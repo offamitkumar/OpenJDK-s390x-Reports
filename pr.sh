@@ -1,52 +1,49 @@
 #!/bin/bash
 
-# Get the current year, month, and day
-year=$(date +%Y)
-month=$(date +%B)
-day=$(date +%d)
-directory_path="/home/amit/OpenJDK-s390x-Reports/$year/$month/$day"
+# Check if a PR is provided
+if [ -z "$1" ]; then
+    echo "Usage: sh pr.sh <PR-NUMBER>"
+    exit 1
+fi
+
+# Assign the first argument to a variable
+PR_NUMBER=$1
+
+directory_path="/home/amit/OpenJDK-s390x-Reports/PRs/$PR_NUMBER"
 
 # helper methods
 git_setup() {
   # Check if the branch exists in the remote or locally
-  if git show-ref --verify --quiet refs/heads/"$year"; then
-    echo "Branch '$year' already exists."
-  else
-    # Create and switch to the new branch
-    git checkout -b "$year"
-    echo "Branch '$year' created and checked out."
-  fi
+    if git show-ref --verify --quiet refs/heads/"PR"; then
+      echo "Branch 'PR' already exists."
+    else
+      # Create and switch to the new branch
+      git checkout -b "PR"
+      echo "Branch 'PR' created and checked out."
+    fi
 }
 
 set_directories() {
-  # Check if the year directory exists
-  if [ ! -d "$year" ]; then
-    mkdir "$year"
+  if [ ! -d "PRs" ]; then
+    mkdir "PRs"
   fi
 
-  # Check if the month directory inside the year directory exists
-  if [ ! -d "$year/$month" ]; then
-    mkdir "$year/$month"
+  if [ ! -d "PRs/$PR_NUMBER" ]; then
+    mkdir "PRs/$PR_NUMBER"
+  fi
+  if [ ! -d "PRs/$PR_NUMBER/fastdebug" ]; then
+    mkdir "PRs/$PR_NUMBER/fastdebug"
   fi
 
-  # Check if the day directory inside the month directory exists
-  if [ ! -d "$year/$month/$day" ]; then
-    mkdir "$year/$month/$day"
-  fi
-
-  if [ ! -d "$year/$month/$day/fastdebug" ]; then
-    mkdir "$year/$month/$day/fastdebug"
-  fi
-
-  if [ ! -d "$year/$month/$day/release" ]; then
-    mkdir "$year/$month/$day/release"
-  fi
+   if [ ! -d "PRs/$PR_NUMBER/release" ]; then
+     mkdir "PRs/$PR_NUMBER/release"
+   fi
 }
 
 git_exit() {
   git add .
   git commit -m "$(date)"
-  git push --set-upstream origin $year
+  git push --set-upstream origin "$PR_NUMBER"
 }
 
 jdk_fastdebug() {
@@ -128,9 +125,17 @@ jdk_release() {
 }
 
 build_test_jdk_head() {
-  cd /home/amit/head/jdk || exit 1
-  git switch master
-  git pull
+  cd /home/amit/jdk || exit 1
+
+    if git show-ref --verify --quiet refs/heads/"$PR_NUMBER"; then
+      git checkout "pull/$PR_NUMBER"
+      git pull https://git.openjdk.org/jdk.git pull/$PR_NUMBER/head
+    else
+      # Create and switch to the new branch
+      git fetch https://git.openjdk.org/jdk.git pull/$PR_NUMBER/head:pull/$PR_NUMBER
+      git checkout pull/$PR_NUMBER
+    fi
+
   git log -1 > $directory_path/top_commit
   jdk_fastdebug;
   jdk_release;
