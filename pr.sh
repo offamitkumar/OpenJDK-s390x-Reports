@@ -51,8 +51,8 @@ jdk_fastdebug() {
 
   bash configure \
     --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=jtreg \
-    --with-gtest=googletest \
+    --with-jtreg=$HOME/jtreg \
+    --with-gtest=$HOME/googletest \
     --with-jmh=build/jmh/jars \
     --with-debug-level=fastdebug \
     --with-native-debug-symbols=internal \
@@ -63,8 +63,8 @@ jdk_fastdebug() {
 
   bash configure \
     --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=jtreg \
-    --with-gtest=googletest \
+    --with-jtreg=$HOME/jtreg \
+    --with-gtest=$HOME/googletest \
     --with-jmh=build/jmh/jars \
     --with-debug-level=fastdebug \
     --with-native-debug-symbols=internal \
@@ -90,7 +90,7 @@ jdk_release() {
 
   bash configure \
     --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=jtreg \
+    --with-jtreg=$HOME/jtreg \
     --with-gtest=googletest \
     --with-jmh=build/jmh/jars \
     --with-debug-level=release \
@@ -102,7 +102,7 @@ jdk_release() {
 
   bash configure \
     --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=jtreg \
+    --with-jtreg=$HOME/jtreg \
     --with-gtest=googletest \
     --with-jmh=build/jmh/jars \
     --with-debug-level=release \
