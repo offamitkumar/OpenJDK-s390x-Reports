@@ -137,7 +137,7 @@ build_test_jdk_head() {
     fi
 
   git log -1 > $directory_path/top_commit
-  jdk_fastdebug;
+#  jdk_fastdebug;
   jdk_release;
   cd /home/amit/OpenJDK-s390x-Reports || exit 1
 }
