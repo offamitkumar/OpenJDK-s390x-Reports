@@ -36,7 +36,7 @@ set_directories() {
 git_exit() {
   git add .
   git commit -m "$day/$month/$year"
-  git push
+  git push --set-upstream origin $year
 }
 
 git_setup
