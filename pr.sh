@@ -127,11 +127,12 @@ jdk_release() {
 build_test_jdk_head() {
   cd /home/amit/jdk
 
-    if git show-ref --verify --quiet refs/heads/"$PR_NUMBER"; then
-      git checkout "pull/$PR_NUMBER"
+    if git show-ref --verify --quiet refs/heads/$PR_NUMBER; then
+      git checkout pull/$PR_NUMBER
       git pull https://git.openjdk.org/jdk.git pull/$PR_NUMBER/head
     else
       # Create and switch to the new branch
+      git switch master
       git fetch https://git.openjdk.org/jdk.git pull/$PR_NUMBER/head:pull/$PR_NUMBER
       git checkout pull/$PR_NUMBER
     fi
