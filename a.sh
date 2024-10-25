@@ -75,15 +75,15 @@ jdk_fastdebug() {
 
   make images
 
-  cp build/linux-s390x-server-fastdebug/build.log  "$directory_path/fastdebug/"
+  cp build/linux-s390x-server-fastdebug/build.log  $directory_path/fastdebug/
 
   make run-test-tier1;
 
-  cp build/linux-s390x-server-fastdebug/test-results/test-summary.txt "$directory_path/fastdebug/"
+  cp build/linux-s390x-server-fastdebug/test-results/test-summary.txt $directory_path/fastdebug/
 
-  cat "$(find build/linux-s390x-server-fastdebug/ -name newfailures.txt)" > "$directory_path/fastdebug/newfailures.txt"
+  cat $(find build/linux-s390x-server-fastdebug/ -name newfailures.txt) > $directory_path/fastdebug/newfailures.txt
 
-  cat "$(find build/linux-s390x-server-fastdebug/ -name other_errors.txt)" > "$directory_path/fastdebug/other_errors.txt"
+  cat $(find build/linux-s390x-server-fastdebug/ -name other_errors.txt) > $directory_path/fastdebug/other_errors.txt
     #More test run with different JTREG Options
 
 }
@@ -118,11 +118,11 @@ jdk_release() {
 
   make run-test-tier1;
 
-  cp build/linux-s390x-server-release/test-results/test-summary.txt "$directory_path/release/"
+  cp build/linux-s390x-server-release/test-results/test-summary.txt $directory_path/release/
 
-  cat "$(find build/linux-s390x-server-release/ -name newfailures.txt)" > "$directory_path/release/newfailures.txt"
+  cat $(find build/linux-s390x-server-release/ -name newfailures.txt) > $directory_path/release/newfailures.txt
 
-  cat "$(find build/linux-s390x-server-release/ -name other_errors.txt)" > "$directory_path/release/other_errors.txt"
+  cat $(find build/linux-s390x-server-release/ -name other_errors.txt) > $directory_path/release/other_errors.txt
 
   #More test run with different JTREG Options
 }
