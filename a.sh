@@ -123,12 +123,12 @@ jdk_release() {
 }
 
 build_test_jdk_head() {
-# cd /home/amit/head/jdk
-# git switch master
-# git pull
-# git log -1 > $directory_path/top_commit
-# jdk_fastdebug;
-# jdk_release;
+  cd /home/amit/head/jdk
+  git switch master
+  git pull
+  git log -1 > $directory_path/top_commit
+  jdk_fastdebug;
+  jdk_release;
   cd /home/amit/OpenJDK-s390x-Reports
 }
 
