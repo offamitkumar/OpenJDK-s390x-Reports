@@ -49,32 +49,32 @@ git_exit() {
 jdk_fastdebug() {
   export CONF=linux-s390x-server-fastdebug
 
-  bash configure \
-    --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=$HOME/jtreg \
-    --with-gtest=$HOME/googletest \
-    --with-jmh=build/jmh/jars \
-    --with-debug-level=fastdebug \
-    --with-native-debug-symbols=internal \
-    --disable-precompiled-headers
-
-  make clean;
-  make dist-clean;
-
-  bash configure \
-    --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=$HOME/jtreg \
-    --with-gtest=$HOME/googletest \
-    --with-jmh=build/jmh/jars \
-    --with-debug-level=fastdebug \
-    --with-native-debug-symbols=internal \
-    --disable-precompiled-headers
-
-  make images
-
+#  bash configure \
+#    --with-boot-jdk=boot_jdk_23 \
+#    --with-jtreg=$HOME/jtreg \
+#    --with-gtest=$HOME/googletest \
+#    --with-jmh=build/jmh/jars \
+#    --with-debug-level=fastdebug \
+#    --with-native-debug-symbols=internal \
+#    --disable-precompiled-headers
+#
+#  make clean;
+#  make dist-clean;
+#
+#  bash configure \
+#    --with-boot-jdk=boot_jdk_23 \
+#    --with-jtreg=$HOME/jtreg \
+#    --with-gtest=$HOME/googletest \
+#    --with-jmh=build/jmh/jars \
+#    --with-debug-level=fastdebug \
+#    --with-native-debug-symbols=internal \
+#    --disable-precompiled-headers
+#
+#  make images
+#
   cp build/linux-s390x-server-fastdebug/build.log  "$directory_path/fastdebug/"
 
-  make run-test-tier1;
+#  make run-test-tier1;
 
   cp build/linux-s390x-server-fastdebug/test-results/test-summary.txt "$directory_path/fastdebug/"
 
@@ -88,38 +88,38 @@ jdk_fastdebug() {
 jdk_release() {
   export CONF=linux-s390x-server-release
 
-  bash configure \
-    --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=$HOME/jtreg \
-    --with-gtest=googletest \
-    --with-jmh=build/jmh/jars \
-    --with-debug-level=release \
-    --with-native-debug-symbols=internal \
-    --disable-precompiled-headers
-
-  make clean;
-  make dist-clean;
-
-  bash configure \
-    --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=$HOME/jtreg \
-    --with-gtest=googletest \
-    --with-jmh=build/jmh/jars \
-    --with-debug-level=release \
-    --with-native-debug-symbols=internal \
-    --disable-precompiled-headers
-
-  make images
-
+#  bash configure \
+#    --with-boot-jdk=boot_jdk_23 \
+#    --with-jtreg=$HOME/jtreg \
+#    --with-gtest=googletest \
+#    --with-jmh=build/jmh/jars \
+#    --with-debug-level=release \
+#    --with-native-debug-symbols=internal \
+#    --disable-precompiled-headers
+#
+#  make clean;
+#  make dist-clean;
+#
+#  bash configure \
+#    --with-boot-jdk=boot_jdk_23 \
+#    --with-jtreg=$HOME/jtreg \
+#    --with-gtest=googletest \
+#    --with-jmh=build/jmh/jars \
+#    --with-debug-level=release \
+#    --with-native-debug-symbols=internal \
+#    --disable-precompiled-headers
+#
+#  make images
+#
   cp build/linux-s390x-server-release/build.log  $directory_path/release/
-
-  make run-test-tier1;
-
+#
+#  make run-test-tier1;
+#
   cp build/linux-s390x-server-release/test-results/test-summary.txt "$directory_path/release/"
 
-  cat "$(find build/linux-s390x-server-release/ -name newfailures.txt)" > "$directory_path/release/newfailures.txt"
+  cat $(find build/linux-s390x-server-release/ -name newfailures.txt) > "$directory_path/release/newfailures.txt"
 
-  cat "$(find build/linux-s390x-server-release/ -name other_errors.txt)" > "$directory_path/release/other_errors.txt"
+  cat $(find build/linux-s390x-server-release/ -name other_errors.txt) > "$directory_path/release/other_errors.txt"
 
   #More test run with different JTREG Options
 }
@@ -137,7 +137,7 @@ build_test_jdk_head() {
     fi
 
   git log -1 > $directory_path/top_commit
-#  jdk_fastdebug;
+  jdk_fastdebug;
   jdk_release;
   cd /home/amit/OpenJDK-s390x-Reports || exit 1
 }
