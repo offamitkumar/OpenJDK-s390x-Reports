@@ -34,13 +34,32 @@ set_directories() {
     mkdir "$year/$month/$day"
   fi
 
-  if [ ! -d "$year/$month/$day/fastdebug" ]; then
-    mkdir "$year/$month/$day/fastdebug"
+  if [ ! -d "$year/$month/$day/head" ]; then
+    mkdir "$year/$month/$day/head"
   fi
 
-  if [ ! -d "$year/$month/$day/release" ]; then
-    mkdir "$year/$month/$day/release"
+  if [ ! -d "$year/$month/$day/head/fastdebug" ]; then
+    mkdir "$year/$month/$day/head/fastdebug"
   fi
+
+  if [ ! -d "$year/$month/$day/head/release" ]; then
+    mkdir "$year/$month/$day/head/release"
+  fi
+}
+
+set_directories_jdk21() {
+
+    if [ ! -d "$year/$month/$day/jdk21" ]; then
+      mkdir "$year/$month/$day/jdk21"
+    fi
+
+    if [ ! -d "$year/$month/$day/jdk21/fastdebug" ]; then
+      mkdir "$year/$month/$day/jdk21/fastdebug"
+    fi
+
+    if [ ! -d "$year/$month/$day/jdk21/release" ]; then
+      mkdir "$year/$month/$day/jdk21/release"
+    fi
 }
 
 git_exit() {
@@ -53,10 +72,9 @@ jdk_fastdebug() {
   export CONF=linux-s390x-server-fastdebug
 
   bash configure \
-    --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=jtreg \
-    --with-gtest=googletest \
-    --with-jmh=build/jmh/jars \
+    --with-boot-jdk=$HOME/boot_jdk_23 \
+    --with-jtreg=$HOME/jtreg \
+    --with-gtest=$HOME/googletest \
     --with-debug-level=fastdebug \
     --with-native-debug-symbols=internal \
     --disable-precompiled-headers
@@ -65,27 +83,62 @@ jdk_fastdebug() {
   make dist-clean;
 
   bash configure \
-    --with-boot-jdk=boot_jdk_23 \
-    --with-jtreg=jtreg \
-    --with-gtest=googletest \
-    --with-jmh=build/jmh/jars \
+    --with-boot-jdk=$HOME/boot_jdk_23 \
+    --with-jtreg=$HOME/jtreg \
+    --with-gtest=$HOME/googletest \
     --with-debug-level=fastdebug \
     --with-native-debug-symbols=internal \
     --disable-precompiled-headers
 
   make images
 
-  cp build/linux-s390x-server-fastdebug/build.log  $directory_path/fastdebug/
+  cp build/linux-s390x-server-fastdebug/build.log  $directory_path/head/fastdebug/
 
   make run-test-tier1;
 
-  cp build/linux-s390x-server-fastdebug/test-results/test-summary.txt $directory_path/fastdebug/
+  cp build/linux-s390x-server-fastdebug/test-results/test-summary.txt $directory_path/head/fastdebug
 
-  cat $(find build/linux-s390x-server-fastdebug/ -name newfailures.txt) > $directory_path/fastdebug/newfailures.txt
+  cat $(find build/linux-s390x-server-fastdebug/ -name newfailures.txt) > $directory_path/head/fastdebug/newfailures.txt
 
-  cat $(find build/linux-s390x-server-fastdebug/ -name other_errors.txt) > $directory_path/fastdebug/other_errors.txt
+  cat $(find build/linux-s390x-server-fastdebug/ -name other_errors.txt) > $directory_path/head/fastdebug/other_errors.txt
     #More test run with different JTREG Options
 
+}
+
+jdk_fastdebug_21() {
+    export CONF=linux-s390x-server-fastdebug
+
+    bash configure \
+      --with-boot-jdk=$HOME/boot_jdk_21 \
+      --with-jtreg=$HOME/jtreg \
+      --with-gtest=$HOME/googletest \
+      --with-debug-level=fastdebug \
+      --with-native-debug-symbols=internal \
+      --disable-precompiled-headers
+
+    make clean;
+    make dist-clean;
+
+    bash configure \
+      --with-boot-jdk=$HOME/boot_jdk_21 \
+      --with-jtreg=$HOME/jtreg \
+      --with-gtest=$HOME/googletest \
+      --with-debug-level=fastdebug \
+      --with-native-debug-symbols=internal \
+      --disable-precompiled-headers
+
+    make images
+
+    cp build/linux-s390x-server-fastdebug/build.log  $directory_path/jdk21/fastdebug/
+
+    make run-test-tier1;
+
+    cp build/linux-s390x-server-fastdebug/test-results/test-summary.txt $directory_path/jdk21/fastdebug
+
+    cat $(find build/linux-s390x-server-fastdebug/ -name newfailures.txt) > $directory_path/jdk21/fastdebug/newfailures.txt
+
+    cat $(find build/linux-s390x-server-fastdebug/ -name other_errors.txt) > $directory_path/jdk21/fastdebug/other_errors.txt
+      #More test run with different JTREG Options
 }
 
 jdk_release() {
@@ -95,7 +148,6 @@ jdk_release() {
     --with-boot-jdk=boot_jdk_23 \
     --with-jtreg=jtreg \
     --with-gtest=googletest \
-    --with-jmh=build/jmh/jars \
     --with-debug-level=release \
     --with-native-debug-symbols=internal \
     --disable-precompiled-headers
@@ -107,38 +159,86 @@ jdk_release() {
     --with-boot-jdk=boot_jdk_23 \
     --with-jtreg=jtreg \
     --with-gtest=googletest \
-    --with-jmh=build/jmh/jars \
     --with-debug-level=release \
     --with-native-debug-symbols=internal \
     --disable-precompiled-headers
 
   make images
 
-  cp build/linux-s390x-server-release/build.log  $directory_path/release/
+  cp build/linux-s390x-server-release/build.log  $directory_path/head/release/
 
   make run-test-tier1;
 
-  cp build/linux-s390x-server-release/test-results/test-summary.txt $directory_path/release/
+  cp build/linux-s390x-server-release/test-results/test-summary.txt $directory_path/head/release/
 
-  cat $(find build/linux-s390x-server-release/ -name newfailures.txt) > $directory_path/release/newfailures.txt
+  cat $(find build/linux-s390x-server-release/ -name newfailures.txt) > $directory_path/head/release/newfailures.txt
 
-  cat $(find build/linux-s390x-server-release/ -name other_errors.txt) > $directory_path/release/other_errors.txt
+  cat $(find build/linux-s390x-server-release/ -name other_errors.txt) > $directory_path/head/release/other_errors.txt
+
+  #More test run with different JTREG Options
+}
+
+jdk_release_21() {
+  export CONF=linux-s390x-server-release
+
+  bash configure \
+    --with-boot-jdk=boot_jdk_21 \
+    --with-jtreg=jtreg \
+    --with-gtest=googletest \
+    --with-debug-level=release \
+    --with-native-debug-symbols=internal \
+    --disable-precompiled-headers
+
+  make clean;
+  make dist-clean;
+
+  bash configure \
+    --with-boot-jdk=boot_jdk_21 \
+    --with-jtreg=jtreg \
+    --with-gtest=googletest \
+    --with-debug-level=release \
+    --with-native-debug-symbols=internal \
+    --disable-precompiled-headers
+
+  make images
+
+  cp build/linux-s390x-server-release/build.log  $directory_path/jdk21/release/
+
+  make run-test-tier1;
+
+  cp build/linux-s390x-server-release/test-results/test-summary.txt $directory_path/jdk21/release/
+
+  cat $(find build/linux-s390x-server-release/ -name newfailures.txt) > $directory_path/jdk21/release/newfailures.txt
+
+  cat $(find build/linux-s390x-server-release/ -name other_errors.txt) > $directory_path/jdk21/release/other_errors.txt
 
   #More test run with different JTREG Options
 }
 
 build_test_jdk_head() {
-  cd /home/amit/head/jdk || exit 1
+  cd /home/amit/head/jdk
   git switch master
   git pull
-  git log -1 > $directory_path/top_commit
+  git log -1 > $directory_path/head/top_commit
   jdk_fastdebug;
   jdk_release;
-  cd /home/amit/OpenJDK-s390x-Reports || exit 1
+  cd /home/amit/OpenJDK-s390x-Reports
+}
+
+build_test_jdk21() {
+  cd /home/amit/head/jdk21u-dev
+  git switch master
+  git pull
+  git log -1 > $directory_path/jdk21/top_commit
+  jdk_fastdebug_21;
+  jdk_release_21;
+  cd /home/amit/OpenJDK-s390x-Reports
 }
 
 # usage
 git_setup
 set_directories
 build_test_jdk_head
+set_directories_jdk21
+build_test_jdk21
 git_exit #adds all the changes and do a git push
