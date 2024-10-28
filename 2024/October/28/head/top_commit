@@ -1,0 +1,8 @@
+commit d5fb6b4a3cf4926acb333e7ee55f96fc76225631
+Author: Yudi Zheng <yzheng@openjdk.org>
+Date:   Mon Oct 28 12:39:04 2024 +0000
+
+    8339939: [JVMCI] Don't compress abstract and interface Klasses
+    
+    Co-authored-by: Doug Simon <dnsimon@openjdk.org>
+    Reviewed-by: dnsimon
