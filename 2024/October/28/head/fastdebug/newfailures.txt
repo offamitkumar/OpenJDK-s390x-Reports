@@ -2,6 +2,7 @@
 # newfailures.txt
 java/lang/Thread/virtual/MonitorEnterExit.java 
 # newfailures.txt
+jdk/jshell/ToolProviderTest.java 
 # newfailures.txt
 compiler/c2/TestDivModNodes.java 
 compiler/c2/irTests/TestAutoVectorization2DArray.java 

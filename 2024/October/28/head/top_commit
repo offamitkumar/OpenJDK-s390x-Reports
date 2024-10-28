@@ -1,8 +1,7 @@
-commit d5fb6b4a3cf4926acb333e7ee55f96fc76225631
-Author: Yudi Zheng <yzheng@openjdk.org>
-Date:   Mon Oct 28 12:39:04 2024 +0000
+commit 9f6211bcf1b46e4bfba2d128d9eb8457bc0cde51
+Author: Matias Saavedra Silva <matsaave@openjdk.org>
+Date:   Mon Oct 28 14:31:35 2024 +0000
 
-    8339939: [JVMCI] Don't compress abstract and interface Klasses
+    8341371: CDS cannot load archived heap objects with -XX:+UseSerialGC -XX:-UseCompressedOops
     
-    Co-authored-by: Doug Simon <dnsimon@openjdk.org>
-    Reviewed-by: dnsimon
+    Reviewed-by: ccheung, iklam
