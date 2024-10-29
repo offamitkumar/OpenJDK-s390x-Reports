@@ -339,4 +339,6 @@ set_directories
 build_test_jdk_head
 set_directories_jdk21
 build_test_jdk21
+set_directories_jdk17
+build_test_jdk17
 git_exit #adds all the changes and do a git push
