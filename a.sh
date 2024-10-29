@@ -92,6 +92,21 @@ set_directories_jdk17() {
     fi
 }
 
+set_directories_jdk11() {
+
+    if [ ! -d "$year/$month/$day/jdk11" ]; then
+      mkdir "$year/$month/$day/jdk11"
+    fi
+
+    if [ ! -d "$year/$month/$day/jdk11/fastdebug" ]; then
+      mkdir "$year/$month/$day/jdk11/fastdebug"
+    fi
+
+    if [ ! -d "$year/$month/$day/jdk11/release" ]; then
+      mkdir "$year/$month/$day/jdk11/release"
+    fi
+}
+
 git_exit() {
   git add .
   git commit -m "$(date)"
@@ -243,6 +258,44 @@ jdk_fastdebug_17() {
       #More test run with different JTREG Options
 }
 
+jdk_fastdebug_11() {
+  export CONF=linux-s390x-normal-server-fastdebug
+
+  bash configure \
+    --with-boot-jdk=$HOME/boot_jdk_11 \
+    --with-jtreg=$HOME/jtreg \
+    --with-debug-level=fastdebug \
+    --disable-warnings-as-errors \
+    --with-native-debug-symbols=internal \
+    --disable-precompiled-headers
+
+  make clean;
+  make dist-clean;
+
+  bash configure \
+    --with-boot-jdk=$HOME/boot_jdk_11 \
+    --with-jtreg=$HOME/jtreg \
+    --with-gtest=$HOME/googletest \
+    --with-debug-level=fastdebug \
+    --disable-warnings-as-errors \
+    --with-native-debug-symbols=internal \
+    --disable-precompiled-headers
+
+  make images
+
+  cp build/linux-s390x-normal-server-fastdebug/build.log  $directory_path/jdk11/fastdebug/
+
+  make run-test-tier1;
+
+  cp build/linux-s390x-normal-server-fastdebug/test-results/test-summary.txt $directory_path/jdk11/fastdebug/
+
+  cat $(find build/linux-s390x-normal-server-fastdebug/ -name newfailures.txt) > $directory_path/jdk11/fastdebug/newfailures.txt
+
+  cat $(find build/linux-s390x-normal-server-fastdebug/ -name other_errors.txt) > $directory_path/jdk11/fastdebug/other_errors.txt
+
+  #More test run with different JTREG Options
+}
+
 jdk_release() {
   export CONF=linux-s390x-server-release
 
@@ -391,6 +444,44 @@ jdk_release_17() {
   #More test run with different JTREG Options
 }
 
+jdk_release_11() {
+  export CONF=linux-s390x-normal-server-release
+
+  bash configure \
+    --with-boot-jdk=$HOME/boot_jdk_11 \
+    --with-jtreg=$HOME/jtreg \
+    --with-debug-level=release \
+    --disable-warnings-as-errors \
+    --with-native-debug-symbols=internal \
+    --disable-precompiled-headers
+
+  make clean;
+  make dist-clean;
+
+  bash configure \
+    --with-boot-jdk=$HOME/boot_jdk_11 \
+    --with-jtreg=$HOME/jtreg \
+    --with-gtest=$HOME/googletest \
+    --with-debug-level=release \
+    --disable-warnings-as-errors \
+    --with-native-debug-symbols=internal \
+    --disable-precompiled-headers
+
+  make images
+
+  cp build/linux-s390x-normal-server-release/build.log  $directory_path/jdk11/release/
+
+  make run-test-tier1;
+
+  cp build/linux-s390x-normal-server-release/test-results/test-summary.txt $directory_path/jdk11/release/
+
+  cat $(find build/linux-s390x-normal-server-release/ -name newfailures.txt) > $directory_path/jdk11/release/newfailures.txt
+
+  cat $(find build/linux-s390x-normal-server-release/ -name other_errors.txt) > $directory_path/jdk11/release/other_errors.txt
+
+  #More test run with different JTREG Options
+}
+
 build_test_jdk_head() {
   cd /home/amit/head/jdk
   git switch master
@@ -431,6 +522,16 @@ build_test_jdk17() {
   cd /home/amit/OpenJDK-s390x-Reports
 }
 
+build_test_jdk11() {
+  cd /home/amit/head/jdk11u-dev
+  git switch master
+  git pull
+  git log -1 > $directory_path/jdk11/top_commit
+  jdk_fastdebug_11;
+  jdk_release_11;
+  cd /home/amit/OpenJDK-s390x-Reports
+}
+
 # usage
 git_setup
 set_directories
@@ -441,4 +542,6 @@ set_directories_jdk17
 build_test_jdk17
 set_directories_jdk23
 build_test_jdk23
+set_directories_jdk11
+build_test_jdk11
 git_exit #adds all the changes and do a git push
