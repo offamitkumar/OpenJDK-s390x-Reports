@@ -1,0 +1,7 @@
+commit 9f6211bcf1b46e4bfba2d128d9eb8457bc0cde51
+Author: Matias Saavedra Silva <matsaave@openjdk.org>
+Date:   Mon Oct 28 14:31:35 2024 +0000
+
+    8341371: CDS cannot load archived heap objects with -XX:+UseSerialGC -XX:-UseCompressedOops
+    
+    Reviewed-by: ccheung, iklam

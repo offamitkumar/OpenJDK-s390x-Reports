@@ -1,0 +1,7 @@
+commit 01eb688a001125dedc8c2cf454578aa352cd906a
+Author: Steven Loomis <srl@openjdk.org>
+Date:   Mon Oct 28 13:31:45 2024 +0000
+
+    8195675: Call to insertText with single character from custom Input Method ignored
+    
+    Backport-of: b8f2ec9091f9f7e5f4611991d04dd8aa113b94fd
