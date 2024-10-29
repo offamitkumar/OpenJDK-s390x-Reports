@@ -1,0 +1,8 @@
+commit 70a227fe5a223939b95675e019c6f3db23b38755
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Oct 25 18:39:59 2024 +0000
+
+    8333824: Unused ClassValue in VarHandles
+    
+    Reviewed-by: phh
+    Backport-of: 7b43a8cd7c663facbe490f889838d7ead0eba0f9

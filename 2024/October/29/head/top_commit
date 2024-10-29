@@ -1,0 +1,7 @@
+commit 9cfb0f7f7ad31081c917be1eb0e39e2552e45382
+Author: Ferenc Rakoczi <ferenc.r.rakoczi@oracle.com>
+Date:   Tue Oct 29 15:18:24 2024 +0000
+
+    8341527: AVX-512 intrinsic for SHA3
+    
+    Reviewed-by: sviswanathan

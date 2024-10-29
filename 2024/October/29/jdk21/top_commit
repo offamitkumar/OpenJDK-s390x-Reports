@@ -1,0 +1,7 @@
+commit 7dc0f7a64224d37f639ab8e8da2c1aa3295cc92e
+Author: Martin Doerr <mdoerr@openjdk.org>
+Date:   Tue Oct 29 15:35:06 2024 +0000
+
+    8342701: [PPC64] TestOSRLotsOfLocals.java crashes
+    
+    Backport-of: 3bba0f3dc8faf83a3aadcd704ae2ae4967e6daa4
