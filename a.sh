@@ -275,7 +275,6 @@ jdk_fastdebug_11() {
   bash configure \
     --with-boot-jdk=$HOME/boot_jdk_11 \
     --with-jtreg=$HOME/jtreg \
-    --with-gtest=$HOME/googletest \
     --with-debug-level=fastdebug \
     --disable-warnings-as-errors \
     --with-native-debug-symbols=internal \
@@ -461,7 +460,6 @@ jdk_release_11() {
   bash configure \
     --with-boot-jdk=$HOME/boot_jdk_11 \
     --with-jtreg=$HOME/jtreg \
-    --with-gtest=$HOME/googletest \
     --with-debug-level=release \
     --disable-warnings-as-errors \
     --with-native-debug-symbols=internal \
