@@ -15,6 +15,7 @@ directory_path="/home/amit/OpenJDK-s390x-Reports/PRs/$PR_NUMBER"
 git_setup() {
   # Check if the branch exists in the remote or locally
     if git show-ref --verify --quiet refs/heads/"PR"; then
+      git switch PR
       echo "Branch 'PR' already exists."
     else
       # Create and switch to the new branch

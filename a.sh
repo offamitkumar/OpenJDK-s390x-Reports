@@ -10,6 +10,7 @@ directory_path="/home/amit/OpenJDK-s390x-Reports/$year/$month/$day"
 git_setup() {
   # Check if the branch exists in the remote or locally
   if git show-ref --verify --quiet refs/heads/"$year"; then
+    git switch $year
     echo "Branch '$year' already exists."
   else
     # Create and switch to the new branch
