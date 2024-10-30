@@ -1,0 +1,7 @@
+commit 4d147bf2c7cd47d8c4c406fdd8393f34b6fe865b
+Author: t.ogata <ogata.toshitaka@fujitsu.com>
+Date:   Wed Oct 30 15:41:34 2024 +0000
+
+    8328379: Convert URLDragTest.html applet test to main
+    
+    Backport-of: fbeac98c84078a566c572abeba07c49e94bbf26b

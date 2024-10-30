@@ -1,0 +1,7 @@
+commit c3cb940f4f7125e8c8695d360a343da10f1ffde4
+Author: Todd V. Jonker <jonker@amazon.com>
+Date:   Wed Oct 30 16:25:06 2024 +0000
+
+    8342765: [21u] RTM tests assume UnlockExperimentalVMOptions is disabled by default
+    
+    Reviewed-by: phh

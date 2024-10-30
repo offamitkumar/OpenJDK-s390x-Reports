@@ -1,0 +1,7 @@
+commit 7404ddf24a162cff445cd0a26aec446461988bc8
+Author: Ramkumar Sunderbabu <rsunderbabu@openjdk.org>
+Date:   Wed Oct 30 15:45:03 2024 +0000
+
+    8202100: Merge vm/share/InMemoryJavaCompiler w/ jdk/test/lib/compiler/InMemoryJavaCompiler
+    
+    Reviewed-by: lmesnik
