@@ -1,0 +1,7 @@
+commit 00fa4dfabc25bfd76a759c946c5768c192c9cc64
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Oct 31 09:54:25 2024 +0000
+
+    8340466: Add description for PassFailJFrame constructors
+    
+    Backport-of: 3762ec3978bfe9910929ab22aaf238e9f4c84630

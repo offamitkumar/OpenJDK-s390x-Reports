@@ -1,0 +1,7 @@
+commit b2694934b567c896b715c420584ce0989d2decc9
+Author: Olexandr Rotan <rotan.olexandr@gmail.com>
+Date:   Thu Oct 31 15:25:42 2024 +0000
+
+    8338981: Access to private classes should be permitted inside the permits clause of the enclosing top-level class
+    
+    Reviewed-by: vromero, mcimadamore
