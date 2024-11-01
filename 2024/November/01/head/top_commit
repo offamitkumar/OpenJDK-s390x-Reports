@@ -1,0 +1,7 @@
+commit 5995786dbd69ed11dd1cacb2a3ac86e3e6f43ab7
+Author: Markus Grönlund <mgronlun@openjdk.org>
+Date:   Fri Nov 1 14:51:51 2024 +0000
+
+    8343177: JFR: Remove critical section for thread id assignment
+    
+    Reviewed-by: dholmes

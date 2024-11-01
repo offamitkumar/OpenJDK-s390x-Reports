@@ -1,0 +1,7 @@
+commit ed797f7d6b0eff31168e54dd07eb5dd22dd898f1
+Author: Fei Yang <fyang@openjdk.org>
+Date:   Fri Nov 1 09:31:37 2024 +0000
+
+    8342578: GHA: RISC-V: Bootstrap using Debian snapshot is still failing
+    
+    Backport-of: 239d84a82a1e6f4ebbd5c5abb320e39cfd5bc330
