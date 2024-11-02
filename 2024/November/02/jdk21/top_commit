@@ -1,0 +1,7 @@
+commit eb8d5fe5b9a79725c7a2409e15c36739cd9dca56
+Author: Xiaolong Peng <xpeng@openjdk.org>
+Date:   Fri Nov 1 21:55:02 2024 +0000
+
+    8319640: ClassicFormat::parseObject (from DateTimeFormatter) does not conform to the javadoc and may leak DateTimeException
+    
+    Backport-of: fe0ccdf5f8a5559a608d2e2cd2b6aecbe245c5ec
