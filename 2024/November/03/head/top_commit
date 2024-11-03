@@ -1,0 +1,7 @@
+commit 29882bfe7b7e76446a96862cd0a5e81c7e054415
+Author: Alexey Semenyuk <asemenyuk@openjdk.org>
+Date:   Sat Nov 2 12:44:17 2024 +0000
+
+    8340311: JPackage app-image exe launches multiple exe's in JDK 22+
+    
+    Reviewed-by: almatvee
