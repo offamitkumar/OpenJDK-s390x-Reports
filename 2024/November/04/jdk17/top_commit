@@ -1,0 +1,7 @@
+commit 955bae2b03055552237584aa7c68b1afcfa3b9c1
+Author: Roland Westrelin <roland@openjdk.org>
+Date:   Mon Nov 4 12:28:37 2024 +0000
+
+    8342496: C2/Shenandoah: SEGV in compiled code when running jcstress
+    
+    Backport-of: 680dc5d896f4f7b01b3cf800d548e32bb2ef8c81

@@ -1,0 +1,7 @@
+commit 9bf55020f074e77df170d7f5bbf807db3a183232
+Author: SendaoYan <syan@openjdk.org>
+Date:   Wed Oct 30 17:37:56 2024 +0000
+
+    8342426: [11u] javax/naming/module/RunBasic.java javac compile fails
+    
+    Reviewed-by: andrew

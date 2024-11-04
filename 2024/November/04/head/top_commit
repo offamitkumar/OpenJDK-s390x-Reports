@@ -1,0 +1,7 @@
+commit 7f8450cc511e22e3183092edfa3a37b39f133cff
+Author: SendaoYan <syan@openjdk.org>
+Date:   Mon Nov 4 15:05:52 2024 +0000
+
+    8343473: Update copyright year of AddmodsOption.java
+    
+    Reviewed-by: mli
