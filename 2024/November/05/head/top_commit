@@ -1,0 +1,7 @@
+commit 8cb122119409fb13b4b9b2e74851207734d5c198
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Tue Nov 5 15:48:23 2024 +0000
+
+    8343532: Test test/hotspot/jtreg/runtime/cds/appcds/jigsaw/addmods/AddmodsOption.java fails on Linux ppc64le after JDK-8319343
+    
+    Reviewed-by: mdoerr, lucy

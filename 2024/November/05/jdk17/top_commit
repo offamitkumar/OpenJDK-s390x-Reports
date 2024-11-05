@@ -1,0 +1,7 @@
+commit b0c75b453345ad7b23751788771c4fd38e919b33
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Nov 5 13:48:03 2024 +0000
+
+    8341235: Improve default instruction frame title in PassFailJFrame
+    
+    Backport-of: 4ba170c403ae85576f84dafd4a157ba0db99873f

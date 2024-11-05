@@ -1,0 +1,8 @@
+commit 98161b7a9b1ff4a9f3b6c41efd15c31a8f959c68
+Author: SendaoYan <syan@openjdk.org>
+Date:   Mon Nov 4 23:32:46 2024 +0000
+
+    8334332: TestIOException.java fails if run by root
+    
+    Reviewed-by: phh
+    Backport-of: 472b935b442f7f925b665c7de91eda77f3dcbe8b
