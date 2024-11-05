@@ -1,0 +1,7 @@
+commit 576b06052cd1ad9686bc7288341ec92546657841
+Author: Amit Kumar <amitlocham09@icloud.com>
+Date:   Tue Nov 5 18:17:30 2024 +0530
+
+    Revert "mac build workaround"
+    
+    This reverts commit ac2fe31d1f134f8d29aea5e6816ec77f0719845a.
