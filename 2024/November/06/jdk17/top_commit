@@ -1,0 +1,7 @@
+commit 0d7b2729e4f4c0fec2dcfea65a0834732a408ee4
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Nov 6 15:41:27 2024 +0000
+
+    8339803: Acknowledge case insensitive unambiguous keywords in tzdata files
+    
+    Backport-of: f4940f65f8908602e2043caaf1141150be865acc

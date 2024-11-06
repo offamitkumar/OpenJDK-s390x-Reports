@@ -1,0 +1,7 @@
+commit bb60a427d7b9bc8b33091daa7d7e4a37256f93bc
+Author: SendaoYan <syan@openjdk.org>
+Date:   Tue Nov 5 19:19:56 2024 +0000
+
+    8342681: TestLoadBypassesNullCheck.java fails improperly specified VM option
+    
+    Backport-of: 8bcd4920f1b03d0ef8e295e53557c629f05ceaa4
