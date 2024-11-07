@@ -1,0 +1,8 @@
+# newfailures.txt
+# newfailures.txt
+java/lang/Thread/virtual/MonitorEnterExit.java 
+# newfailures.txt
+# newfailures.txt
+gtest/GTestWrapper.java 
+runtime/NMT/VirtualAllocCommitMerge.java 
+# newfailures.txt

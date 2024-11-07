@@ -1,0 +1,8 @@
+commit 1d117f65f06456ae571aecc146542c2f79d402cf
+Author: Quan Anh Mai <qamai@openjdk.org>
+Date:   Thu Nov 7 14:32:18 2024 +0000
+
+    8343394: Make MemorySessionImpl.state a stable field
+    
+    Co-authored-by: Maurizio Cimadamore <mcimadamore@openjdk.org>
+    Reviewed-by: mcimadamore, jvernee
