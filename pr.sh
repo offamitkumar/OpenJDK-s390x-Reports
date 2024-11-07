@@ -51,10 +51,9 @@ jdk_fastdebug() {
   export CONF=linux-s390x-server-fastdebug
 
   bash configure \
-    --with-boot-jdk=boot_jdk_23 \
+    --with-boot-jdk=$HOME/boot_jdk_23 \
     --with-jtreg=$HOME/jtreg \
     --with-gtest=$HOME/googletest \
-    --with-jmh=build/jmh/jars \
     --with-debug-level=fastdebug \
     --with-native-debug-symbols=internal \
     --disable-precompiled-headers
@@ -63,10 +62,9 @@ jdk_fastdebug() {
   make dist-clean;
 
   bash configure \
-    --with-boot-jdk=boot_jdk_23 \
+    --with-boot-jdk=$HOME/boot_jdk_23 \
     --with-jtreg=$HOME/jtreg \
     --with-gtest=$HOME/googletest \
-    --with-jmh=build/jmh/jars \
     --with-debug-level=fastdebug \
     --with-native-debug-symbols=internal \
     --disable-precompiled-headers
@@ -90,10 +88,9 @@ jdk_release() {
   export CONF=linux-s390x-server-release
 
   bash configure \
-    --with-boot-jdk=boot_jdk_23 \
+    --with-boot-jdk=$HOME/boot_jdk_23 \
     --with-jtreg=$HOME/jtreg \
-    --with-gtest=googletest \
-    --with-jmh=build/jmh/jars \
+    --with-gtest=$HOME/googletest \
     --with-debug-level=release \
     --with-native-debug-symbols=internal \
     --disable-precompiled-headers
@@ -102,10 +99,9 @@ jdk_release() {
   make dist-clean;
 
   bash configure \
-    --with-boot-jdk=boot_jdk_23 \
+    --with-boot-jdk=$HOME/boot_jdk_23 \
     --with-jtreg=$HOME/jtreg \
-    --with-gtest=googletest \
-    --with-jmh=build/jmh/jars \
+    --with-gtest=$HOME/googletest \
     --with-debug-level=release \
     --with-native-debug-symbols=internal \
     --disable-precompiled-headers
