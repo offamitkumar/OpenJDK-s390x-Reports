@@ -1,0 +1,5 @@
+commit 37e301714e9f168b49c4911eac2e9ba02c80bb19
+Author: Patricio Chilano Mateo <patricio.chilano.mateo@oracle.com>
+Date:   Tue Nov 5 17:57:09 2024 -0400
+
+    Use JvmtiVTMSTransitionDisabler::VTMS_vthread_mount/unmount
