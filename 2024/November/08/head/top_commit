@@ -1,0 +1,7 @@
+commit 72f67fb16a2470fc40c6ddc3700ba92f98a62096
+Author: Daniel Jeliński <djelinski@openjdk.org>
+Date:   Fri Nov 8 15:03:17 2024 +0000
+
+    8343411: Test fail on Windows due to "An established connection was aborted by the software in your host machine"
+    
+    Reviewed-by: dfuchs, jpai

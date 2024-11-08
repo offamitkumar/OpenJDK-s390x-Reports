@@ -1,0 +1,7 @@
+commit d2b244d8de68caf911d0639abba802ead2620b2d
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Thu Nov 7 13:40:24 2024 +0000
+
+    8340387: Update OS detection code to recognize Windows Server 2025
+    
+    Backport-of: 34cddfbedd20d5804cab8044fbc402564e98eb9c

@@ -1,0 +1,8 @@
+# newfailures.txt
+# newfailures.txt
+java/lang/Thread/virtual/MonitorEnterExit.java 
+java/util/zip/DeflateIn_InflateOut.java 
+# newfailures.txt
+# newfailures.txt
+runtime/NMT/VirtualAllocCommitMerge.java 
+# newfailures.txt
