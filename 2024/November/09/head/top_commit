@@ -1,0 +1,7 @@
+commit 2614c991d8244337dbf6a22bf296cd5eff5a7809
+Author: Quan Anh Mai <qamai@openjdk.org>
+Date:   Sat Nov 9 09:39:23 2024 +0000
+
+    8343793: Test java/foreign/TestMemorySession.java is timing out
+    
+    Reviewed-by: mcimadamore
