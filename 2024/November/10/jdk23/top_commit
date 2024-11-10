@@ -1,0 +1,7 @@
+commit 69d97e02192ae000bee41c21c24453ab43c92709
+Author: Amit Kumar <amitkumar@openjdk.org>
+Date:   Wed Nov 6 17:05:29 2024 +0000
+
+    8342962: [s390x] TestOSRLotsOfLocals.java crashes
+    
+    Backport-of: 54327bc4e38773b7461977ce17f2185c068bce9b

@@ -1,0 +1,7 @@
+commit 827528c3228705496813887f92f964310b010464
+Author: Dan Lutker <dlutker@openjdk.org>
+Date:   Fri Nov 8 18:23:05 2024 +0000
+
+    8339470: [17u] More defensive fix for 8163921
+    
+    Backport-of: 6261dd7e3827ecd65c61a3d71f4234c88f08fccd

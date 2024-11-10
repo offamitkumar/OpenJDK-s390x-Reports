@@ -1,0 +1,8 @@
+commit 423e8e0999f53aa0bf95a7505a771dab3dd5c8d6
+Author: Albert Mingkun Yang <ayang@openjdk.org>
+Date:   Sun Nov 10 11:03:03 2024 +0000
+
+    8339162: [REDO] JDK-8338440 Parallel: Improve fragmentation mitigation in Full GC
+    
+    Co-authored-by: Guoxiong Li <gli@openjdk.org>
+    Reviewed-by: zgu, iwalulya, gli

@@ -1,0 +1,9 @@
+# newfailures.txt
+# newfailures.txt
+java/lang/Thread/virtual/MonitorEnterExit.java 
+java/util/zip/DeInflate.java 
+# newfailures.txt
+# newfailures.txt
+compiler/c2/irTests/TestAutoVectorization2DArray.java 
+runtime/NMT/VirtualAllocCommitMerge.java 
+# newfailures.txt

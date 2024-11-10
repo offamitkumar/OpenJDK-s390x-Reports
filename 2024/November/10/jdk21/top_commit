@@ -1,0 +1,8 @@
+commit 582a2befafc87184a3eae51dc61ce6df6ccaf5c9
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Nov 8 11:11:03 2024 +0000
+
+    8320575: generic type information lost on mandated parameters of record's compact constructors
+    
+    Reviewed-by: mbaesken
+    Backport-of: 7bf1989f59695c3d08b4bd116fb4c022cf9661f4
