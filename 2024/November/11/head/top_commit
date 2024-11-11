@@ -1,0 +1,7 @@
+commit 80f4c0c38a57960a1c96de72af6fc69ef10337ce
+Author: Nizar Benalla <nbenalla@openjdk.org>
+Date:   Mon Nov 11 15:21:56 2024 +0000
+
+    8343442: Add since checker tests to the networking area modules
+    
+    Reviewed-by: jpai, dfuchs

@@ -1,0 +1,9 @@
+commit 9bdf2a619d1d158d6c1e8e1e1238a4229e0b0783
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Nov 11 09:48:32 2024 +0000
+
+    8341927: Replace hardcoded security providers with new test.provider.name system property
+    8343848: Fix typo of property name in TestOAEPPadding after 8341927
+    
+    Reviewed-by: lucy
+    Backport-of: 9a9ac1d0059438d33fe69ef51265dc7cff6ad2bd

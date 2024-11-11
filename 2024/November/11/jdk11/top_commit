@@ -1,0 +1,7 @@
+commit cf53387daf0d99e2d426e5e9a35e8d79b9701485
+Author: Jiří Vaněk <jvanek@openjdk.org>
+Date:   Mon Nov 11 13:53:37 2024 +0000
+
+    8342629: [11u] Properly message out that shenandoah is disabled
+    
+    Reviewed-by: andrew

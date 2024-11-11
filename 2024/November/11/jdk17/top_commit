@@ -1,0 +1,7 @@
+commit cc70a502050587351b9b60a79d63877c92bc10cc
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Nov 11 09:04:20 2024 +0000
+
+    8333317: Test sun/security/pkcs11/sslecc/ClientJSSEServerJSSE.java failed with: Invalid ECDH ServerKeyExchange signature
+    
+    Backport-of: d7c85b194dcb2c312afe18e62a87b1708d4f14bb
