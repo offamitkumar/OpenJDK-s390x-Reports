@@ -1,0 +1,7 @@
+# newfailures.txt
+# newfailures.txt
+# newfailures.txt
+# newfailures.txt
+compiler/c2/irTests/TestAutoVectorization2DArray.java 
+runtime/NMT/VirtualAllocCommitMerge.java 
+# newfailures.txt

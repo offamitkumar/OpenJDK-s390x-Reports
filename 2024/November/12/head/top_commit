@@ -1,0 +1,7 @@
+commit 2989d8734c70e1db87d2a708719fd2d966903a93
+Author: Fei Yang <fyang@openjdk.org>
+Date:   Tue Nov 12 15:26:19 2024 +0000
+
+    8343805: RISC-V: JVM crashes on startup when disabling compressed instructions
+    
+    Reviewed-by: mli
