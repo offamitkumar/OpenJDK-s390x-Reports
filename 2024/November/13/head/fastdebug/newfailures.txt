@@ -1,0 +1,8 @@
+# newfailures.txt
+# newfailures.txt
+# newfailures.txt
+jdk/jshell/ToolProviderTest.java 
+# newfailures.txt
+compiler/c2/irTests/TestAutoVectorization2DArray.java 
+runtime/NMT/VirtualAllocCommitMerge.java 
+# newfailures.txt

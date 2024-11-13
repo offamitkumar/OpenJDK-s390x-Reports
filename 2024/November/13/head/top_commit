@@ -1,0 +1,7 @@
+commit b80ca4902af71938b32634d3fd230f4d65cde454
+Author: theoweidmannoracle <theo.weidmann@oracle.com>
+Date:   Wed Nov 13 14:55:20 2024 +0000
+
+    8344124: JDK-8341411 Broke the build
+    
+    Reviewed-by: thartmann, chagedorn, epeter, jwaters
