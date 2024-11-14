@@ -1,0 +1,9 @@
+commit 8a96bf73baba57ab000a31dbdb5a5ac3756cc31d
+Author: Sidraya Jayagond <sidraya@linux.ibm.com>
+Date:   Mon Oct 14 04:44:49 2024 +0200
+
+    Disable vector instructions from string intrinsics
+    
+    Address Lutz's comments.
+    Disable vector instructions from string intrinsics will be
+    enabled once PR to JDK-8336356 gets integrates.

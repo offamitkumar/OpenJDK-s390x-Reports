@@ -1,0 +1,9 @@
+# newfailures.txt
+# newfailures.txt
+java/util/zip/CloseInflaterDeflaterTest.java 
+# newfailures.txt
+jdk/jshell/ToolProviderTest.java 
+# newfailures.txt
+compiler/c2/irTests/TestIfMinMax.java 
+runtime/NMT/VirtualAllocCommitMerge.java 
+# newfailures.txt
