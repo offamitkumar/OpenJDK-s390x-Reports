@@ -1,0 +1,7 @@
+commit c99638d35c8aea16eae244d26bc4ab8dcb080788
+Author: Andrew John Hughes <andrew@openjdk.org>
+Date:   Wed Nov 13 00:57:51 2024 +0000
+
+    8335801: [11u] Backport of 8210988 to 11u removes gcc warnings
+    
+    Reviewed-by: phh

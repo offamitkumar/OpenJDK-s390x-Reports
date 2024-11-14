@@ -1,0 +1,7 @@
+commit 22d5e0d1f8849410abe40165b58f45f5e4293884
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Nov 13 09:11:06 2024 +0000
+
+    8343474: [updates] Customize README.md to specifics of update project
+    
+    Reviewed-by: clanger, sgehwolf, andrew, aph
