@@ -1,0 +1,7 @@
+commit 40a055ebd2cdeda237108bb506126a09460de5b5
+Author: Daniel Fuchs <dfuchs@openjdk.org>
+Date:   Fri Nov 15 15:05:33 2024 +0000
+
+    8344228: Revisit SecurityManager usage in java.net.http after JEP 486 integration
+    
+    Reviewed-by: jpai

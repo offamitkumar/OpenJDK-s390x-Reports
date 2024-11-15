@@ -1,0 +1,7 @@
+commit 37c05c05c1977bcf22cdeb9d0b6c44a4fa51d7cc
+Author: Amit Kumar <amitkumar@openjdk.org>
+Date:   Wed Nov 13 10:12:53 2024 +0000
+
+    8342489: compiler/c2/irTests/TestVectorizationMismatchedAccess.java fails on big-endian platforms
+    
+    Backport-of: b6f745df5795341dab1fc049a188a9e70d563a1a
