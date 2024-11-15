@@ -1,5 +1,6 @@
 # newfailures.txt
 # newfailures.txt
+java/util/Spliterator/SpliteratorTraversingAndSplittingTest.java 
 # newfailures.txt
 # newfailures.txt
 compiler/c2/irTests/TestAutoVectorization2DArray.java 
