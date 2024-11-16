@@ -1,0 +1,7 @@
+commit d0b770c938be6b5b3a0176148265ef33184a9b8b
+Author: Eirik Bjørsnøs <eirbjo@openjdk.org>
+Date:   Sat Nov 16 13:31:06 2024 +0000
+
+    8344289: SM cleanup in jdk.internal.util
+    
+    Reviewed-by: liach, rriggs, bpb
