@@ -1,0 +1,7 @@
+commit aa10ec7c96bc50057e07fe2733079a1b3fa13a03
+Author: Prasanta Sadhukhan <psadhukhan@openjdk.org>
+Date:   Sun Nov 17 08:52:48 2024 +0000
+
+    8343123: Nimbus: javax/swing/JInternalFrame/bug6726866.java does not have green undecorated window
+    
+    Reviewed-by: tr, dnguyen
