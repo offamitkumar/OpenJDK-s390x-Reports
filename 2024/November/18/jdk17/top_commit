@@ -1,0 +1,7 @@
+commit 82a609dd7841eab66866e785ddd035b55d441970
+Author: Martin Doerr <mdoerr@openjdk.org>
+Date:   Mon Nov 18 16:25:53 2024 +0000
+
+    8343923: GHA: Switch to Xcode 15 on MacOS AArch64 runners
+    
+    Backport-of: 4c5bc5f2f091ae861d5329cdae42fe7fa295544b

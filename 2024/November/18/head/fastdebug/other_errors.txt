@@ -1,0 +1,9 @@
+# other_errors.txt
+# other_errors.txt
+java/lang/Double/ParseHexFloatingPoint.java 
+java/lang/invoke/VarHandles/VarHandleTestAccessDouble.java 
+java/lang/invoke/VarHandles/VarHandleTestAccessFloat.java 
+java/util/Locale/HashCodeShouldBeThreadSafe.java 
+# other_errors.txt
+# other_errors.txt
+# other_errors.txt

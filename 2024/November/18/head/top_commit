@@ -1,0 +1,7 @@
+commit d52d13648612546ef4458579aff6daf965586a03
+Author: Daniel Fuchs <dfuchs@openjdk.org>
+Date:   Mon Nov 18 15:17:40 2024 +0000
+
+    8344221: Remove calls to SecurityManager and and doPrivileged in java.net.IDN, java.net.URL, java.net.URLConnection, sun.net.util.URLUtil, and java.net.URLStreamHandlerProvider after JEP 486 integration
+    
+    Reviewed-by: alanb, rriggs

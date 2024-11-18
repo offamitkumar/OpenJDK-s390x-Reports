@@ -1,0 +1,22 @@
+# newfailures.txt
+# newfailures.txt
+java/lang/String/CompactString/MaxSizeUTF16String.java 
+java/lang/Thread/virtual/MonitorEnterExit.java#Xcomp-LM_LEGACY 
+java/lang/Thread/virtual/MonitorEnterExit.java#Xcomp-LM_LIGHTWEIGHT 
+java/lang/Thread/virtual/MonitorEnterExit.java#Xcomp-noTieredCompilation-LM_LEGACY 
+java/lang/Thread/virtual/MonitorEnterExit.java#Xcomp-noTieredCompilation-LM_LIGHTWEIGHT 
+java/lang/Thread/virtual/MonitorWaitNotify.java#Xcomp-LM_LEGACY 
+java/lang/Thread/virtual/MonitorWaitNotify.java#Xcomp-LM_LIGHTWEIGHT 
+java/lang/Thread/virtual/MonitorWaitNotify.java#Xcomp-noTieredCompilation-LM_LEGACY 
+java/lang/Thread/virtual/MonitorWaitNotify.java#Xcomp-noTieredCompilation-LM_LIGHTWEIGHT 
+java/lang/Thread/virtual/Parking.java#Xcomp 
+java/lang/Thread/virtual/Parking.java#Xcomp-noTieredCompilation 
+java/lang/invoke/VarHandles/VarHandleTestByteArrayAsDouble.java 
+java/lang/invoke/VarHandles/VarHandleTestByteArrayAsInt.java 
+java/lang/invoke/VarHandles/VarHandleTestByteArrayAsLong.java 
+java/util/Calendar/CalendarTestScripts/JapaneseRollTests.java 
+java/util/Calendar/CalendarTestScripts/JapaneseTests.java 
+java/util/zip/CopyZipFile.java 
+# newfailures.txt
+# newfailures.txt
+# newfailures.txt
