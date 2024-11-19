@@ -1,0 +1,9 @@
+# other_errors.txt
+# other_errors.txt
+java/lang/invoke/VarHandles/VarHandleTestAccessByte.java 
+java/lang/invoke/VarHandles/VarHandleTestAccessInt.java 
+java/util/Locale/HashCodeShouldBeThreadSafe.java 
+# other_errors.txt
+tools/javac/tree/SourceTreeScannerTest.java 
+# other_errors.txt
+# other_errors.txt

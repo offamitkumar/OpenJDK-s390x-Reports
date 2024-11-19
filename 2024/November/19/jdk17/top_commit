@@ -1,0 +1,7 @@
+commit d0949c82fd2eedc983e85fd86a9ce7d430e574a7
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Mon Nov 18 22:43:17 2024 +0000
+
+    8332935: Crash:  assert(*lastPtr != 0) failed: Mismatched JNINativeInterface tables, check for new entries
+    
+    Backport-of: 90699828478fe0a1307ad68cc0cb368fe4db890e

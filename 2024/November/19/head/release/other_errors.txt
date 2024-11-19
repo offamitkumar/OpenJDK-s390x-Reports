@@ -1,0 +1,9 @@
+# other_errors.txt
+# other_errors.txt
+java/lang/Double/ParseHexFloatingPoint.java 
+java/lang/reflect/Proxy/ProxyClassAccessTest.java 
+java/util/Locale/HashCodeShouldBeThreadSafe.java 
+# other_errors.txt
+# other_errors.txt
+runtime/cds/CDSMapTest.java 
+# other_errors.txt

@@ -1,0 +1,21 @@
+# newfailures.txt
+# newfailures.txt
+java/lang/StackWalker/LocalsAndOperands.java#id0 
+java/lang/StackWalker/LocalsAndOperands.java#id1 
+java/lang/String/CompactString/MaxSizeUTF16String.java 
+java/lang/Thread/virtual/MonitorEnterExit.java#Xcomp-LM_LEGACY 
+java/lang/Thread/virtual/MonitorEnterExit.java#Xcomp-LM_LIGHTWEIGHT 
+java/lang/Thread/virtual/MonitorEnterExit.java#Xcomp-noTieredCompilation-LM_LEGACY 
+java/lang/Thread/virtual/MonitorEnterExit.java#Xcomp-noTieredCompilation-LM_LIGHTWEIGHT 
+java/lang/Thread/virtual/MonitorWaitNotify.java#Xcomp-LM_LEGACY 
+java/lang/Thread/virtual/MonitorWaitNotify.java#Xcomp-LM_LIGHTWEIGHT 
+java/lang/Thread/virtual/MonitorWaitNotify.java#Xcomp-noTieredCompilation-LM_LEGACY 
+java/lang/Thread/virtual/MonitorWaitNotify.java#Xcomp-noTieredCompilation-LM_LIGHTWEIGHT 
+java/lang/Thread/virtual/Parking.java#Xcomp 
+java/lang/Thread/virtual/Parking.java#Xcomp-noTieredCompilation 
+java/util/Calendar/CalendarTestScripts/JapaneseRollTests.java 
+java/util/Calendar/CalendarTestScripts/JapaneseTests.java 
+# newfailures.txt
+# newfailures.txt
+runtime/exceptionMsgs/ArrayIndexOutOfBoundsException/ArrayIndexOutOfBoundsExceptionTest.java#id1 
+# newfailures.txt

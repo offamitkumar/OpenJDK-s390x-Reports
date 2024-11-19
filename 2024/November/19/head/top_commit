@@ -1,0 +1,7 @@
+commit ded01e4316a46d4c4a74d494db61d03f8591fd67
+Author: Roger Riggs <rriggs@openjdk.org>
+Date:   Tue Nov 19 15:21:02 2024 +0000
+
+    8344327: SM cleanup in jdk.unsupported ReflectionFactory
+    
+    Reviewed-by: liach, mullan, alanb
