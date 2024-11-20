@@ -1,0 +1,7 @@
+commit 73d6539e660ec35f54359a17f08a3131a65bc9b2
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Nov 20 10:06:39 2024 +0000
+
+    8328697: SubMenuShowTest and SwallowKeyEvents tests stabilization
+    
+    Backport-of: 638708cad8228f62caf633015973403164675560

@@ -1,0 +1,7 @@
+commit 75420e9314c54adc5b45f9b274a87af54dd6b5a8
+Author: Emanuel Peter <epeter@openjdk.org>
+Date:   Wed Nov 20 14:23:57 2024 +0000
+
+    8334431: C2 SuperWord: fix performance regression due to store-to-load-forwarding failures
+    
+    Reviewed-by: chagedorn, qamai

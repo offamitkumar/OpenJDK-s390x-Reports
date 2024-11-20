@@ -1,0 +1,7 @@
+commit bcc85d923fffe37546caa4a738d8fdbce745dd45
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Fri Nov 15 11:19:01 2024 +0000
+
+    8318442: java/net/httpclient/ManyRequests2.java fails intermittently on Linux
+    
+    Backport-of: 06d8216a4ef6b883119459da7e52b37d16cd2f03
