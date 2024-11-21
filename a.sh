@@ -1,117 +1,108 @@
 #!/bin/bash
 
 # Get the current year, month, and day
-year=$(date +%Y)
-month=$(date +%B)
-day=$(date +%d)
-directory_path="/home/amit/OpenJDK-s390x-Reports/$year/$month/$day"
+#year=$(date +%Y)
+#month=$(date +%B)
+#day=$(date +%d)
+daily_builds="daily_builds"
+directory_path="/home/amit/OpenJDK-s390x-Reports/$daily_builds"
 
 # helper methods
 git_setup() {
   # Check if the branch exists in the remote or locally
-  if git show-ref --verify --quiet refs/heads/"$year"; then
-    git switch $year
-    echo "Branch '$year' already exists."
+  if git show-ref --verify --quiet refs/heads/"$daily_builds"; then
+    git switch $daily_builds
+    echo "Branch '$daily_builds' already exists."
   else
     # Create and switch to the new branch
-    git checkout -b "$year"
-    echo "Branch '$year' created and checked out."
+    git checkout -b "$daily_builds"
+    echo "Branch '$daily_builds' created and checked out."
   fi
 }
 
-set_directories() {
-  # Check if the year directory exists
-  if [ ! -d "$year" ]; then
-    mkdir "$year"
+set_directories_head() {
+
+  if [ ! -d "$daily_builds" ]; then
+    mkdir "$daily_builds"
   fi
 
-  # Check if the month directory inside the year directory exists
-  if [ ! -d "$year/$month" ]; then
-    mkdir "$year/$month"
+  if [ ! -d "$daily_builds/head" ]; then
+    mkdir "$daily_builds/head"
   fi
 
-  # Check if the day directory inside the month directory exists
-  if [ ! -d "$year/$month/$day" ]; then
-    mkdir "$year/$month/$day"
+  if [ ! -d "$daily_builds/head/fastdebug" ]; then
+    mkdir "$daily_builds/head/fastdebug"
   fi
 
-  if [ ! -d "$year/$month/$day/head" ]; then
-    mkdir "$year/$month/$day/head"
-  fi
-
-  if [ ! -d "$year/$month/$day/head/fastdebug" ]; then
-    mkdir "$year/$month/$day/head/fastdebug"
-  fi
-
-  if [ ! -d "$year/$month/$day/head/release" ]; then
-    mkdir "$year/$month/$day/head/release"
+  if [ ! -d "$daily_builds/head/release" ]; then
+    mkdir "$daily_builds/head/release"
   fi
 }
 
 set_directories_jdk21() {
 
-    if [ ! -d "$year/$month/$day/jdk21" ]; then
-      mkdir "$year/$month/$day/jdk21"
+    if [ ! -d "$daily_builds/jdk21" ]; then
+      mkdir "$daily_builds/jdk21"
     fi
 
-    if [ ! -d "$year/$month/$day/jdk21/fastdebug" ]; then
-      mkdir "$year/$month/$day/jdk21/fastdebug"
+    if [ ! -d "$daily_builds/jdk21/fastdebug" ]; then
+      mkdir "$daily_builds/jdk21/fastdebug"
     fi
 
-    if [ ! -d "$year/$month/$day/jdk21/release" ]; then
-      mkdir "$year/$month/$day/jdk21/release"
+    if [ ! -d "$daily_builds/jdk21/release" ]; then
+      mkdir "$daily_builds/jdk21/release"
     fi
 }
 
 set_directories_jdk23() {
 
-    if [ ! -d "$year/$month/$day/jdk23" ]; then
-      mkdir "$year/$month/$day/jdk23"
+    if [ ! -d "$daily_builds/jdk23" ]; then
+      mkdir "$daily_builds/jdk23"
     fi
 
-    if [ ! -d "$year/$month/$day/jdk23/fastdebug" ]; then
-      mkdir "$year/$month/$day/jdk23/fastdebug"
+    if [ ! -d "$daily_builds/jdk23/fastdebug" ]; then
+      mkdir "$daily_builds/jdk23/fastdebug"
     fi
 
-    if [ ! -d "$year/$month/$day/jdk23/release" ]; then
-      mkdir "$year/$month/$day/jdk23/release"
+    if [ ! -d "$daily_builds/jdk23/release" ]; then
+      mkdir "$daily_builds/jdk23/release"
     fi
 }
 
 set_directories_jdk17() {
 
-    if [ ! -d "$year/$month/$day/jdk17" ]; then
-      mkdir "$year/$month/$day/jdk17"
+    if [ ! -d "$daily_builds/jdk17" ]; then
+      mkdir "$daily_builds/jdk17"
     fi
 
-    if [ ! -d "$year/$month/$day/jdk17/fastdebug" ]; then
-      mkdir "$year/$month/$day/jdk17/fastdebug"
+    if [ ! -d "$daily_builds/jdk17/fastdebug" ]; then
+      mkdir "$daily_builds/jdk17/fastdebug"
     fi
 
-    if [ ! -d "$year/$month/$day/jdk17/release" ]; then
-      mkdir "$year/$month/$day/jdk17/release"
+    if [ ! -d "$daily_builds/jdk17/release" ]; then
+      mkdir "$daily_builds/jdk17/release"
     fi
 }
 
 set_directories_jdk11() {
 
-    if [ ! -d "$year/$month/$day/jdk11" ]; then
-      mkdir "$year/$month/$day/jdk11"
+    if [ ! -d "$daily_builds/jdk11" ]; then
+      mkdir "$daily_builds/jdk11"
     fi
 
-    if [ ! -d "$year/$month/$day/jdk11/fastdebug" ]; then
-      mkdir "$year/$month/$day/jdk11/fastdebug"
+    if [ ! -d "$daily_builds/jdk11/fastdebug" ]; then
+      mkdir "$daily_builds/jdk11/fastdebug"
     fi
 
-    if [ ! -d "$year/$month/$day/jdk11/release" ]; then
-      mkdir "$year/$month/$day/jdk11/release"
+    if [ ! -d "$daily_builds/jdk11/release" ]; then
+      mkdir "$daily_builds/jdk11/release"
     fi
 }
 
 git_exit() {
   git add .
   git commit -m "$(date)"
-  git push --set-upstream origin $year
+  git push --set-upstream origin $daily_builds
 }
 
 jdk_fastdebug() {
@@ -147,7 +138,7 @@ jdk_fastdebug() {
   cat $(find build/linux-s390x-server-fastdebug/ -name newfailures.txt) > $directory_path/head/fastdebug/newfailures.txt
 
   cat $(find build/linux-s390x-server-fastdebug/ -name other_errors.txt) > $directory_path/head/fastdebug/other_errors.txt
-    #More test run with different JTREG Options
+  #More test run with different JTREG Options
 
 }
 
@@ -533,7 +524,7 @@ build_test_jdk11() {
 
 # usage
 git_setup
-set_directories
+set_directories_head
 build_test_jdk_head
 set_directories_jdk21
 build_test_jdk21
