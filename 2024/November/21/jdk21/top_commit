@@ -1,0 +1,7 @@
+commit 4bbc29cf9c98dc286e6069701d580fcc084cb792
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Nov 21 09:06:43 2024 +0000
+
+    8319678: Several tests from corelibs areas ignore VM flags
+    
+    Backport-of: 2e3682a7f2983cd58b9564253dc698760faba4b8

@@ -1,0 +1,9 @@
+# newfailures.txt
+# newfailures.txt
+java/lang/invoke/PrivateInvokeTest.java 
+java/util/zip/CloseInflaterDeflaterTest.java 
+# newfailures.txt
+# newfailures.txt
+compiler/c2/irTests/TestAutoVectorization2DArray.java 
+runtime/ErrorHandling/TestDwarf.java#dontCheckDecoder 
+# newfailures.txt

@@ -1,0 +1,7 @@
+commit dcac5eb061d65dddaa5a7eb88bb70ea088887f52
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Nov 21 09:13:19 2024 +0000
+
+    8328619: sun/management/jmxremote/bootstrap/SSLConfigFilePermissionTest.java failed with BindException: Address already in use
+    
+    Backport-of: 2af0312c958e693b1377f4c014ae8f84cabf6b83

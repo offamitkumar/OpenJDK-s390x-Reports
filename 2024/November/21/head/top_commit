@@ -1,0 +1,7 @@
+commit 882d6358074135b2c4fe21b32bd73f40022980bc
+Author: Artur Barashev <abarashev@openjdk.org>
+Date:   Thu Nov 21 14:14:30 2024 +0000
+
+    8245545: Disable TLS_RSA cipher suites
+    
+    Reviewed-by: mullan
