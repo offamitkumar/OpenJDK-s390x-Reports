@@ -1,0 +1,5 @@
+commit 1c0766a669182419b22753c227c02461426dff78
+Author: Andrew Dinn <adinn@redhat.com>
+Date:   Tue Nov 19 16:29:52 2024 +0000
+
+    locate super lookup stubs in same blob for all arches

@@ -1,0 +1,7 @@
+commit 7105bb98cf8797082d2b61f0e08a4e5ba0bae8ac
+Author: Phil Race <prr@openjdk.org>
+Date:   Thu Nov 21 04:22:27 2024 +0000
+
+    8344664: Remove some un-used java/sun.security imports in the java.desktop module
+    
+    Reviewed-by: iris
