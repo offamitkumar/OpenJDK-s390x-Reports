@@ -9,6 +9,8 @@ directory_path="/home/amit/OpenJDK-s390x-Reports/$daily_builds"
 
 # helper methods
 git_setup() {
+  git switch main
+  git pull
   # Check if the branch exists in the remote or locally
   if git show-ref --verify --quiet refs/heads/"$daily_builds"; then
     git switch $daily_builds
@@ -103,6 +105,7 @@ git_exit() {
   git add .
   git commit -m "$(date)"
   git push --set-upstream origin $daily_builds
+  git switch main # switch back to main
 }
 
 jdk_fastdebug() {
