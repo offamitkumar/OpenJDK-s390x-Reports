@@ -1,0 +1,7 @@
+commit a44a35e2c33f01f9feb4ffad417ced12c029d4e0
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Nov 22 10:12:31 2024 +0000
+
+    8342181: Update tests to use stronger Key and Salt size
+    
+    Backport-of: d81d3015610b2468a954185d15d898ca64f51583

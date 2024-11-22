@@ -1,7 +1,7 @@
-commit 7105bb98cf8797082d2b61f0e08a4e5ba0bae8ac
-Author: Phil Race <prr@openjdk.org>
-Date:   Thu Nov 21 04:22:27 2024 +0000
+commit 6d3becb486ab38c9c2d2a6fbc428bf794375317c
+Author: Tobias Hartmann <thartmann@openjdk.org>
+Date:   Fri Nov 22 14:48:39 2024 +0000
 
-    8344664: Remove some un-used java/sun.security imports in the java.desktop module
+    8344861: Disable CheckJNICalls in tests until JDK-8344802 is fixed
     
-    Reviewed-by: iris
+    Reviewed-by: coleenp
