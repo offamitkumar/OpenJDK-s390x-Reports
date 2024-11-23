@@ -1,7 +1,8 @@
-commit a44a35e2c33f01f9feb4ffad417ced12c029d4e0
+commit fbc040cf8a17fc8de15b8771765441b86a8169ae
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Nov 22 10:12:31 2024 +0000
+Date:   Sat Nov 23 13:52:15 2024 +0000
 
-    8342181: Update tests to use stronger Key and Salt size
+    8339637: (tz) Update Timezone Data to 2024b
     
-    Backport-of: d81d3015610b2468a954185d15d898ca64f51583
+    Reviewed-by: andrew
+    Backport-of: add7934bb57ce0e1030061c8e551eaae6a6f7fee

@@ -1,7 +1,7 @@
-commit 6d3becb486ab38c9c2d2a6fbc428bf794375317c
-Author: Tobias Hartmann <thartmann@openjdk.org>
-Date:   Fri Nov 22 14:48:39 2024 +0000
+commit d00f31156a9ab9efcee492dfd0aaed1515df1f00
+Author: Jaikiran Pai <jpai@openjdk.org>
+Date:   Sat Nov 23 07:26:04 2024 +0000
 
-    8344861: Disable CheckJNICalls in tests until JDK-8344802 is fixed
+    8343150: Change URLClassLoader.getPermissions to return empty PermissionCollection
     
-    Reviewed-by: coleenp
+    Reviewed-by: dfuchs, alanb, michaelm
