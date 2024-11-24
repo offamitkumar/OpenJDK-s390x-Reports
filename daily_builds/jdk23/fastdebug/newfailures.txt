@@ -3,6 +3,7 @@
 java/lang/invoke/PrivateInvokeTest.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
 # newfailures.txt
+jdk/jshell/ToolProviderTest.java 
 # newfailures.txt
 compiler/c2/irTests/TestAutoVectorization2DArray.java 
 runtime/NMT/VirtualAllocCommitMerge.java 

@@ -1,7 +1,7 @@
-commit d00f31156a9ab9efcee492dfd0aaed1515df1f00
-Author: Jaikiran Pai <jpai@openjdk.org>
-Date:   Sat Nov 23 07:26:04 2024 +0000
+commit 6711e1327a76782c8315b9e85525e1408657727b
+Author: Damon Nguyen <dnguyen@openjdk.org>
+Date:   Sun Nov 24 08:54:17 2024 +0000
 
-    8343150: Change URLClassLoader.getPermissions to return empty PermissionCollection
+    8344914: OOME in several tests since JDK-6672644 - JComboBox still scrolling
     
-    Reviewed-by: dfuchs, alanb, michaelm
+    Reviewed-by: prr
