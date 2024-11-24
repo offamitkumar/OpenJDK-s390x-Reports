@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # Get the current year, month, and day
-year=$(date +%Y)
-month=$(date +%B)
-day=$(date +%d)
+#year=$(date +%Y)
+#month=$(date +%B)
+#day=$(date +%d)
 daily_builds="daily_builds"
 directory_path="/home/amit/OpenJDK-s390x-Reports/$daily_builds"
 
 # helper methods
 git_setup() {
+  git switch main
+  git pull
   # Check if the branch exists in the remote or locally
   if git show-ref --verify --quiet refs/heads/"$daily_builds"; then
     git switch $daily_builds
@@ -103,6 +105,7 @@ git_exit() {
   git add .
   git commit -m "$(date)"
   git push --set-upstream origin $daily_builds
+  git switch main # switch back to main
 }
 
 jdk_fastdebug() {
@@ -131,14 +134,14 @@ jdk_fastdebug() {
 
   cp build/linux-s390x-server-fastdebug/build.log  $directory_path/head/fastdebug/
 
-#  make run-test-tier1;
-#
-#  cp build/linux-s390x-server-fastdebug/test-results/test-summary.txt $directory_path/head/fastdebug
-#
-#  cat $(find build/linux-s390x-server-fastdebug/ -name newfailures.txt) > $directory_path/head/fastdebug/newfailures.txt
-#
-#  cat $(find build/linux-s390x-server-fastdebug/ -name other_errors.txt) > $directory_path/head/fastdebug/other_errors.txt
-#    #More test run with different JTREG Options
+  make run-test-tier1;
+
+  cp build/linux-s390x-server-fastdebug/test-results/test-summary.txt $directory_path/head/fastdebug
+
+  cat $(find build/linux-s390x-server-fastdebug/ -name newfailures.txt) > $directory_path/head/fastdebug/newfailures.txt
+
+  cat $(find build/linux-s390x-server-fastdebug/ -name other_errors.txt) > $directory_path/head/fastdebug/other_errors.txt
+  #More test run with different JTREG Options
 
 }
 
@@ -313,13 +316,13 @@ jdk_release() {
 
   cp build/linux-s390x-server-release/build.log  $directory_path/head/release/
 
-#  make run-test-tier1;
-#
-#  cp build/linux-s390x-server-release/test-results/test-summary.txt $directory_path/head/release/
-#
-#  cat $(find build/linux-s390x-server-release/ -name newfailures.txt) > $directory_path/head/release/newfailures.txt
-#
-#  cat $(find build/linux-s390x-server-release/ -name other_errors.txt) > $directory_path/head/release/other_errors.txt
+  make run-test-tier1;
+
+  cp build/linux-s390x-server-release/test-results/test-summary.txt $directory_path/head/release/
+
+  cat $(find build/linux-s390x-server-release/ -name newfailures.txt) > $directory_path/head/release/newfailures.txt
+
+  cat $(find build/linux-s390x-server-release/ -name other_errors.txt) > $directory_path/head/release/other_errors.txt
 
   #More test run with different JTREG Options
 }
@@ -526,12 +529,12 @@ build_test_jdk11() {
 git_setup
 set_directories_head
 build_test_jdk_head
-#set_directories_jdk21
-#build_test_jdk21
-#set_directories_jdk17
-#build_test_jdk17
-#set_directories_jdk23
-#build_test_jdk23
-#set_directories_jdk11
-#build_test_jdk11
+set_directories_jdk21
+build_test_jdk21
+set_directories_jdk17
+build_test_jdk17
+set_directories_jdk23
+build_test_jdk23
+set_directories_jdk11
+build_test_jdk11
 git_exit #adds all the changes and do a git push
