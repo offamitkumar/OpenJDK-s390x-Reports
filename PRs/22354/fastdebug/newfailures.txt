@@ -1,0 +1,7 @@
+# newfailures.txt
+# newfailures.txt
+sun/nio/cs/ISO8859x.java 
+# newfailures.txt
+# newfailures.txt
+compiler/intrinsics/string/TestEncodeIntrinsics.java 
+# newfailures.txt
