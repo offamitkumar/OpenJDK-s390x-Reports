@@ -1,8 +1,5 @@
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
-jdk/javadoc/doclet/testSpecTag/TestSpecTag.java 
-tools/javac/api/T6306137.java 
 # newfailures.txt
-compiler/intrinsics/string/TestEncodeIntrinsics.java 
 # newfailures.txt
