@@ -1,0 +1,7 @@
+commit 0d6b6b331fb8ae010e2f02e1c55cc611cc25a49e
+Author: SendaoYan <syan@openjdk.org>
+Date:   Mon Nov 25 14:56:58 2024 +0000
+
+    8343877: Test AsyncClose.java intermittent fails - Socket.getInputStream().read() wasn't preempted
+    
+    Backport-of: 752e1629555f0ec8630373ec87b049afdd709ea6

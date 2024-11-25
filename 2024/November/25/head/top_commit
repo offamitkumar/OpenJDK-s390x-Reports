@@ -1,0 +1,7 @@
+commit 4110d3925c8bfc3256b01d835faa111c2c21b8db
+Author: Roger Riggs <rriggs@openjdk.org>
+Date:   Mon Nov 25 14:34:27 2024 +0000
+
+    8344865: SM cleanup in sun/reflect/annotation
+    
+    Reviewed-by: liach, jpai
