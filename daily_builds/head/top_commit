@@ -1,7 +1,7 @@
-commit 6711e1327a76782c8315b9e85525e1408657727b
-Author: Damon Nguyen <dnguyen@openjdk.org>
-Date:   Sun Nov 24 08:54:17 2024 +0000
+commit c329f97f3211bc14aa4211461bb9a7abb073296e
+Author: Marc R. Hoffmann <marchof@openjdk.org>
+Date:   Tue Nov 26 15:09:49 2024 +0000
 
-    8344914: OOME in several tests since JDK-6672644 - JComboBox still scrolling
+    8345015: Remove unused method lookup_time_t_function
     
-    Reviewed-by: prr
+    Reviewed-by: alanb

@@ -1,7 +1,7 @@
-commit 37c05c05c1977bcf22cdeb9d0b6c44a4fa51d7cc
-Author: Amit Kumar <amitkumar@openjdk.org>
-Date:   Wed Nov 13 10:12:53 2024 +0000
+commit d620426835a15fe75c42758567a7dab4ef0eb772
+Author: Axel Boldt-Christmas <aboldtch@openjdk.org>
+Date:   Tue Nov 26 09:41:34 2024 +0000
 
-    8342489: compiler/c2/irTests/TestVectorizationMismatchedAccess.java fails on big-endian platforms
+    8340586: JdkJfrEvent::get_all_klasses stores non-strong oops in JNI handles
     
-    Backport-of: b6f745df5795341dab1fc049a188a9e70d563a1a
+    Backport-of: 97b681e93a9469d8d16122dc10bbf2f5b5fe2266
