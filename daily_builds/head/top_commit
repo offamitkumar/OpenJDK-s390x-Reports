@@ -1,7 +1,7 @@
-commit c329f97f3211bc14aa4211461bb9a7abb073296e
-Author: Marc R. Hoffmann <marchof@openjdk.org>
-Date:   Tue Nov 26 15:09:49 2024 +0000
+commit ac3bbf7ddc1f6a55682264d66282e6ee8825f47a
+Author: Volkan Yazıcı <volkan.yazici@oracle.com>
+Date:   Wed Nov 27 13:49:51 2024 +0000
 
-    8345015: Remove unused method lookup_time_t_function
+    8344856: Remove calls to SecurityManager and doPrivileged in sun.net.www.protocol.ftp.FtpURLConnection after JEP 486 integration
     
-    Reviewed-by: alanb
+    Reviewed-by: dfuchs
