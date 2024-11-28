@@ -2,7 +2,6 @@
 # newfailures.txt
 java/lang/invoke/PrivateInvokeTest.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
-java/util/zip/DeflateIn_InflateOut.java 
 # newfailures.txt
 # newfailures.txt
 compiler/c2/irTests/TestAutoVectorization2DArray.java 

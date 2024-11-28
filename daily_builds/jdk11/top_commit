@@ -1,8 +1,8 @@
-commit 2155f8d22a5e34d9b9386485b2a6a1c2bdf8b52c
-Author: Antonio Vieiro <avieirov@redhat.com>
-Date:   Wed Nov 27 14:54:06 2024 +0000
+commit 874b25e64174ba64efec9b61229f3f610133270a
+Author: RadekCap <rcap@redhat.com>
+Date:   Wed Nov 27 22:22:24 2024 +0000
 
-    8339803: Acknowledge case insensitive unambiguous keywords in tzdata files
+    8339637: (tz) Update Timezone Data to 2024b
     
     Reviewed-by: andrew
-    Backport-of: 0d7b2729e4f4c0fec2dcfea65a0834732a408ee4
+    Backport-of: fbc040cf8a17fc8de15b8771765441b86a8169ae

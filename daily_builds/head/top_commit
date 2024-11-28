@@ -1,7 +1,7 @@
-commit ac3bbf7ddc1f6a55682264d66282e6ee8825f47a
-Author: Volkan Yazıcı <volkan.yazici@oracle.com>
-Date:   Wed Nov 27 13:49:51 2024 +0000
+commit 3b21a298c29d88720f6bfb2dc1f3305b6a3db307
+Author: Daniel Fuchs <dfuchs@openjdk.org>
+Date:   Thu Nov 28 14:17:15 2024 +0000
 
-    8344856: Remove calls to SecurityManager and doPrivileged in sun.net.www.protocol.ftp.FtpURLConnection after JEP 486 integration
+    8345175: Further cleanup in java.logging and jdk.internal.logger after JEP 486 integration
     
-    Reviewed-by: dfuchs
+    Reviewed-by: alanb, coffeys

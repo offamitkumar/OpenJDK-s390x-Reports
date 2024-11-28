@@ -1,7 +1,8 @@
-commit 0d6b6b331fb8ae010e2f02e1c55cc611cc25a49e
-Author: SendaoYan <syan@openjdk.org>
-Date:   Mon Nov 25 14:56:58 2024 +0000
+commit d70ea492436514ac79fd723578e5e5bae5c18866
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Thu Nov 28 09:33:57 2024 +0000
 
-    8343877: Test AsyncClose.java intermittent fails - Socket.getInputStream().read() wasn't preempted
+    8340552: Harden TzdbZoneRulesCompiler against missing zone names
     
-    Backport-of: 752e1629555f0ec8630373ec87b049afdd709ea6
+    Reviewed-by: andrew
+    Backport-of: bc4abb4379ced7ddfb3d173d2dfc669a4b11d12f
