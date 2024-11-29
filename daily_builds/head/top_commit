@@ -1,7 +1,9 @@
-commit 3b21a298c29d88720f6bfb2dc1f3305b6a3db307
-Author: Daniel Fuchs <dfuchs@openjdk.org>
-Date:   Thu Nov 28 14:17:15 2024 +0000
+commit a80ccf2cd2792c24b51f1143cb0e6c5b036c5b28
+Author: Tobias Holenstein <tholenstein@openjdk.org>
+Date:   Fri Nov 29 15:21:39 2024 +0000
 
-    8345175: Further cleanup in java.logging and jdk.internal.logger after JEP 486 integration
+    8345039: IGV: save user-defined node colors to XML
     
-    Reviewed-by: alanb, coffeys
+    Co-authored-by: Roberto Castañeda Lozano <rcastanedalo@openjdk.org>
+    Co-authored-by: Christian Hagedorn <chagedorn@openjdk.org>
+    Reviewed-by: chagedorn, epeter, rcastanedalo

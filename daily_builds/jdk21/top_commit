@@ -1,7 +1,7 @@
-commit 5ac01dec3617efd6e51ea3256cba31c741336c13
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Thu Nov 28 13:37:28 2024 +0000
+commit 046c4aa16167134d1614be81a375d2d86e44077a
+Author: Saint Wesonga <saint.wesonga@microsoft.com>
+Date:   Thu Nov 28 21:05:44 2024 +0000
 
-    8345055: [21u] ProblemList failing rtm tests on ppc platforms
+    8334475: UnsafeIntrinsicsTest.java#ZGenerationalDebug assert(!assert_on_failure) failed: Has low-order bits set
     
-    Reviewed-by: mdoerr
+    Backport-of: 7f189a59d9ad803aee72565bc46a817d3f46f2e5

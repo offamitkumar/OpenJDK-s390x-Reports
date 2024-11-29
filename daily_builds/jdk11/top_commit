@@ -1,8 +1,8 @@
-commit 874b25e64174ba64efec9b61229f3f610133270a
-Author: RadekCap <rcap@redhat.com>
-Date:   Wed Nov 27 22:22:24 2024 +0000
+commit 1c80800a26fee6b1760b63bcfae672e232c639f7
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Fri Nov 29 11:48:25 2024 +0000
 
-    8339637: (tz) Update Timezone Data to 2024b
+    8340552: Harden TzdbZoneRulesCompiler against missing zone names
     
     Reviewed-by: andrew
-    Backport-of: fbc040cf8a17fc8de15b8771765441b86a8169ae
+    Backport-of: d70ea492436514ac79fd723578e5e5bae5c18866
