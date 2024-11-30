@@ -1,9 +1,12 @@
-commit a80ccf2cd2792c24b51f1143cb0e6c5b036c5b28
-Author: Tobias Holenstein <tholenstein@openjdk.org>
-Date:   Fri Nov 29 15:21:39 2024 +0000
+commit 28ae281b42cd00f471e275db544a5d23a42df59c
+Author: William Kemper <wkemper@openjdk.org>
+Date:   Fri Nov 29 20:53:07 2024 +0000
 
-    8345039: IGV: save user-defined node colors to XML
+    8337511: Implement JEP 404: Generational Shenandoah (Experimental)
     
-    Co-authored-by: Roberto Castañeda Lozano <rcastanedalo@openjdk.org>
-    Co-authored-by: Christian Hagedorn <chagedorn@openjdk.org>
-    Reviewed-by: chagedorn, epeter, rcastanedalo
+    Co-authored-by: Kelvin Nilsen <kdnilsen@openjdk.org>
+    Co-authored-by: Y. Srinivas Ramakrishna <ysr@openjdk.org>
+    Co-authored-by: Bernd Mathiske <bmathiske@openjdk.org>
+    Co-authored-by: Martin Doerr <mdoerr@openjdk.org>
+    Co-authored-by: Fei Yang <fyang@openjdk.org>
+    Reviewed-by: rkennke, shade, phh
