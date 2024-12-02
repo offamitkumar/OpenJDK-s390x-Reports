@@ -1,7 +1,8 @@
-commit 046c4aa16167134d1614be81a375d2d86e44077a
-Author: Saint Wesonga <saint.wesonga@microsoft.com>
-Date:   Thu Nov 28 21:05:44 2024 +0000
+commit d383ba546ca749d21ad39288e47335135e7b2142
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Dec 2 15:52:28 2024 +0000
 
-    8334475: UnsafeIntrinsicsTest.java#ZGenerationalDebug assert(!assert_on_failure) failed: Has low-order bits set
+    8322809: SystemModulesMap::classNames and moduleNames arrays do not match the order
     
-    Backport-of: 7f189a59d9ad803aee72565bc46a817d3f46f2e5
+    Reviewed-by: sgehwolf, mbaesken
+    Backport-of: f3be138eb80c9e7f6cc21afb75cda9e49b667c8a

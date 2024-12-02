@@ -1,8 +1,7 @@
-commit d70ea492436514ac79fd723578e5e5bae5c18866
-Author: Antonio Vieiro <avieirov@redhat.com>
-Date:   Thu Nov 28 09:33:57 2024 +0000
+commit 20927ac8405b4adca463e4c691ea573abdac1c4f
+Author: RadekCap <rcap@redhat.com>
+Date:   Mon Dec 2 14:22:51 2024 +0000
 
-    8340552: Harden TzdbZoneRulesCompiler against missing zone names
+    8331863: DUIterator_Fast used before it is constructed
     
-    Reviewed-by: andrew
-    Backport-of: bc4abb4379ced7ddfb3d173d2dfc669a4b11d12f
+    Backport-of: d13f75c9ef000b05442f9f468b2f45df9a8450cf

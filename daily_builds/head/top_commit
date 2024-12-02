@@ -1,7 +1,7 @@
-commit 50b4cbd8a4159a8657f4525e4023f3a498020493
-Author: Amit Kumar <amitkumar@openjdk.org>
-Date:   Sun Dec 1 13:55:47 2024 +0000
+commit 30b8bbe255c1653d25961c3fe79096b2b8d62bd6
+Author: Sean Mullan <mullan@openjdk.org>
+Date:   Mon Dec 2 15:23:47 2024 +0000
 
-    8345102: [s390x/ppc] ShowRegistersOnAssertTest.java fails after 8343756
+    8345060: Remove Security Manager dependencies from java.security.KeyStore and Identity APIs and implementations
     
-    Reviewed-by: mdoerr, mbaesken
+    Reviewed-by: hchao, alanb, weijun
