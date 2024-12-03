@@ -1,7 +1,7 @@
-commit 30b8bbe255c1653d25961c3fe79096b2b8d62bd6
-Author: Sean Mullan <mullan@openjdk.org>
-Date:   Mon Dec 2 15:23:47 2024 +0000
+commit caf053b3ad53e4ce86d07adee6d71ea1ff3e8965
+Author: Alexey Ivanov <aivanov@openjdk.org>
+Date:   Tue Dec 3 15:05:13 2024 +0000
 
-    8345060: Remove Security Manager dependencies from java.security.KeyStore and Identity APIs and implementations
+    8337287: Update image in javax.swing.text.Document.insert
     
-    Reviewed-by: hchao, alanb, weijun
+    Reviewed-by: serb, prr, abhiscxk

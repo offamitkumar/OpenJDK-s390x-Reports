@@ -1,7 +1,7 @@
-commit 20927ac8405b4adca463e4c691ea573abdac1c4f
-Author: RadekCap <rcap@redhat.com>
-Date:   Mon Dec 2 14:22:51 2024 +0000
+commit f23d6bf3f74d9221124e31e69691af891ecb3309
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Dec 3 09:11:09 2024 +0000
 
-    8331863: DUIterator_Fast used before it is constructed
+    8339892: Several security shell tests don't set TESTJAVAOPTS
     
-    Backport-of: d13f75c9ef000b05442f9f468b2f45df9a8450cf
+    Backport-of: 8a2a75e56de4497da48f43b3be3eb71bf3ef75ab
