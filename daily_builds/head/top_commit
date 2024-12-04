@@ -1,7 +1,7 @@
-commit caf053b3ad53e4ce86d07adee6d71ea1ff3e8965
-Author: Alexey Ivanov <aivanov@openjdk.org>
-Date:   Tue Dec 3 15:05:13 2024 +0000
+commit 6c1ed0bb6912d8085b98f50b7bdbb467369f3992
+Author: Aggelos Biboudis <abimpoudis@openjdk.org>
+Date:   Wed Dec 4 14:32:47 2024 +0000
 
-    8337287: Update image in javax.swing.text.Document.insert
+    8345474: Translation for instanceof is not triggered when patterns are not used in the compilation unit
     
-    Reviewed-by: serb, prr, abhiscxk
+    Reviewed-by: mcimadamore

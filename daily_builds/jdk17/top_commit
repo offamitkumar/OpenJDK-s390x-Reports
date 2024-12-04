@@ -1,7 +1,10 @@
-commit f23d6bf3f74d9221124e31e69691af891ecb3309
+commit ed63b718fe5b4e9f77154f6015516762800d13d6
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Dec 3 09:11:09 2024 +0000
+Date:   Wed Dec 4 07:50:37 2024 +0000
 
-    8339892: Several security shell tests don't set TESTJAVAOPTS
+    8308341: JNI_GetCreatedJavaVMs returns a partially initialized JVM
+    8309231: ProblemList vmTestbase/nsk/jvmti/scenarios/jni_interception/JI05/ji05t001/TestDescription.java
+    8309171: Test vmTestbase/nsk/jvmti/scenarios/jni_interception/JI05/ji05t001/TestDescription.java fails after JDK-8308341
     
-    Backport-of: 8a2a75e56de4497da48f43b3be3eb71bf3ef75ab
+    Reviewed-by: phh
+    Backport-of: 1e6770fb978e630b38a70a05120c50f723bb66dc

@@ -1,7 +1,7 @@
-commit 96a3a88ee206680ba06c6ed876b538de41ff511c
-Author: Martin Balao <mbalao@openjdk.org>
-Date:   Tue Dec 3 15:25:26 2024 +0000
+commit 71bf10ed8c012d9b202ef82bdd0bc0af585125e9
+Author: Richard Reingruber <rrich@openjdk.org>
+Date:   Wed Dec 4 16:24:38 2024 +0000
 
-    8344993: [21u] [REDO] Backport JDK-8327501 and JDK-8328366 to JDK 21
+    8341862: PPC64: C1 unwind_handler fails to unlock synchronized methods with LM_MONITOR
     
-    Reviewed-by: sgehwolf
+    Backport-of: ed6809666b12b0de66f68d5e7e389dde1708aaf3
