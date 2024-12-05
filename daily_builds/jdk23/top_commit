@@ -1,7 +1,7 @@
-commit d620426835a15fe75c42758567a7dab4ef0eb772
-Author: Axel Boldt-Christmas <aboldtch@openjdk.org>
-Date:   Tue Nov 26 09:41:34 2024 +0000
+commit 9101cc14972ce6bdeb966e67bcacc8b693c37d0a
+Author: Amit Kumar <amitkumar@openjdk.org>
+Date:   Wed Dec 4 23:38:37 2024 +0000
 
-    8340586: JdkJfrEvent::get_all_klasses stores non-strong oops in JNI handles
+    8336012: Fix usages of jtreg-reserved properties
     
-    Backport-of: 97b681e93a9469d8d16122dc10bbf2f5b5fe2266
+    Backport-of: e6c5aa7a6cb54c647d261facdcffa6a410849627

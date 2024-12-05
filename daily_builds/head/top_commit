@@ -1,7 +1,7 @@
-commit 6c1ed0bb6912d8085b98f50b7bdbb467369f3992
-Author: Aggelos Biboudis <abimpoudis@openjdk.org>
-Date:   Wed Dec 4 14:32:47 2024 +0000
+commit 7513b1378de4fc2270d8e144a9c3b75859e6fe5f
+Author: Gerard Ziemski <gziemski@openjdk.org>
+Date:   Thu Dec 5 15:28:30 2024 +0000
 
-    8345474: Translation for instanceof is not triggered when patterns are not used in the compilation unit
+    8328944: NMT reports "unknown" memory
     
-    Reviewed-by: mcimadamore
+    Reviewed-by: jsjolen, coleenp

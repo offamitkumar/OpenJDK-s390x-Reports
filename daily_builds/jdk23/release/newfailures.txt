@@ -1,10 +1,6 @@
 # newfailures.txt
 # newfailures.txt
-java/lang/invoke/PrivateInvokeTest.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
-java/util/zip/CopyZipFile.java 
 # newfailures.txt
 # newfailures.txt
-runtime/NMT/VirtualAllocCommitMerge.java 
-runtime/locking/TestRecursiveMonitorChurn.java 
 # newfailures.txt
