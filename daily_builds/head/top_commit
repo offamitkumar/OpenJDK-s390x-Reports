@@ -1,7 +1,7 @@
-commit 7513b1378de4fc2270d8e144a9c3b75859e6fe5f
-Author: Gerard Ziemski <gziemski@openjdk.org>
-Date:   Thu Dec 5 15:28:30 2024 +0000
+commit 496641955041c5e48359e6256a4a61812653d900
+Author: Chen Liang <liach@openjdk.org>
+Date:   Fri Dec 6 14:25:03 2024 +0000
 
-    8328944: NMT reports "unknown" memory
+    8334733: Remove obsolete @enablePreview from tests after JDK-8334714
     
-    Reviewed-by: jsjolen, coleenp
+    Reviewed-by: mchung, asotona
