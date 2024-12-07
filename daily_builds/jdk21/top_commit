@@ -1,7 +1,7 @@
-commit 71bf10ed8c012d9b202ef82bdd0bc0af585125e9
-Author: Richard Reingruber <rrich@openjdk.org>
-Date:   Wed Dec 4 16:24:38 2024 +0000
+commit 532c49aa8406b513b7f1d9a25249dbd877dc394b
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Dec 6 19:41:49 2024 +0000
 
-    8341862: PPC64: C1 unwind_handler fails to unlock synchronized methods with LM_MONITOR
+    8324672: Update jdk/java/time/tck/java/time/TCKInstant.java now() to be more robust
     
-    Backport-of: ed6809666b12b0de66f68d5e7e389dde1708aaf3
+    Backport-of: e94e3bba3932f3d92c0a135d333d1ccd6e72b964

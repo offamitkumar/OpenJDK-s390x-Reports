@@ -1,7 +1,7 @@
-commit 496641955041c5e48359e6256a4a61812653d900
-Author: Chen Liang <liach@openjdk.org>
-Date:   Fri Dec 6 14:25:03 2024 +0000
+commit c517ffba7d9388e75b5d7bba77e565e71c0a7d76
+Author: Hamlin Li <mli@openjdk.org>
+Date:   Sat Dec 7 09:56:15 2024 +0000
 
-    8334733: Remove obsolete @enablePreview from tests after JDK-8334714
+    8339910: RISC-V: crc32 intrinsic with carry-less multiplication
     
-    Reviewed-by: mchung, asotona
+    Reviewed-by: rehn, luhenry

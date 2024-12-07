@@ -1,10 +1,7 @@
-commit ed63b718fe5b4e9f77154f6015516762800d13d6
+commit 4dc682a311db4ddea94e733adfee2007b23db01a
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Dec 4 07:50:37 2024 +0000
+Date:   Fri Dec 6 20:07:27 2024 +0000
 
-    8308341: JNI_GetCreatedJavaVMs returns a partially initialized JVM
-    8309231: ProblemList vmTestbase/nsk/jvmti/scenarios/jni_interception/JI05/ji05t001/TestDescription.java
-    8309171: Test vmTestbase/nsk/jvmti/scenarios/jni_interception/JI05/ji05t001/TestDescription.java fails after JDK-8308341
+    8324672: Update jdk/java/time/tck/java/time/TCKInstant.java now() to be more robust
     
-    Reviewed-by: phh
-    Backport-of: 1e6770fb978e630b38a70a05120c50f723bb66dc
+    Backport-of: e94e3bba3932f3d92c0a135d333d1ccd6e72b964
