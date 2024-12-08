@@ -2,6 +2,5 @@
 # other_errors.txt
 java/lang/Thread/virtual/Starvation.java 
 # other_errors.txt
-jdk/jshell/TerminalNoExecTest.java 
 # other_errors.txt
 # other_errors.txt
