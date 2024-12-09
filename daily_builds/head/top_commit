@@ -1,7 +1,7 @@
-commit c517ffba7d9388e75b5d7bba77e565e71c0a7d76
-Author: Hamlin Li <mli@openjdk.org>
-Date:   Sat Dec 7 09:56:15 2024 +0000
+commit 7aa0cbc91d90493a3dae973cb8077cfa283c32b4
+Author: Scott Marlow <smarlow@redhat.com>
+Date:   Mon Dec 9 14:59:59 2024 +0000
 
-    8339910: RISC-V: crc32 intrinsic with carry-less multiplication
+    8345614: Improve AnnotationFormatError message for duplicate annotation interfaces
     
-    Reviewed-by: rehn, luhenry
+    Reviewed-by: liach

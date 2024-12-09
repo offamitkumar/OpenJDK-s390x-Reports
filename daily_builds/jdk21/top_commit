@@ -1,7 +1,8 @@
-commit 532c49aa8406b513b7f1d9a25249dbd877dc394b
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Dec 6 19:41:49 2024 +0000
+commit a0ed69d5a380c41546d6e0c9dbaa235adfe7f237
+Author: Richard Reingruber <rrich@openjdk.org>
+Date:   Mon Dec 9 07:38:11 2024 +0000
 
-    8324672: Update jdk/java/time/tck/java/time/TCKInstant.java now() to be more robust
+    8341715: PPC64: ObjectMonitor::_owner should be reset unconditionally in nmethod unlocking
     
-    Backport-of: e94e3bba3932f3d92c0a135d333d1ccd6e72b964
+    Reviewed-by: mdoerr
+    Backport-of: f9208fadde8141e18a025ddb6ce28423861ba391
