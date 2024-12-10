@@ -1,8 +1,9 @@
-commit a0ed69d5a380c41546d6e0c9dbaa235adfe7f237
-Author: Richard Reingruber <rrich@openjdk.org>
-Date:   Mon Dec 9 07:38:11 2024 +0000
+commit c1bd8d91240f0802ddbbe0d5542b4ebadd7262d0
+Author: Martin Doerr <mdoerr@openjdk.org>
+Date:   Tue Dec 10 16:02:00 2024 +0000
 
-    8341715: PPC64: ObjectMonitor::_owner should be reset unconditionally in nmethod unlocking
+    8343343: Misc crash dump improvements on more platforms after JDK-8294160
+    8343149: Cleanup os::print_tos_pc on AIX
     
-    Reviewed-by: mdoerr
-    Backport-of: f9208fadde8141e18a025ddb6ce28423861ba391
+    Reviewed-by: mbaesken
+    Backport-of: e33dc13567a4f0d9a6c1ae63fa0424ca27d52584

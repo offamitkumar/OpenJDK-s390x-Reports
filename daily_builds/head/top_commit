@@ -1,7 +1,7 @@
-commit 7aa0cbc91d90493a3dae973cb8077cfa283c32b4
-Author: Scott Marlow <smarlow@redhat.com>
-Date:   Mon Dec 9 14:59:59 2024 +0000
+commit 4f855d1342d55aeee93b7d0c5796fbfd4994c856
+Author: Roger Riggs <rriggs@openjdk.org>
+Date:   Tue Dec 10 15:16:58 2024 +0000
 
-    8345614: Improve AnnotationFormatError message for duplicate annotation interfaces
+    8345818: Fix SM cleanup of parsing of System property resource.bundle.debug
     
-    Reviewed-by: liach
+    Reviewed-by: lancea, eirbjo

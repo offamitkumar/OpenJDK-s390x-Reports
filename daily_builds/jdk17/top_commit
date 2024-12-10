@@ -1,7 +1,8 @@
-commit ace471e9fb285d5977e85ba1e467717cdd43f922
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Dec 9 13:39:52 2024 +0000
+commit 131a032b8d360a8d26ae0693d5cdc3666761563c
+Author: Martin Doerr <mdoerr@openjdk.org>
+Date:   Tue Dec 10 16:02:57 2024 +0000
 
-    8295087: Manual Test to Automated Test Conversion
+    8342607: Enhance register printing on x86_64 platforms
     
-    Backport-of: a3693ccc617d06137a61050b34646e8a90ed3d7e
+    Reviewed-by: mbaesken
+    Backport-of: 1bfb57dca4a65ea64a15914b1e8b5c4c509db6f5
