@@ -1,9 +1,7 @@
-commit c1bd8d91240f0802ddbbe0d5542b4ebadd7262d0
-Author: Martin Doerr <mdoerr@openjdk.org>
-Date:   Tue Dec 10 16:02:00 2024 +0000
+commit 1419546268caab4fa3a6a31d259b318693a5ca1a
+Author: Sonia Zaldana Calles <szaldana@openjdk.org>
+Date:   Wed Dec 11 14:40:44 2024 +0000
 
-    8343343: Misc crash dump improvements on more platforms after JDK-8294160
-    8343149: Cleanup os::print_tos_pc on AIX
+    8338100: C2: assert(!n_loop->is_member(get_loop(lca))) failed: control must not be back in the loop
     
-    Reviewed-by: mbaesken
-    Backport-of: e33dc13567a4f0d9a6c1ae63fa0424ca27d52584
+    Backport-of: e203df46faf610e35e2c2510271ad68199f4fa3f

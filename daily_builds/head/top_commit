@@ -1,7 +1,7 @@
-commit 4f855d1342d55aeee93b7d0c5796fbfd4994c856
-Author: Roger Riggs <rriggs@openjdk.org>
-Date:   Tue Dec 10 15:16:58 2024 +0000
+commit 72c6daf1b1073bc1eb9d1b07794c0e8ba5b9b437
+Author: theoweidmannoracle <theo.weidmann@oracle.com>
+Date:   Wed Dec 11 15:21:28 2024 +0000
 
-    8345818: Fix SM cleanup of parsing of System property resource.bundle.debug
+    8346007: Incorrect copyright header in UModLNodeIdealizationTests.java
     
-    Reviewed-by: lancea, eirbjo
+    Reviewed-by: thartmann
