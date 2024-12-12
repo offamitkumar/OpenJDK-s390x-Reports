@@ -1,7 +1,7 @@
-commit 1419546268caab4fa3a6a31d259b318693a5ca1a
-Author: Sonia Zaldana Calles <szaldana@openjdk.org>
-Date:   Wed Dec 11 14:40:44 2024 +0000
+commit 814566b10accb1f55b9bcd3c0fe79dc9512d40db
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Dec 12 09:08:37 2024 +0000
 
-    8338100: C2: assert(!n_loop->is_member(get_loop(lca))) failed: control must not be back in the loop
+    8343100: Consolidate EmptyFolderTest and EmptyFolderPackageTest jpackage tests into single java file
     
-    Backport-of: e203df46faf610e35e2c2510271ad68199f4fa3f
+    Backport-of: 00fe9f7bdfd245791bca6b5b1b2d0a98d41af221
