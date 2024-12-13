@@ -1,7 +1,7 @@
-commit 8c2f28a2bba681bb8e7671f4caade77b040d6250
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Dec 12 09:10:02 2024 +0000
+commit ff496b9c1cf8beaf9f94c1999c8baa2407617e3f
+Author: SendaoYan <syan@openjdk.org>
+Date:   Fri Dec 13 03:11:08 2024 +0000
 
-    8343100: Consolidate EmptyFolderTest and EmptyFolderPackageTest jpackage tests into single java file
+    8320916: jdk/jfr/event/gc/stacktrace/TestParallelMarkSweepAllocationPendingStackTrace.java failed with "OutOfMemoryError: GC overhead limit exceeded"
     
-    Backport-of: 00fe9f7bdfd245791bca6b5b1b2d0a98d41af221
+    Backport-of: 693847452f208446a34186f142fe2c56a49ceceb

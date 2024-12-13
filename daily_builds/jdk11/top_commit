@@ -1,8 +1,8 @@
-commit bf34fd4d415acf418da1667210c5175312fab224
-Author: Alexey Bakhtin <abakhtin@openjdk.org>
-Date:   Fri Dec 6 17:32:51 2024 +0000
+commit a47c72fad455bfdf9053cb8e94c99e73965ab50d
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Fri Dec 13 13:01:35 2024 +0000
 
-    8335912: Add an operation mode to the jar command when extracting to not overwriting existing files
+    8343474: [updates] Customize README.md to specifics of update project
     
-    Reviewed-by: mbaesken, mbalao, andrew
-    Backport-of: 158b93d19a518d2b9d3d185e2d4c4dbff9c82aab
+    Reviewed-by: sgehwolf
+    Backport-of: ac1f86887384f0e3cf9becdeb9ee1e54fd4e60cb

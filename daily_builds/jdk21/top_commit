@@ -1,7 +1,7 @@
-commit 814566b10accb1f55b9bcd3c0fe79dc9512d40db
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Dec 12 09:08:37 2024 +0000
+commit 7b2a675f7061850e27d72c3c8d793fae10b96535
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Fri Dec 13 12:46:17 2024 +0000
 
-    8343100: Consolidate EmptyFolderTest and EmptyFolderPackageTest jpackage tests into single java file
+    8341820: Check return value of hcreate_r
     
-    Backport-of: 00fe9f7bdfd245791bca6b5b1b2d0a98d41af221
+    Backport-of: 7c0dbf8e9c69d51aa8e06305e4483002116019f4
