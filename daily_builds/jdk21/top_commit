@@ -1,7 +1,7 @@
-commit 7b2a675f7061850e27d72c3c8d793fae10b96535
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Fri Dec 13 12:46:17 2024 +0000
+commit 1c691358f3a6ea61ed23a887e9550a8dbd865057
+Author: SendaoYan <syan@openjdk.org>
+Date:   Mon Dec 16 14:58:22 2024 +0000
 
-    8341820: Check return value of hcreate_r
+    8343129: Disable unstable check of ThreadsListHandle.sanity_vm ThreadList values
     
-    Backport-of: 7c0dbf8e9c69d51aa8e06305e4483002116019f4
+    Backport-of: 59fcfae63090f6659a94a9e3dd0705739ec1b074

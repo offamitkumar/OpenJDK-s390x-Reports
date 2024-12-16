@@ -1,7 +1,7 @@
-commit 6b022bb64b2109c8cd40ebd3b8b3226cf894544d
-Author: Leonid Mesnik <lmesnik@openjdk.org>
-Date:   Sat Dec 14 19:08:19 2024 +0000
+commit d737978924f08f1aae280867e5106f2cfd0e9d31
+Author: Archie Cobbs <acobbs@openjdk.org>
+Date:   Mon Dec 16 14:52:42 2024 +0000
 
-    8344453: Test jdk/jfr/event/oldobject/TestSanityDefault.java timed out
+    8343477: Remove unnecessary @SuppressWarnings annotations (compiler)
     
-    Reviewed-by: egahlin
+    Reviewed-by: darcy, mcimadamore

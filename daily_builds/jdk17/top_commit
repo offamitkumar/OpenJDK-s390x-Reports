@@ -1,7 +1,7 @@
-commit ff496b9c1cf8beaf9f94c1999c8baa2407617e3f
+commit 9c126b3c86860e98b40e3a2a8b576760d80e0389
 Author: SendaoYan <syan@openjdk.org>
-Date:   Fri Dec 13 03:11:08 2024 +0000
+Date:   Mon Dec 16 14:59:50 2024 +0000
 
-    8320916: jdk/jfr/event/gc/stacktrace/TestParallelMarkSweepAllocationPendingStackTrace.java failed with "OutOfMemoryError: GC overhead limit exceeded"
+    8343129: Disable unstable check of ThreadsListHandle.sanity_vm ThreadList values
     
-    Backport-of: 693847452f208446a34186f142fe2c56a49ceceb
+    Backport-of: 59fcfae63090f6659a94a9e3dd0705739ec1b074
