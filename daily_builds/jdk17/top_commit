@@ -1,7 +1,13 @@
-commit 9c126b3c86860e98b40e3a2a8b576760d80e0389
-Author: SendaoYan <syan@openjdk.org>
-Date:   Mon Dec 16 14:59:50 2024 +0000
+commit 6400a16be535bd311574a9c93fdf9dd26eaa37ee
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Dec 17 13:38:06 2024 +0000
 
-    8343129: Disable unstable check of ThreadsListHandle.sanity_vm ThreadList values
+    8341978: Improve JButton/bug4490179.java
     
-    Backport-of: 59fcfae63090f6659a94a9e3dd0705739ec1b074
+    Use latch to synchronize actions in the test.
+    Verify mouseButton3Released does not trigger actionPerformed
+    while mouse button 1 is pressed.
+    Ensure mouse button 1 is released.
+    Verify releasing mouse button 1 triggers actionPerformed.
+    
+    Backport-of: 8174cbd5cb797a80d48246a686897ef6fe64ed57

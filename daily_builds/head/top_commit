@@ -1,7 +1,7 @@
-commit d737978924f08f1aae280867e5106f2cfd0e9d31
-Author: Archie Cobbs <acobbs@openjdk.org>
-Date:   Mon Dec 16 14:52:42 2024 +0000
+commit a5503fb6fa0ad8ae7472a1c849723357da581986
+Author: Jan Kratochvil <jkratochvil@openjdk.org>
+Date:   Tue Dec 17 14:58:21 2024 +0000
 
-    8343477: Remove unnecessary @SuppressWarnings annotations (compiler)
+    8346432: java.lang.foreign.Linker comment typo
     
-    Reviewed-by: darcy, mcimadamore
+    Reviewed-by: jvernee

@@ -1,7 +1,8 @@
-commit 1c691358f3a6ea61ed23a887e9550a8dbd865057
-Author: SendaoYan <syan@openjdk.org>
-Date:   Mon Dec 16 14:58:22 2024 +0000
+commit e1b5f3c56d02c6738726106d3d069fea7a633245
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Dec 17 13:30:51 2024 +0000
 
-    8343129: Disable unstable check of ThreadsListHandle.sanity_vm ThreadList values
+    8343314: Move common properties from jpackage jtreg test declarations to TEST.properties file
     
-    Backport-of: 59fcfae63090f6659a94a9e3dd0705739ec1b074
+    Reviewed-by: mdoerr
+    Backport-of: c33a8f52b613e5eff02f572eda876cbbfc7c22cf
