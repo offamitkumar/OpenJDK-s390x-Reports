@@ -1,7 +1,7 @@
-commit a5503fb6fa0ad8ae7472a1c849723357da581986
-Author: Jan Kratochvil <jkratochvil@openjdk.org>
-Date:   Tue Dec 17 14:58:21 2024 +0000
+commit a0b7c4f015c694425893b8d21d2aecae71a3b604
+Author: Prasanta Sadhukhan <psadhukhan@openjdk.org>
+Date:   Wed Dec 18 14:54:41 2024 +0000
 
-    8346432: java.lang.foreign.Linker comment typo
+    8346324: javax/swing/JScrollBar/4865918/bug4865918.java fails in CI
     
-    Reviewed-by: jvernee
+    Reviewed-by: aivanov, abhiscxk

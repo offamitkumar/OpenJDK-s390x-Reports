@@ -1,13 +1,8 @@
-commit 6400a16be535bd311574a9c93fdf9dd26eaa37ee
+commit cdf62864a7991a973a5108b8941f59ec1d6ca0ba
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Dec 17 13:38:06 2024 +0000
+Date:   Wed Dec 18 11:15:35 2024 +0000
 
-    8341978: Improve JButton/bug4490179.java
+    8328753: Open source few Undecorated Frame tests
+    8337886: java/awt/Frame/MaximizeUndecoratedTest.java fails in OEL due to a slight color difference
     
-    Use latch to synchronize actions in the test.
-    Verify mouseButton3Released does not trigger actionPerformed
-    while mouse button 1 is pressed.
-    Ensure mouse button 1 is released.
-    Verify releasing mouse button 1 triggers actionPerformed.
-    
-    Backport-of: 8174cbd5cb797a80d48246a686897ef6fe64ed57
+    Backport-of: 539990cd9a7241e7e9d8f5dc1fdf832eb0fa7860

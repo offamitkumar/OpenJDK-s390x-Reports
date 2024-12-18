@@ -1,8 +1,7 @@
-commit e1b5f3c56d02c6738726106d3d069fea7a633245
+commit 1c53e8cadf30d0de6bcdb7c043bd338f100e0fb7
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Dec 17 13:30:51 2024 +0000
+Date:   Wed Dec 18 11:06:27 2024 +0000
 
-    8343314: Move common properties from jpackage jtreg test declarations to TEST.properties file
+    8328827: Convert java/awt/print/PrinterJob/PrinterDialogsModalityTest/PrinterDialogsModalityTest.html applet test to main
     
-    Reviewed-by: mdoerr
-    Backport-of: c33a8f52b613e5eff02f572eda876cbbfc7c22cf
+    Backport-of: db01fcd6d8c24b01a1f23c71b2917ff396b0686f
