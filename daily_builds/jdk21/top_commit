@@ -1,7 +1,7 @@
-commit 1c53e8cadf30d0de6bcdb7c043bd338f100e0fb7
+commit b23b738d0eccc0395126c29c2766d61dee83a5c3
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Dec 18 11:06:27 2024 +0000
+Date:   Thu Dec 19 13:02:56 2024 +0000
 
-    8328827: Convert java/awt/print/PrinterJob/PrinterDialogsModalityTest/PrinterDialogsModalityTest.html applet test to main
+    8344646: The libjsig deprecation warning should go to stderr not stdout
     
-    Backport-of: db01fcd6d8c24b01a1f23c71b2917ff396b0686f
+    Backport-of: efeacfee015d1105dcd75e489d367a7716441fa8

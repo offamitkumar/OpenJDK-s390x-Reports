@@ -1,8 +1,7 @@
-commit cdf62864a7991a973a5108b8941f59ec1d6ca0ba
+commit bfc957aa795dd3656c9f1ecf92e68be2b5144ec0
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Dec 18 11:15:35 2024 +0000
+Date:   Thu Dec 19 13:06:30 2024 +0000
 
-    8328753: Open source few Undecorated Frame tests
-    8337886: java/awt/Frame/MaximizeUndecoratedTest.java fails in OEL due to a slight color difference
+    8344646: The libjsig deprecation warning should go to stderr not stdout
     
-    Backport-of: 539990cd9a7241e7e9d8f5dc1fdf832eb0fa7860
+    Backport-of: efeacfee015d1105dcd75e489d367a7716441fa8

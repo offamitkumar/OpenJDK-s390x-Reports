@@ -1,7 +1,7 @@
-commit a0b7c4f015c694425893b8d21d2aecae71a3b604
-Author: Prasanta Sadhukhan <psadhukhan@openjdk.org>
-Date:   Wed Dec 18 14:54:41 2024 +0000
+commit 572ce269d0cf7974ad5299edbff596a36d0692a9
+Author: Patricio Chilano Mateo <pchilanomate@openjdk.org>
+Date:   Thu Dec 19 14:45:27 2024 +0000
 
-    8346324: javax/swing/JScrollBar/4865918/bug4865918.java fails in CI
+    8345266: java/util/concurrent/locks/StampedLock/OOMEInStampedLock.java JTREG_TEST_THREAD_FACTORY=Virtual fails with OOME
     
-    Reviewed-by: aivanov, abhiscxk
+    Reviewed-by: dholmes, alanb, coleenp
