@@ -1,7 +1,9 @@
-commit b23b738d0eccc0395126c29c2766d61dee83a5c3
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Dec 19 13:02:56 2024 +0000
+commit a01f02445d4c6711ee0df517c278b2e55616643c
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Fri Dec 20 07:46:13 2024 +0000
 
-    8344646: The libjsig deprecation warning should go to stderr not stdout
+    8339475: Clean up return code handling for pthread calls in library coding
+    8341135: Incorrect format string after JDK-8339475
     
-    Backport-of: efeacfee015d1105dcd75e489d367a7716441fa8
+    Reviewed-by: mdoerr
+    Backport-of: 2a2ecc994e02049d6d84f083b8e92a51368577bf
