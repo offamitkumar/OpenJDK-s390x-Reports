@@ -1,7 +1,8 @@
-commit bfc957aa795dd3656c9f1ecf92e68be2b5144ec0
+commit 247815b28d0b49af3094d779b29208dc65b3f59d
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Dec 19 13:06:30 2024 +0000
+Date:   Sat Dec 21 08:23:58 2024 +0000
 
-    8344646: The libjsig deprecation warning should go to stderr not stdout
+    8325937: runtime/handshake/HandshakeDirectTest.java causes "monitor end should be strictly below the frame pointer" assertion failure on AArch64
     
-    Backport-of: efeacfee015d1105dcd75e489d367a7716441fa8
+    Reviewed-by: aph, rrich
+    Backport-of: 83e9e482b181e76ca9f645e8cc83cfa9337df498

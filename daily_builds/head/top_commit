@@ -1,7 +1,7 @@
-commit bcb1bdaae772c752d54939dae3a0d95892acc228
-Author: Severin Gehwolf <sgehwolf@openjdk.org>
-Date:   Fri Dec 20 12:35:35 2024 +0000
+commit 43b7e9f54776ec7ed98d2e2f717c3d9663268ef2
+Author: Jan Kratochvil <jkratochvil@openjdk.org>
+Date:   Sat Dec 21 03:40:48 2024 +0000
 
-    8345259: Disallow ALL-MODULE-PATH without explicit --module-path
+    8346713: [testsuite] NeverActAsServerClassMachine breaks TestPLABAdaptToMinTLABSize.java TestPinnedHumongousFragmentation.java TestPinnedObjectContents.java
     
-    Reviewed-by: mchung
+    Reviewed-by: stefank, tschatzl
