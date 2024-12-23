@@ -1,7 +1,10 @@
-commit 43b7e9f54776ec7ed98d2e2f717c3d9663268ef2
-Author: Jan Kratochvil <jkratochvil@openjdk.org>
-Date:   Sat Dec 21 03:40:48 2024 +0000
+commit ed292318a98163b3226aa05d06825b48c3d97dbb
+Author: Nizar Benalla <nbenalla@openjdk.org>
+Date:   Mon Dec 23 13:50:39 2024 +0000
 
-    8346713: [testsuite] NeverActAsServerClassMachine breaks TestPLABAdaptToMinTLABSize.java TestPinnedHumongousFragmentation.java TestPinnedObjectContents.java
+    8337111: Bad HTML checker for generated documentation
+    8337113: Bad character checker for generated documentation
+    8337116: Internal links checker for generated documentation
+    8337114: DocType checker for generated documentation
     
-    Reviewed-by: stefank, tschatzl
+    Reviewed-by: hannesw
