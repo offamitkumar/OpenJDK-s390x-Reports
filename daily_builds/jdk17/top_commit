@@ -1,8 +1,7 @@
-commit 247815b28d0b49af3094d779b29208dc65b3f59d
+commit e6fb662484d3b24406b1ce13f17a087c05bc39cc
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Sat Dec 21 08:23:58 2024 +0000
+Date:   Tue Dec 24 11:32:52 2024 +0000
 
-    8325937: runtime/handshake/HandshakeDirectTest.java causes "monitor end should be strictly below the frame pointer" assertion failure on AArch64
+    8345414: Google CAInterop test failures
     
-    Reviewed-by: aph, rrich
-    Backport-of: 83e9e482b181e76ca9f645e8cc83cfa9337df498
+    Backport-of: 8e9ba788ae04a9a617a393709bf2c51a0c157206
