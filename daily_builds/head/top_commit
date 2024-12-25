@@ -1,8 +1,7 @@
-commit 62a4544bb76aa339a8129f81d2527405a1b1e7e3
-Author: Swati Sharma <swati.sharma@intel.com>
-Date:   Mon Dec 23 19:16:18 2024 +0000
+commit 6c59185475eeca83153f085eba27cc0b3acf9bb4
+Author: SendaoYan <syan@openjdk.org>
+Date:   Wed Dec 25 01:27:35 2024 +0000
 
-    8205051: Poor Performance with UseNUMA when cpu and memory nodes are misaligned
+    8345757: [ASAN] clang17 report 'dprintf' macro redefined
     
-    Co-authored-by: Derek White <drwhite@openjdk.org>
-    Reviewed-by: sjohanss, tschatzl
+    Reviewed-by: kbarrett, valeriep
