@@ -1,7 +1,7 @@
-commit 36b067cbb23208cdaa6ea622fe4fe994a1b2ba42
+commit 8a5bbfebfa055e2ac28d62a43ffa80a2afd033b2
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Dec 24 11:22:48 2024 +0000
+Date:   Fri Dec 27 10:04:56 2024 +0000
 
-    8345414: Google CAInterop test failures
+    8335468: [XWayland] JavaFX hangs when calling java.awt.Robot.getPixelColor
     
-    Backport-of: 8e9ba788ae04a9a617a393709bf2c51a0c157206
+    Backport-of: 965aace297154ab08ee41a4d988553707cae8b32

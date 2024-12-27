@@ -1,7 +1,7 @@
-commit 6c59185475eeca83153f085eba27cc0b3acf9bb4
-Author: SendaoYan <syan@openjdk.org>
-Date:   Wed Dec 25 01:27:35 2024 +0000
+commit 807f6f7fb868240cba5ba117c7059216f69a53f9
+Author: Amit Kumar <amitkumar@openjdk.org>
+Date:   Fri Dec 27 10:05:41 2024 +0000
 
-    8345757: [ASAN] clang17 report 'dprintf' macro redefined
+    8346847: [s390x] minimal build failure
     
-    Reviewed-by: kbarrett, valeriep
+    Reviewed-by: stuefe
