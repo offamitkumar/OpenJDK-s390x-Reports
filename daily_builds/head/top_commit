@@ -1,7 +1,7 @@
-commit bd0fde71d9113bad902e71b61f0ca44c650809ef
+commit 24c5ff7ba58cb7cf93df07f81484cd8fae60e31e
 Author: Jaikiran Pai <jpai@openjdk.org>
-Date:   Sun Dec 29 08:37:25 2024 +0000
+Date:   Mon Dec 30 00:53:15 2024 +0000
 
-    8302293: jar --create fails with IllegalArgumentException if archive name is shorter than 3 characters
+    8346871: Improve robustness of java/util/zip/EntryCount64k.java test
     
     Reviewed-by: lancea
