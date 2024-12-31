@@ -3,4 +3,5 @@
 java/util/zip/CloseInflaterDeflaterTest.java 
 # newfailures.txt
 # newfailures.txt
+gc/stringdedup/TestStringDeduplicationFullGC.java#id0 
 # newfailures.txt

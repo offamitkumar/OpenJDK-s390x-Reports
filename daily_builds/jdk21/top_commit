@@ -1,7 +1,8 @@
-commit 8a5bbfebfa055e2ac28d62a43ffa80a2afd033b2
+commit d912330772c537fc77854c6cd52d60185b1570fc
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Dec 27 10:04:56 2024 +0000
+Date:   Mon Dec 30 22:31:01 2024 +0000
 
-    8335468: [XWayland] JavaFX hangs when calling java.awt.Robot.getPixelColor
+    8340313: Crash due to invalid oop in nmethod after C1 patching
     
-    Backport-of: 965aace297154ab08ee41a4d988553707cae8b32
+    Reviewed-by: mdoerr
+    Backport-of: 58d39c317e332fda994f66529fcd1a0ea0e53151
