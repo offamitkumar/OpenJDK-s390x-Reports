@@ -1,7 +1,8 @@
-commit 65fde365263e0ec532c2ac2df406f59f711e4902
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Dec 30 22:35:08 2024 +0000
+commit d929b803836436314a62ede766467d3b436e00ff
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Thu Jan 2 08:23:05 2025 +0000
 
-    8332158: [XWayland] test/jdk/java/awt/Mouse/EnterExitEvents/ResizingFrameTest.java
+    8341722: Fix some warnings as errors when building on Linux with toolchain clang
     
-    Backport-of: b1b4cd429a4135840966975dd0c068fe428e2ee6
+    Reviewed-by: mdoerr
+    Backport-of: 3aa59b3139d6ca88afb4339510b0a47ec15c8959

@@ -1,7 +1,7 @@
-commit 24c5ff7ba58cb7cf93df07f81484cd8fae60e31e
-Author: Jaikiran Pai <jpai@openjdk.org>
-Date:   Mon Dec 30 00:53:15 2024 +0000
+commit a77ed30fcc3360cd16a11b1899f52f7e871df1df
+Author: Volkan Yazıcı <volkan.yazici@oracle.com>
+Date:   Thu Jan 2 09:19:58 2025 +0000
 
-    8346871: Improve robustness of java/util/zip/EntryCount64k.java test
+    8336412: sun.net.www.MimeTable has a few unused methods
     
-    Reviewed-by: lancea
+    Reviewed-by: jpai
