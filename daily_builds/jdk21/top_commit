@@ -1,8 +1,8 @@
-commit d912330772c537fc77854c6cd52d60185b1570fc
+commit 056a2651af9e27d6d80ae01265acfecc8953b224
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Dec 30 22:31:01 2024 +0000
+Date:   Fri Jan 3 10:27:20 2025 +0000
 
-    8340313: Crash due to invalid oop in nmethod after C1 patching
+    8337660: C2: basic blocks with only BoxLock nodes are wrongly treated as empty
     
-    Reviewed-by: mdoerr
-    Backport-of: 58d39c317e332fda994f66529fcd1a0ea0e53151
+    Reviewed-by: mbaesken
+    Backport-of: 0105203575182e24a56a38a12da7c1af58ea0a78

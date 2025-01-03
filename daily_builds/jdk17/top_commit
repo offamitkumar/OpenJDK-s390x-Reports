@@ -1,8 +1,9 @@
-commit d929b803836436314a62ede766467d3b436e00ff
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Thu Jan 2 08:23:05 2025 +0000
+commit aedd0be591a8d1c76832f66878c4f182e542ce4e
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Jan 3 10:36:54 2025 +0000
 
-    8341722: Fix some warnings as errors when building on Linux with toolchain clang
+    8343101: Rework BasicTest.testTemp test cases
+    8343178: Test BasicTest.java javac compile fails cannot find symbol
     
     Reviewed-by: mdoerr
-    Backport-of: 3aa59b3139d6ca88afb4339510b0a47ec15c8959
+    Backport-of: fe9284a8c523bc747e107836c85114864efab2a1
