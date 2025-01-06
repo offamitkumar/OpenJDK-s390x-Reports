@@ -1,7 +1,7 @@
-commit 07c9f7138affdf0d42ecdc30adcb854515569985
-Author: Albert Mingkun Yang <ayang@openjdk.org>
-Date:   Fri Jan 3 11:46:34 2025 +0000
+commit dd81f8dcf504d4329e710623c4c92e4786948ada
+Author: Archie Cobbs <acobbs@openjdk.org>
+Date:   Mon Jan 6 15:28:36 2025 +0000
 
-    8346921: Remove unused arg in markWord::must_be_preserved
+    8344079: Minor fixes and cleanups to compiler lint-related code
     
-    Reviewed-by: kbarrett, tschatzl
+    Reviewed-by: mcimadamore

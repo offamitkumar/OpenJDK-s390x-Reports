@@ -6,6 +6,5 @@ java/util/zip/DeInflate.java
 java/util/zip/ZipFile/CopyJar.java 
 tools/pack200/PackTestZip64.java 
 # newfailures.txt
-jdk/jshell/VariablesTest.java 
 # newfailures.txt
 # newfailures.txt

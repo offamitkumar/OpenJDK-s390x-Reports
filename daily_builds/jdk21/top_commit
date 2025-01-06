@@ -1,8 +1,7 @@
-commit f24dfe678a33d88ec12edca607bf6ed8a4b3b6b6
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Sun Jan 5 11:01:48 2025 +0000
+commit 98e6549913fadad86a3973c549c07c7941d09757
+Author: Amit Kumar <amitkumar@openjdk.org>
+Date:   Mon Jan 6 05:31:29 2025 +0000
 
-    8344326: Move jpackage tests from "jdk.jpackage.tests" package to the default package
+    8346847: [s390x] minimal build failure
     
-    Reviewed-by: mbaesken
-    Backport-of: 2c509a158fad63e69a8072fa4a7588eaacf37dc0
+    Backport-of: 807f6f7fb868240cba5ba117c7059216f69a53f9
