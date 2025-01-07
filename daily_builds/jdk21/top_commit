@@ -1,7 +1,7 @@
-commit 98e6549913fadad86a3973c549c07c7941d09757
-Author: Amit Kumar <amitkumar@openjdk.org>
-Date:   Mon Jan 6 05:31:29 2025 +0000
+commit be280b5d5c8a9687837edb20167395bc9221cd1b
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Jan 7 10:13:31 2025 +0000
 
-    8346847: [s390x] minimal build failure
+    8339524: Clean up a few ExtendedRobot tests
     
-    Backport-of: 807f6f7fb868240cba5ba117c7059216f69a53f9
+    Backport-of: 16232578d9acf9d0b5a9ad0e7530291471b5cc9c

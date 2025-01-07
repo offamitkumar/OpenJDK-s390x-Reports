@@ -1,7 +1,7 @@
-commit dd81f8dcf504d4329e710623c4c92e4786948ada
-Author: Archie Cobbs <acobbs@openjdk.org>
-Date:   Mon Jan 6 15:28:36 2025 +0000
+commit c8a9dd3a027781d006850c028714a62903c487d5
+Author: Per Minborg <pminborg@openjdk.org>
+Date:   Tue Jan 7 15:18:02 2025 +0000
 
-    8344079: Minor fixes and cleanups to compiler lint-related code
+    8346609: Improve MemorySegment.toString
     
     Reviewed-by: mcimadamore

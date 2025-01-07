@@ -1,9 +1,7 @@
-commit aedd0be591a8d1c76832f66878c4f182e542ce4e
+commit 34fd1217b325ee433fd354fde273d86d021f9bea
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Jan 3 10:36:54 2025 +0000
+Date:   Tue Jan 7 10:20:20 2025 +0000
 
-    8343101: Rework BasicTest.testTemp test cases
-    8343178: Test BasicTest.java javac compile fails cannot find symbol
+    8339524: Clean up a few ExtendedRobot tests
     
-    Reviewed-by: mdoerr
-    Backport-of: fe9284a8c523bc747e107836c85114864efab2a1
+    Backport-of: 16232578d9acf9d0b5a9ad0e7530291471b5cc9c
