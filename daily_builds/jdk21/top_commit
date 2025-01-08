@@ -1,7 +1,7 @@
-commit be280b5d5c8a9687837edb20167395bc9221cd1b
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Jan 7 10:13:31 2025 +0000
+commit f117cb06d8e4ee3267d6e91855cf59d888f2a20c
+Author: Fabian Meumertzheim <fmeum@openjdk.org>
+Date:   Wed Jan 8 14:31:51 2025 +0000
 
-    8339524: Clean up a few ExtendedRobot tests
+    8345684: OperatingSystemMXBean.getSystemCpuLoad() throws NPE
     
-    Backport-of: 16232578d9acf9d0b5a9ad0e7530291471b5cc9c
+    Backport-of: d7ef3ac0b7e677c4901c69ad4361b5de8408e8d3

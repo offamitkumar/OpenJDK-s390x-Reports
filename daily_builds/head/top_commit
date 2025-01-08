@@ -1,7 +1,7 @@
-commit c8a9dd3a027781d006850c028714a62903c487d5
-Author: Per Minborg <pminborg@openjdk.org>
-Date:   Tue Jan 7 15:18:02 2025 +0000
+commit ae3fc464563ad1ba59883ccf60d235b42f5ad7fa
+Author: Yagmur Eren <yagmur.eren@oracle.com>
+Date:   Wed Jan 8 15:14:14 2025 +0000
 
-    8346609: Improve MemorySegment.toString
+    8345580: Remove const from Node::_idx which is modified
     
-    Reviewed-by: mcimadamore
+    Reviewed-by: epeter, qamai
