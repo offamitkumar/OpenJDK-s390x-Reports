@@ -1,7 +1,8 @@
-commit f117cb06d8e4ee3267d6e91855cf59d888f2a20c
-Author: Fabian Meumertzheim <fmeum@openjdk.org>
-Date:   Wed Jan 8 14:31:51 2025 +0000
+commit 0d8d8e6bdcb00b5710ce70332c1fbacc0fa90f26
+Author: Liam Miller-Cushon <cushon@openjdk.org>
+Date:   Thu Jan 9 07:50:03 2025 +0000
 
-    8345684: OperatingSystemMXBean.getSystemCpuLoad() throws NPE
+    8336942: Improve test coverage for class loading elements with annotations of different retentions
     
-    Backport-of: d7ef3ac0b7e677c4901c69ad4361b5de8408e8d3
+    Reviewed-by: goetz, vromero
+    Backport-of: e36ce5f0341e8d0ec06cb12d0b2c0aa084401021
