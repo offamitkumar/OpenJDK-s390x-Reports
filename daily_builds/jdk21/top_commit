@@ -1,8 +1,7 @@
-commit 0d8d8e6bdcb00b5710ce70332c1fbacc0fa90f26
-Author: Liam Miller-Cushon <cushon@openjdk.org>
-Date:   Thu Jan 9 07:50:03 2025 +0000
+commit 9e451b4247b267131a886993b181f7dd2ad67437
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Jan 10 16:06:53 2025 +0000
 
-    8336942: Improve test coverage for class loading elements with annotations of different retentions
+    8226933: [TEST_BUG]GTK L&F: There is no swatches or RGB tab in JColorChooser
     
-    Reviewed-by: goetz, vromero
-    Backport-of: e36ce5f0341e8d0ec06cb12d0b2c0aa084401021
+    Backport-of: 5c4f1ef746b0c373a131726d74d27f0e0cc6e40d

@@ -1,8 +1,7 @@
-commit 53d7539a889cbcfffa8524fd9e47efdf5c121d87
-Author: Liam Miller-Cushon <cushon@openjdk.org>
-Date:   Thu Jan 9 15:59:03 2025 +0000
+commit 36481ddf69fd57ecaa11f2408eb2462df85e1894
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Jan 10 16:12:12 2025 +0000
 
-    8336942: Improve test coverage for class loading elements with annotations of different retentions
+    8328368: Convert java/awt/image/multiresolution/MultiDisplayTest/MultiDisplayTest.java applet test to main
     
-    Reviewed-by: phh
-    Backport-of: e36ce5f0341e8d0ec06cb12d0b2c0aa084401021
+    Backport-of: ba05c6d0b6955a0c5110b75e709e2206961f9fec
