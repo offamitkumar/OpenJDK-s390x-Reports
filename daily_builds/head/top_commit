@@ -1,7 +1,7 @@
-commit beb0e607d3b66b9e97c263cd8f2e23f447ebfc50
-Author: Peter Levart <plevart@openjdk.org>
-Date:   Fri Jan 10 14:47:01 2025 +0000
+commit 3145278847428ad3a855a3e2c605b77f74ebe113
+Author: Serguei Spitsyn <sspitsyn@openjdk.org>
+Date:   Sat Jan 11 07:07:27 2025 +0000
 
-    8347397: Cleanup of JDK-8169880
+    8346727: JvmtiVTMSTransitionDisabler deadlock
     
-    Reviewed-by: liach, alanb
+    Reviewed-by: cjplummer, lmesnik
