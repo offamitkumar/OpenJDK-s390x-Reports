@@ -1,7 +1,7 @@
-commit 36481ddf69fd57ecaa11f2408eb2462df85e1894
+commit 59f98c15d78751c54d1273882ac729f54ebd4176
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Jan 10 16:12:12 2025 +0000
+Date:   Mon Jan 13 15:27:31 2025 +0000
 
-    8328368: Convert java/awt/image/multiresolution/MultiDisplayTest/MultiDisplayTest.java applet test to main
+    8226933: [TEST_BUG]GTK L&F: There is no swatches or RGB tab in JColorChooser
     
-    Backport-of: ba05c6d0b6955a0c5110b75e709e2206961f9fec
+    Backport-of: 5c4f1ef746b0c373a131726d74d27f0e0cc6e40d

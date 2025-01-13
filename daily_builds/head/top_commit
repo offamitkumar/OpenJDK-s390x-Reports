@@ -1,7 +1,7 @@
-commit 3145278847428ad3a855a3e2c605b77f74ebe113
-Author: Serguei Spitsyn <sspitsyn@openjdk.org>
-Date:   Sat Jan 11 07:07:27 2025 +0000
+commit 062f2dcfe5b62cc3dd3c292eeebd7a7ac78f849a
+Author: Christian Hagedorn <chagedorn@openjdk.org>
+Date:   Mon Jan 13 14:19:43 2025 +0000
 
-    8346727: JvmtiVTMSTransitionDisabler deadlock
+    8347554: [BACKOUT] C2: implement optimization for series of Add of unique value
     
-    Reviewed-by: cjplummer, lmesnik
+    Reviewed-by: thartmann
