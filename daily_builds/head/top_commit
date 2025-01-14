@@ -1,7 +1,7 @@
-commit 062f2dcfe5b62cc3dd3c292eeebd7a7ac78f849a
-Author: Christian Hagedorn <chagedorn@openjdk.org>
-Date:   Mon Jan 13 14:19:43 2025 +0000
+commit dfd215b7e9e40526006448369c8847aadfe0926b
+Author: Henry Jen <henryjen@openjdk.org>
+Date:   Tue Jan 14 15:26:36 2025 +0000
 
-    8347554: [BACKOUT] C2: implement optimization for series of Add of unique value
+    8347376: tools/jlink/runtimeImage/JavaSEReproducibleTest.java and PackagedModulesVsRuntimeImageLinkTest.java failed after JDK-8321413
     
-    Reviewed-by: thartmann
+    Reviewed-by: dholmes, iklam, alanb

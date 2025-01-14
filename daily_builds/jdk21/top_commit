@@ -1,7 +1,8 @@
-commit 405a8920984b357b253dbc34f2fb543b191c78f5
+commit 4035d85f098449b199d60bce20dfbc2cb236e88c
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Jan 13 15:23:36 2025 +0000
+Date:   Tue Jan 14 08:13:01 2025 +0000
 
-    8339542: compiler/codecache/CheckSegmentedCodeCache.java fails
+    8325529: Remove unused imports from `ModuleGenerator` test file
     
-    Backport-of: 777c20cb14010b6726834246ae4c61bc4ccb3f9b
+    Reviewed-by: rschmelter
+    Backport-of: d70156d2e2eddc311af12bc016b1ebb70efd92dd
