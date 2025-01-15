@@ -1,7 +1,7 @@
-commit dfd215b7e9e40526006448369c8847aadfe0926b
-Author: Henry Jen <henryjen@openjdk.org>
-Date:   Tue Jan 14 15:26:36 2025 +0000
+commit a0f7982e44deec2cd59379c62b215c3f526fc2c4
+Author: Mikhail Yankelevich <mikhail.yankelevich@oracle.com>
+Date:   Wed Jan 15 15:24:31 2025 +0000
 
-    8347376: tools/jlink/runtimeImage/JavaSEReproducibleTest.java and PackagedModulesVsRuntimeImageLinkTest.java failed after JDK-8321413
+    8345134: Test sun/security/tools/jarsigner/ConciseJarsigner.java failed: unable to find valid certification path to requested target
     
-    Reviewed-by: dholmes, iklam, alanb
+    Reviewed-by: weijun

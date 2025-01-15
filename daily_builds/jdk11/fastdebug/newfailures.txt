@@ -8,3 +8,5 @@ tools/pack200/PackTestZip64.java
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
+gc/cms/TestBubbleUpRef.java 
+gc/stress/gcbasher/TestGCBasherWithCMS.java 
