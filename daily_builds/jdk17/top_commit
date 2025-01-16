@@ -1,8 +1,7 @@
-commit 10e109d200d3ae3c19d5da9130cdc9215a32816f
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Jan 14 13:29:14 2025 +0000
+commit df6014ef96bf90ac738fff87bafe30167eaea365
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Thu Jan 16 15:31:39 2025 +0000
 
-    8311663: Additional refactoring of Locale tests to JUnit
+    8346887: DrawFocusRect() may cause an assertion failure
     
-    Reviewed-by: rschmelter
-    Backport-of: 71cac8ce47b69a2b78d54cbceb0f0510e5ea4cdc
+    Backport-of: 8eddf67c82a2af4d704c4063ad802640770b3c26

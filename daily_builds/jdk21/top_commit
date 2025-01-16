@@ -1,8 +1,7 @@
-commit 4035d85f098449b199d60bce20dfbc2cb236e88c
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Jan 14 08:13:01 2025 +0000
+commit 97119a918bfd52ae5431bb6058d271b24abe93c3
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Thu Jan 16 15:32:01 2025 +0000
 
-    8325529: Remove unused imports from `ModuleGenerator` test file
+    8346887: DrawFocusRect() may cause an assertion failure
     
-    Reviewed-by: rschmelter
-    Backport-of: d70156d2e2eddc311af12bc016b1ebb70efd92dd
+    Backport-of: 8eddf67c82a2af4d704c4063ad802640770b3c26

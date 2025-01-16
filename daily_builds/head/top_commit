@@ -1,7 +1,7 @@
-commit a0f7982e44deec2cd59379c62b215c3f526fc2c4
-Author: Mikhail Yankelevich <mikhail.yankelevich@oracle.com>
-Date:   Wed Jan 15 15:24:31 2025 +0000
+commit 788f04990aaf284da2067972bd62cc02d50166b6
+Author: Theo Weidmann <tweidmann@openjdk.org>
+Date:   Thu Jan 16 14:38:02 2025 +0000
 
-    8345134: Test sun/security/tools/jarsigner/ConciseJarsigner.java failed: unable to find valid certification path to requested target
+    8346607: IGV: Support drag-and-drop for opening graph files
     
-    Reviewed-by: weijun
+    Reviewed-by: rcastanedalo, chagedorn, dfenacci, thartmann
