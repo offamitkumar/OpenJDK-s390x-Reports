@@ -1,7 +1,8 @@
-commit df6014ef96bf90ac738fff87bafe30167eaea365
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Thu Jan 16 15:31:39 2025 +0000
+commit 25c7a7bdc1470e2e8e8cc0844ce95fac7c501103
+Author: Alexey Bakhtin <abakhtin@openjdk.org>
+Date:   Fri Jan 17 16:55:54 2025 +0000
 
-    8346887: DrawFocusRect() may cause an assertion failure
+    8179502: Enhance OCSP, CRL and Certificate Fetch Timeouts
     
-    Backport-of: 8eddf67c82a2af4d704c4063ad802640770b3c26
+    Reviewed-by: yan
+    Backport-of: 2836c34b64e4626e25c86a53e5bef2bf32f95d2e
