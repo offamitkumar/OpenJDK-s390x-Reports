@@ -1,8 +1,8 @@
-commit 25c7a7bdc1470e2e8e8cc0844ce95fac7c501103
-Author: Alexey Bakhtin <abakhtin@openjdk.org>
-Date:   Fri Jan 17 16:55:54 2025 +0000
+commit 2d29e1bff0c5c599da2104b6e10fed29fbb5bf4b
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Sat Jan 18 14:13:33 2025 +0000
 
-    8179502: Enhance OCSP, CRL and Certificate Fetch Timeouts
+    8316696: Remove the testing base classes: IntlTest and CollatorTest
     
-    Reviewed-by: yan
-    Backport-of: 2836c34b64e4626e25c86a53e5bef2bf32f95d2e
+    Reviewed-by: mdoerr
+    Backport-of: b859da9c548fbd1463b336059d1c55312c7b7ba4

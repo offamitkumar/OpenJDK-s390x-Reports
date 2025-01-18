@@ -1,7 +1,7 @@
-commit 2c41f5adbfcebb057c2ffc8396729bdd1c100079
-Author: Zhengyu Gu <zgu@openjdk.org>
-Date:   Fri Jan 17 13:39:22 2025 +0000
+commit 1f0efc00913e57690b57b7425bcc7dd6373e698f
+Author: Robbin Ehn <rehn@openjdk.org>
+Date:   Sat Jan 18 09:19:21 2025 +0000
 
-    8347959: ThreadDumper leaks memory
+    8347343: RISC-V: Unchecked zicntr csr reads
     
-    Reviewed-by: amenkov, sspitsyn, shade
+    Reviewed-by: fyang, mli
