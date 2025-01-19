@@ -1,7 +1,7 @@
-commit 1f0efc00913e57690b57b7425bcc7dd6373e698f
-Author: Robbin Ehn <rehn@openjdk.org>
-Date:   Sat Jan 18 09:19:21 2025 +0000
+commit 644d154c7c771236904560fc5b91f149a6a646cf
+Author: Archie Cobbs <acobbs@openjdk.org>
+Date:   Sun Jan 19 14:57:08 2025 +0000
 
-    8347343: RISC-V: Unchecked zicntr csr reads
+    8347474: Options singleton is used before options are parsed
     
-    Reviewed-by: fyang, mli
+    Reviewed-by: vromero
