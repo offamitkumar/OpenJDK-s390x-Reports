@@ -1,8 +1,7 @@
-commit 2d29e1bff0c5c599da2104b6e10fed29fbb5bf4b
+commit d35cb919e55276181d6bf21be551ec8d0b4c583a
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Sat Jan 18 14:13:33 2025 +0000
+Date:   Mon Jan 20 09:35:43 2025 +0000
 
-    8316696: Remove the testing base classes: IntlTest and CollatorTest
+    8346055: javax/swing/text/StyledEditorKit/4506788/bug4506788.java fails in ubuntu22.04
     
-    Reviewed-by: mdoerr
-    Backport-of: b859da9c548fbd1463b336059d1c55312c7b7ba4
+    Backport-of: 31ceec7cd55b455cddf0953cc23aaa64612bd6e7

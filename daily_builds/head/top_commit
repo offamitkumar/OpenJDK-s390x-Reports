@@ -1,7 +1,7 @@
-commit 644d154c7c771236904560fc5b91f149a6a646cf
+commit 0fbf10a9cf51d01d82cd43cf0edfaeee83313a9c
 Author: Archie Cobbs <acobbs@openjdk.org>
-Date:   Sun Jan 19 14:57:08 2025 +0000
+Date:   Mon Jan 20 14:20:10 2025 +0000
 
-    8347474: Options singleton is used before options are parsed
+    8348038: Docs build failing in Options.notifyListeners with AssertionError
     
-    Reviewed-by: vromero
+    Reviewed-by: jlahoda, mcimadamore

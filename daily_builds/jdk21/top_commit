@@ -1,7 +1,7 @@
-commit 97119a918bfd52ae5431bb6058d271b24abe93c3
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Thu Jan 16 15:32:01 2025 +0000
+commit 5c87961ad8106c0a8e2c9e8bc73164cf7f150b63
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Jan 20 09:12:59 2025 +0000
 
-    8346887: DrawFocusRect() may cause an assertion failure
+    8346055: javax/swing/text/StyledEditorKit/4506788/bug4506788.java fails in ubuntu22.04
     
-    Backport-of: 8eddf67c82a2af4d704c4063ad802640770b3c26
+    Backport-of: 31ceec7cd55b455cddf0953cc23aaa64612bd6e7
