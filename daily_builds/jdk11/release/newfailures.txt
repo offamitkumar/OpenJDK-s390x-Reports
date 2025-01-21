@@ -1,6 +1,5 @@
 # newfailures.txt
 # newfailures.txt
-java/lang/invoke/PrivateInvokeTest.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
 java/util/zip/DeInflate.java 
 java/util/zip/ZipFile/CopyJar.java 

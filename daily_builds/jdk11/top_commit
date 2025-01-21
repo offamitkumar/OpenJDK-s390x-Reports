@@ -1,8 +1,7 @@
-commit be6956b15653f0d870efae89fc1b5df657cca45f
-Author: Liam Miller-Cushon <cushon@openjdk.org>
-Date:   Sat Jan 11 22:18:17 2025 +0000
+commit 86a1b523c58464278aa822342022bdfe5b62f2a2
+Author: Radek Cap <rcap@redhat.com>
+Date:   Tue Jan 21 16:37:23 2025 +0000
 
-    8273914: Indy string concat changes order of operations
+    8336012: Fix usages of jtreg-reserved properties
     
-    Reviewed-by: andrew
-    Backport-of: cfee4512f7048e9cf440078e9eb87d37c7ebcdd9
+    Backport-of: 98526a632076775d0d7dba28a1e083ef348bc82a

@@ -1,7 +1,7 @@
-commit 0fbf10a9cf51d01d82cd43cf0edfaeee83313a9c
-Author: Archie Cobbs <acobbs@openjdk.org>
-Date:   Mon Jan 20 14:20:10 2025 +0000
+commit 1ed396b4fc5e8e5ed69694449993b9330e396531
+Author: Simon Tooke <stooke@openjdk.org>
+Date:   Tue Jan 21 15:01:37 2025 +0000
 
-    8348038: Docs build failing in Options.notifyListeners with AssertionError
+    8346927: serviceability/dcmd/vm/[SystemMapTest.java|SystemDumpMapTest.java] fail at jmx
     
-    Reviewed-by: jlahoda, mcimadamore
+    Reviewed-by: kevinw
