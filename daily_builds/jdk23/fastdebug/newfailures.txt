@@ -1,10 +1,7 @@
 # newfailures.txt
 # newfailures.txt
 java/util/zip/CloseInflaterDeflaterTest.java 
-java/util/zip/DeInflate.java 
-java/util/zip/DeflateIn_InflateOut.java 
 # newfailures.txt
-jdk/jshell/ToolProviderTest.java 
 # newfailures.txt
 compiler/c2/irTests/TestAutoVectorization2DArray.java 
 # newfailures.txt

@@ -1,7 +1,6 @@
-commit 9101cc14972ce6bdeb966e67bcacc8b693c37d0a
-Author: Amit Kumar <amitkumar@openjdk.org>
-Date:   Wed Dec 4 23:38:37 2024 +0000
+commit aa9bbd5a6a3ac817e5990b718a7c78a2a7e311ba
+Merge: 9101cc14972 a13b02ce6f8
+Author: Rob McKenna <robm@openjdk.org>
+Date:   Tue Jan 21 18:56:33 2025 +0000
 
-    8336012: Fix usages of jtreg-reserved properties
-    
-    Backport-of: e6c5aa7a6cb54c647d261facdcffa6a410849627
+    Merge

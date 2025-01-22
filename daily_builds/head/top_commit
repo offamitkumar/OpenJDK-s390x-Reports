@@ -1,7 +1,7 @@
-commit 1ed396b4fc5e8e5ed69694449993b9330e396531
-Author: Simon Tooke <stooke@openjdk.org>
-Date:   Tue Jan 21 15:01:37 2025 +0000
+commit 25bb698eff9f5aadb54dd37a442e2e1bc555353a
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Wed Jan 22 15:27:41 2025 +0000
 
-    8346927: serviceability/dcmd/vm/[SystemMapTest.java|SystemDumpMapTest.java] fail at jmx
+    8348195: More u2 conversion warnings after JDK-8347147
     
-    Reviewed-by: kevinw
+    Reviewed-by: coleenp, dholmes

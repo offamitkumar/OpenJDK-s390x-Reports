@@ -1,7 +1,6 @@
-commit 5c87961ad8106c0a8e2c9e8bc73164cf7f150b63
+commit 719f33805a8a033b3432336e455582300fb58c51
+Merge: ab69b0d1007 7069f193f1f
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Jan 20 09:12:59 2025 +0000
+Date:   Wed Jan 22 07:30:18 2025 +0000
 
-    8346055: javax/swing/text/StyledEditorKit/4506788/bug4506788.java fails in ubuntu22.04
-    
-    Backport-of: 31ceec7cd55b455cddf0953cc23aaa64612bd6e7
+    Merge
