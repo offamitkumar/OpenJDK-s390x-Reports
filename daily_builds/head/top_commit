@@ -1,7 +1,13 @@
-commit 25bb698eff9f5aadb54dd37a442e2e1bc555353a
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Wed Jan 22 15:27:41 2025 +0000
+commit 605b53e4f8857c58a72fa361f8787c563d6dab90
+Author: Alexey Ivanov <aivanov@openjdk.org>
+Date:   Thu Jan 23 15:18:38 2025 +0000
 
-    8348195: More u2 conversion warnings after JDK-8347147
+    8348299: Update List/ItemEventTest/ItemEventTest.java
     
-    Reviewed-by: coleenp, dholmes
+    Use thread-safe StringBuffer to track selecting/deselecting items.
+    Use auto waitForIdle for all events.
+    Log handleEvent and ItemListener.
+    Take screenshot of the list on failure;
+    Optionally take screenshot after each mouse press+release.
+    
+    Reviewed-by: azvegint, prr, kizune

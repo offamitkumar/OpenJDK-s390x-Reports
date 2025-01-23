@@ -1,6 +1,7 @@
-commit 719f33805a8a033b3432336e455582300fb58c51
-Merge: ab69b0d1007 7069f193f1f
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jan 22 07:30:18 2025 +0000
+commit 91e7582724f78ac924ed8003a2c80e6dc731517f
+Author: Chen Liang <liach@openjdk.org>
+Date:   Thu Jan 23 11:40:42 2025 +0000
 
-    Merge
+    8345614: Improve AnnotationFormatError message for duplicate annotation interfaces
+    
+    Backport-of: 7aa0cbc91d90493a3dae973cb8077cfa283c32b4

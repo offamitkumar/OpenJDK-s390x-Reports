@@ -1,6 +1,7 @@
-commit e06115c104b47609e2962411e61c663725e03005
-Merge: d35cb919e55 c5c90ffa45d
+commit c19a7ecd586d28a3744291ed3761f9aabd11ae69
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jan 22 07:33:14 2025 +0000
+Date:   Thu Jan 23 00:00:55 2025 +0000
 
-    Merge
+    8321818: vmTestbase/nsk/stress/strace/strace015.java failed with 'Cannot read the array length because "<local4>" is null'
+    
+    Backport-of: ea50c54a14d39fcedabe8426a14eaec27ab24af2
