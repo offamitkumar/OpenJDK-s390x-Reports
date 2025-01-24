@@ -1,8 +1,8 @@
 # newfailures.txt
 # newfailures.txt
-java/lang/ClassLoader/nativeLibrary/NativeLibraryTest.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
 java/util/zip/DeInflate.java 
+java/util/zip/DeflateIn_InflateOut.java 
 java/util/zip/ZipFile/CopyJar.java 
 tools/pack200/PackTestZip64.java 
 # newfailures.txt

@@ -1,13 +1,7 @@
-commit 605b53e4f8857c58a72fa361f8787c563d6dab90
-Author: Alexey Ivanov <aivanov@openjdk.org>
-Date:   Thu Jan 23 15:18:38 2025 +0000
+commit 909cef5198e91f56e4c76c2cf86048583791f3ab
+Author: Sonia Zaldana Calles <szaldana@openjdk.org>
+Date:   Fri Jan 24 14:36:05 2025 +0000
 
-    8348299: Update List/ItemEventTest/ItemEventTest.java
+    8339891: Several sun/security/ssl/SSLSessionImpl/* tests override test.java.opts
     
-    Use thread-safe StringBuffer to track selecting/deselecting items.
-    Use auto waitForIdle for all events.
-    Log handleEvent and ItemListener.
-    Take screenshot of the list on failure;
-    Optionally take screenshot after each mouse press+release.
-    
-    Reviewed-by: azvegint, prr, kizune
+    Reviewed-by: lmesnik
