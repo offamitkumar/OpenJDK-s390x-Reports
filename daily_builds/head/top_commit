@@ -1,7 +1,9 @@
-commit 909cef5198e91f56e4c76c2cf86048583791f3ab
-Author: Sonia Zaldana Calles <szaldana@openjdk.org>
-Date:   Fri Jan 24 14:36:05 2025 +0000
+commit 1d2eb2fbaea700fc77b644b5eb5a8a7c40ede108
+Author: Alan Bateman <alanb@openjdk.org>
+Date:   Sat Jan 25 07:25:24 2025 +0000
 
-    8339891: Several sun/security/ssl/SSLSessionImpl/* tests override test.java.opts
+    8299504: Resolve `uses` and `provides` at run time if the service is optional and missing
     
-    Reviewed-by: lmesnik
+    Co-authored-by: Alan Bateman <alanb@openjdk.org>
+    Co-authored-by: Alex Buckley <abuckley@openjdk.org>
+    Reviewed-by: sundar
