@@ -1,9 +1,7 @@
-commit 1d2eb2fbaea700fc77b644b5eb5a8a7c40ede108
-Author: Alan Bateman <alanb@openjdk.org>
-Date:   Sat Jan 25 07:25:24 2025 +0000
+commit 002679ac9fe4de8150b7dd4c9aeb44eeef1257d6
+Author: Koushik Thirupattur <koushik.thirupattur@oracle.com>
+Date:   Sat Jan 25 19:06:47 2025 +0000
 
-    8299504: Resolve `uses` and `provides` at run time if the service is optional and missing
+    8347065: Add missing @spec tags for Java Security Standard Algorithm Names
     
-    Co-authored-by: Alan Bateman <alanb@openjdk.org>
-    Co-authored-by: Alex Buckley <abuckley@openjdk.org>
-    Reviewed-by: sundar
+    Reviewed-by: weijun
