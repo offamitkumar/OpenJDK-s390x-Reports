@@ -1,7 +1,7 @@
-commit 002679ac9fe4de8150b7dd4c9aeb44eeef1257d6
-Author: Koushik Thirupattur <koushik.thirupattur@oracle.com>
-Date:   Sat Jan 25 19:06:47 2025 +0000
+commit ad01dfb670215a35d4151c7129c9086888e1f9e8
+Author: Albert Mingkun Yang <ayang@openjdk.org>
+Date:   Mon Jan 27 14:57:49 2025 +0000
 
-    8347065: Add missing @spec tags for Java Security Standard Algorithm Names
+    8346920: Serial: Support allocation in old generation when heap is almost full
     
-    Reviewed-by: weijun
+    Reviewed-by: tschatzl, gli, sjohanss
