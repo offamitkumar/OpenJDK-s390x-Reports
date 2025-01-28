@@ -1,7 +1,8 @@
-commit 554292a97291b7ed4f897e21acc8491460189bb1
-Author: Varada M <varadam@openjdk.org>
-Date:   Mon Jan 27 13:54:25 2025 +0000
+commit 5d21a2bcc4ba06331df52470795134d8540dd567
+Author: Radek Cap <rcap@redhat.com>
+Date:   Tue Jan 28 11:16:01 2025 +0000
 
-    8211851: (ch) java/nio/channels/AsynchronousSocketChannel/StressLoopback.java times out (aix)
+    8347965: (tz) Update Timezone Data to 2025a
     
-    Backport-of: 8b22517cb0b24c4134a2dbf22591f6f84d7d866c
+    Reviewed-by: andrew
+    Backport-of: caa3c78f7837b1f561740184bd8f9cb671c467eb

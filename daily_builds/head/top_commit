@@ -1,7 +1,7 @@
-commit ad01dfb670215a35d4151c7129c9086888e1f9e8
-Author: Albert Mingkun Yang <ayang@openjdk.org>
-Date:   Mon Jan 27 14:57:49 2025 +0000
+commit fb066caea8a6bbf5b7a6fbe1ca51282e2c7c1ff2
+Author: Alexey Semenyuk <asemenyuk@openjdk.org>
+Date:   Tue Jan 28 13:51:04 2025 +0000
 
-    8346920: Serial: Support allocation in old generation when heap is almost full
+    8347272: [ubsan] JvmLauncher.cpp:262:52: runtime error: applying non-zero offset 40 to null pointer
     
-    Reviewed-by: tschatzl, gli, sjohanss
+    Reviewed-by: almatvee, mbaesken

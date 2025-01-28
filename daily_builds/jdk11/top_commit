@@ -1,6 +1,8 @@
-commit a2983ce702557505cab1cf47a853a240f49e0402
-Merge: 86a1b523c5 4adb4598c3
-Author: Andrew John Hughes <andrew@openjdk.org>
-Date:   Wed Jan 22 18:35:47 2025 +0000
+commit ecff933d69566da3b36e08c746e6f8b89a3b6ac8
+Author: Radek Cap <rcap@redhat.com>
+Date:   Tue Jan 28 19:00:13 2025 +0000
 
-    Merge
+    8344589: Update IANA Language Subtag Registry to Version 2024-11-19
+    
+    Reviewed-by: andrew
+    Backport-of: 9267dfa63b1d6b3f339782d2b720055a3da8ae6a
