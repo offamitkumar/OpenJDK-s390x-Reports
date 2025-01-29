@@ -1,8 +1,7 @@
-commit 5d21a2bcc4ba06331df52470795134d8540dd567
-Author: Radek Cap <rcap@redhat.com>
-Date:   Tue Jan 28 11:16:01 2025 +0000
+commit 83b8d310a5e50d25cd792ae89157d52fa85ea65e
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Jan 29 10:31:28 2025 +0000
 
-    8347965: (tz) Update Timezone Data to 2025a
+    8343378: Exceptions in javax/management DeadLockTest.java do not cause test failure
     
-    Reviewed-by: andrew
-    Backport-of: caa3c78f7837b1f561740184bd8f9cb671c467eb
+    Backport-of: 4a70c83bd0c563185123ce9d8a34e006c62db7cc

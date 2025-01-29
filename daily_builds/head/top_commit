@@ -1,7 +1,7 @@
-commit fb066caea8a6bbf5b7a6fbe1ca51282e2c7c1ff2
-Author: Alexey Semenyuk <asemenyuk@openjdk.org>
-Date:   Tue Jan 28 13:51:04 2025 +0000
+commit 96fefed37f658c3aefd7419dd96ccaa474949a42
+Author: Theo Weidmann <tweidmann@openjdk.org>
+Date:   Wed Jan 29 15:14:40 2025 +0000
 
-    8347272: [ubsan] JvmLauncher.cpp:262:52: runtime error: applying non-zero offset 40 to null pointer
+    8319850: PrintInlining should print which methods are late inlines
     
-    Reviewed-by: almatvee, mbaesken
+    Reviewed-by: chagedorn, kvn, jsjolen, dlong

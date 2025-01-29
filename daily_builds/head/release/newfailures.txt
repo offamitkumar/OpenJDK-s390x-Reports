@@ -2,4 +2,5 @@
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
+compiler/inlining/LateInlinePrinting.java 
 # newfailures.txt
