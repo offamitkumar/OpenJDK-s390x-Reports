@@ -1,7 +1,7 @@
-commit 6a9eb07c209f4f37c6e7b9538a6dad6343f7714f
-Author: Antonio Vieiro <antonio@vieiro.net>
-Date:   Wed Jan 29 10:41:11 2025 +0000
+commit 33d19c4b29fa43ab7bf7feca5f35ee5ddaf5b987
+Author: Steven Loomis <srl@openjdk.org>
+Date:   Thu Jan 30 15:31:11 2025 +0000
 
-    8343786: [11u] GHA: Bump macOS and Xcode versions to macos-13 and XCode 14.3.1
+    8195675: Call to insertText with single character from custom Input Method ignored
     
-    Reviewed-by: andrew
+    Backport-of: b8f2ec9091f9f7e5f4611991d04dd8aa113b94fd

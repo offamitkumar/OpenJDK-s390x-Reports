@@ -1,7 +1,7 @@
-commit 83b8d310a5e50d25cd792ae89157d52fa85ea65e
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jan 29 10:31:28 2025 +0000
+commit 95e4bc9e201f8643d21bd9fe6fc180951bbcd1e7
+Author: SendaoYan <syan@openjdk.org>
+Date:   Thu Jan 30 09:24:40 2025 +0000
 
-    8343378: Exceptions in javax/management DeadLockTest.java do not cause test failure
+    8332494: java/util/zip/EntryCount64k.java failing with java.lang.RuntimeException: '\\A\\Z' missing from stderr
     
-    Backport-of: 4a70c83bd0c563185123ce9d8a34e006c62db7cc
+    Backport-of: f5ab7dff402a3152f5d5736cc6521b4be617eccf

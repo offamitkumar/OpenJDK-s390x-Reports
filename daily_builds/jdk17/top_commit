@@ -1,7 +1,8 @@
-commit 1a06a61fda5c3e5657c6c3081d2d0fb6a22eb77b
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jan 29 10:37:17 2025 +0000
+commit b0c130ba3aa443ca58e9bcda813a80e989632b93
+Author: Antonio Vieiro <antonio@vieiro.net>
+Date:   Thu Jan 30 10:04:05 2025 +0000
 
-    8327098: GTest needs larger combination limit
+    8294316: SA core file support is broken on macosx-x64 starting with macOS 12.x
     
-    Backport-of: c901da48e30d53cb8e4e3c1f0584c5f2d3d095f1
+    Reviewed-by: sgehwolf
+    Backport-of: eaa475f72ced51cf0f0d0bce9ff1265bfb81ab31

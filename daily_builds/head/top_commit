@@ -1,7 +1,7 @@
-commit 96fefed37f658c3aefd7419dd96ccaa474949a42
-Author: Theo Weidmann <tweidmann@openjdk.org>
-Date:   Wed Jan 29 15:14:40 2025 +0000
+commit 5d5b294b0aaf619a4ed57296f389205e04556870
+Author: Andrew Dinn <adinn@openjdk.org>
+Date:   Thu Jan 30 15:29:13 2025 +0000
 
-    8319850: PrintInlining should print which methods are late inlines
+    8349070: Fix riscv and ppc build errors caused by JDK-8343767
     
-    Reviewed-by: chagedorn, kvn, jsjolen, dlong
+    Reviewed-by: mdoerr, fyang, jwaters

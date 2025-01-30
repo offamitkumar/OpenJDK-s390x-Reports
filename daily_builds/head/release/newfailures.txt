@@ -3,4 +3,5 @@
 # newfailures.txt
 # newfailures.txt
 compiler/inlining/LateInlinePrinting.java 
+compiler/intrinsics/TestContinuationPinningAndEA.java 
 # newfailures.txt
