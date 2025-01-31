@@ -1,7 +1,7 @@
-commit 95e4bc9e201f8643d21bd9fe6fc180951bbcd1e7
-Author: SendaoYan <syan@openjdk.org>
-Date:   Thu Jan 30 09:24:40 2025 +0000
+commit e1967d5124309de5276ab88d1bcf4d24f2620dab
+Author: Christoph Langer <clanger@openjdk.org>
+Date:   Fri Jan 31 10:23:00 2025 +0000
 
-    8332494: java/util/zip/EntryCount64k.java failing with java.lang.RuntimeException: '\\A\\Z' missing from stderr
+    8348625: [21u, 17u] Revert JDK-8185862 to restore old java.awt.headless behavior on Windows
     
-    Backport-of: f5ab7dff402a3152f5d5736cc6521b4be617eccf
+    Reviewed-by: sgehwolf

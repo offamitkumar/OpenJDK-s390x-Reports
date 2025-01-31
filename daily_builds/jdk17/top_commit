@@ -1,8 +1,7 @@
-commit b0c130ba3aa443ca58e9bcda813a80e989632b93
-Author: Antonio Vieiro <antonio@vieiro.net>
-Date:   Thu Jan 30 10:04:05 2025 +0000
+commit 6453b755a177183b512ca726d5b0ab8179f64c06
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Thu Jan 30 18:52:50 2025 +0000
 
-    8294316: SA core file support is broken on macosx-x64 starting with macOS 12.x
+    8347427: JTabbedPane/8134116/Bug8134116.java has no license header
     
-    Reviewed-by: sgehwolf
-    Backport-of: eaa475f72ced51cf0f0d0bce9ff1265bfb81ab31
+    Backport-of: f67b703625afa2e049c572978d29ac00d8c956d3
