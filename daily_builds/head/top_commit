@@ -1,7 +1,7 @@
-commit fcd5ebc7e8964c7936c0eede031cb6193621f5fb
-Author: Magnus Ihse Bursie <ihse@openjdk.org>
-Date:   Fri Jan 31 14:35:42 2025 +0000
+commit 305bbdae7fe40e33cf2baa100c134bd85ecaa553
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Sat Feb 1 14:06:48 2025 +0000
 
-    8292944: Noisy output when running make help the first time
+    8348402: PerfDataManager stalls shutdown for 1ms
     
-    Reviewed-by: erikj
+    Reviewed-by: dholmes, pchilanomate, coleenp

@@ -1,7 +1,6 @@
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
-jdk/jshell/ToolProviderTest.java 
 # newfailures.txt
 compiler/intrinsics/TestContinuationPinningAndEA.java 
 # newfailures.txt
