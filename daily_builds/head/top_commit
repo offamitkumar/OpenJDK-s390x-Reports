@@ -1,7 +1,7 @@
-commit 305bbdae7fe40e33cf2baa100c134bd85ecaa553
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Sat Feb 1 14:06:48 2025 +0000
+commit 2cce5eeb092b68b4e4ce6a8289a8aa567f47c973
+Author: SendaoYan <syan@openjdk.org>
+Date:   Sun Feb 2 02:46:16 2025 +0000
 
-    8348402: PerfDataManager stalls shutdown for 1ms
+    8349142: [JMH] compiler.MergeLoadBench.getCharBV fails
     
-    Reviewed-by: dholmes, pchilanomate, coleenp
+    Reviewed-by: liach
