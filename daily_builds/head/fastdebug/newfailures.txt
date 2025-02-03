@@ -2,5 +2,4 @@
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
-compiler/intrinsics/TestContinuationPinningAndEA.java 
 # newfailures.txt
