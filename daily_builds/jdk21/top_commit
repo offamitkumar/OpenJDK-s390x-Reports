@@ -1,7 +1,7 @@
-commit e1967d5124309de5276ab88d1bcf4d24f2620dab
-Author: Christoph Langer <clanger@openjdk.org>
-Date:   Fri Jan 31 10:23:00 2025 +0000
+commit d2cbada0b7c88521dfb4d3696205c9beb77018af
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Tue Feb 4 03:38:45 2025 +0000
 
-    8348625: [21u, 17u] Revert JDK-8185862 to restore old java.awt.headless behavior on Windows
+    8345468: test/jdk/javax/swing/JScrollBar/4865918/bug4865918.java fails in ubuntu22.04
     
-    Reviewed-by: sgehwolf
+    Backport-of: 6f307623568efe4d90942cd22ec9a26b2e1ca1b1

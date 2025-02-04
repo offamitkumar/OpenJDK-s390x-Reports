@@ -1,7 +1,7 @@
-commit a57c9b101a7fdb08ed1c8ca31ab0d4cc0040f1ba
-Author: SendaoYan <syan@openjdk.org>
-Date:   Mon Feb 3 14:25:47 2025 +0000
+commit beb43e2633900bb9ab3c975376fe5860b6d054e0
+Author: Per Minborg <pminborg@openjdk.org>
+Date:   Tue Feb 4 14:10:42 2025 +0000
 
-    8349184: [JMH] jdk.incubator.vector.ColumnFilterBenchmark.filterDoubleColumn fails on linux-aarch64
+    8349343: Add missing copyright messages in FFM benchmarks
     
-    Reviewed-by: haosun, aph
+    Reviewed-by: jvernee
