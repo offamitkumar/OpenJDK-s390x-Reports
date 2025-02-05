@@ -1,7 +1,7 @@
-commit beb43e2633900bb9ab3c975376fe5860b6d054e0
-Author: Per Minborg <pminborg@openjdk.org>
-Date:   Tue Feb 4 14:10:42 2025 +0000
+commit 6b994cd8ccba4f5d0199cb2925f0a6b5450ac115
+Author: Roland Westrelin <roland@openjdk.org>
+Date:   Wed Feb 5 13:54:35 2025 +0000
 
-    8349343: Add missing copyright messages in FFM benchmarks
+    8333697: C2: Hit MemLimit in PhaseCFG::global_code_motion
     
-    Reviewed-by: jvernee
+    Reviewed-by: thartmann, kvn

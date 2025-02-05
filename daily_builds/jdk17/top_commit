@@ -1,7 +1,7 @@
-commit 6453b755a177183b512ca726d5b0ab8179f64c06
-Author: Sergey Bylokhov <serb@openjdk.org>
-Date:   Thu Jan 30 18:52:50 2025 +0000
+commit bd41268a9a56be7039805ddacd20f1a8b33baec8
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Feb 5 09:07:46 2025 +0000
 
-    8347427: JTabbedPane/8134116/Bug8134116.java has no license header
+    8338571: [TestBug] DefaultCloseOperation.java test not working as expected wrt instruction after JDK-8325851 fix
     
-    Backport-of: f67b703625afa2e049c572978d29ac00d8c956d3
+    Backport-of: 8858de393a5cb4f9f1150a6cdf388266362a9559
