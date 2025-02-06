@@ -1,7 +1,7 @@
-commit 6b994cd8ccba4f5d0199cb2925f0a6b5450ac115
-Author: Roland Westrelin <roland@openjdk.org>
-Date:   Wed Feb 5 13:54:35 2025 +0000
+commit 5ec1aae21e80d86c55df28a86935f50ae77f7b41
+Author: Viktor Klang <vklang@openjdk.org>
+Date:   Thu Feb 6 15:02:21 2025 +0000
 
-    8333697: C2: Hit MemLimit in PhaseCFG::global_code_motion
+    8347842: ThreadPoolExecutor specification discusses RuntimePermission
     
-    Reviewed-by: thartmann, kvn
+    Reviewed-by: alanb, jpai
