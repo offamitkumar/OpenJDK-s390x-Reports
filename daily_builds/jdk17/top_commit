@@ -1,7 +1,7 @@
-commit bd41268a9a56be7039805ddacd20f1a8b33baec8
+commit 7213c0da2f78980942f563a40af53dccd9f98d1e
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Feb 5 09:07:46 2025 +0000
+Date:   Fri Feb 7 08:36:28 2025 +0000
 
-    8338571: [TestBug] DefaultCloseOperation.java test not working as expected wrt instruction after JDK-8325851 fix
+    8340411: open source several 2D imaging tests
     
-    Backport-of: 8858de393a5cb4f9f1150a6cdf388266362a9559
+    Backport-of: 8dcf7b8fa7b17bf34c62c561c6ed78e8080df1ff

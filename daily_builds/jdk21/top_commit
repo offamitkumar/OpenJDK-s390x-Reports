@@ -1,8 +1,7 @@
-commit 29a5de085a4eb746dcad637ced4cb719a59c3013
-Author: Joachim Kern <jkern@openjdk.org>
-Date:   Wed Feb 5 09:50:20 2025 +0000
+commit 46a146407f0a2168c5a92a06f2d08f33096937e2
+Author: Martin Doerr <mdoerr@openjdk.org>
+Date:   Fri Feb 7 10:10:35 2025 +0000
 
-    8334371: [AIX] Beginning with AIX 7.3 TL1 mmap() supports 64K memory pages
+    8348562: ZGC: segmentation fault due to missing node type check in barrier elision analysis
     
-    Reviewed-by: mdoerr, stuefe
-    Backport-of: ced99066354fc6a32c587b9e3c35b07e26d3452e
+    Backport-of: afcc2b03afc77f730300e1d92471466d56ed75fb
