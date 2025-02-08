@@ -1,7 +1,7 @@
-commit 86cec4ea2c2c56f03b23be44caade49b922cd3c6
-Author: Ivan Walulya <iwalulya@openjdk.org>
-Date:   Fri Feb 7 10:22:23 2025 +0000
+commit 8f6ccde9829ea0e4fe1c087e68bec4d9efb55c64
+Author: SendaoYan <syan@openjdk.org>
+Date:   Sat Feb 8 13:11:07 2025 +0000
 
-    8343782: G1: Use one G1CardSet instance for multiple old gen regions
+    8349554: [UBSAN] os::attempt_reserve_memory_between reported applying non-zero offset to non-null pointer produced null pointer
     
-    Reviewed-by: ayang, tschatzl
+    Reviewed-by: stefank, stuefe
