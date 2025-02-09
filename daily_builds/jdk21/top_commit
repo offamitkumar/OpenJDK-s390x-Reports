@@ -1,7 +1,7 @@
-commit 46a146407f0a2168c5a92a06f2d08f33096937e2
-Author: Martin Doerr <mdoerr@openjdk.org>
-Date:   Fri Feb 7 10:10:35 2025 +0000
+commit 9c8fe67afff3a275c2e5944e996ce3f32ae53b37
+Author: Christoph Langer <clanger@openjdk.org>
+Date:   Sun Feb 9 12:20:49 2025 +0000
 
-    8348562: ZGC: segmentation fault due to missing node type check in barrier elision analysis
+    8349603: [21u, 17u, 11u] Update GHA JDKs after Jan/25 updates
     
-    Backport-of: afcc2b03afc77f730300e1d92471466d56ed75fb
+    Reviewed-by: mbaesken, sgehwolf
