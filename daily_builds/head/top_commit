@@ -1,7 +1,7 @@
-commit 8f6ccde9829ea0e4fe1c087e68bec4d9efb55c64
-Author: SendaoYan <syan@openjdk.org>
-Date:   Sat Feb 8 13:11:07 2025 +0000
+commit f74c4dfe0b0c384a25f0b7a2330ba96d50b7fceb
+Author: Johan Sjölen <jsjolen@openjdk.org>
+Date:   Mon Feb 10 13:52:23 2025 +0000
 
-    8349554: [UBSAN] os::attempt_reserve_memory_between reported applying non-zero offset to non-null pointer produced null pointer
+    8349580: Do not use address in MemTracker top level functions
     
-    Reviewed-by: stefank, stuefe
+    Reviewed-by: gziemski, stefank
