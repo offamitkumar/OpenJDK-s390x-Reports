@@ -1,7 +1,7 @@
-commit f74c4dfe0b0c384a25f0b7a2330ba96d50b7fceb
-Author: Johan Sjölen <jsjolen@openjdk.org>
-Date:   Mon Feb 10 13:52:23 2025 +0000
+commit ee079fdbf1c513a4c57ef86a803eb0add651c539
+Author: Tobias Hartmann <thartmann@openjdk.org>
+Date:   Tue Feb 11 13:57:45 2025 +0000
 
-    8349580: Do not use address in MemTracker top level functions
+    8349820: Temporarily increase MemLimit for tests until JDK-8349772 and JDK-8337821 are fixed
     
-    Reviewed-by: gziemski, stefank
+    Reviewed-by: rcastanedalo, epeter

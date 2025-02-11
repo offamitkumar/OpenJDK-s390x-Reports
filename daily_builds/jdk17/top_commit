@@ -1,7 +1,8 @@
-commit 7213c0da2f78980942f563a40af53dccd9f98d1e
+commit 2691c1428c592f952a0093e0cae3244ab48246c0
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Feb 7 08:36:28 2025 +0000
+Date:   Tue Feb 11 13:53:45 2025 +0000
 
-    8340411: open source several 2D imaging tests
+    8345368: java/io/File/createTempFile/SpecialTempFile.java fails on Windows Server 2025
     
-    Backport-of: 8dcf7b8fa7b17bf34c62c561c6ed78e8080df1ff
+    Reviewed-by: mbaesken
+    Backport-of: b0c131e872f997cb7deadc9b0a87bd76e3a2a83c

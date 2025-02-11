@@ -1,7 +1,7 @@
-commit 9c8fe67afff3a275c2e5944e996ce3f32ae53b37
-Author: Christoph Langer <clanger@openjdk.org>
-Date:   Sun Feb 9 12:20:49 2025 +0000
+commit 3e556491933baa9b03b79319ababe20bc3c69e38
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Feb 11 13:50:27 2025 +0000
 
-    8349603: [21u, 17u, 11u] Update GHA JDKs after Jan/25 updates
+    8345368: java/io/File/createTempFile/SpecialTempFile.java fails on Windows Server 2025
     
-    Reviewed-by: mbaesken, sgehwolf
+    Backport-of: b0c131e872f997cb7deadc9b0a87bd76e3a2a83c
