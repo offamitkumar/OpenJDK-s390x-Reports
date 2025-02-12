@@ -1,7 +1,7 @@
-commit ee079fdbf1c513a4c57ef86a803eb0add651c539
-Author: Tobias Hartmann <thartmann@openjdk.org>
-Date:   Tue Feb 11 13:57:45 2025 +0000
+commit ed17c55ea34b3b6009dab11d64f21e0b7af3d701
+Author: Coleen Phillimore <coleenp@openjdk.org>
+Date:   Wed Feb 12 12:04:40 2025 +0000
 
-    8349820: Temporarily increase MemLimit for tests until JDK-8349772 and JDK-8337821 are fixed
+    8349145: Make Class.getProtectionDomain() non-native
     
-    Reviewed-by: rcastanedalo, epeter
+    Reviewed-by: liach, dholmes, yzheng

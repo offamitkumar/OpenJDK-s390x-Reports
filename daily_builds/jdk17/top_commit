@@ -1,8 +1,8 @@
-commit 2691c1428c592f952a0093e0cae3244ab48246c0
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Feb 11 13:53:45 2025 +0000
+commit 4e5176419cdf67562ae3e3d491ba0efe77acb1df
+Author: Christoph Langer <clanger@openjdk.org>
+Date:   Wed Feb 12 17:04:09 2025 +0000
 
-    8345368: java/io/File/createTempFile/SpecialTempFile.java fails on Windows Server 2025
+    8348625: [21u, 17u] Revert JDK-8185862 to restore old java.awt.headless behavior on Windows
     
     Reviewed-by: mbaesken
-    Backport-of: b0c131e872f997cb7deadc9b0a87bd76e3a2a83c
+    Backport-of: e1967d5124309de5276ab88d1bcf4d24f2620dab
