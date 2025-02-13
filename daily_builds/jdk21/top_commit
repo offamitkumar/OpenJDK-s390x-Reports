@@ -1,8 +1,7 @@
-commit eb824722c053608b779d3b8959ba218aceed6875
-Author: Antonio Vieiro <avieirov@redhat.com>
-Date:   Wed Feb 12 02:05:45 2025 +0000
+commit 950e655064a75e20540955ad91430c8bea7ae73b
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Thu Feb 13 12:57:33 2025 +0000
 
-    8346587: Distrust TLS server certificates anchored by Camerfirma Root CAs
+    8347576: Error output in libjsound has non matching format strings
     
-    Reviewed-by: andrew
-    Backport-of: d2262fe4e9b3118d4c4ab152aa2771b744398367
+    Backport-of: 07a0dcbabcb1216211c1da75f6dd2582da194df9

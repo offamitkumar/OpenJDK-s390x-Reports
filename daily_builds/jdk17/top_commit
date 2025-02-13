@@ -1,8 +1,7 @@
-commit 4e5176419cdf67562ae3e3d491ba0efe77acb1df
-Author: Christoph Langer <clanger@openjdk.org>
-Date:   Wed Feb 12 17:04:09 2025 +0000
+commit fcdcff0e0d6a25de5e1c3bd62ba909774663b0db
+Author: SendaoYan <syan@openjdk.org>
+Date:   Thu Feb 13 11:51:29 2025 +0000
 
-    8348625: [21u, 17u] Revert JDK-8185862 to restore old java.awt.headless behavior on Windows
+    8346972: Test java/nio/channels/FileChannel/LoopingTruncate.java fails sometimes with IOException: There is not enough space on the disk
     
-    Reviewed-by: mbaesken
-    Backport-of: e1967d5124309de5276ab88d1bcf4d24f2620dab
+    Backport-of: a07d784919ae232a890bf79de27b8623e294ad20

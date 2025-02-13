@@ -1,7 +1,7 @@
-commit ed17c55ea34b3b6009dab11d64f21e0b7af3d701
-Author: Coleen Phillimore <coleenp@openjdk.org>
-Date:   Wed Feb 12 12:04:40 2025 +0000
+commit c2fc94782669ae1645014ee3bfeba957dbff4669
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Thu Feb 13 14:16:23 2025 +0000
 
-    8349145: Make Class.getProtectionDomain() non-native
+    8349378: Build splashscreen lib with SIZE optimization
     
-    Reviewed-by: liach, dholmes, yzheng
+    Reviewed-by: erikj, prr, honkar
