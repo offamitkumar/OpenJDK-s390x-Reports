@@ -1,7 +1,8 @@
-commit 33d19c4b29fa43ab7bf7feca5f35ee5ddaf5b987
-Author: Steven Loomis <srl@openjdk.org>
-Date:   Thu Jan 30 15:31:11 2025 +0000
+commit 8322c66efa9da9210eca7d6081d2a8c2d65ba4e0
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Fri Feb 14 16:21:20 2025 +0000
 
-    8195675: Call to insertText with single character from custom Input Method ignored
+    8346587: Distrust TLS server certificates anchored by Camerfirma Root CAs
     
-    Backport-of: b8f2ec9091f9f7e5f4611991d04dd8aa113b94fd
+    Reviewed-by: sgehwolf
+    Backport-of: f4bef2f24a9bb433b5693aa59bb81acac6b311f3

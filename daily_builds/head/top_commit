@@ -1,7 +1,7 @@
-commit c2fc94782669ae1645014ee3bfeba957dbff4669
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Thu Feb 13 14:16:23 2025 +0000
+commit 0414dcec118fce24037ca1a6b00561c0ce4c6953
+Author: Maxim Kartashev <mkartashev@openjdk.org>
+Date:   Fri Feb 14 15:28:59 2025 +0000
 
-    8349378: Build splashscreen lib with SIZE optimization
+    8349812: (fs) Files.newByteChannel with empty path name and CREATE_NEW throws unexpected exception
     
-    Reviewed-by: erikj, prr, honkar
+    Reviewed-by: bpb
