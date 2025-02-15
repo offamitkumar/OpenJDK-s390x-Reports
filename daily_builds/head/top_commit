@@ -1,7 +1,7 @@
-commit 0414dcec118fce24037ca1a6b00561c0ce4c6953
-Author: Maxim Kartashev <mkartashev@openjdk.org>
-Date:   Fri Feb 14 15:28:59 2025 +0000
+commit 5cf11324afdeed0189e0491845a7ffe78c7c1e13
+Author: Alexey Semenyuk <asemenyuk@openjdk.org>
+Date:   Sat Feb 15 14:31:29 2025 +0000
 
-    8349812: (fs) Files.newByteChannel with empty path name and CREATE_NEW throws unexpected exception
+    8350098: jpackage test lib erroneously will run methods without @Test annotation as tests
     
-    Reviewed-by: bpb
+    Reviewed-by: almatvee
