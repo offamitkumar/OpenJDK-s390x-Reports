@@ -1,7 +1,7 @@
-commit 5cf11324afdeed0189e0491845a7ffe78c7c1e13
-Author: Alexey Semenyuk <asemenyuk@openjdk.org>
-Date:   Sat Feb 15 14:31:29 2025 +0000
+commit 7d11418c820b46926a25907766d16083a4b349de
+Author: Bradford Wetmore <wetmore@openjdk.org>
+Date:   Sat Feb 15 22:40:46 2025 +0000
 
-    8350098: jpackage test lib erroneously will run methods without @Test annotation as tests
+    8350147: Replace example in KEM class with the one from JEP 452
     
-    Reviewed-by: almatvee
+    Reviewed-by: weijun
