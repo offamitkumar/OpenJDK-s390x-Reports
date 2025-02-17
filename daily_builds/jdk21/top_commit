@@ -1,7 +1,7 @@
-commit 950e655064a75e20540955ad91430c8bea7ae73b
+commit b7d92cd0ae781de6c51ea965c16bd6e0c396e9f7
 Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Thu Feb 13 12:57:33 2025 +0000
+Date:   Mon Feb 17 11:40:25 2025 +0000
 
-    8347576: Error output in libjsound has non matching format strings
+    8338303: Linux ppc64le with toolchain clang - detection failure in early JVM startup
     
-    Backport-of: 07a0dcbabcb1216211c1da75f6dd2582da194df9
+    Backport-of: 70eec9001a550888f35476f9e2cf3c62d41442dd

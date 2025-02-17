@@ -1,7 +1,7 @@
-commit 7d11418c820b46926a25907766d16083a4b349de
-Author: Bradford Wetmore <wetmore@openjdk.org>
-Date:   Sat Feb 15 22:40:46 2025 +0000
+commit 8b2aa51b0c36a993e46fea7a4b61788dd101d606
+Author: Suchismith Roy <sroy@openjdk.org>
+Date:   Mon Feb 17 13:28:34 2025 +0000
 
-    8350147: Replace example in KEM class with the one from JEP 452
+    8349780: AIX os::get_summary_cpu_info  support Power 11
     
-    Reviewed-by: weijun
+    Reviewed-by: stuefe, amitkumar
