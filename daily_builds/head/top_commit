@@ -1,7 +1,7 @@
-commit 8b2aa51b0c36a993e46fea7a4b61788dd101d606
-Author: Suchismith Roy <sroy@openjdk.org>
-Date:   Mon Feb 17 13:28:34 2025 +0000
+commit e1d0a9c832ef3e92faaed7f290ff56c0ed8a9d94
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Tue Feb 18 13:20:05 2025 +0000
 
-    8349780: AIX os::get_summary_cpu_info  support Power 11
+    8350202: Tune for Power10 CPUs on Linux ppc64le
     
-    Reviewed-by: stuefe, amitkumar
+    Reviewed-by: mdoerr
