@@ -1,7 +1,8 @@
-commit fcdcff0e0d6a25de5e1c3bd62ba909774663b0db
-Author: SendaoYan <syan@openjdk.org>
-Date:   Thu Feb 13 11:51:29 2025 +0000
+commit 06ea6d5c17899df8fd83d0b14983c7c1e88d9cde
+Author: Radek Cap <rcap@redhat.com>
+Date:   Wed Feb 19 15:34:33 2025 +0000
 
-    8346972: Test java/nio/channels/FileChannel/LoopingTruncate.java fails sometimes with IOException: There is not enough space on the disk
+    8347965: (tz) Update Timezone Data to 2025a
     
-    Backport-of: a07d784919ae232a890bf79de27b8623e294ad20
+    Reviewed-by: goetz, andrew
+    Backport-of: 5d21a2bcc4ba06331df52470795134d8540dd567

@@ -1,7 +1,7 @@
-commit b7d92cd0ae781de6c51ea965c16bd6e0c396e9f7
+commit 6cc0ec2fdc56150df361a31861a36cc8518f4cb6
 Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Mon Feb 17 11:40:25 2025 +0000
+Date:   Wed Feb 19 08:36:31 2025 +0000
 
-    8338303: Linux ppc64le with toolchain clang - detection failure in early JVM startup
+    8347267: [macOS]: UnixOperatingSystem.c:67:40: runtime error: division by zero
     
-    Backport-of: 70eec9001a550888f35476f9e2cf3c62d41442dd
+    Backport-of: 5e92a4ceafd0626e3600e44a3370ca2f5d9347c8

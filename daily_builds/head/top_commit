@@ -1,7 +1,7 @@
-commit e1d0a9c832ef3e92faaed7f290ff56c0ed8a9d94
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Tue Feb 18 13:20:05 2025 +0000
+commit efbad00c4d7931177ccc5e9bce3b30dfbac94010
+Author: Ivan Walulya <iwalulya@openjdk.org>
+Date:   Wed Feb 19 14:27:33 2025 +0000
 
-    8350202: Tune for Power10 CPUs on Linux ppc64le
+    8349688: G1: Wrong initial optional region index when selecting candidates from retained regions
     
-    Reviewed-by: mdoerr
+    Reviewed-by: tschatzl, ayang
