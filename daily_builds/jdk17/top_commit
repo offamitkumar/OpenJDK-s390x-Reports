@@ -1,8 +1,7 @@
-commit 06ea6d5c17899df8fd83d0b14983c7c1e88d9cde
-Author: Radek Cap <rcap@redhat.com>
-Date:   Wed Feb 19 15:34:33 2025 +0000
+commit b2f814e033e1bd81be1d8c2dff16dcf7aa80eddc
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Feb 20 13:27:12 2025 +0000
 
-    8347965: (tz) Update Timezone Data to 2025a
+    8342098: Write a test to compare the images
     
-    Reviewed-by: goetz, andrew
-    Backport-of: 5d21a2bcc4ba06331df52470795134d8540dd567
+    Backport-of: 47ebf8d868b2e15b943a227ad3cf2ee12eed10f6

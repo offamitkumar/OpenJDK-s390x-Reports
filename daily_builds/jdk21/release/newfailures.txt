@@ -1,5 +1,6 @@
 # newfailures.txt
 # newfailures.txt
+java/foreign/nested/TestNested.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
 # newfailures.txt
 # newfailures.txt

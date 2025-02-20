@@ -1,7 +1,7 @@
-commit 6cc0ec2fdc56150df361a31861a36cc8518f4cb6
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Wed Feb 19 08:36:31 2025 +0000
+commit 1b49a33e73ba40058462e0d8269d941386d94a30
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Feb 20 08:06:27 2025 +0000
 
-    8347267: [macOS]: UnixOperatingSystem.c:67:40: runtime error: division by zero
+    8342098: Write a test to compare the images
     
-    Backport-of: 5e92a4ceafd0626e3600e44a3370ca2f5d9347c8
+    Backport-of: 47ebf8d868b2e15b943a227ad3cf2ee12eed10f6
