@@ -1,8 +1,8 @@
-commit d158b8baefb0f47991c202fa5eae877a09d37956
-Author: Daniel Hu <costmuch@amazon.com>
-Date:   Thu Feb 20 17:33:05 2025 +0000
+commit 6139332080e106a31bf4281ee4a6edc9918d83d0
+Author: Christoph Langer <clanger@openjdk.org>
+Date:   Fri Feb 21 06:15:50 2025 +0000
 
-    8312049: runtime/logging/ClassLoadUnloadTest can be improved
+    8349603: [21u, 17u, 11u] Update GHA JDKs after Jan/25 updates
     
-    Reviewed-by: phh
-    Backport-of: 4676b40f17dd18941f5883cb9b989ad639992a50
+    Reviewed-by: sgehwolf
+    Backport-of: 6ccdc3f8e03d5780da0914c1155b38d33ab76e42
