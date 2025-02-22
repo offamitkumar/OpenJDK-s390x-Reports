@@ -1,7 +1,7 @@
-commit b2f814e033e1bd81be1d8c2dff16dcf7aa80eddc
+commit 2846c9e07b4502f2cc0c823b97c889f1440c66a6
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Feb 20 13:27:12 2025 +0000
+Date:   Sat Feb 22 15:20:15 2025 +0000
 
-    8342098: Write a test to compare the images
+    8346828: javax/swing/JScrollBar/4865918/bug4865918.java still fails in CI
     
-    Backport-of: 47ebf8d868b2e15b943a227ad3cf2ee12eed10f6
+    Backport-of: 9fafd63d46f64428e0b9c2e9a6b0ac7ca0e2d355

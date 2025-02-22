@@ -1,8 +1,7 @@
-commit 6139332080e106a31bf4281ee4a6edc9918d83d0
-Author: Christoph Langer <clanger@openjdk.org>
-Date:   Fri Feb 21 06:15:50 2025 +0000
+commit 86dddbcda62626382d97c596f2edf777757dbe98
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Fri Feb 21 23:06:37 2025 +0000
 
-    8349603: [21u, 17u, 11u] Update GHA JDKs after Jan/25 updates
+    8347427: JTabbedPane/8134116/Bug8134116.java has no license header
     
-    Reviewed-by: sgehwolf
-    Backport-of: 6ccdc3f8e03d5780da0914c1155b38d33ab76e42
+    Backport-of: f67b703625afa2e049c572978d29ac00d8c956d3

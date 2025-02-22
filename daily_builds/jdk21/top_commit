@@ -1,7 +1,7 @@
-commit 1b49a33e73ba40058462e0d8269d941386d94a30
+commit 69192febb25cfe2cd053735815e85657aea3e777
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Feb 20 08:06:27 2025 +0000
+Date:   Sat Feb 22 15:13:14 2025 +0000
 
-    8342098: Write a test to compare the images
+    8348675: TrayIcon tests fail in Ubuntu 24.10 Wayland
     
-    Backport-of: 47ebf8d868b2e15b943a227ad3cf2ee12eed10f6
+    Backport-of: 6f4fc82149b52dd91289fe42def7d1cacad31212
