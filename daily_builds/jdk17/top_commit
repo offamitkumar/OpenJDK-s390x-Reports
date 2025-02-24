@@ -1,7 +1,7 @@
-commit 2846c9e07b4502f2cc0c823b97c889f1440c66a6
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Sat Feb 22 15:20:15 2025 +0000
+commit 01d107aea8eca4f4d2863deb30ac60e802debe15
+Author: Antonio Vieiro <antonio@vieiro.net>
+Date:   Mon Feb 24 08:11:02 2025 +0000
 
-    8346828: javax/swing/JScrollBar/4865918/bug4865918.java still fails in CI
+    8339728: [Accessibility,Windows,JAWS] Bug in the getKeyChar method of the AccessBridge class
     
-    Backport-of: 9fafd63d46f64428e0b9c2e9a6b0ac7ca0e2d355
+    Backport-of: af639f37ffb3a46351258155a4400a20c9b313fb

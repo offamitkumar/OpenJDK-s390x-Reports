@@ -1,7 +1,8 @@
-commit 86dddbcda62626382d97c596f2edf777757dbe98
-Author: Sergey Bylokhov <serb@openjdk.org>
-Date:   Fri Feb 21 23:06:37 2025 +0000
+commit 659a4669208645420e151e78ab5fd3ac3808b310
+Author: Zdenek Zambersky <zzambers@openjdk.org>
+Date:   Mon Feb 24 15:29:43 2025 +0000
 
-    8347427: JTabbedPane/8134116/Bug8134116.java has no license header
+    8306408: Fix the format of several tables in building.md
     
-    Backport-of: f67b703625afa2e049c572978d29ac00d8c956d3
+    Reviewed-by: andrew
+    Backport-of: 26755a968665545a151adce79a5227c79724bb6b

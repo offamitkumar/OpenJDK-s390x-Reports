@@ -1,7 +1,8 @@
-commit 69192febb25cfe2cd053735815e85657aea3e777
+commit d02ad34144917a36911296b20ce28381ead3f601
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Sat Feb 22 15:13:14 2025 +0000
+Date:   Mon Feb 24 10:54:41 2025 +0000
 
-    8348675: TrayIcon tests fail in Ubuntu 24.10 Wayland
+    8327476: Upgrade JLine to 3.26.1
     
-    Backport-of: 6f4fc82149b52dd91289fe42def7d1cacad31212
+    Reviewed-by: mdoerr
+    Backport-of: aaa90b3005c85852971203ce6feb88e7091e167b
