@@ -1,7 +1,8 @@
-commit 01d107aea8eca4f4d2863deb30ac60e802debe15
-Author: Antonio Vieiro <antonio@vieiro.net>
-Date:   Mon Feb 24 08:11:02 2025 +0000
+commit ae0177b6abc1c4b3755ec446f2f35ad2616107a9
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Feb 25 16:20:20 2025 +0000
 
-    8339728: [Accessibility,Windows,JAWS] Bug in the getKeyChar method of the AccessBridge class
+    8302111: Serialization considerations
     
-    Backport-of: af639f37ffb3a46351258155a4400a20c9b313fb
+    Reviewed-by: rrich
+    Backport-of: 369c573383a0120e0d85aeb89a211f38b5261013
