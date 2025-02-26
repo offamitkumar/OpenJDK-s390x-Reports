@@ -1,8 +1,7 @@
-commit ae0177b6abc1c4b3755ec446f2f35ad2616107a9
+commit fd353e38a820eed00b1a5f28e892a4d6baa3f1d1
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Feb 25 16:20:20 2025 +0000
+Date:   Wed Feb 26 08:29:36 2025 +0000
 
-    8302111: Serialization considerations
+    8350651: Bump update version for OpenJDK: jdk-17.0.16
     
-    Reviewed-by: rrich
-    Backport-of: 369c573383a0120e0d85aeb89a211f38b5261013
+    Reviewed-by: clanger

@@ -1,8 +1,7 @@
-commit 951453e9f0a46d114b801986f29cb0fe1179e130
+commit 4159e888ca33db26703483c6c9d64a28221eda4a
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Feb 25 16:14:14 2025 +0000
+Date:   Wed Feb 26 08:14:00 2025 +0000
 
-    8344581: [TESTBUG] java/awt/Robot/ScreenCaptureRobotTest.java failing on macOS
+    8350650: Bump update version for OpenJDK: jdk-21.0.8
     
-    Reviewed-by: mbaesken
-    Backport-of: 0d30b869d8be831bfc5ff5511b3a42900e4c22a4
+    Reviewed-by: clanger
