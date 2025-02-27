@@ -1,7 +1,7 @@
-commit 4159e888ca33db26703483c6c9d64a28221eda4a
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Feb 26 08:14:00 2025 +0000
+commit ae47d99675d38a60006dd901187595e6cad04e82
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Thu Feb 27 13:32:07 2025 +0000
 
-    8350650: Bump update version for OpenJDK: jdk-21.0.8
+    8346082: Output JVMTI agent information in hserr files
     
-    Reviewed-by: clanger
+    Backport-of: c75b1d4bf65d927e18b10ea6de263a331b78e13a
