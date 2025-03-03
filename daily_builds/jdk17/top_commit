@@ -1,7 +1,7 @@
-commit fd353e38a820eed00b1a5f28e892a4d6baa3f1d1
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Feb 26 08:29:36 2025 +0000
+commit 72e90637a1dcd7cecc736ca289dabbaaca39f66b
+Author: Martin Doerr <mdoerr@openjdk.org>
+Date:   Mon Mar 3 09:22:08 2025 +0000
 
-    8350651: Bump update version for OpenJDK: jdk-17.0.16
+    8343205: CompileBroker::possibly_add_compiler_threads excessively polls available memory
     
-    Reviewed-by: clanger
+    Backport-of: 3087c6c74d742b7b5eaf28e4c886b5dc1811ea6f
