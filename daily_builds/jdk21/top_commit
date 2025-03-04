@@ -1,9 +1,7 @@
-commit ef23a01ac5abdeadeaf4bfddb156c22c148cc64d
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Mon Mar 3 10:05:43 2025 +0000
+commit 9d9bcd2c8963c709a2d0e8d7d2680db5608d42cc
+Author: SendaoYan <syan@openjdk.org>
+Date:   Tue Mar 4 15:35:28 2025 +0000
 
-    8279016: JFR Leak Profiler is broken with Shenandoah
-    8343754: Problemlist jdk/jfr/event/oldobject/TestShenandoah.java after JDK-8279016
+    8314840: 3 gc/epsilon tests ignore external vm options
     
-    Reviewed-by: phh, serb, ysr
-    Backport-of: 0be7118b2f761b416ebf8cbb11473d51e80be409
+    Backport-of: da8abdc0bf98e8afc9d56ffe25a8fe83ed1531a5
