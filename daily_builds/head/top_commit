@@ -1,7 +1,7 @@
-commit efbad00c4d7931177ccc5e9bce3b30dfbac94010
-Author: Ivan Walulya <iwalulya@openjdk.org>
-Date:   Wed Feb 19 14:27:33 2025 +0000
+commit d90b79a2bd2f8bb6e50aa32aafe47748ef6ebeff
+Author: Coleen Phillimore <coleenp@openjdk.org>
+Date:   Mon Mar 10 14:54:50 2025 +0000
 
-    8349688: G1: Wrong initial optional region index when selecting candidates from retained regions
+    8351046: Rename ObjectMonitor functions
     
-    Reviewed-by: tschatzl, ayang
+    Reviewed-by: stefank, fbredberg

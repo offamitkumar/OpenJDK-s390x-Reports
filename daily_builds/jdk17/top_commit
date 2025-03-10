@@ -1,7 +1,8 @@
-commit 6e37df10401b55a1944fb5c1007dea979f696e1c
-Author: SendaoYan <syan@openjdk.org>
-Date:   Tue Mar 4 15:36:17 2025 +0000
+commit d215a1f47ce869179e1fddbb724fba5902816676
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Mar 10 14:49:49 2025 +0000
 
-    8349200: [JMH] time.format.ZonedDateTimeFormatterBenchmark fails
+    8348936: [Accessibility,macOS,VoiceOver] VoiceOver doesn't announce untick on toggling the checkbox with "space" key on macOS
+    8345728: [Accessibility,macOS,Screen Magnifier]: JCheckbox unchecked state does not magnify but works for checked state
     
-    Backport-of: 9d101b2528f4bb1c4dfb74cdc5e37343b9175580
+    Backport-of: 1e87ff01994df16df7de331040fc5d7a4a85f630

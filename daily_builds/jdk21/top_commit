@@ -1,7 +1,7 @@
-commit d29111af0d7223116ae4c4f7f9c98ee7be81ed77
-Author: Dhamoder Nalla <dhanalla@openjdk.org>
-Date:   Thu Mar 6 17:29:52 2025 +0000
+commit 16a593a8d7bb9ebd2909f9f488a40333ec1c62f5
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Mar 10 14:38:59 2025 +0000
 
-    8348323: Corrupted timezone string in JVM crash log
+    8348596: Update FreeType to 2.13.3
     
-    Backport-of: 2bef5b4a877f4d3bc766558b8782b7b57dee79a8
+    Backport-of: 6b719eeebc346fd4655fc718d7d033b3ebf54d9e

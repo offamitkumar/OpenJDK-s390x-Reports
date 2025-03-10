@@ -1,8 +1,7 @@
-commit 659a4669208645420e151e78ab5fd3ac3808b310
-Author: Zdenek Zambersky <zzambers@openjdk.org>
-Date:   Mon Feb 24 15:29:43 2025 +0000
+commit 289644add4ee0d649bdbf91ed6ffc4e510fc4022
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Mon Mar 10 17:24:37 2025 +0000
 
-    8306408: Fix the format of several tables in building.md
+    8346887: DrawFocusRect() may cause an assertion failure
     
-    Reviewed-by: andrew
-    Backport-of: 26755a968665545a151adce79a5227c79724bb6b
+    Backport-of: 8eddf67c82a2af4d704c4063ad802640770b3c26
