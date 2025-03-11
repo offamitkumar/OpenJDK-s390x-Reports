@@ -1,7 +1,7 @@
-commit 16a593a8d7bb9ebd2909f9f488a40333ec1c62f5
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Mar 10 14:38:59 2025 +0000
+commit a12f9f210c640f02cd3628fb4e8c0c84ea6247f3
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Tue Mar 11 09:12:22 2025 +0000
 
-    8348596: Update FreeType to 2.13.3
+    8350201: Out of bounds access on Linux aarch64 in os::print_register_info
     
-    Backport-of: 6b719eeebc346fd4655fc718d7d033b3ebf54d9e
+    Backport-of: 59810ad745b28f50d287fa8db650c3f1924791d9

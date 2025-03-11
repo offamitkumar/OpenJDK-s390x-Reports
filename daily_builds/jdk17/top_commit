@@ -1,8 +1,7 @@
-commit d215a1f47ce869179e1fddbb724fba5902816676
+commit 682c9390339a79b89f82e580f90587deafbeef45
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Mar 10 14:49:49 2025 +0000
+Date:   Tue Mar 11 14:22:24 2025 +0000
 
-    8348936: [Accessibility,macOS,VoiceOver] VoiceOver doesn't announce untick on toggling the checkbox with "space" key on macOS
-    8345728: [Accessibility,macOS,Screen Magnifier]: JCheckbox unchecked state does not magnify but works for checked state
+    8348596: Update FreeType to 2.13.3
     
-    Backport-of: 1e87ff01994df16df7de331040fc5d7a4a85f630
+    Backport-of: 6b719eeebc346fd4655fc718d7d033b3ebf54d9e

@@ -1,7 +1,7 @@
-commit d90b79a2bd2f8bb6e50aa32aafe47748ef6ebeff
-Author: Coleen Phillimore <coleenp@openjdk.org>
-Date:   Mon Mar 10 14:54:50 2025 +0000
+commit 0ad9a104e2fed2dd80494cec22e9d9332d37821b
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Tue Mar 11 15:27:36 2025 +0000
 
-    8351046: Rename ObjectMonitor functions
+    8351146: JFR: JavaMonitorInflate event should default to no threshold and be disabled
     
-    Reviewed-by: stefank, fbredberg
+    Reviewed-by: coleenp, egahlin
