@@ -1,7 +1,8 @@
-commit a12f9f210c640f02cd3628fb4e8c0c84ea6247f3
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Tue Mar 11 09:12:22 2025 +0000
+commit d39195732ab8cd51ae12db96233aadaa618b7c4e
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Wed Mar 12 16:17:48 2025 +0000
 
-    8350201: Out of bounds access on Linux aarch64 in os::print_register_info
+    8350616: Skip ValidateHazardPtrsClosure in non-debug builds
     
-    Backport-of: 59810ad745b28f50d287fa8db650c3f1924791d9
+    Reviewed-by: shade
+    Backport-of: e43960a0170bf29b28ff4733e1c8c927947fb0bb

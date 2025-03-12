@@ -1,7 +1,8 @@
-commit 289644add4ee0d649bdbf91ed6ffc4e510fc4022
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Mar 10 17:24:37 2025 +0000
+commit 878517221091509b55233ba84627635654e5f070
+Author: Taizo Kurashige <103394724+kurashige23@users.noreply.github.com>
+Date:   Wed Mar 12 09:19:02 2025 +0000
 
-    8346887: DrawFocusRect() may cause an assertion failure
+    8026976: ECParameters, Point does not match field size
     
-    Backport-of: 8eddf67c82a2af4d704c4063ad802640770b3c26
+    Reviewed-by: sgehwolf
+    Backport-of: 55f5542ca2104df91e14693534cc7b3c36e81953

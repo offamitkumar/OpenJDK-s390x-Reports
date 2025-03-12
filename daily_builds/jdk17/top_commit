@@ -1,7 +1,7 @@
-commit 682c9390339a79b89f82e580f90587deafbeef45
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Mar 11 14:22:24 2025 +0000
+commit 03828f8616b5d11491176b54bf6adb5e024581a6
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Wed Mar 12 16:18:47 2025 +0000
 
-    8348596: Update FreeType to 2.13.3
+    8350616: Skip ValidateHazardPtrsClosure in non-debug builds
     
-    Backport-of: 6b719eeebc346fd4655fc718d7d033b3ebf54d9e
+    Backport-of: e43960a0170bf29b28ff4733e1c8c927947fb0bb
