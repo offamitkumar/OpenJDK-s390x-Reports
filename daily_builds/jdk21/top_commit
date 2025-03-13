@@ -1,8 +1,7 @@
-commit d39195732ab8cd51ae12db96233aadaa618b7c4e
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Mar 12 16:17:48 2025 +0000
+commit f16c950dcf27438599c1de35a4124f85b2321aeb
+Author: Severin Gehwolf <sgehwolf@openjdk.org>
+Date:   Thu Mar 13 16:08:43 2025 +0000
 
-    8350616: Skip ValidateHazardPtrsClosure in non-debug builds
+    8303770: Remove Baltimore root certificate expiring in May 2025
     
-    Reviewed-by: shade
-    Backport-of: e43960a0170bf29b28ff4733e1c8c927947fb0bb
+    Backport-of: 2371696781edc040d8fa8133c78b284a2e3de1ed

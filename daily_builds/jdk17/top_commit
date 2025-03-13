@@ -1,7 +1,8 @@
-commit 03828f8616b5d11491176b54bf6adb5e024581a6
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Mar 12 16:18:47 2025 +0000
+commit f39ce948644ec218906674eb3e7e715134f362b4
+Author: Roman Marchenko <rmarchenko@openjdk.org>
+Date:   Thu Mar 13 16:23:34 2025 +0000
 
-    8350616: Skip ValidateHazardPtrsClosure in non-debug builds
+    8309841: Jarsigner should print a warning if an entry is removed
     
-    Backport-of: e43960a0170bf29b28ff4733e1c8c927947fb0bb
+    Reviewed-by: yan
+    Backport-of: bdfb41f977258831e4b0ceaef5d016d095ab6e7f
