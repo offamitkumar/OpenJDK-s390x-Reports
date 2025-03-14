@@ -1,7 +1,8 @@
-commit 4e51a8c9ad4e5345d05cf32ce1e82b7158f80e93
-Author: Galder Zamarreño <galder@openjdk.org>
-Date:   Thu Mar 13 13:53:54 2025 +0000
+commit 712a70c5c44ac1fe916ceb1fff854d689b79b126
+Author: Hamlin Li <mli@openjdk.org>
+Date:   Fri Mar 14 15:07:29 2025 +0000
 
-    8307513: C2: intrinsify Math.max(long,long) and Math.min(long,long)
+    8318220: RISC-V: C2 ReverseI
+    8318221: RISC-V: C2 ReverseL
     
-    Reviewed-by: roland, epeter, chagedorn, darcy
+    Reviewed-by: fyang, luhenry

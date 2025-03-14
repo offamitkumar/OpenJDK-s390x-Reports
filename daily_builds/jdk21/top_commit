@@ -1,7 +1,7 @@
-commit f16c950dcf27438599c1de35a4124f85b2321aeb
-Author: Severin Gehwolf <sgehwolf@openjdk.org>
-Date:   Thu Mar 13 16:08:43 2025 +0000
+commit d83fe71a65f58fb1e90240c9aa6472f1523ac0fc
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Mar 14 12:41:19 2025 +0000
 
-    8303770: Remove Baltimore root certificate expiring in May 2025
+    8340907: Open source closed frame tests # 2
     
-    Backport-of: 2371696781edc040d8fa8133c78b284a2e3de1ed
+    Backport-of: f2a767f59b1f66966665bc8601273b532961395a
