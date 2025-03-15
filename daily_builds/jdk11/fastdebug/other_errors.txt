@@ -3,4 +3,3 @@
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
-gc/stress/gcbasher/TestGCBasherWithCMS.java 

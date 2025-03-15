@@ -1,8 +1,7 @@
-commit 712a70c5c44ac1fe916ceb1fff854d689b79b126
-Author: Hamlin Li <mli@openjdk.org>
-Date:   Fri Mar 14 15:07:29 2025 +0000
+commit 0460978e7c769624cacdb528277a99914b327e30
+Author: Ian Graves <igraves@openjdk.org>
+Date:   Fri Mar 14 17:50:42 2025 +0000
 
-    8318220: RISC-V: C2 ReverseI
-    8318221: RISC-V: C2 ReverseL
+    8351096: Typos in Vector API doc
     
-    Reviewed-by: fyang, luhenry
+    Reviewed-by: psandoz
