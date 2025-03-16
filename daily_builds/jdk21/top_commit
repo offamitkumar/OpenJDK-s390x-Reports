@@ -1,7 +1,7 @@
-commit d83fe71a65f58fb1e90240c9aa6472f1523ac0fc
+commit a42df5577c2809740dead4b2e1991bb99e832a06
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Mar 14 12:41:19 2025 +0000
+Date:   Sat Mar 15 20:19:33 2025 +0000
 
-    8340907: Open source closed frame tests # 2
+    8340790: Open source several AWT Dialog tests - Batch 4
     
-    Backport-of: f2a767f59b1f66966665bc8601273b532961395a
+    Backport-of: 6d7e67956b1722b4e3d33253d68c095058f39f02

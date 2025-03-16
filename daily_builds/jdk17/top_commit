@@ -1,7 +1,7 @@
-commit 7bf2d44f531c8c127b372167b67c1d40db539586
-Author: SendaoYan <syan@openjdk.org>
-Date:   Sat Mar 15 03:21:02 2025 +0000
+commit fd50c1722380ce419bd5ac7f1318d1a808f87ec5
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Sat Mar 15 20:21:19 2025 +0000
 
-    8276995: Bug in jdk.jfr.event.gc.collection.TestSystemGC
+    8340790: Open source several AWT Dialog tests - Batch 4
     
-    Backport-of: 91ce41f96d725a02f9566f87133ed64d448c80cc
+    Backport-of: 6d7e67956b1722b4e3d33253d68c095058f39f02

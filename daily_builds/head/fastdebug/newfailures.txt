@@ -1,7 +1,6 @@
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
-jdk/jshell/ToolProviderTest.java 
 # newfailures.txt
 compiler/c2/TestMergeStores.java#id1 
 compiler/c2/TestMergeStores.java#id2 

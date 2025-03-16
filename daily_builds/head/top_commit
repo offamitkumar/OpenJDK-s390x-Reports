@@ -1,7 +1,7 @@
-commit 0460978e7c769624cacdb528277a99914b327e30
-Author: Ian Graves <igraves@openjdk.org>
-Date:   Fri Mar 14 17:50:42 2025 +0000
+commit 06289f3d90577d220de5509a3892f7ed260c24b9
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Sun Mar 16 13:04:45 2025 +0000
 
-    8351096: Typos in Vector API doc
+    8351821: VMManagementImpl.c avoid switching off warnings
     
-    Reviewed-by: psandoz
+    Reviewed-by: ihse, kevinw
