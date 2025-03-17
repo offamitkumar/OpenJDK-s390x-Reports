@@ -3,4 +3,5 @@
 java/util/zip/CloseInflaterDeflaterTest.java 
 # newfailures.txt
 # newfailures.txt
+runtime/Monitor/DeflationIntervalsTest.java#defaults 
 # newfailures.txt

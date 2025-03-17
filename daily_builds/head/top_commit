@@ -1,7 +1,7 @@
-commit 06289f3d90577d220de5509a3892f7ed260c24b9
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Sun Mar 16 13:04:45 2025 +0000
+commit d68775d7118c926cacb7e9e4c02b85bdb0705521
+Author: Erik Gahlin <egahlin@openjdk.org>
+Date:   Mon Mar 17 15:29:14 2025 +0000
 
-    8351821: VMManagementImpl.c avoid switching off warnings
+    8351995: JFR: Leftovers from removal of Security Manager
     
-    Reviewed-by: ihse, kevinw
+    Reviewed-by: mgronlun
