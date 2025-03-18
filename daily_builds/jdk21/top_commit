@@ -1,7 +1,7 @@
-commit 5ff88f61f6ab04ddf3936f8b249f9a48974f53d1
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Mar 17 08:24:12 2025 +0000
+commit 544b111ef8770ff727f6ee7a78a1cd5219881cb6
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Tue Mar 18 16:15:12 2025 +0000
 
-    8352076: [21u] Problem list tests that fail in 21 and would be fixed by 8309622
+    8338064: Give better error for ConcurrentHashTable corruption
     
-    Reviewed-by: sgehwolf
+    Backport-of: 069e0ea69f43960164d3e077d2c7b950cde77927

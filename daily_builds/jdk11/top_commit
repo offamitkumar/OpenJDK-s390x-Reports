@@ -1,8 +1,8 @@
-commit 878517221091509b55233ba84627635654e5f070
-Author: Taizo Kurashige <103394724+kurashige23@users.noreply.github.com>
-Date:   Wed Mar 12 09:19:02 2025 +0000
+commit bf78d9b8509fa32889234fbecb984825c25144a1
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Tue Mar 18 11:55:04 2025 +0000
 
-    8026976: ECParameters, Point does not match field size
+    8339728: [Accessibility,Windows,JAWS] Bug in the getKeyChar method of the AccessBridge class
     
     Reviewed-by: sgehwolf
-    Backport-of: 55f5542ca2104df91e14693534cc7b3c36e81953
+    Backport-of: 01d107aea8eca4f4d2863deb30ac60e802debe15
