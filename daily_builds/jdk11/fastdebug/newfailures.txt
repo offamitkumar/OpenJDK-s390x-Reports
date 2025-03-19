@@ -2,8 +2,10 @@
 # newfailures.txt
 java/util/zip/CloseInflaterDeflaterTest.java 
 java/util/zip/DeInflate.java 
+java/util/zip/DeflateIn_InflateOut.java 
 java/util/zip/ZipFile/CopyJar.java 
 tools/pack200/PackTestZip64.java 
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
+gc/stress/gcbasher/TestGCBasherWithCMS.java 

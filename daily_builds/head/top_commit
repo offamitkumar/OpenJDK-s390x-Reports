@@ -1,7 +1,7 @@
-commit a37d8434ab991507bf8085ecf7816d0cd41ab584
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Tue Mar 18 12:59:29 2025 +0000
+commit c7f333888be052aa37fe878bfc2785fc47fbeaaa
+Author: Manukumar V S <mvs@openjdk.org>
+Date:   Wed Mar 19 15:25:22 2025 +0000
 
-    8352015: LIBVERIFY_OPTIMIZATION remove special optimization settings
+    8352109: java/awt/Desktop/MailTest.java fails in platforms where Action.MAIL is not supported
     
-    Reviewed-by: erikj, ihse
+    Reviewed-by: aivanov
