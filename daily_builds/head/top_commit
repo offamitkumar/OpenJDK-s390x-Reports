@@ -1,7 +1,7 @@
-commit c7f333888be052aa37fe878bfc2785fc47fbeaaa
-Author: Manukumar V S <mvs@openjdk.org>
-Date:   Wed Mar 19 15:25:22 2025 +0000
+commit 9a17a6ff0f7b53e9d87bf5db85399aabeb2582c8
+Author: Jan Lahoda <jlahoda@openjdk.org>
+Date:   Thu Mar 20 15:17:10 2025 +0000
 
-    8352109: java/awt/Desktop/MailTest.java fails in platforms where Action.MAIL is not supported
+    8350749: Upgrade JLine to 3.29.0
     
-    Reviewed-by: aivanov
+    Reviewed-by: liach

@@ -1,7 +1,9 @@
-commit 544b111ef8770ff727f6ee7a78a1cd5219881cb6
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Tue Mar 18 16:15:12 2025 +0000
+commit e985f85d990e6d38f16608e5eb8c94400638d13b
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Mar 20 15:36:51 2025 +0000
 
-    8338064: Give better error for ConcurrentHashTable corruption
+    8343529: serviceability/sa/ClhsdbWhere.java fails AssertionFailure: Corrupted constant pool
+    8307318: Test serviceability/sa/ClhsdbCDSJstackPrintAll.java failed: ArrayIndexOutOfBoundsException
     
-    Backport-of: 069e0ea69f43960164d3e077d2c7b950cde77927
+    Reviewed-by: mbaesken
+    Backport-of: 21e0fb8648d61f041a04d44ad6c46fc5efd86261

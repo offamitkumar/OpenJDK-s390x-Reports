@@ -1,8 +1,8 @@
-commit bf78d9b8509fa32889234fbecb984825c25144a1
-Author: Antonio Vieiro <avieirov@redhat.com>
-Date:   Tue Mar 18 11:55:04 2025 +0000
+commit 6b7a312bd3255b4b020d3f027a98e7831f575dd4
+Author: Roman Marchenko <rmarchenko@openjdk.org>
+Date:   Thu Mar 20 10:15:15 2025 +0000
 
-    8339728: [Accessibility,Windows,JAWS] Bug in the getKeyChar method of the AccessBridge class
+    8309841: Jarsigner should print a warning if an entry is removed
     
-    Reviewed-by: sgehwolf
-    Backport-of: 01d107aea8eca4f4d2863deb30ac60e802debe15
+    Reviewed-by: abakhtin, andrew
+    Backport-of: bdfb41f977258831e4b0ceaef5d016d095ab6e7f
