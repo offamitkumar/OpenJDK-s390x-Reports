@@ -1,9 +1,7 @@
-commit e985f85d990e6d38f16608e5eb8c94400638d13b
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Mar 20 15:36:51 2025 +0000
+commit 8ed020ecba44c203bc9a1de8ed47aebf274fcfa5
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Fri Mar 21 08:06:29 2025 +0000
 
-    8343529: serviceability/sa/ClhsdbWhere.java fails AssertionFailure: Corrupted constant pool
-    8307318: Test serviceability/sa/ClhsdbCDSJstackPrintAll.java failed: ArrayIndexOutOfBoundsException
+    8350786: Some java/lang jtreg tests miss requires vm.hasJFR
     
-    Reviewed-by: mbaesken
-    Backport-of: 21e0fb8648d61f041a04d44ad6c46fc5efd86261
+    Backport-of: 7a47dcb97ba3f7b8bf4d9ddfa3f51c5195fe2aa2

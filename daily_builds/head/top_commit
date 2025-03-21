@@ -1,7 +1,7 @@
-commit 9a17a6ff0f7b53e9d87bf5db85399aabeb2582c8
-Author: Jan Lahoda <jlahoda@openjdk.org>
-Date:   Thu Mar 20 15:17:10 2025 +0000
+commit 0cb110ebb7f8d184dd855f64c5dd7924c8202b3d
+Author: Doug Simon <dnsimon@openjdk.org>
+Date:   Fri Mar 21 13:00:25 2025 +0000
 
-    8350749: Upgrade JLine to 3.29.0
+    8350892: [JVMCI] Align ResolvedJavaType.getInstanceFields with Class.getDeclaredFields
     
-    Reviewed-by: liach
+    Reviewed-by: yzheng, never, thartmann

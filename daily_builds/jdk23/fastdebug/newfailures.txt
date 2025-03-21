@@ -20,7 +20,6 @@ java/lang/module/ModuleFinderTest.java
 java/lang/module/ModuleNamesTest.java 
 java/lang/module/MultiReleaseJarTest.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
-java/util/zip/DeflateIn_InflateOut.java 
 jdk/modules/incubator/ServiceBinding.java 
 # newfailures.txt
 jdk/jshell/ToolProviderTest.java 
