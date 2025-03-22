@@ -1,7 +1,8 @@
-commit 8ed020ecba44c203bc9a1de8ed47aebf274fcfa5
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Fri Mar 21 08:06:29 2025 +0000
+commit 32ac3e713ea4370e496717967fff7de9450d2f69
+Author: Alexey Bakhtin <abakhtin@openjdk.org>
+Date:   Sat Mar 22 00:16:13 2025 +0000
 
-    8350786: Some java/lang jtreg tests miss requires vm.hasJFR
+    8342075: HttpClient: improve HTTP/2 flow control checks
     
-    Backport-of: 7a47dcb97ba3f7b8bf4d9ddfa3f51c5195fe2aa2
+    Reviewed-by: andrew
+    Backport-of: b0ac633b2d0076d64b463b2a6ce19abf6b12c50f
