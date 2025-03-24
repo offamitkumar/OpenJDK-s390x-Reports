@@ -1,7 +1,7 @@
-commit df9210e6578acd53384ee1ac06601510c9a52696
-Author: Zihao Lin <linzihao1999@outlook.com>
-Date:   Sun Mar 23 00:35:59 2025 +0000
+commit 5709f79cf86d532b38133a7fc11e6388af573723
+Author: Erik Gahlin <egahlin@openjdk.org>
+Date:   Mon Mar 24 15:16:54 2025 +0000
 
-    8347706: jvmciEnv.cpp has jvmci includes out of order
+    8352648: JFR: 'jfr query' should not be available in product builds
     
-    Reviewed-by: dnsimon
+    Reviewed-by: mgronlun, shade

@@ -1,7 +1,7 @@
-commit b2255b98f5122c3d26b822dac4597a54257ffcaf
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Mar 20 19:40:38 2025 +0000
+commit b31ac46bcb149c4dc6ef4a28a431e61789d16751
+Author: Dmitry Chuyko <dchuyko@openjdk.org>
+Date:   Mon Mar 24 15:18:22 2025 +0000
 
-    8352302: Test sun/security/tools/jarsigner/TimestampCheck.java is failing
+    8335662: [AArch64] C1: guarantee(val < (1ULL << nbits)) failed: Field too big for insn
     
-    Backport-of: 577ede73d8e916bac9050d3bee80d2f18cc833a7
+    Backport-of: 401d0d6b09ea422eacecda2900793a416097dc9b

@@ -2,5 +2,4 @@
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
-compiler/loopopts/VerifyGraphEdgesWithDeadCodeCheckFromSafepoints.java 
 # newfailures.txt
