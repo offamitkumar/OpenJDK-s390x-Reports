@@ -1,8 +1,7 @@
-commit 90b9b36b3b2b1c5aba20bee1dce9dad4324aa5f7
-Author: Martin Balao <mbalao@openjdk.org>
-Date:   Mon Mar 24 15:21:25 2025 +0000
+commit cfbfbca131f78be6a452dea4e8ddc899913ce515
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Tue Mar 25 00:04:59 2025 +0000
 
-    8339810: Clean up the code in sun.tools.jar.Main to properly close resources and use ZipFile during extract
+    8334895: OpenJDK fails to configure on linux aarch64 when CDS is disabled after JDK-8331942
     
-    Reviewed-by: andrew
-    Backport-of: 8fce5275fc94ebc404a6a37f5ea0407140de63c1
+    Backport-of: 3b1ca986427d3a69c9e167b9b4c07d1b83bc264d

@@ -1,7 +1,7 @@
-commit b31ac46bcb149c4dc6ef4a28a431e61789d16751
-Author: Dmitry Chuyko <dchuyko@openjdk.org>
-Date:   Mon Mar 24 15:18:22 2025 +0000
+commit 48c8aac638c66ef68e23984e75804779b8d4a440
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Tue Mar 25 00:04:56 2025 +0000
 
-    8335662: [AArch64] C1: guarantee(val < (1ULL << nbits)) failed: Field too big for insn
+    8334780: Crash: assert(h_array_list.not_null()) failed: invariant
     
-    Backport-of: 401d0d6b09ea422eacecda2900793a416097dc9b
+    Backport-of: e7a0b5b09bcfcd8b09667e51ec588e206f0652ff

@@ -4,4 +4,5 @@
 # newfailures.txt
 compiler/c2/TestMergeStores.java#id1 
 compiler/c2/TestMergeStores.java#id2 
+compiler/startup/StartupOutput.java 
 # newfailures.txt

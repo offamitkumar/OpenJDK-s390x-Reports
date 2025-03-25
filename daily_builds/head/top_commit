@@ -1,7 +1,7 @@
-commit 5709f79cf86d532b38133a7fc11e6388af573723
-Author: Erik Gahlin <egahlin@openjdk.org>
-Date:   Mon Mar 24 15:16:54 2025 +0000
+commit e98838f58db1606f35c85ac9fcdbdf1076b6a303
+Author: David Linus Briemann <david.briemann@sap.com>
+Date:   Tue Mar 25 15:16:46 2025 +0000
 
-    8352648: JFR: 'jfr query' should not be available in product builds
+    8352065: [PPC64] C2: Implement PopCountVL, CountLeadingZerosV and CountTrailingZerosV nodes
     
-    Reviewed-by: mgronlun, shade
+    Reviewed-by: mdoerr, rrich
