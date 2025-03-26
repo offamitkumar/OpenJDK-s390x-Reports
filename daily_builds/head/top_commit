@@ -1,7 +1,7 @@
-commit e98838f58db1606f35c85ac9fcdbdf1076b6a303
-Author: David Linus Briemann <david.briemann@sap.com>
-Date:   Tue Mar 25 15:16:46 2025 +0000
+commit 79bffe2f28f90986d45f4e91efc021290b4fc00a
+Author: Roland Westrelin <roland@openjdk.org>
+Date:   Wed Mar 26 14:37:53 2025 +0000
 
-    8352065: [PPC64] C2: Implement PopCountVL, CountLeadingZerosV and CountTrailingZerosV nodes
+    8349361: C2: RShiftL should support all applicable transformations that RShiftI does
     
-    Reviewed-by: mdoerr, rrich
+    Reviewed-by: epeter, chagedorn, jkarthikeyan
