@@ -1,7 +1,7 @@
-commit cfbfbca131f78be6a452dea4e8ddc899913ce515
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Tue Mar 25 00:04:59 2025 +0000
+commit 9d382091d6d1a848be38a0453575afd019921cdd
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Mar 27 16:04:48 2025 +0000
 
-    8334895: OpenJDK fails to configure on linux aarch64 when CDS is disabled after JDK-8331942
+    8345134: Test sun/security/tools/jarsigner/ConciseJarsigner.java failed: unable to find valid certification path to requested target
     
-    Backport-of: 3b1ca986427d3a69c9e167b9b4c07d1b83bc264d
+    Backport-of: a0f7982e44deec2cd59379c62b215c3f526fc2c4

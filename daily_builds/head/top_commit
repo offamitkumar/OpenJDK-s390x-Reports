@@ -1,7 +1,7 @@
-commit 79bffe2f28f90986d45f4e91efc021290b4fc00a
-Author: Roland Westrelin <roland@openjdk.org>
-Date:   Wed Mar 26 14:37:53 2025 +0000
+commit 50ac24eb0ff06d9b4fc52a6cafea63eb4d59cb95
+Author: Vladimir Ivanov <vaivanov@openjdk.org>
+Date:   Thu Mar 27 14:58:07 2025 +0000
 
-    8349361: C2: RShiftL should support all applicable transformations that RShiftI does
+    8351593: [JMH] test PhoneCode.Bulk reports NPE exception
     
-    Reviewed-by: epeter, chagedorn, jkarthikeyan
+    Reviewed-by: redestad, drwhite

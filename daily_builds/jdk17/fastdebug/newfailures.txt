@@ -1,6 +1,5 @@
 # newfailures.txt
 # newfailures.txt
-java/foreign/TestResourceScope.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
 # newfailures.txt
 # newfailures.txt

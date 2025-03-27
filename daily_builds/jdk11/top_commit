@@ -1,8 +1,8 @@
-commit 6d469db3a627913c0cb1d31e7c143e10bf20e371
-Author: Martin Balao <mbalao@openjdk.org>
-Date:   Wed Mar 26 00:54:40 2025 +0000
+commit da5bfa9a70a5868cff8cbd5b66dfcc342757a8d4
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Thu Mar 27 00:31:27 2025 +0000
 
-    8339810: Clean up the code in sun.tools.jar.Main to properly close resources and use ZipFile during extract
+    8293345: SunPKCS11 provider checks on PKCS11 Mechanism are problematic
     
-    Reviewed-by: yan, andrew
-    Backport-of: 8fce5275fc94ebc404a6a37f5ea0407140de63c1
+    Reviewed-by: andrew
+    Backport-of: 6f16a44784fbaeedfe4ccd6c4e7fb5280b329c2b

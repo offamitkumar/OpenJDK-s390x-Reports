@@ -1,7 +1,7 @@
-commit 48c8aac638c66ef68e23984e75804779b8d4a440
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Tue Mar 25 00:04:56 2025 +0000
+commit 96e8c5652053e4ee424d73834dc55d97838c6eea
+Author: Daniel Hu <costmuch@amazon.com>
+Date:   Thu Mar 27 16:31:52 2025 +0000
 
-    8334780: Crash: assert(h_array_list.not_null()) failed: invariant
+    8277983: Remove unused fields from sun.net.www.protocol.jar.JarURLConnection
     
-    Backport-of: e7a0b5b09bcfcd8b09667e51ec588e206f0652ff
+    Backport-of: f34f8d4d6a9b3e24a93a322b985c1413c27311cc
