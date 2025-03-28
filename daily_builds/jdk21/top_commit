@@ -1,7 +1,7 @@
-commit 9d382091d6d1a848be38a0453575afd019921cdd
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Mar 27 16:04:48 2025 +0000
+commit 5eb51cdc5cb1b9b901e51485b3fafcb69bd75e60
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Fri Mar 28 04:18:28 2025 +0000
 
-    8345134: Test sun/security/tools/jarsigner/ConciseJarsigner.java failed: unable to find valid certification path to requested target
+    8270269: Desktop.browse method fails if earlier CoInitialize call as COINIT_MULTITHREADED
     
-    Backport-of: a0f7982e44deec2cd59379c62b215c3f526fc2c4
+    Backport-of: b25ed57b764fc485e4e8ca4118ffb1cc70fdfe7f

@@ -1,8 +1,7 @@
-commit da5bfa9a70a5868cff8cbd5b66dfcc342757a8d4
+commit c0e7aa6c122e88e0d749ac3e8edf2cda9c5f53da
 Author: Antonio Vieiro <avieirov@redhat.com>
-Date:   Thu Mar 27 00:31:27 2025 +0000
+Date:   Fri Mar 28 18:29:31 2025 +0000
 
-    8293345: SunPKCS11 provider checks on PKCS11 Mechanism are problematic
+    8303770: Remove Baltimore root certificate expiring in May 2025
     
-    Reviewed-by: andrew
-    Backport-of: 6f16a44784fbaeedfe4ccd6c4e7fb5280b329c2b
+    Backport-of: 4e67796c3fcbffa706be8fabb56d00f9128edac1

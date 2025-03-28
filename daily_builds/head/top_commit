@@ -1,7 +1,7 @@
-commit 50ac24eb0ff06d9b4fc52a6cafea63eb4d59cb95
-Author: Vladimir Ivanov <vaivanov@openjdk.org>
-Date:   Thu Mar 27 14:58:07 2025 +0000
+commit d8090337ee8ea763bca4e8e3baaf8ee4dd3d6214
+Author: Kevin Driver <kdriver@openjdk.org>
+Date:   Fri Mar 28 15:27:26 2025 +0000
 
-    8351593: [JMH] test PhoneCode.Bulk reports NPE exception
+    8341775: Duplicate manifest files are removed by jarsigner after signing
     
-    Reviewed-by: redestad, drwhite
+    Reviewed-by: weijun, hchao
