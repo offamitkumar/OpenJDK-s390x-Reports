@@ -1,7 +1,7 @@
-commit d8090337ee8ea763bca4e8e3baaf8ee4dd3d6214
-Author: Kevin Driver <kdriver@openjdk.org>
-Date:   Fri Mar 28 15:27:26 2025 +0000
+commit 3d2c3cd40ebce901d09a2479c267342e04e6f79c
+Author: Daniel Gredler <dgredler@openjdk.org>
+Date:   Fri Mar 28 17:22:33 2025 +0000
 
-    8341775: Duplicate manifest files are removed by jarsigner after signing
+    8352970: Remove unnecessary Windows version check in Win32ShellFolderManager2
     
-    Reviewed-by: weijun, hchao
+    Reviewed-by: prr, serb
