@@ -1,7 +1,7 @@
-commit 9631398cd936a947bc71af82b10b1a7ece8f68b3
+commit 59468baadb4c0fbaf9377c39242cc4da81151370
 Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Fri Mar 28 08:49:25 2025 +0000
+Date:   Sun Mar 30 15:50:58 2025 +0000
 
-    8347576: Error output in libjsound has non matching format strings
+    8349039: Adjust exception No type named <ThreadType> in database
     
-    Backport-of: 950e655064a75e20540955ad91430c8bea7ae73b
+    Backport-of: 669f8c0c07b57fa00ac84b8a90c4a1a1459443e3

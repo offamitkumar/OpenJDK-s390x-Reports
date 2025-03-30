@@ -1,7 +1,7 @@
-commit 3d2c3cd40ebce901d09a2479c267342e04e6f79c
-Author: Daniel Gredler <dgredler@openjdk.org>
-Date:   Fri Mar 28 17:22:33 2025 +0000
+commit 8cbadf78d04d0e3d1136a5582f281de099fc5e49
+Author: Rohit Arul Raj <rraj@openjdk.org>
+Date:   Sun Mar 30 13:22:21 2025 +0000
 
-    8352970: Remove unnecessary Windows version check in Win32ShellFolderManager2
+    8317976: Optimize SIMD sort for AMD Zen 4
     
-    Reviewed-by: prr, serb
+    Reviewed-by: psandoz, vlivanov
