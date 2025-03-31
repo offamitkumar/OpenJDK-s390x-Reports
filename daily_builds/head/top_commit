@@ -1,7 +1,7 @@
-commit 8cbadf78d04d0e3d1136a5582f281de099fc5e49
-Author: Rohit Arul Raj <rraj@openjdk.org>
-Date:   Sun Mar 30 13:22:21 2025 +0000
+commit bbd5b174c50346152a624317b6bd76ec48f7e551
+Author: Hai-May Chao <hchao@openjdk.org>
+Date:   Mon Mar 31 15:04:48 2025 +0000
 
-    8317976: Optimize SIMD sort for AMD Zen 4
+    8339280: jarsigner -verify performs cross-checking between CEN and LOC
     
-    Reviewed-by: psandoz, vlivanov
+    Reviewed-by: mullan, weijun, lancea

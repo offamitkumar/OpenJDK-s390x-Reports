@@ -1,7 +1,8 @@
-commit 59468baadb4c0fbaf9377c39242cc4da81151370
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Sun Mar 30 15:50:58 2025 +0000
+commit 41b35416615c6078e6c31ef76120a86fe56fe84d
+Author: Dmitry Chuyko <dchuyko@openjdk.org>
+Date:   Mon Mar 31 15:35:37 2025 +0000
 
-    8349039: Adjust exception No type named <ThreadType> in database
+    8298061: vmTestbase/nsk/sysdict/vm/stress/btree/btree012/btree012.java failed with "fatal error: refcount has gone to zero"
     
-    Backport-of: 669f8c0c07b57fa00ac84b8a90c4a1a1459443e3
+    Reviewed-by: coleenp
+    Backport-of: 03d992728e27bd3dcd00d1af8a7b7179281e626f
