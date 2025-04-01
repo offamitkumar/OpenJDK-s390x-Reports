@@ -1,7 +1,7 @@
-commit bbd5b174c50346152a624317b6bd76ec48f7e551
-Author: Hai-May Chao <hchao@openjdk.org>
-Date:   Mon Mar 31 15:04:48 2025 +0000
+commit a1ab1d8de411aace21decd133e7e74bb97f27897
+Author: David Holmes <dholmes@openjdk.org>
+Date:   Tue Apr 1 12:59:49 2025 +0000
 
-    8339280: jarsigner -verify performs cross-checking between CEN and LOC
+    8353449: [BACKOUT] One instance of STATIC_LIB_CFLAGS was missed in JDK-8345683
     
-    Reviewed-by: mullan, weijun, lancea
+    Reviewed-by: alanb, ihse

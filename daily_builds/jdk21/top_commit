@@ -1,7 +1,7 @@
-commit 5eb51cdc5cb1b9b901e51485b3fafcb69bd75e60
-Author: Sergey Bylokhov <serb@openjdk.org>
-Date:   Fri Mar 28 04:18:28 2025 +0000
+commit b3118d81de079469881ede6af6dc86873bada496
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Mon Mar 31 18:42:21 2025 +0000
 
-    8270269: Desktop.browse method fails if earlier CoInitialize call as COINIT_MULTITHREADED
+    8343019: Primitive caches must use boxed instances from the archive
     
-    Backport-of: b25ed57b764fc485e4e8ca4118ffb1cc70fdfe7f
+    Backport-of: 7c36fa7e175c01dd994cd8f1ef9fd942dbddbce0

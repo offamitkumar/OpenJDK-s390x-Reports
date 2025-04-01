@@ -1,8 +1,7 @@
-commit 41b35416615c6078e6c31ef76120a86fe56fe84d
-Author: Dmitry Chuyko <dchuyko@openjdk.org>
-Date:   Mon Mar 31 15:35:37 2025 +0000
+commit 692f275d7af1db381ec9cf22eeb566f8e7a07667
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Mon Mar 31 18:43:15 2025 +0000
 
-    8298061: vmTestbase/nsk/sysdict/vm/stress/btree/btree012/btree012.java failed with "fatal error: refcount has gone to zero"
+    8350211: CTW: Attempt to preload all classes in constant pool
     
-    Reviewed-by: coleenp
-    Backport-of: 03d992728e27bd3dcd00d1af8a7b7179281e626f
+    Backport-of: d13fd5738f8a3d4b4009c2e15cfd967332d97bbd
