@@ -1,7 +1,7 @@
-commit a1ab1d8de411aace21decd133e7e74bb97f27897
-Author: David Holmes <dholmes@openjdk.org>
-Date:   Tue Apr 1 12:59:49 2025 +0000
+commit d32ff1392205ea0fd179478a7ddb3d5f63923461
+Author: Patricio Chilano Mateo <pchilanomate@openjdk.org>
+Date:   Wed Apr 2 14:32:03 2025 +0000
 
-    8353449: [BACKOUT] One instance of STATIC_LIB_CFLAGS was missed in JDK-8345683
+    8353117: Crash: assert(id >= ThreadIdentifier::initial() && id < ThreadIdentifier::current()) failed: must be reasonable)
     
-    Reviewed-by: alanb, ihse
+    Reviewed-by: dholmes, fbredberg

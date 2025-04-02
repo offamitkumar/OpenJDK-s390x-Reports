@@ -3,6 +3,12 @@
 # newfailures.txt
 jdk/jshell/ToolProviderTest.java 
 # newfailures.txt
+applications/ctw/modules/jdk_jfr.java 
+# newfailures.txt
+applications/ctw/modules/java_base_2.java 
+applications/ctw/modules/java_security_jgss.java 
+applications/ctw/modules/jdk_jfr.java 
+# newfailures.txt
 compiler/c2/TestMergeStores.java#id1 
 compiler/c2/TestMergeStores.java#id2 
 compiler/startup/StartupOutput.java 

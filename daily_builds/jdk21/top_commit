@@ -1,7 +1,8 @@
-commit b3118d81de079469881ede6af6dc86873bada496
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Mar 31 18:42:21 2025 +0000
+commit 32cad6923ecbb47e7321f992d830020c69acd649
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Apr 2 10:09:30 2025 +0000
 
-    8343019: Primitive caches must use boxed instances from the archive
+    8348598: Update Libpng to 1.6.47
     
-    Backport-of: 7c36fa7e175c01dd994cd8f1ef9fd942dbddbce0
+    Reviewed-by: mbaesken
+    Backport-of: 6b82b42a2116900b2125e03c1ffa0824d6062757
