@@ -1,7 +1,8 @@
-commit d32ff1392205ea0fd179478a7ddb3d5f63923461
-Author: Patricio Chilano Mateo <pchilanomate@openjdk.org>
-Date:   Wed Apr 2 14:32:03 2025 +0000
+commit 64b691ab619d2d99a9c6492341074d2794563c16
+Author: Thomas Schatzl <tschatzl@openjdk.org>
+Date:   Thu Apr 3 15:06:22 2025 +0000
 
-    8353117: Crash: assert(id >= ThreadIdentifier::initial() && id < ThreadIdentifier::current()) failed: must be reasonable)
+    8271870: G1: Add objArray splitting when scanning object with evacuation failure
+    8271871: G1 does not try to deduplicate objects that failed evacuation
     
-    Reviewed-by: dholmes, fbredberg
+    Reviewed-by: iwalulya, ayang

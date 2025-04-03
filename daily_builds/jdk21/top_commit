@@ -1,8 +1,7 @@
-commit 32cad6923ecbb47e7321f992d830020c69acd649
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Apr 2 10:09:30 2025 +0000
+commit 73f92061a567a212c960479ece62256015a55d0f
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Thu Apr 3 15:08:05 2025 +0000
 
-    8348598: Update Libpng to 1.6.47
+    8337981: ShenandoahHeap::is_in should check for alive regions
     
-    Reviewed-by: mbaesken
-    Backport-of: 6b82b42a2116900b2125e03c1ffa0824d6062757
+    Backport-of: b9d49dcef22ab81a087d890bbac0329a5244a2ef
