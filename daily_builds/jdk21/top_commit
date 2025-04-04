@@ -1,7 +1,7 @@
-commit 73f92061a567a212c960479ece62256015a55d0f
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Thu Apr 3 15:08:05 2025 +0000
+commit 237a45b1bad840506e02d2b52f5d276554e490c4
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Apr 4 07:06:47 2025 +0000
 
-    8337981: ShenandoahHeap::is_in should check for alive regions
+    8340625: Open source additional Component tests (part 3)
     
-    Backport-of: b9d49dcef22ab81a087d890bbac0329a5244a2ef
+    Backport-of: ebb4759c3d2776f5e6e83f743a7891a145f8aee4

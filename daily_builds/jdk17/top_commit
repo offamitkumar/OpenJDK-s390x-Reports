@@ -1,8 +1,7 @@
-commit bb103d7d0914f90e85eb5f87831ffef1de536072
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Apr 3 11:39:29 2025 +0000
+commit 729b0c7aa59d7b2e53cdaa8b4a1631962951f8d8
+Author: Andrei Pangin <apangin@openjdk.org>
+Date:   Fri Apr 4 15:46:06 2025 +0000
 
-    8298730: Refactor subsystem_file_line_contents and add docs and tests
+    8352649: [17u] guarantee(is_result_safe || is_in_asgct()) failed inside AsyncGetCallTrace
     
-    Reviewed-by: phh
-    Backport-of: 500c3c17379fe0a62d42ba31bdcdb584b1823f60
+    Reviewed-by: jbachorik

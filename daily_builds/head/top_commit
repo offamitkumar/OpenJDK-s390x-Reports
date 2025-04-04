@@ -1,8 +1,7 @@
-commit 64b691ab619d2d99a9c6492341074d2794563c16
-Author: Thomas Schatzl <tschatzl@openjdk.org>
-Date:   Thu Apr 3 15:06:22 2025 +0000
+commit 3cc43b3224efdf1a3f35fff58b993027a9e1f4ad
+Author: Magnus Ihse Bursie <ihse@openjdk.org>
+Date:   Fri Apr 4 13:44:55 2025 +0000
 
-    8271870: G1: Add objArray splitting when scanning object with evacuation failure
-    8271871: G1 does not try to deduplicate objects that failed evacuation
+    8349075: Once again allow -compilejdk in JAVA_OPTIONS
     
-    Reviewed-by: iwalulya, ayang
+    Reviewed-by: rehn, erikj
