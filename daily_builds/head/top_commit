@@ -1,7 +1,7 @@
-commit 3cc43b3224efdf1a3f35fff58b993027a9e1f4ad
-Author: Magnus Ihse Bursie <ihse@openjdk.org>
-Date:   Fri Apr 4 13:44:55 2025 +0000
+commit 9bb804b14e164982860db6323c7db33214cd0d36
+Author: Jaikiran Pai <jpai@openjdk.org>
+Date:   Sat Apr 5 01:12:48 2025 +0000
 
-    8349075: Once again allow -compilejdk in JAVA_OPTIONS
+    8338554: Fix inconsistencies in javadoc/doclet/testLinkOption/TestRedirectLinks.java
     
-    Reviewed-by: rehn, erikj
+    Reviewed-by: liach, nbenalla
