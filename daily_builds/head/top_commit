@@ -1,7 +1,7 @@
-commit 9bb804b14e164982860db6323c7db33214cd0d36
-Author: Jaikiran Pai <jpai@openjdk.org>
-Date:   Sat Apr 5 01:12:48 2025 +0000
+commit 6d37e633e6afa11ecd40bed10c0efbde6f9f6181
+Author: Zhengyu Gu <zgu@openjdk.org>
+Date:   Sat Apr 5 20:25:30 2025 +0000
 
-    8338554: Fix inconsistencies in javadoc/doclet/testLinkOption/TestRedirectLinks.java
+    8353753: Remove unnecessary forward declaration in oop.hpp
     
-    Reviewed-by: liach, nbenalla
+    Reviewed-by: kbarrett
