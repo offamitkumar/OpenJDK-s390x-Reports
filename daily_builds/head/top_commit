@@ -1,7 +1,7 @@
-commit 6d37e633e6afa11ecd40bed10c0efbde6f9f6181
-Author: Zhengyu Gu <zgu@openjdk.org>
-Date:   Sat Apr 5 20:25:30 2025 +0000
+commit 9a391f44e038d6c15a7872164bd3099edad93c8d
+Author: Eirik Bjørsnøs <eirbjo@openjdk.org>
+Date:   Mon Apr 7 15:23:18 2025 +0000
 
-    8353753: Remove unnecessary forward declaration in oop.hpp
+    8353278: Consolidate local file URL checks in jar: and file: URL schemes
     
-    Reviewed-by: kbarrett
+    Reviewed-by: dfuchs, jpai

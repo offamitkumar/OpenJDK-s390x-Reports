@@ -1,7 +1,7 @@
-commit 729b0c7aa59d7b2e53cdaa8b4a1631962951f8d8
-Author: Andrei Pangin <apangin@openjdk.org>
-Date:   Fri Apr 4 15:46:06 2025 +0000
+commit ac00cd26889308164704d8bc902102c2f7486c9a
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Mon Apr 7 16:18:48 2025 +0000
 
-    8352649: [17u] guarantee(is_result_safe || is_in_asgct()) failed inside AsyncGetCallTrace
+    8329261: G1: interpreter post-barrier x86 code asserts index size of wrong buffer
     
-    Reviewed-by: jbachorik
+    Backport-of: 1131bb77ec94dd131a10df4ba0f3fab32c65c0f2

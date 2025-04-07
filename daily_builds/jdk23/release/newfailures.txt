@@ -20,7 +20,7 @@ java/lang/module/ModuleFinderTest.java
 java/lang/module/ModuleNamesTest.java 
 java/lang/module/MultiReleaseJarTest.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
-java/util/zip/DeflateIn_InflateOut.java 
+java/util/zip/DeInflate.java 
 jdk/modules/incubator/ServiceBinding.java 
 # newfailures.txt
 tools/javac/annotations/SyntheticParameters.java 

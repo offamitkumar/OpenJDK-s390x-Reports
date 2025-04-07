@@ -1,7 +1,7 @@
-commit 237a45b1bad840506e02d2b52f5d276554e490c4
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Apr 4 07:06:47 2025 +0000
+commit e8daf0c703dc926f00ac106b25be5aa95ec33249
+Author: Paul Hohensee <phh@openjdk.org>
+Date:   Mon Apr 7 15:28:13 2025 +0000
 
-    8340625: Open source additional Component tests (part 3)
+    8344361: Restore null return for invalid services from legacy providers
     
-    Backport-of: ebb4759c3d2776f5e6e83f743a7891a145f8aee4
+    Backport-of: e20bd018c4046870d0cf632bb8e5440cb9f5c3c2
