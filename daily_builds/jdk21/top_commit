@@ -1,7 +1,7 @@
-commit e8daf0c703dc926f00ac106b25be5aa95ec33249
-Author: Paul Hohensee <phh@openjdk.org>
-Date:   Mon Apr 7 15:28:13 2025 +0000
+commit 7b9e268d3dd5e9d62117269bf3cd87836eb562a3
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Mon Apr 7 16:19:38 2025 +0000
 
-    8344361: Restore null return for invalid services from legacy providers
+    8329261: G1: interpreter post-barrier x86 code asserts index size of wrong buffer
     
-    Backport-of: e20bd018c4046870d0cf632bb8e5440cb9f5c3c2
+    Backport-of: 1131bb77ec94dd131a10df4ba0f3fab32c65c0f2

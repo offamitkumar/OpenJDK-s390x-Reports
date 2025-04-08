@@ -1,7 +1,9 @@
-commit ac00cd26889308164704d8bc902102c2f7486c9a
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Apr 7 16:18:48 2025 +0000
+commit 8ea7310b57403f20ac8b0c6e13ecd67e0360c9c1
+Author: Andrew John Hughes <andrew@openjdk.org>
+Date:   Tue Apr 8 14:11:41 2025 +0000
 
-    8329261: G1: interpreter post-barrier x86 code asserts index size of wrong buffer
+    8331735: UpcallLinker::on_exit races with GC when copying frame anchor
+    8286875: ProgrammableUpcallHandler::on_entry/on_exit access thread fields from native
     
-    Backport-of: 1131bb77ec94dd131a10df4ba0f3fab32c65c0f2
+    Reviewed-by: mbalao
+    Backport-of: 91457e694353386737e325e6fa0253bcefb8d579
