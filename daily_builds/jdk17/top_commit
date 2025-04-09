@@ -1,9 +1,7 @@
-commit 8ea7310b57403f20ac8b0c6e13ecd67e0360c9c1
-Author: Andrew John Hughes <andrew@openjdk.org>
-Date:   Tue Apr 8 14:11:41 2025 +0000
+commit 5d7aa66ed84470fc5021fb20bdb68593c2bf0128
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Apr 9 15:04:28 2025 +0000
 
-    8331735: UpcallLinker::on_exit races with GC when copying frame anchor
-    8286875: ProgrammableUpcallHandler::on_entry/on_exit access thread fields from native
+    8340279: Open source several AWT Dialog tests - Batch 2
     
-    Reviewed-by: mbalao
-    Backport-of: 91457e694353386737e325e6fa0253bcefb8d579
+    Backport-of: e0dabfb4bfd93a4407518177043d3dbc85c4bbd9

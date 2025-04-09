@@ -1,7 +1,7 @@
-commit 7b9e268d3dd5e9d62117269bf3cd87836eb562a3
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Apr 7 16:19:38 2025 +0000
+commit 2b6eccc11cafcc3186778aacfeb521a19c1eba78
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Apr 9 14:57:25 2025 +0000
 
-    8329261: G1: interpreter post-barrier x86 code asserts index size of wrong buffer
+    8340279: Open source several AWT Dialog tests - Batch 2
     
-    Backport-of: 1131bb77ec94dd131a10df4ba0f3fab32c65c0f2
+    Backport-of: e0dabfb4bfd93a4407518177043d3dbc85c4bbd9

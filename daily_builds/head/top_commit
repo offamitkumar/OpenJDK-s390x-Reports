@@ -1,7 +1,7 @@
-commit 58ff36f3bdefe2e883dc871a4e7fcaa81e8eef5b
-Author: Daniel Jeliński <djelinski@openjdk.org>
-Date:   Tue Apr 8 15:19:32 2025 +0000
+commit 5f2a604b633c0cd24f897f828a7c928c3d2b651c
+Author: Danish Nawab <danish.nawab@sixt.com>
+Date:   Wed Apr 9 15:25:24 2025 +0000
 
-    8350705: [JMH] test security.SSLHandshake failed for 2 threads configuration
+    8353840: JNativeScan should not abort for missing classes
     
-    Reviewed-by: hchao, mullan
+    Reviewed-by: jvernee, liach

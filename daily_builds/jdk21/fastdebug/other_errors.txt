@@ -2,5 +2,4 @@
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
-compiler/vectorization/TestFloat16VectorConvChain.java 
 # other_errors.txt
