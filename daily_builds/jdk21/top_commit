@@ -1,7 +1,8 @@
-commit 2b6eccc11cafcc3186778aacfeb521a19c1eba78
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Apr 9 14:57:25 2025 +0000
+commit e718378c0824ec9d63c87608f48552c31c65fa86
+Author: Paul Hohensee <phh@openjdk.org>
+Date:   Thu Apr 10 10:03:03 2025 +0000
 
-    8340279: Open source several AWT Dialog tests - Batch 2
+    8344414: ZGC: Another division by zero in rule_major_allocation_rate
     
-    Backport-of: e0dabfb4bfd93a4407518177043d3dbc85c4bbd9
+    Reviewed-by: cslucas, rkennke
+    Backport-of: 63af2f42b7abe9504897d7c3f3b4cc0b57123694
