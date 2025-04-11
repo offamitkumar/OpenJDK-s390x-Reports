@@ -1,7 +1,7 @@
-commit 5d7aa66ed84470fc5021fb20bdb68593c2bf0128
+commit 1f039fe2044edbd09d62914bc99e01facfc453c4
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Apr 9 15:04:28 2025 +0000
+Date:   Fri Apr 11 13:21:52 2025 +0000
 
-    8340279: Open source several AWT Dialog tests - Batch 2
+    8344361: Restore null return for invalid services from legacy providers
     
-    Backport-of: e0dabfb4bfd93a4407518177043d3dbc85c4bbd9
+    Backport-of: e20bd018c4046870d0cf632bb8e5440cb9f5c3c2
