@@ -1,7 +1,7 @@
-commit 1d7138fe021d64686ac59cddd1bc7c787c610aa9
-Author: Erik Gahlin <egahlin@openjdk.org>
-Date:   Fri Apr 11 15:12:54 2025 +0000
+commit 04ad59de768b69b4e897a93f46efad9cc25737ad
+Author: Serguei Spitsyn <sspitsyn@openjdk.org>
+Date:   Sat Apr 12 07:20:19 2025 +0000
 
-    8353614: JFR: jfr print --exact
+    8316397: StackTrace/Suspended/GetStackTraceSuspendedStressTest.java failed with: SingleStep event is NOT expected
     
-    Reviewed-by: mgronlun
+    Reviewed-by: dholmes, pchilanomate

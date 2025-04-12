@@ -1,7 +1,7 @@
-commit 6236ffb7a6ae48ba179dc382991cf9bfa2546cae
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Apr 11 14:21:37 2025 +0000
+commit 7ef18817c0673bbc19c80ede9fc4750b85921d92
+Author: Dhamoder Nalla <dhanalla@openjdk.org>
+Date:   Fri Apr 11 19:17:02 2025 +0000
 
-    8327370: (ch) sun.nio.ch.Poller.register throws AssertionError
+    8338136: Hotspot should support multiple large page sizes on Windows
     
-    Backport-of: d2bebffb1fd26fae4526afd33a818ee776b7102e
+    Backport-of: 4ded28380b6756e0679d80706f76bd6e78c370b9
