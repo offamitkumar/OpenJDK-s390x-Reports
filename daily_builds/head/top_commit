@@ -1,7 +1,7 @@
-commit 04ad59de768b69b4e897a93f46efad9cc25737ad
-Author: Serguei Spitsyn <sspitsyn@openjdk.org>
-Date:   Sat Apr 12 07:20:19 2025 +0000
+commit 5d9760897014c9a2cf0813af3ffbfb358ef55e31
+Author: Hannes Wallnöfer <hannesw@openjdk.org>
+Date:   Sun Apr 13 10:08:39 2025 +0000
 
-    8316397: StackTrace/Suspended/GetStackTraceSuspendedStressTest.java failed with: SingleStep event is NOT expected
+    8254622: Hide superclasses from conditionally exported packages
     
-    Reviewed-by: dholmes, pchilanomate
+    Reviewed-by: kcr, liach

@@ -1,7 +1,7 @@
-commit c4a7b2c304b06245b26765706d53f00dc0238769
-Author: Antonio Vieiro <avieirov@redhat.com>
-Date:   Wed Apr 9 08:26:34 2025 +0000
+commit 1672eb1b5ee486e97fbd20a2d720d51f1b3a2de7
+Author: SendaoYan <syan@openjdk.org>
+Date:   Sun Apr 13 03:50:03 2025 +0000
 
-    8327476: Upgrade JLine to 3.26.1
+    8347629: Test FailOverDirectExecutionControlTest.java fails with -Xcomp
     
-    Backport-of: bb391d7a3656eda8864b777a9561a9e7e71a47a9
+    Backport-of: 981d3c2b6edb8ee8233be07cd1ce682200019d1f
