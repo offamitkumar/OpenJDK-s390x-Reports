@@ -1,7 +1,7 @@
-commit 5d9760897014c9a2cf0813af3ffbfb358ef55e31
-Author: Hannes Wallnöfer <hannesw@openjdk.org>
-Date:   Sun Apr 13 10:08:39 2025 +0000
+commit 16657dba998207ef238ac387336907cd186e31d5
+Author: Sean Mullan <mullan@openjdk.org>
+Date:   Mon Apr 14 14:44:11 2025 +0000
 
-    8254622: Hide superclasses from conditionally exported packages
+    8354449: Remove com/sun/org/apache/xml/internal/security/resource/xmlsecurity_de.properties
     
-    Reviewed-by: kcr, liach
+    Reviewed-by: weijun, ihse

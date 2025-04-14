@@ -1,7 +1,8 @@
-commit 7ef18817c0673bbc19c80ede9fc4750b85921d92
-Author: Dhamoder Nalla <dhanalla@openjdk.org>
-Date:   Fri Apr 11 19:17:02 2025 +0000
+commit 2439c6d5aaff7d9ee2a5be4c7caa5f9ccd65b748
+Author: Paul Hohensee <phh@openjdk.org>
+Date:   Mon Apr 14 15:02:41 2025 +0000
 
-    8338136: Hotspot should support multiple large page sizes on Windows
+    8349637: Integer.numberOfLeadingZeros outputs incorrectly in certain cases
     
-    Backport-of: 4ded28380b6756e0679d80706f76bd6e78c370b9
+    Reviewed-by: rkennke
+    Backport-of: 3657e92ead1e678942fcb272e77c3867eb5aa13e
