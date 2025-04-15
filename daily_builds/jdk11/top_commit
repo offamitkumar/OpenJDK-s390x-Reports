@@ -1,7 +1,7 @@
-commit 1672eb1b5ee486e97fbd20a2d720d51f1b3a2de7
+commit ed62438860b6b4205ce91594d34c162e0677b1d6
 Author: SendaoYan <syan@openjdk.org>
-Date:   Sun Apr 13 03:50:03 2025 +0000
+Date:   Tue Apr 15 01:53:38 2025 +0000
 
-    8347629: Test FailOverDirectExecutionControlTest.java fails with -Xcomp
+    8350469: [11u] Test AbsPathsInImage.java fails - JDK-8239429 public clone
     
-    Backport-of: 981d3c2b6edb8ee8233be07cd1ce682200019d1f
+    Reviewed-by: sgehwolf

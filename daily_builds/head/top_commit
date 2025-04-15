@@ -1,7 +1,7 @@
-commit 16657dba998207ef238ac387336907cd186e31d5
-Author: Sean Mullan <mullan@openjdk.org>
-Date:   Mon Apr 14 14:44:11 2025 +0000
+commit 36864a2a08b5b64e63a9265d595ba7fb608994cb
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Tue Apr 15 11:55:47 2025 +0000
 
-    8354449: Remove com/sun/org/apache/xml/internal/security/resource/xmlsecurity_de.properties
+    8351491: Add info from release file to hserr file
     
-    Reviewed-by: weijun, ihse
+    Reviewed-by: dholmes, lucy

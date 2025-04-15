@@ -1,8 +1,7 @@
-commit 2439c6d5aaff7d9ee2a5be4c7caa5f9ccd65b748
-Author: Paul Hohensee <phh@openjdk.org>
-Date:   Mon Apr 14 15:02:41 2025 +0000
+commit d1249a764c9e8c4a502e2d8473dcc9da13096336
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Apr 15 10:40:05 2025 +0000
 
-    8349637: Integer.numberOfLeadingZeros outputs incorrectly in certain cases
+    8353138: Screen capture for test TaskbarPositionTest.java, failure case
     
-    Reviewed-by: rkennke
-    Backport-of: 3657e92ead1e678942fcb272e77c3867eb5aa13e
+    Backport-of: 05ff557dee6adc679d85bfe8fb49f69053a6aaba
