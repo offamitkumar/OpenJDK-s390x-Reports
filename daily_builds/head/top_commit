@@ -1,7 +1,7 @@
-commit 36864a2a08b5b64e63a9265d595ba7fb608994cb
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Tue Apr 15 11:55:47 2025 +0000
+commit 465c8e658356f658ee04397936f555f6bdffc3c2
+Author: Ferenc Rakoczi <ferenc.r.rakoczi@oracle.com>
+Date:   Wed Apr 16 12:35:24 2025 +0000
 
-    8351491: Add info from release file to hserr file
+    8349721: Add aarch64 intrinsics for ML-KEM
     
-    Reviewed-by: dholmes, lucy
+    Reviewed-by: adinn

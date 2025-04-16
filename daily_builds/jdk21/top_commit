@@ -1,7 +1,7 @@
-commit d1249a764c9e8c4a502e2d8473dcc9da13096336
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Apr 15 10:40:05 2025 +0000
+commit 421654630dfcc4b697fdd61c8a46c1d2f899d8fb
+Author: Liam Miller-Cushon <cushon@openjdk.org>
+Date:   Wed Apr 16 08:18:29 2025 +0000
 
-    8353138: Screen capture for test TaskbarPositionTest.java, failure case
+    8341779: [REDO BACKPORT] type annotations are not visible to javac plugins across compilation boundaries (JDK-8225377)
     
-    Backport-of: 05ff557dee6adc679d85bfe8fb49f69053a6aaba
+    Reviewed-by: vromero
