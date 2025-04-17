@@ -1,7 +1,8 @@
-commit 85d0ab55d6bae2aea4368e6668e361db8a9cbd1c
+commit bfe6fe226f4ac7a71480e0a7265b615619fd2010
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Apr 16 13:17:59 2025 +0000
+Date:   Thu Apr 17 13:51:01 2025 +0000
 
-    8353138: Screen capture for test TaskbarPositionTest.java, failure case
+    8315721: CloseRace.java#id0 fails transiently on libgraal
     
-    Backport-of: 05ff557dee6adc679d85bfe8fb49f69053a6aaba
+    Reviewed-by: rrich
+    Backport-of: 1be355734da94243e29f0899b53aa1ebdf3bcb79

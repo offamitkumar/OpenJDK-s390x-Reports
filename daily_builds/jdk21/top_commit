@@ -1,7 +1,7 @@
-commit 421654630dfcc4b697fdd61c8a46c1d2f899d8fb
-Author: Liam Miller-Cushon <cushon@openjdk.org>
-Date:   Wed Apr 16 08:18:29 2025 +0000
+commit 67c4a0826babb55ce56acf2b3b289b51d9d5529e
+Author: Severin Gehwolf <sgehwolf@openjdk.org>
+Date:   Thu Apr 17 13:19:34 2025 +0000
 
-    8341779: [REDO BACKPORT] type annotations are not visible to javac plugins across compilation boundaries (JDK-8225377)
+    8340024: In ClassReader, extract a constant for the superclass supertype_index
     
-    Reviewed-by: vromero
+    Backport-of: 68c4f36857a8ce62731cc73e251e969d48e526ef
