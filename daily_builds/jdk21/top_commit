@@ -1,7 +1,8 @@
-commit 67c4a0826babb55ce56acf2b3b289b51d9d5529e
-Author: Severin Gehwolf <sgehwolf@openjdk.org>
-Date:   Thu Apr 17 13:19:34 2025 +0000
+commit 5675b623b66db9c03ed1002d41236a090d30a476
+Author: Paul Hohensee <phh@openjdk.org>
+Date:   Fri Apr 18 12:50:22 2025 +0000
 
-    8340024: In ClassReader, extract a constant for the superclass supertype_index
+    8343855: HTTP/2 ConnectionWindowUpdateSender may miss some unprocessed DataFrames from closed streams
     
-    Backport-of: 68c4f36857a8ce62731cc73e251e969d48e526ef
+    Reviewed-by: rkennke
+    Backport-of: bd6152f5967107d7b32db9bcfa224fc07314f098

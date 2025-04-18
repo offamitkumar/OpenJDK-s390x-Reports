@@ -1,7 +1,7 @@
-commit cd8adf13ed6579fad9e777aa291146fa653288b0
-Author: Ferenc Rakoczi <ferenc.r.rakoczi@oracle.com>
-Date:   Thu Apr 17 14:01:46 2025 +0000
+commit 22e8a97a1ce4e1c781fbc6f1e271c477fe95f069
+Author: Alexey Semenyuk <asemenyuk@openjdk.org>
+Date:   Fri Apr 18 12:12:52 2025 +0000
 
-    8354926: Remove remnants of debugging in the fix for JDK-8348561 and JDK-8349721
+    8354988: Separate stderr and stdout in Executor class from jpackage test lib
     
-    Reviewed-by: adinn
+    Reviewed-by: almatvee
