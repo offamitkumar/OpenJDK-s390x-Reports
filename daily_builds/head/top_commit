@@ -1,7 +1,7 @@
-commit 22e8a97a1ce4e1c781fbc6f1e271c477fe95f069
-Author: Alexey Semenyuk <asemenyuk@openjdk.org>
-Date:   Fri Apr 18 12:12:52 2025 +0000
+commit 128f2d1cadae3cf91e4c590e6dabe2086737b7dd
+Author: Liming Liu <lliu@openjdk.org>
+Date:   Sat Apr 19 10:02:13 2025 +0000
 
-    8354988: Separate stderr and stdout in Executor class from jpackage test lib
+    8354572: Turn off AlwaysMergeDMB for Ampere CPU by default
     
-    Reviewed-by: almatvee
+    Reviewed-by: shade

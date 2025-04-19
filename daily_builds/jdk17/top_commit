@@ -1,8 +1,7 @@
-commit bfe6fe226f4ac7a71480e0a7265b615619fd2010
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Apr 17 13:51:01 2025 +0000
+commit e38a5f6964a3fb0b43ac69b1c6c6294b4f410104
+Author: SendaoYan <syan@openjdk.org>
+Date:   Sat Apr 19 09:04:06 2025 +0000
 
-    8315721: CloseRace.java#id0 fails transiently on libgraal
+    8349974: [JMH,17u] MaskQueryOperationsBenchmark fails java.lang.NoClassDefFoundError
     
-    Reviewed-by: rrich
-    Backport-of: 1be355734da94243e29f0899b53aa1ebdf3bcb79
+    Reviewed-by: phh
