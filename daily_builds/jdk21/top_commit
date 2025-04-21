@@ -1,7 +1,7 @@
-commit 181f952c0268af9581d7375de59fb272cbdf4b01
-Author: Martin Doerr <mdoerr@openjdk.org>
-Date:   Sat Apr 19 13:44:12 2025 +0000
+commit db4f792a248c59e71c46a00035e097265a024c09
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Apr 21 08:24:41 2025 +0000
 
-    8352512: TestVectorZeroCount: counter not reset between iterations
+    8349348: Refactor ClassLoaderDeadlock.sh and Deadlock.sh to run fully in java
     
-    Backport-of: 1c0fa0af7847d80fd3fbe38f28207aab270609b3
+    Backport-of: 32d6d031514be9cfee5b0fd778cb738b7ff9d770

@@ -1,7 +1,7 @@
-commit 128f2d1cadae3cf91e4c590e6dabe2086737b7dd
-Author: Liming Liu <lliu@openjdk.org>
-Date:   Sat Apr 19 10:02:13 2025 +0000
+commit 4dd64b49716144cc697fb461ff88860e2cbcaaea
+Author: Emanuel Peter <epeter@openjdk.org>
+Date:   Mon Apr 21 11:41:45 2025 +0000
 
-    8354572: Turn off AlwaysMergeDMB for Ampere CPU by default
+    8354477: C2 SuperWord: make use of memory edges more explicit
     
-    Reviewed-by: shade
+    Reviewed-by: kvn, roland
