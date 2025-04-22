@@ -112,7 +112,7 @@ jdk_fastdebug() {
   export CONF=linux-s390x-server-fastdebug
 
   bash configure \
-    --with-boot-jdk=$HOME/boot_jdk_23 \
+    --with-boot-jdk=$HOME/boot_jdk_24 \
     --with-jtreg=$HOME/jtreg \
     --with-gtest=$HOME/googletest \
     --with-debug-level=fastdebug \
@@ -123,7 +123,7 @@ jdk_fastdebug() {
   make dist-clean;
 
   bash configure \
-    --with-boot-jdk=$HOME/boot_jdk_23 \
+    --with-boot-jdk=$HOME/boot_jdk_24 \
     --with-jtreg=$HOME/jtreg \
     --with-gtest=$HOME/googletest \
     --with-debug-level=fastdebug \
@@ -294,7 +294,7 @@ jdk_release() {
   export CONF=linux-s390x-server-release
 
   bash configure \
-    --with-boot-jdk=$HOME/boot_jdk_23 \
+    --with-boot-jdk=$HOME/boot_jdk_24 \
     --with-jtreg=$HOME/jtreg \
     --with-gtest=$HOME/googletest \
     --with-debug-level=release \
@@ -305,7 +305,7 @@ jdk_release() {
   make dist-clean;
 
   bash configure \
-    --with-boot-jdk=$HOME/boot_jdk_23 \
+    --with-boot-jdk=$HOME/boot_jdk_24 \
     --with-jtreg=$HOME/jtreg \
     --with-gtest=$HOME/googletest \
     --with-debug-level=release \
