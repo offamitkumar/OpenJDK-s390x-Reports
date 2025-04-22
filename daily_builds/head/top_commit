@@ -1,7 +1,7 @@
-commit 4dd64b49716144cc697fb461ff88860e2cbcaaea
-Author: Emanuel Peter <epeter@openjdk.org>
-Date:   Mon Apr 21 11:41:45 2025 +0000
+commit 0be3f163ed12db305673928d97f975d6f6bb6b1c
+Author: Chen Liang <liach@openjdk.org>
+Date:   Tue Apr 22 03:29:59 2025 +0000
 
-    8354477: C2 SuperWord: make use of memory edges more explicit
+    8341608: jdeps in JDK 23 crashes when parsing signatures while jdeps in JDK 22 works fine
     
-    Reviewed-by: kvn, roland
+    Reviewed-by: jpai, henryjen
