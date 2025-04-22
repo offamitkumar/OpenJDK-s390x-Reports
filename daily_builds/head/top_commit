@@ -1,7 +1,7 @@
-commit 0be3f163ed12db305673928d97f975d6f6bb6b1c
-Author: Chen Liang <liach@openjdk.org>
-Date:   Tue Apr 22 03:29:59 2025 +0000
+commit da16c839735bbf79ece4967f95a98208f74b7f73
+Author: Alisen Chung <achung@openjdk.org>
+Date:   Tue Apr 22 15:26:59 2025 +0000
 
-    8341608: jdeps in JDK 23 crashes when parsing signatures while jdeps in JDK 22 works fine
+    8354466: Open some misc Swing bugs 9
     
-    Reviewed-by: jpai, henryjen
+    Reviewed-by: kizune, honkar

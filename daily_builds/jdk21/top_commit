@@ -1,7 +1,8 @@
-commit 2ba3cd60b7945736bb43cc94ed32c36cfe0a763f
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Apr 21 17:58:36 2025 +0000
+commit 732dca8c4cdf110c67de8acfd2808346c3c484cd
+Author: Xiaolong Peng <xpeng@openjdk.org>
+Date:   Tue Apr 22 14:39:03 2025 +0000
 
-    8328107: Shenandoah/C2: TestVerifyLoopOptimizations test failure
+    8350313: Include timings for leaving safepoint in safepoint logging
     
-    Backport-of: b5212d7bfe78b18c18e45c42c724a22365709328
+    Reviewed-by: phh
+    Backport-of: 9ec46968fbfddf99a8349cb6903d24b1c2fdaf1d
