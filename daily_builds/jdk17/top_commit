@@ -1,7 +1,8 @@
-commit 5a4b8cfdaafc4baa0488bbcac793b78197aab1a3
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Apr 21 08:27:49 2025 +0000
+commit 6b4fe753e2ba03e93bd2dc7dbb04984f9c206179
+Author: Michael De Vera <mldevera@amazon.com>
+Date:   Mon Apr 21 19:02:40 2025 +0000
 
-    8349348: Refactor ClassLoaderDeadlock.sh and Deadlock.sh to run fully in java
+    8314120: Add tests for FileDescriptor.sync
     
-    Backport-of: 32d6d031514be9cfee5b0fd778cb738b7ff9d770
+    Reviewed-by: phh
+    Backport-of: e22d333febe9edbb961fee9b51759d4cd28684fd

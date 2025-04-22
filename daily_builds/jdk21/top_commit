@@ -1,7 +1,7 @@
-commit db4f792a248c59e71c46a00035e097265a024c09
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Apr 21 08:24:41 2025 +0000
+commit 2ba3cd60b7945736bb43cc94ed32c36cfe0a763f
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Mon Apr 21 17:58:36 2025 +0000
 
-    8349348: Refactor ClassLoaderDeadlock.sh and Deadlock.sh to run fully in java
+    8328107: Shenandoah/C2: TestVerifyLoopOptimizations test failure
     
-    Backport-of: 32d6d031514be9cfee5b0fd778cb738b7ff9d770
+    Backport-of: b5212d7bfe78b18c18e45c42c724a22365709328
