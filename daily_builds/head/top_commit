@@ -1,7 +1,7 @@
-commit da16c839735bbf79ece4967f95a98208f74b7f73
-Author: Alisen Chung <achung@openjdk.org>
-Date:   Tue Apr 22 15:26:59 2025 +0000
+commit 12c3a231e6c1709660e61995f09ad857858e2e36
+Author: Jiangli Zhou <jiangli@openjdk.org>
+Date:   Wed Apr 23 14:55:15 2025 +0000
 
-    8354466: Open some misc Swing bugs 9
+    8354898: jdk/internal/loader/NativeLibraries/Main.java fails on static JDK
     
-    Reviewed-by: kizune, honkar
+    Reviewed-by: jpai
