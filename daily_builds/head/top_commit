@@ -1,7 +1,7 @@
-commit 12c3a231e6c1709660e61995f09ad857858e2e36
-Author: Jiangli Zhou <jiangli@openjdk.org>
-Date:   Wed Apr 23 14:55:15 2025 +0000
+commit 0edd018a48c202a6da4afe80e245799b47000885
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Thu Apr 24 14:48:00 2025 +0000
 
-    8354898: jdk/internal/loader/NativeLibraries/Main.java fails on static JDK
+    8355432: Remove CompileTask from SA
     
-    Reviewed-by: jpai
+    Reviewed-by: cjplummer, lmesnik
