@@ -1,7 +1,7 @@
-commit c2ba777e0b2524359b23481f2c31afdcd5568827
-Author: SendaoYan <syan@openjdk.org>
-Date:   Wed Apr 23 15:26:29 2025 +0000
+commit 44cba7be5162d26729a8da716db0b2e3e2a0153e
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Thu Apr 24 18:53:58 2025 +0000
 
-    8350386: Test TestCodeCacheFull.java fails with option -XX:-UseCodeCacheFlushing
+    8321479: java -D-D crashes
     
-    Backport-of: ad48846edd894073d89839a2771271553b4e27cd
+    Backport-of: dcdcd48d8fbf076e12841e557ebbe70228c8a92b

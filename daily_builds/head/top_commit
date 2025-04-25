@@ -1,7 +1,7 @@
-commit 0edd018a48c202a6da4afe80e245799b47000885
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Thu Apr 24 14:48:00 2025 +0000
+commit 5c067232bf21aaca2b7addd2a862e15a8696ffb8
+Author: Anjian-Wen <wenanjian@bytedance.com>
+Date:   Fri Apr 25 12:50:12 2025 +0000
 
-    8355432: Remove CompileTask from SA
+    8355074: RISC-V: C2: Support Vector-Scalar version of Zvbb Vector And-Not instruction
     
-    Reviewed-by: cjplummer, lmesnik
+    Reviewed-by: fjiang, fyang
