@@ -1,7 +1,7 @@
-commit 9c86ac27236a67ff7d84447821d89772b993f7e1
-Author: Tejesh R <tr@openjdk.org>
-Date:   Sun Apr 27 11:44:40 2025 +0000
+commit b1e778d9d2ad13ee5f1ed629a8805008580f86c0
+Author: Joachim Kern <jkern@openjdk.org>
+Date:   Mon Apr 28 14:38:59 2025 +0000
 
-    8354495: Open source several AWT DataTransfer tests
+    8354686: [AIX] now ubsan is possible
     
-    Reviewed-by: azvegint
+    Reviewed-by: mbaesken, clanger

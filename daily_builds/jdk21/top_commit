@@ -1,7 +1,7 @@
-commit 25452ae45cd46db3702da94470917fc7d1930834
-Author: SendaoYan <syan@openjdk.org>
-Date:   Sun Apr 27 03:03:20 2025 +0000
+commit 56b21a79469704ef342b5abdaa64a08fe8f31625
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Apr 28 14:35:47 2025 +0000
 
-    8349623: [ASAN] Gtest os_linux.glibc_mallinfo_wrapper_vm fails
+    8353787: Increased number of SHA-384-Digest java.util.jar.Attributes$Name instances leading to higher memory footprint
     
-    Backport-of: f2ffbbd70ccaaa97cb7d05c168995dd2599a3d1d
+    Backport-of: b64cdc28132c889ca8e21dc9534590ba2a778bcd

@@ -1,7 +1,7 @@
-commit d132468950815df952e38869f304445502631f52
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Thu Apr 24 18:52:37 2025 +0000
+commit c269609dad26a6b25b7a154a9ee3627b8b256500
+Author: Paul Hohensee <phh@openjdk.org>
+Date:   Mon Apr 28 17:10:10 2025 +0000
 
-    8325680: Uninitialised memory in deleteGSSCB of GSSLibStub.c:179
+    8347995: Race condition in jdk/java/net/httpclient/offline/FixedResponseHttpClient.java
     
-    Backport-of: 419191c653f787b5dc3032f9da31d8c9b9a08235
+    Backport-of: a62a870150cf199f16277b478af2f5d937255b3c
