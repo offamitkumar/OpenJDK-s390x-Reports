@@ -1,7 +1,7 @@
-commit b1e778d9d2ad13ee5f1ed629a8805008580f86c0
-Author: Joachim Kern <jkern@openjdk.org>
-Date:   Mon Apr 28 14:38:59 2025 +0000
+commit b5156bb16aade1ff40f20ed6ce6faafe7becb671
+Author: Liam Miller-Cushon <cushon@openjdk.org>
+Date:   Tue Apr 29 14:32:38 2025 +0000
 
-    8354686: [AIX] now ubsan is possible
+    8355065: ConcurrentModificationException in RichDiagnosticFormatter
     
-    Reviewed-by: mbaesken, clanger
+    Reviewed-by: vromero

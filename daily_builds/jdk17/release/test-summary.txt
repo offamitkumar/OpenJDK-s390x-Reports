@@ -6,6 +6,6 @@ Test summary
 >> jtreg:test/jdk:tier1                               2060  2059     1     0 <<
    jtreg:test/langtools:tier1                         4243  4243     0     0   
    jtreg:test/jaxp:tier1                                 0     0     0     0   
-   jtreg:test/lib-test:tier1                            32    32     0     0   
+   jtreg:test/lib-test:tier1                            33    33     0     0   
 ==============================
 TEST FAILURE
