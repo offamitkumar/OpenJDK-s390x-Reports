@@ -1,7 +1,7 @@
-commit b5156bb16aade1ff40f20ed6ce6faafe7becb671
-Author: Liam Miller-Cushon <cushon@openjdk.org>
-Date:   Tue Apr 29 14:32:38 2025 +0000
+commit 4c695fa8a459adcdb8cdfe9e90783007c65fb90e
+Author: Roger Riggs <rriggs@openjdk.org>
+Date:   Wed Apr 30 13:50:57 2025 +0000
 
-    8355065: ConcurrentModificationException in RichDiagnosticFormatter
+    8351000: StringBuilder getChar and putChar robustness
     
-    Reviewed-by: vromero
+    Reviewed-by: liach, lancea, rgiulietti, pminborg

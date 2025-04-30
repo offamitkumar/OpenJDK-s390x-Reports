@@ -3,7 +3,7 @@
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/stream/test/org/openjdk/tests/java/util/stream/CountTest.java 
+java/util/zip/DeflateIn_InflateOut.java 
 # newfailures.txt
 # newfailures.txt
 compiler/c2/TestMergeStores.java#id1 
