@@ -1,7 +1,7 @@
-commit d5a2f7685996163080ff3bd8a3cbae610736b967
+commit c2228cc099d300edfb90958ae1d98acd698f9ff9
 Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Apr 28 16:48:32 2025 +0000
+Date:   Wed Apr 30 20:38:33 2025 +0000
 
-    8318700: MacOS Zero cannot run gtests due to wrong JVM path
+    8320948: NPE due to unreported compiler error
     
-    Backport-of: 744e0893100d402b2b51762d57bcc2e99ab7fdcc
+    Backport-of: a9cb120d03e5b2efa244086e213d3b9e4706558a
