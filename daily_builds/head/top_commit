@@ -1,7 +1,7 @@
-commit bee273d6b4e34692952d4e7474ab72ee5c54e33a
-Author: Chen Liang <liach@openjdk.org>
-Date:   Thu May 1 14:37:26 2025 +0000
+commit 9f9e73d5f9fcb5e926a2674c54cbbc92012b75f6
+Author: Per Minborg <pminborg@openjdk.org>
+Date:   Fri May 2 14:14:59 2025 +0000
 
-    8297271: AccessFlag.maskToAccessFlags should be specific to class file version
+    8349146: [REDO] Implement a better allocator for downcalls
     
-    Reviewed-by: rriggs
+    Reviewed-by: mcimadamore, jvernee, liach
