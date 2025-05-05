@@ -1,7 +1,8 @@
-commit c2228cc099d300edfb90958ae1d98acd698f9ff9
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Apr 30 20:38:33 2025 +0000
+commit fdd0cb550e4345d93c5436404e0a798563d623f1
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon May 5 13:10:09 2025 +0000
 
-    8320948: NPE due to unreported compiler error
+    8349501: Relocate supporting classes in security/testlibrary to test/lib/jdk tree
     
-    Backport-of: a9cb120d03e5b2efa244086e213d3b9e4706558a
+    Reviewed-by: rschmelter
+    Backport-of: b737f7fb3004e4e9c95fba95c6fcda70073ae00e
