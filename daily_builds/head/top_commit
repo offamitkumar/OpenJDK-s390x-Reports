@@ -1,7 +1,7 @@
-commit 1501a5e41e59162a374cf5b8cfc37faced48a6ed
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Mon May 5 12:51:02 2025 +0000
+commit 088825ed889551e6067d46bf77fe4d30a3972da1
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Tue May 6 14:15:37 2025 +0000
 
-    8356122: Client build fails after JDK-8350209
+    8355979: ATTRIBUTE_NO_UBSAN needs to be extended to handle float divisions by zero on AIX
     
-    Reviewed-by: chagedorn
+    Reviewed-by: jkern, lucy

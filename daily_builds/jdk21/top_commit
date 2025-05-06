@@ -1,8 +1,7 @@
-commit fdd0cb550e4345d93c5436404e0a798563d623f1
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon May 5 13:10:09 2025 +0000
+commit 96f7dbfd1b80d3ffbe8f9a26ce160e5a7aa0a881
+Author: SendaoYan <syan@openjdk.org>
+Date:   Tue May 6 08:57:49 2025 +0000
 
-    8349501: Relocate supporting classes in security/testlibrary to test/lib/jdk tree
+    8353190: Use "/native" Run Option for TestAvailableProcessors Execution
     
-    Reviewed-by: rschmelter
-    Backport-of: b737f7fb3004e4e9c95fba95c6fcda70073ae00e
+    Backport-of: 34c4d895ca321508c24b13338900d617679aadae
