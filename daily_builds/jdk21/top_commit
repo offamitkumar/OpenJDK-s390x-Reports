@@ -1,7 +1,7 @@
-commit 96f7dbfd1b80d3ffbe8f9a26ce160e5a7aa0a881
-Author: SendaoYan <syan@openjdk.org>
-Date:   Tue May 6 08:57:49 2025 +0000
+commit cd0df72dbb99bb514398db4ccf2d3b371090fbfc
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu May 8 11:04:38 2025 +0000
 
-    8353190: Use "/native" Run Option for TestAvailableProcessors Execution
+    8350498: Remove two Camerfirma root CA certificates
     
-    Backport-of: 34c4d895ca321508c24b13338900d617679aadae
+    Backport-of: 1313349a2efd42ab84a543dfee11e3547f6ef4a3

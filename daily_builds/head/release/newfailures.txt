@@ -3,6 +3,9 @@
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
+jdk/modules/etc/DefaultModules.java 
+jdk/modules/etc/VerifyModuleDelegation.java 
+jdk/modules/open/Basic.java 
 # newfailures.txt
 # newfailures.txt
 runtime/cds/appcds/aotCode/AOTCodeFlags.java 

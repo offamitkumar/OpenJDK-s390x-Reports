@@ -4,7 +4,8 @@ java/util/concurrent/tck/JSR166TestCase.java#default
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
 java/util/stream/GatherersMapConcurrentTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/ConcatOpTest.java 
+java/util/zip/ZipFile/ManyEntries.java 
+jdk/internal/ref/Cleaner/CleanableListTest.java 
 # newfailures.txt
 # newfailures.txt
 compiler/c2/TestMergeStores.java#id1 

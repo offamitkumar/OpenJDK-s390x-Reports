@@ -1,7 +1,7 @@
-commit 088825ed889551e6067d46bf77fe4d30a3972da1
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Tue May 6 14:15:37 2025 +0000
+commit c6ffacb5754642083f614a5ee6dc76b7d145c605
+Author: Maurizio Cimadamore <mcimadamore@openjdk.org>
+Date:   Thu May 8 15:14:35 2025 +0000
 
-    8355979: ATTRIBUTE_NO_UBSAN needs to be extended to handle float divisions by zero on AIX
+    8344703: Compiler Implementation for Flexible Constructor Bodies
     
-    Reviewed-by: jkern, lucy
+    Reviewed-by: vromero, liach, jlahoda

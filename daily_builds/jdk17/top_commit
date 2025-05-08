@@ -1,7 +1,8 @@
-commit 23901f36d243a180d3cddcb72fb90ae0cdc5a45b
+commit 4e011ef165025c3369e4654a9ace503a4e1e1b87
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon May 5 13:11:47 2025 +0000
+Date:   Thu May 8 11:11:23 2025 +0000
 
-    8333680: com/sun/tools/attach/BasicTests.java fails with "SocketException: Permission denied: connect"
+    8350498: Remove two Camerfirma root CA certificates
     
-    Backport-of: 17bd483ff01e463cef45824f0c1296a8f3e782c8
+    Reviewed-by: mbaesken
+    Backport-of: 1313349a2efd42ab84a543dfee11e3547f6ef4a3
