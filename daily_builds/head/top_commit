@@ -1,7 +1,7 @@
-commit c6ffacb5754642083f614a5ee6dc76b7d145c605
-Author: Maurizio Cimadamore <mcimadamore@openjdk.org>
-Date:   Thu May 8 15:14:35 2025 +0000
+commit 9ebb5d42d43a743cf3a5197c7dabe46ac8120474
+Author: Patricio Chilano Mateo <pchilanomate@openjdk.org>
+Date:   Fri May 9 15:05:09 2025 +0000
 
-    8344703: Compiler Implementation for Flexible Constructor Bodies
+    8346255: java/lang/management/ThreadMXBean/VirtualThreadDeadlocks.java finds no deadlock
     
-    Reviewed-by: vromero, liach, jlahoda
+    Reviewed-by: kevinw, dholmes, alanb

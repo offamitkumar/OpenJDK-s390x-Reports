@@ -1,8 +1,7 @@
-commit 276a157622f76d7210e11423879d81ccd70c3568
-Author: Taizo Kurashige <103394724+kurashige23@users.noreply.github.com>
-Date:   Wed May 7 14:03:49 2025 +0000
+commit 8894d6ad1b83553a5c60af51fd2de2319fd1d6ec
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Fri May 9 14:44:54 2025 +0000
 
-    8296631: NSS tests failing on OL9 linux-aarch64 hosts
+    8350498: Remove two Camerfirma root CA certificates
     
-    Reviewed-by: phh
-    Backport-of: 6e1aacdfba5a32f7b071eea8039888d275827e83
+    Backport-of: 4e011ef165025c3369e4654a9ace503a4e1e1b87
