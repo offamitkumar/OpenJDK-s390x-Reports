@@ -1,7 +1,7 @@
-commit 3a28a2982ee93918b37ddf06f1fe196e319f503d
-Author: SendaoYan <syan@openjdk.org>
-Date:   Fri May 9 09:19:39 2025 +0000
+commit 4f7c12676f870c36a505b866122a1f2218f51fb9
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Sat May 10 03:09:38 2025 +0000
 
-    8350386: Test TestCodeCacheFull.java fails with option -XX:-UseCodeCacheFlushing
+    8312246: NPE when HSDB visits bad oop
     
-    Backport-of: c2ba777e0b2524359b23481f2c31afdcd5568827
+    Backport-of: a7427678e160bf54c57d5bec80650b053dfc9e9a

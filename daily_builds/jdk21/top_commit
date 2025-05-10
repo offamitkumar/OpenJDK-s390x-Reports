@@ -1,8 +1,7 @@
-commit 23469f8de1c6340bc22ef6d9f99740ea9c0e3fe9
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri May 9 16:10:14 2025 +0000
+commit 0545f2cc02e80093dd6735eed7be254e2e5e2008
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Sat May 10 03:11:45 2025 +0000
 
-    8349492: Update sun/security/pkcs12/KeytoolOpensslInteropTest.java to use a recent Openssl version
+    8314319: LogCompilation doesn't reset lateInlining when it encounters a failure.
     
-    Reviewed-by: mdoerr
-    Backport-of: 8d8bd0c4b3bfdc7670bba03b01b0a00dac9f9825
+    Backport-of: e9e0c5699b8d0fbd1bd3a6caa3e0182a2e5bdda3

@@ -1,7 +1,7 @@
-commit 9ebb5d42d43a743cf3a5197c7dabe46ac8120474
-Author: Patricio Chilano Mateo <pchilanomate@openjdk.org>
-Date:   Fri May 9 15:05:09 2025 +0000
+commit 436960308cebe020549fcdbb4bcb12c90ce7aeb8
+Author: Ioi Lam <iklam@openjdk.org>
+Date:   Sat May 10 15:16:19 2025 +0000
 
-    8346255: java/lang/management/ThreadMXBean/VirtualThreadDeadlocks.java finds no deadlock
+    8356597: AOT cache and CDS archive should not be created in read-only mode
     
-    Reviewed-by: kevinw, dholmes, alanb
+    Reviewed-by: shade, kvn
