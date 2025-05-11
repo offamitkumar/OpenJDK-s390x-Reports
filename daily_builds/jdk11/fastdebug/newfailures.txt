@@ -7,4 +7,5 @@ tools/pack200/PackTestZip64.java
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
+gc/ergonomics/TestDynamicNumberOfGCThreads.java 
 runtime/CheckUnhandledOops/TestVerifyOops.java 

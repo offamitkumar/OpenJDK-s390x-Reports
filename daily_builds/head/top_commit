@@ -1,7 +1,7 @@
-commit 436960308cebe020549fcdbb4bcb12c90ce7aeb8
-Author: Ioi Lam <iklam@openjdk.org>
-Date:   Sat May 10 15:16:19 2025 +0000
+commit 97d2a37927fca993537644e748c8abca58752d44
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Sun May 11 07:39:15 2025 +0000
 
-    8356597: AOT cache and CDS archive should not be created in read-only mode
+    8355790: Enhance code consistency: java.desktop/unix:sun.awt
     
-    Reviewed-by: shade, kvn
+    Reviewed-by: achung, prr
