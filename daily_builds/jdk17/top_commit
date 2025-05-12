@@ -1,7 +1,7 @@
-commit 4f7c12676f870c36a505b866122a1f2218f51fb9
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Sat May 10 03:09:38 2025 +0000
+commit e1cda219b3fea2aa9db7953645299153e4e086df
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon May 12 15:02:04 2025 +0000
 
-    8312246: NPE when HSDB visits bad oop
+    8349492: Update sun/security/pkcs12/KeytoolOpensslInteropTest.java to use a recent Openssl version
     
-    Backport-of: a7427678e160bf54c57d5bec80650b053dfc9e9a
+    Backport-of: 23469f8de1c6340bc22ef6d9f99740ea9c0e3fe9
