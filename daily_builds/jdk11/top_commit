@@ -1,7 +1,7 @@
-commit d46f769e70f6c0e8effcb78310cacc391a14fd6f
-Author: Jaroslav Bachorik <jbachorik@openjdk.org>
-Date:   Mon May 12 03:37:59 2025 +0000
+commit 819a1fec8f590eb202b2b70a2f105bc9cebb5adc
+Author: Paul Hohensee <phh@openjdk.org>
+Date:   Tue May 13 17:29:48 2025 +0000
 
-    8315380: AsyncGetCallTrace crash in frame::safe_for_sender
+    8211400: nsk.share.gc.Memory::getArrayLength returns wrong value
     
-    Reviewed-by: phh, shade, apangin
+    Backport-of: 860d49db22cf352eaf1b3b20fff43d090f0eebc8
