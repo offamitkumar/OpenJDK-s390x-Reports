@@ -1,7 +1,8 @@
-commit 38a356d3fa7eac0600acc7f27e7b311e3fa299de
-Author: Daniel Hu <costmuch@amazon.com>
-Date:   Mon May 12 16:16:54 2025 +0000
+commit eb8320ce840175f1f132673824ef8e67850814da
+Author: Galder Zamarreño <galder@openjdk.org>
+Date:   Wed May 14 08:50:03 2025 +0000
 
-    8316629: j.text.DateFormatSymbols setZoneStrings() exception is unhelpful
+    8344925: translet-name ignored when package-name is also set
     
-    Backport-of: ef49e6c0d7e4e3a2d7d3d8dcb1edf195b23ce12c
+    Reviewed-by: joehw
+    Backport-of: 3989a199578fc1d91988cfdbb95f11dd6d4c7b81
