@@ -1,8 +1,7 @@
-commit eb8320ce840175f1f132673824ef8e67850814da
-Author: Galder Zamarreño <galder@openjdk.org>
-Date:   Wed May 14 08:50:03 2025 +0000
+commit ecfa00db746900dff15e3fd4b7de3669cf989dc7
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu May 15 07:43:48 2025 +0000
 
-    8344925: translet-name ignored when package-name is also set
+    8326090: Rename jvmti_aod.h
     
-    Reviewed-by: joehw
-    Backport-of: 3989a199578fc1d91988cfdbb95f11dd6d4c7b81
+    Backport-of: 27003b53bbb565123678a7feca74628b29991a5c

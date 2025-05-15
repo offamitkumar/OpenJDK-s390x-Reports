@@ -1,7 +1,7 @@
-commit 1afd887b138ac2425289b6f863801774f050c23c
-Author: Jiangli Zhou <jiangli@openjdk.org>
-Date:   Wed May 14 14:58:29 2025 +0000
+commit 8fcfddb2d202cdb61941efdb3fec5807fee98c33
+Author: Volkan Yazici <vyazici@openjdk.org>
+Date:   Thu May 15 14:54:27 2025 +0000
 
-    8356102: TestJcmdOutput, JcmdWithNMTDisabled and DumpSharedDictionary hs/tier1 tests fail on static-jdk
+    8353197: Document preconditions for JavaLangAccess methods
     
-    Reviewed-by: dholmes
+    Reviewed-by: pminborg, liach

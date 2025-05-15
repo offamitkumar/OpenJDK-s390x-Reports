@@ -1,6 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-jdk/internal/loader/URLClassPath/JarCheckTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

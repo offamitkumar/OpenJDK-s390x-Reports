@@ -22,7 +22,7 @@ java/lang/module/MultiReleaseJarTest.java
 java/util/zip/CloseInflaterDeflaterTest.java 
 jdk/modules/incubator/ServiceBinding.java 
 # newfailures.txt
-jdk/jshell/TerminalNoExecTest.java 
+jdk/jshell/ToolProviderTest.java 
 tools/javac/annotations/SyntheticParameters.java 
 tools/javac/classfiles/attributes/AnnotationDefault/AnnotationDefaultTest.java 
 tools/javac/classfiles/attributes/EnclosingMethod/EnclosingMethodTest.java 

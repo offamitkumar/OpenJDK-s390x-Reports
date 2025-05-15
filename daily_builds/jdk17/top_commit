@@ -1,7 +1,8 @@
-commit e1cda219b3fea2aa9db7953645299153e4e086df
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon May 12 15:02:04 2025 +0000
+commit b5f25e0df4bec818c64d734f65425ab5620d834c
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Thu May 15 17:02:36 2025 +0000
 
-    8349492: Update sun/security/pkcs12/KeytoolOpensslInteropTest.java to use a recent Openssl version
+    8356571: Re-enable -Wtype-limits for GCC in LCMS
     
-    Backport-of: 23469f8de1c6340bc22ef6d9f99740ea9c0e3fe9
+    Reviewed-by: phh
+    Backport-of: 9a0e6f338f34fb5da16d5f9eb710cdddd4302945
