@@ -1,7 +1,7 @@
-commit 8fcfddb2d202cdb61941efdb3fec5807fee98c33
-Author: Volkan Yazici <vyazici@openjdk.org>
-Date:   Thu May 15 14:54:27 2025 +0000
+commit 46a12e781edcbe9da7bd39eb9e101fc680053cef
+Author: Timofei Pushkin <tpushkin@openjdk.org>
+Date:   Fri May 16 13:51:58 2025 +0000
 
-    8353197: Document preconditions for JavaLangAccess methods
+    8315130: java.lang.IllegalAccessError when processing classlist to create CDS archive
     
-    Reviewed-by: pminborg, liach
+    Reviewed-by: iklam, ccheung

@@ -1,7 +1,8 @@
-commit 819a1fec8f590eb202b2b70a2f105bc9cebb5adc
-Author: Paul Hohensee <phh@openjdk.org>
-Date:   Tue May 13 17:29:48 2025 +0000
+commit c5407b6a8464fcc1eed31a2e9e30651e9011dbd3
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Thu May 15 23:28:54 2025 +0000
 
-    8211400: nsk.share.gc.Memory::getArrayLength returns wrong value
+    8356571: Re-enable -Wtype-limits for GCC in LCMS
     
-    Backport-of: 860d49db22cf352eaf1b3b20fff43d090f0eebc8
+    Reviewed-by: phh, andrew
+    Backport-of: 9a0e6f338f34fb5da16d5f9eb710cdddd4302945

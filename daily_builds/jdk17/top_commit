@@ -1,8 +1,7 @@
-commit b5f25e0df4bec818c64d734f65425ab5620d834c
-Author: Sergey Bylokhov <serb@openjdk.org>
-Date:   Thu May 15 17:02:36 2025 +0000
+commit 4c59024073b11cf7b1ad52d0da006494ed6c382f
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri May 16 08:30:10 2025 +0000
 
-    8356571: Re-enable -Wtype-limits for GCC in LCMS
+    8352676: Opensource JMenu tests - series1
     
-    Reviewed-by: phh
-    Backport-of: 9a0e6f338f34fb5da16d5f9eb710cdddd4302945
+    Backport-of: c002b97ee99c1889aa89e0a8853beafaf0969e9c

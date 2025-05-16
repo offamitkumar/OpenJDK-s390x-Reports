@@ -1,7 +1,7 @@
-commit ecfa00db746900dff15e3fd4b7de3669cf989dc7
+commit 9a5daf173645d3726f4eec3d21e81e201772985c
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu May 15 07:43:48 2025 +0000
+Date:   Fri May 16 08:15:51 2025 +0000
 
-    8326090: Rename jvmti_aod.h
+    8352676: Opensource JMenu tests - series1
     
-    Backport-of: 27003b53bbb565123678a7feca74628b29991a5c
+    Backport-of: c002b97ee99c1889aa89e0a8853beafaf0969e9c
