@@ -1,7 +1,7 @@
-commit 46a12e781edcbe9da7bd39eb9e101fc680053cef
-Author: Timofei Pushkin <tpushkin@openjdk.org>
-Date:   Fri May 16 13:51:58 2025 +0000
+commit 76570c627db527f856f2394fb9ead02939eca621
+Author: Calvin Cheung <ccheung@openjdk.org>
+Date:   Fri May 16 22:12:59 2025 +0000
 
-    8315130: java.lang.IllegalAccessError when processing classlist to create CDS archive
+    8357149: Test runtime/cds/appcds/aotCode/AOTCodeFlags.java is broken after JDK-8354887
     
-    Reviewed-by: iklam, ccheung
+    Reviewed-by: kvn, iklam
