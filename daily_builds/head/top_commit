@@ -1,7 +1,7 @@
-commit 76570c627db527f856f2394fb9ead02939eca621
-Author: Calvin Cheung <ccheung@openjdk.org>
-Date:   Fri May 16 22:12:59 2025 +0000
+commit 6c42856b8d5039c14ba04a48c60d09039d5030fe
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Sun May 18 11:32:37 2025 +0000
 
-    8357149: Test runtime/cds/appcds/aotCode/AOTCodeFlags.java is broken after JDK-8354887
+    8356778: Compiler add event logging in case of failures
     
-    Reviewed-by: kvn, iklam
+    Reviewed-by: lucy
