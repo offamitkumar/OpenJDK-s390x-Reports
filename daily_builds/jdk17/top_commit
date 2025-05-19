@@ -1,7 +1,7 @@
-commit 4c59024073b11cf7b1ad52d0da006494ed6c382f
+commit 08de2ba0e60cf968d2dd6fee3fec83a2471c62ce
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri May 16 08:30:10 2025 +0000
+Date:   Mon May 19 06:06:28 2025 +0000
 
-    8352676: Opensource JMenu tests - series1
+    8352908: Open source several swing tests batch1
     
-    Backport-of: c002b97ee99c1889aa89e0a8853beafaf0969e9c
+    Backport-of: a2dc9c71e47a1cdf70ab351c557a5f1835eb5f4a

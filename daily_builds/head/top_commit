@@ -1,7 +1,7 @@
-commit 6c42856b8d5039c14ba04a48c60d09039d5030fe
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Sun May 18 11:32:37 2025 +0000
+commit 6a58af310ab2b800642f4604ee90cc74981fb9f3
+Author: Vladimir Kozlov <kvn@openjdk.org>
+Date:   Mon May 19 15:00:54 2025 +0000
 
-    8356778: Compiler add event logging in case of failures
+    8357143: New test AOTCodeCompressedOopsTest.java fails on platforms without AOT Code Cache support
     
-    Reviewed-by: lucy
+    Reviewed-by: asmehra, fyang, shade, mdoerr

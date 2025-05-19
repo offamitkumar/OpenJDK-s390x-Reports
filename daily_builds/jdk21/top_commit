@@ -1,7 +1,8 @@
-commit 9a5daf173645d3726f4eec3d21e81e201772985c
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri May 16 08:15:51 2025 +0000
+commit a1e58917dfd27963f9509c1f2ce1dc1c53d48aad
+Author: Roman Marchenko <rmarchenko@openjdk.org>
+Date:   Mon May 19 14:57:09 2025 +0000
 
-    8352676: Opensource JMenu tests - series1
+    8297692: Avoid sending per-region GCPhaseParallel JFR events in G1ScanCollectionSetRegionClosure
     
-    Backport-of: c002b97ee99c1889aa89e0a8853beafaf0969e9c
+    Reviewed-by: phh
+    Backport-of: a73226b18e274c44171021760e9eb05bc4a8b711
