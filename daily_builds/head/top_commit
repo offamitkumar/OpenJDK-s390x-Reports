@@ -1,7 +1,7 @@
-commit 6a58af310ab2b800642f4604ee90cc74981fb9f3
-Author: Vladimir Kozlov <kvn@openjdk.org>
-Date:   Mon May 19 15:00:54 2025 +0000
+commit 6162e2c5213c5dd7c1127fd9616b543efa898962
+Author: Weijun Wang <weijun@openjdk.org>
+Date:   Tue May 20 14:50:46 2025 +0000
 
-    8357143: New test AOTCodeCompressedOopsTest.java fails on platforms without AOT Code Cache support
+    8357062: Update Public Suffix List to 823beb1
     
-    Reviewed-by: asmehra, fyang, shade, mdoerr
+    Reviewed-by: mullan
