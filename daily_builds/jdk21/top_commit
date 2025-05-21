@@ -1,8 +1,7 @@
-commit a1e58917dfd27963f9509c1f2ce1dc1c53d48aad
-Author: Roman Marchenko <rmarchenko@openjdk.org>
-Date:   Mon May 19 14:57:09 2025 +0000
+commit 56972c620c8dba04f8e1344b51e65de64216e5fc
+Author: Arno Zeller <azeller@openjdk.org>
+Date:   Wed May 21 16:09:36 2025 +0000
 
-    8297692: Avoid sending per-region GCPhaseParallel JFR events in G1ScanCollectionSetRegionClosure
+    8354530: AIX: sporadic unexpected errno when calling setsockopt in Net.joinOrDrop
     
-    Reviewed-by: phh
-    Backport-of: a73226b18e274c44171021760e9eb05bc4a8b711
+    Backport-of: dc881ee36900bc12bea9616a6078a1f3266c183d

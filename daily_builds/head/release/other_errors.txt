@@ -1,34 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/prefs/CodePointZeroPrefsTest.java 
-java/util/prefs/CommentsInXml.java 
-java/util/prefs/ConflictInFlush.java 
-java/util/prefs/ExportNode.java 
-java/util/prefs/ExportSubtree.java 
-java/util/prefs/RemoveNullKeyCheck.java 
-java/util/stream/examples/JavadocExamples.java 
-java/util/stream/test/org/openjdk/tests/java/lang/invoke/DeserializeMethodTest.java 
-java/util/stream/test/org/openjdk/tests/java/lang/invoke/MHProxiesTest.java 
-java/util/stream/test/org/openjdk/tests/java/lang/invoke/SerializedLambdaTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/CollectAndSummaryStatisticsTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/CollectionAndMapModifyStreamTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/CollectorExample.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/CollectorToUnmodListTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/CollectorsTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/ConcatOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/ConcatTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/CountTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/DistinctOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/DoublePrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/FilterOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/FindAnyOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/FindFirstOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/FlatMapOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/ForEachOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/GroupByOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/InfiniteStreamWithLimitOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntPrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntSliceOpTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

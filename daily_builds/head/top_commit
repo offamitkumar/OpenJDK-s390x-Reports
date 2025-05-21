@@ -1,7 +1,7 @@
-commit 6162e2c5213c5dd7c1127fd9616b543efa898962
-Author: Weijun Wang <weijun@openjdk.org>
-Date:   Tue May 20 14:50:46 2025 +0000
+commit 275cfd323b1b7b5e8927e7be2f229d200bac9980
+Author: Brian Burkhalter <bpb@openjdk.org>
+Date:   Wed May 21 15:21:49 2025 +0000
 
-    8357062: Update Public Suffix List to 823beb1
+    8357280: (bf) Remove @requires tags from java/nio/Buffer/LimitDirectMemory[NegativeTest].java
     
-    Reviewed-by: mullan
+    Reviewed-by: alanb
