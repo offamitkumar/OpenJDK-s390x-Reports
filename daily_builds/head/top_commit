@@ -1,7 +1,7 @@
-commit 275cfd323b1b7b5e8927e7be2f229d200bac9980
+commit 72e440d06e6a93141e8943f1a62610cd951e22c4
 Author: Brian Burkhalter <bpb@openjdk.org>
-Date:   Wed May 21 15:21:49 2025 +0000
+Date:   Thu May 22 15:17:34 2025 +0000
 
-    8357280: (bf) Remove @requires tags from java/nio/Buffer/LimitDirectMemory[NegativeTest].java
+    8357303: (fs) UnixSecureDirectoryStream.implDelete has unused haveFlags parameter
     
-    Reviewed-by: alanb
+    Reviewed-by: alanb, shade

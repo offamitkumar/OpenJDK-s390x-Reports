@@ -1,7 +1,8 @@
-commit 56972c620c8dba04f8e1344b51e65de64216e5fc
-Author: Arno Zeller <azeller@openjdk.org>
-Date:   Wed May 21 16:09:36 2025 +0000
+commit b4ee5241cce000054eb45e50041371e8467e2510
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu May 22 09:50:24 2025 +0000
 
-    8354530: AIX: sporadic unexpected errno when calling setsockopt in Net.joinOrDrop
+    8356096: ISO 4217 Amendment 179 Update
     
-    Backport-of: dc881ee36900bc12bea9616a6078a1f3266c183d
+    Reviewed-by: rrich
+    Backport-of: 0cb355ee921183423c8ffc44491f428c49c62c28

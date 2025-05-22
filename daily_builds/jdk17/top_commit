@@ -1,7 +1,7 @@
-commit 08de2ba0e60cf968d2dd6fee3fec83a2471c62ce
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon May 19 06:06:28 2025 +0000
+commit 01a62e385ef9852dac37acd3eb88a36665330275
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Thu May 22 16:52:02 2025 +0000
 
-    8352908: Open source several swing tests batch1
+    8306997: C2: "malformed control flow" assert due to missing safepoint on backedge with a switch
     
-    Backport-of: a2dc9c71e47a1cdf70ab351c557a5f1835eb5f4a
+    Backport-of: e0774bed2d2fcd850f5ca6884dd7aeb45f0bdaef
