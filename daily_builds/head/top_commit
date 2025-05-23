@@ -1,7 +1,7 @@
-commit 72e440d06e6a93141e8943f1a62610cd951e22c4
-Author: Brian Burkhalter <bpb@openjdk.org>
-Date:   Thu May 22 15:17:34 2025 +0000
+commit 90e076b2a1ee5f91317157911e2c62a37978e93e
+Author: Aggelos Biboudis <abimpoudis@openjdk.org>
+Date:   Fri May 23 14:55:57 2025 +0000
 
-    8357303: (fs) UnixSecureDirectoryStream.implDelete has unused haveFlags parameter
+    8357654: [BACKOUT] JDK-8343580: Type error with inner classes of generic classes in functions generic by outer
     
-    Reviewed-by: alanb, shade
+    Reviewed-by: mcimadamore, liach, vromero
