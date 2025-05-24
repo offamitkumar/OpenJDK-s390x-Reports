@@ -1,9 +1,9 @@
 # newfailures.txt
 # newfailures.txt
+java/util/concurrent/forkjoin/AsyncShutdownNowInvokeAnyRace.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-jdk/internal/misc/ThreadFlock/ThreadFlockTest.java#virtual 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt

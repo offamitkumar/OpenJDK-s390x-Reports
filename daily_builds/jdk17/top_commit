@@ -1,7 +1,7 @@
-commit a4770b5dbc06bc0b1285c6d4487826c96e3d92e1
-Author: Sergey Bylokhov <serb@openjdk.org>
-Date:   Fri May 23 15:19:58 2025 +0000
+commit a16a779109538f1e7c5ca6de1a5fb09126e3b3e5
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri May 23 18:07:20 2025 +0000
 
-    8357193: [VS 2022 17.14] Warning C5287 in debugInit.c: enum type mismatch during build
+    8343037: Missing @since tag on JColorChooser.showDialog overload
     
-    Backport-of: 5f38d1bb94d008c33c1a7af12c81ee0e15371e13
+    Backport-of: bd795946e777fccf797b1b69806217f988212f73
