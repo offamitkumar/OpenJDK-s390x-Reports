@@ -1,7 +1,7 @@
-commit b034710b2ae5fbfbe619abba86fef3b5a2d685e0
-Author: Nizar Benalla <nbenalla@openjdk.org>
-Date:   Sun May 25 12:56:55 2025 +0000
+commit a300c356555019a42c19bf0c16184f6dee4ad96e
+Author: Daniel Skantz <dskantz@openjdk.org>
+Date:   Mon May 26 14:22:12 2025 +0000
 
-    8356629: Incorrect use of {@linkplain} in java.sql
+    8357105: C2: compilation fails with "assert(false) failed: empty program detected during loop optimization"
     
-    Reviewed-by: lancea
+    Reviewed-by: syan, rcastanedalo
