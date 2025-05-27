@@ -1,7 +1,7 @@
-commit a300c356555019a42c19bf0c16184f6dee4ad96e
-Author: Daniel Skantz <dskantz@openjdk.org>
-Date:   Mon May 26 14:22:12 2025 +0000
+commit c29537740efb04e061732a700582d43b1956cff4
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Tue May 27 14:44:40 2025 +0000
 
-    8357105: C2: compilation fails with "assert(false) failed: empty program detected during loop optimization"
+    8357800: Initialize JvmtiThreadState bool fields with bool literals
     
-    Reviewed-by: syan, rcastanedalo
+    Reviewed-by: alanb, stefank
