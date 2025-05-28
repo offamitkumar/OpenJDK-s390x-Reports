@@ -1,7 +1,12 @@
-commit c29537740efb04e061732a700582d43b1956cff4
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Tue May 27 14:44:40 2025 +0000
+commit e3f85c961b4c1e5e01aedf3a0f4e1b0e6ff457fd
+Author: Igor Veresov <iveresov@openjdk.org>
+Date:   Wed May 28 15:15:03 2025 +0000
 
-    8357800: Initialize JvmtiThreadState bool fields with bool literals
+    8355003: Implement JEP 515: Ahead-of-Time Method Profiling
     
-    Reviewed-by: alanb, stefank
+    Co-authored-by: John R Rose <jrose@openjdk.org>
+    Co-authored-by: Vladimir Ivanov <vlivanov@openjdk.org>
+    Co-authored-by: Ioi Lam <iklam@openjdk.org>
+    Co-authored-by: Vladimir Kozlov <kvn@openjdk.org>
+    Co-authored-by: Aleksey Shipilev <shade@openjdk.org>
+    Reviewed-by: kvn, ihse, cjplummer, iklam
