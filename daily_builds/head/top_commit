@@ -1,12 +1,7 @@
-commit e3f85c961b4c1e5e01aedf3a0f4e1b0e6ff457fd
-Author: Igor Veresov <iveresov@openjdk.org>
-Date:   Wed May 28 15:15:03 2025 +0000
+commit 79aff26c2880922b92863911d8a5a035ba9a1e75
+Author: Brian Burkhalter <bpb@openjdk.org>
+Date:   Thu May 29 15:20:39 2025 +0000
 
-    8355003: Implement JEP 515: Ahead-of-Time Method Profiling
+    8354724: Methods in java.io.Reader to read all characters and all lines
     
-    Co-authored-by: John R Rose <jrose@openjdk.org>
-    Co-authored-by: Vladimir Ivanov <vlivanov@openjdk.org>
-    Co-authored-by: Ioi Lam <iklam@openjdk.org>
-    Co-authored-by: Vladimir Kozlov <kvn@openjdk.org>
-    Co-authored-by: Aleksey Shipilev <shade@openjdk.org>
-    Reviewed-by: kvn, ihse, cjplummer, iklam
+    Reviewed-by: rriggs, smarks, jpai, alanb
