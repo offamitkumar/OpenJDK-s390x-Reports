@@ -1,5 +1,7 @@
 # other_errors.txt
 # other_errors.txt
+java/util/Scanner/ScannerStreamTest.java 
+sun/invoke/util/WrapperTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

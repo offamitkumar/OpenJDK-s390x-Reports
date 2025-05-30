@@ -1,7 +1,7 @@
-commit 79aff26c2880922b92863911d8a5a035ba9a1e75
-Author: Brian Burkhalter <bpb@openjdk.org>
-Date:   Thu May 29 15:20:39 2025 +0000
+commit 26275a10b2aa75f0d4ff49248a3309f9d7b19bf3
+Author: Archie Cobbs <acobbs@openjdk.org>
+Date:   Fri May 30 14:42:36 2025 +0000
 
-    8354724: Methods in java.io.Reader to read all characters and all lines
+    8355753: @SuppressWarnings("this-escape") not respected for indirect leak via field
     
-    Reviewed-by: rriggs, smarks, jpai, alanb
+    Reviewed-by: vromero
