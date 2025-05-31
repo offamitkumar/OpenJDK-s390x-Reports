@@ -2,6 +2,7 @@
 # newfailures.txt
 java/foreign/nested/TestNested.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
+java/util/zip/DeflateIn_InflateOut.java 
 # newfailures.txt
 # newfailures.txt
 compiler/c2/irTests/TestAutoVectorization2DArray.java 

@@ -1,7 +1,7 @@
-commit 26275a10b2aa75f0d4ff49248a3309f9d7b19bf3
-Author: Archie Cobbs <acobbs@openjdk.org>
-Date:   Fri May 30 14:42:36 2025 +0000
+commit 84002d12ed83c8254422fdda349aa647422d0768
+Author: Jaikiran Pai <jpai@openjdk.org>
+Date:   Sat May 31 13:02:58 2025 +0000
 
-    8355753: @SuppressWarnings("this-escape") not respected for indirect leak via field
+    8228773: URLClassLoader constructors should include API note warning that the parent should not be null
     
-    Reviewed-by: vromero
+    Reviewed-by: alanb, mullan

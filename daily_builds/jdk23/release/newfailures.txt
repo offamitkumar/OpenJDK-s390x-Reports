@@ -19,7 +19,6 @@ java/lang/module/ModuleDescriptorTest.java
 java/lang/module/ModuleFinderTest.java 
 java/lang/module/ModuleNamesTest.java 
 java/lang/module/MultiReleaseJarTest.java 
-java/lang/ref/FinalizerHistogramTest.java 
 java/util/zip/CloseInflaterDeflaterTest.java 
 jdk/modules/incubator/ServiceBinding.java 
 # newfailures.txt
