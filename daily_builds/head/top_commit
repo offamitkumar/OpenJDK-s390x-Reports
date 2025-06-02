@@ -1,7 +1,7 @@
-commit c1b5f62a8c30038d3b1a14d184535ba0642d51c9
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Sun Jun 1 09:06:04 2025 +0000
+commit 1b6ae2059b0475ec78559d2d6612f3b6ec68309f
+Author: Matias Saavedra Silva <matsaave@openjdk.org>
+Date:   Mon Jun 2 15:29:30 2025 +0000
 
-    8358136: Make langtools/jdk/javadoc/doclet/testLinkOption/TestRedirectLinks.java intermittent
+    8357576: FieldInfo::_index is not initialized by the constructor
     
-    Reviewed-by: jpai, nbenalla, syan
+    Reviewed-by: coleenp, dholmes

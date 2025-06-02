@@ -1,7 +1,7 @@
-commit 432eb57354b08e48b5649e0903e01cfbf2cc4f8d
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue May 27 11:57:36 2025 +0000
+commit 27b6284bdd3ec7d627ccde9ddd22ea47e7463834
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Mon Jun 2 11:20:30 2025 +0000
 
-    8336587: failure_handler lldb command times out on macosx-aarch64 core file
+    8352946: SEGV_BND signal code of SIGSEGV missing from our signal-code table
     
-    Backport-of: 21a6cf848da00c795d833f926f831c7aea05dfa3
+    Backport-of: bac2aa44454982684e06854add1dbbb806fba363
