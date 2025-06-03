@@ -1,7 +1,7 @@
-commit 1b6ae2059b0475ec78559d2d6612f3b6ec68309f
-Author: Matias Saavedra Silva <matsaave@openjdk.org>
-Date:   Mon Jun 2 15:29:30 2025 +0000
+commit faf19abd312ac461f9f74035fec61af7d834ffc1
+Author: Yudi Zheng <yzheng@openjdk.org>
+Date:   Tue Jun 3 15:10:53 2025 +0000
 
-    8357576: FieldInfo::_index is not initialized by the constructor
+    8358333: Use VEX2 prefix in Assembler::psllq
     
-    Reviewed-by: coleenp, dholmes
+    Reviewed-by: jbhateja, thartmann

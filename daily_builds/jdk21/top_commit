@@ -1,7 +1,8 @@
-commit 27b6284bdd3ec7d627ccde9ddd22ea47e7463834
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Mon Jun 2 11:20:30 2025 +0000
+commit c7409c79614a0693694e979065205bd847a5bee9
+Author: Zdenek Zambersky <zzambers@openjdk.org>
+Date:   Tue Jun 3 15:11:30 2025 +0000
 
-    8352946: SEGV_BND signal code of SIGSEGV missing from our signal-code table
+    8343618: Stack smashing in awt_InputMethod.c on Linux s390x
     
-    Backport-of: bac2aa44454982684e06854add1dbbb806fba363
+    Reviewed-by: andrew
+    Backport-of: ee6891456ed672305d9b48846b5a7977373e1284
