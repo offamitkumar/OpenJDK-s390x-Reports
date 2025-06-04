@@ -1,7 +1,7 @@
-commit faf19abd312ac461f9f74035fec61af7d834ffc1
-Author: Yudi Zheng <yzheng@openjdk.org>
-Date:   Tue Jun 3 15:10:53 2025 +0000
+commit c90921644643bc731cab4c014a5144a74e670df1
+Author: Stefan Karlsson <stefank@openjdk.org>
+Date:   Wed Jun 4 14:56:20 2025 +0000
 
-    8358333: Use VEX2 prefix in Assembler::psllq
+    8357443: ZGC: Optimize old page iteration in remap remembered phase
     
-    Reviewed-by: jbhateja, thartmann
+    Reviewed-by: aboldtch, eosterlund
