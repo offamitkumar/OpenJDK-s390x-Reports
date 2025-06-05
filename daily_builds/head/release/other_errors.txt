@@ -1,5 +1,6 @@
 # other_errors.txt
 # other_errors.txt
+java/util/ServiceLoader/inheritance/NoInheritanceTest.java 
 # other_errors.txt
 # other_errors.txt
 gc/g1/TestMixedGCLiveThreshold.java#0percent 

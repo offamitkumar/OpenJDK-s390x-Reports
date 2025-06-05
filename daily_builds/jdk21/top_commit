@@ -1,8 +1,7 @@
-commit c7409c79614a0693694e979065205bd847a5bee9
-Author: Zdenek Zambersky <zzambers@openjdk.org>
-Date:   Tue Jun 3 15:11:30 2025 +0000
+commit 19f95c20b14fe1f6852f789bf22066218ae19f3a
+Author: Daishi Tabata <dtabata@openjdk.org>
+Date:   Thu Jun 5 14:16:46 2025 +0000
 
-    8343618: Stack smashing in awt_InputMethod.c on Linux s390x
+    8357194: [21u] lible cannot find the path of libjava
     
-    Reviewed-by: andrew
-    Backport-of: ee6891456ed672305d9b48846b5a7977373e1284
+    Reviewed-by: phh

@@ -1,8 +1,13 @@
 # newfailures.txt
 # newfailures.txt
+java/util/ServiceLoader/basic/ServiceLoaderBasicTest.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
+java/util/stream/GatherersMapConcurrentTest.java 
+jdk/internal/misc/CDS/ArchivedEnumTest.java 
+jdk/internal/misc/VM/RuntimeArguments.java 
+jdk/internal/reflect/CallerSensitive/CheckCSMs.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt
