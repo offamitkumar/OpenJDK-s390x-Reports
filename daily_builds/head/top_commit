@@ -1,7 +1,7 @@
-commit c59e44a7aa2aeff0823830b698d524523b996650
-Author: Patricio Chilano Mateo <pchilanomate@openjdk.org>
-Date:   Thu Jun 5 15:02:02 2025 +0000
+commit 026975a1aa290613934ae421bbc56326627bad8d
+Author: Alexandre Iline <shurailine@openjdk.org>
+Date:   Fri Jun 6 15:05:43 2025 +0000
 
-    8357914: TestEmptyBootstrapMethodsAttr.java fails when run with TEST_THREAD_FACTORY=Virtual
+    8358721: Update JCov for class file version 70
     
-    Reviewed-by: lmesnik, dholmes, sspitsyn, syan
+    Reviewed-by: iris, alanb, erikj

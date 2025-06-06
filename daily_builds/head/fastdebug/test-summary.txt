@@ -2,9 +2,9 @@
 Test summary
 ==============================
    TEST                                              TOTAL  PASS  FAIL ERROR  SKIP   
->> jtreg:test/hotspot/jtreg:tier1                     3011  2436     3     3   569 <<
->> jtreg:test/jdk:tier1                               2524  2416     3     0   105 <<
->> jtreg:test/langtools:tier1                         4650  4640     1     0     9 <<
+>> jtreg:test/hotspot/jtreg:tier1                     3010  2434     3     3   570 <<
+>> jtreg:test/jdk:tier1                               2525  2416     4     0   105 <<
+>> jtreg:test/langtools:tier1                         4651  4641     1     0     9 <<
    jtreg:test/jaxp:tier1                                 0     0     0     0     0   
    jtreg:test/lib-test:tier1                            37    37     0     0     0   
 ==============================

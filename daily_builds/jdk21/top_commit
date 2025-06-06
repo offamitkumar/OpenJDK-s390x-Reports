@@ -1,7 +1,8 @@
-commit 19f95c20b14fe1f6852f789bf22066218ae19f3a
-Author: Daishi Tabata <dtabata@openjdk.org>
-Date:   Thu Jun 5 14:16:46 2025 +0000
+commit edd41203d6ea5c74fde9d5c6025fecbaf969e969
+Author: Roman Marchenko <rmarchenko@openjdk.org>
+Date:   Fri Jun 6 14:43:20 2025 +0000
 
-    8357194: [21u] lible cannot find the path of libjava
+    8347826: Introspector shows wrong method list after 8071693
     
-    Reviewed-by: phh
+    Reviewed-by: abakhtin
+    Backport-of: c5f235c000db6654493ea109008dbccf97f01678
