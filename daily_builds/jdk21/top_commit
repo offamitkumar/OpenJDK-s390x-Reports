@@ -1,8 +1,7 @@
-commit edd41203d6ea5c74fde9d5c6025fecbaf969e969
-Author: Roman Marchenko <rmarchenko@openjdk.org>
-Date:   Fri Jun 6 14:43:20 2025 +0000
+commit 20ee988cadfa65ce8cb5c23931dded2d3213764c
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Jun 6 17:24:46 2025 +0000
 
-    8347826: Introspector shows wrong method list after 8071693
+    8334010: VM crashes with ObjectAlignmentInBytes > GCCardSizeInBytes
     
-    Reviewed-by: abakhtin
-    Backport-of: c5f235c000db6654493ea109008dbccf97f01678
+    Backport-of: 577babf1968700e4b648305cd5a5c2ddf712e2dc

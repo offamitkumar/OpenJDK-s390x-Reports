@@ -1,7 +1,8 @@
-commit 026975a1aa290613934ae421bbc56326627bad8d
-Author: Alexandre Iline <shurailine@openjdk.org>
-Date:   Fri Jun 6 15:05:43 2025 +0000
+commit d7352559195b9e052c3eb24d773c0d6c10dc23ad
+Author: Rajan Halade <rhalade@openjdk.org>
+Date:   Fri Jun 6 21:35:21 2025 +0000
 
-    8358721: Update JCov for class file version 70
+    8345414: Google CAInterop test failures
     
-    Reviewed-by: iris, alanb, erikj
+    Reviewed-by: weijun
+    Backport-of: 8e9ba788ae04a9a617a393709bf2c51a0c157206
