@@ -1,8 +1,7 @@
-commit d7352559195b9e052c3eb24d773c0d6c10dc23ad
-Author: Rajan Halade <rhalade@openjdk.org>
-Date:   Fri Jun 6 21:35:21 2025 +0000
+commit e94ad551c6d31b91ec066f92f9bbdb956f54e887
+Author: Kim Barrett <kbarrett@openjdk.org>
+Date:   Sat Jun 7 20:34:34 2025 +0000
 
-    8345414: Google CAInterop test failures
+    8342639: Global operator new in adlc has wrong exception spec
     
-    Reviewed-by: weijun
-    Backport-of: 8e9ba788ae04a9a617a393709bf2c51a0c157206
+    Reviewed-by: kvn, mdoerr
