@@ -1,13 +1,9 @@
 # newfailures.txt
 # newfailures.txt
-java/util/TimeZone/ThreeLetterZoneID.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/stream/GatherersMapConcurrentTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/RangeTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/StreamCloseTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/StreamLinkTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/ConcatOpTest.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt

@@ -1,7 +1,7 @@
-commit e94ad551c6d31b91ec066f92f9bbdb956f54e887
-Author: Kim Barrett <kbarrett@openjdk.org>
-Date:   Sat Jun 7 20:34:34 2025 +0000
+commit 2103dc15cb662fd8795b1b51d9cb61c389bed7a0
+Author: Alexander Zvegintsev <azvegint@openjdk.org>
+Date:   Mon Jun 9 13:35:01 2025 +0000
 
-    8342639: Global operator new in adlc has wrong exception spec
+    8358452: JNI exception pending in Java_sun_awt_screencast_ScreencastHelper_remoteDesktopKeyImpl of screencast_pipewire.c:1214 (ID: 51119)
     
-    Reviewed-by: kvn, mdoerr
+    Reviewed-by: psadhukhan, serb, aivanov, avu

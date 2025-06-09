@@ -1,8 +1,13 @@
 # other_errors.txt
 # other_errors.txt
-java/util/TimeZone/Bug8167143.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/StreamParSeqTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/StreamSpliteratorTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/ConcatTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/IntSliceOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/IntUniqOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/IterateTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/LongPrimitiveOpsTests.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/MapOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/MatchOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/mapMultiOpTest.java 
 # other_errors.txt
 # other_errors.txt
 gc/g1/TestMixedGCLiveThreshold.java#0percent 
