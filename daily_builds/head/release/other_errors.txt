@@ -2,7 +2,4 @@
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
-gc/g1/TestMixedGCLiveThreshold.java#0percent 
-gc/g1/TestMixedGCLiveThreshold.java#100percent 
-gc/g1/TestMixedGCLiveThreshold.java#25percent 
 # other_errors.txt

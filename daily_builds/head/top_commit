@@ -1,7 +1,7 @@
-commit 2103dc15cb662fd8795b1b51d9cb61c389bed7a0
-Author: Alexander Zvegintsev <azvegint@openjdk.org>
-Date:   Mon Jun 9 13:35:01 2025 +0000
+commit a2f99fd88bd03337e1ba73b413ffe4e39f3584cf
+Author: Roland Westrelin <roland@openjdk.org>
+Date:   Tue Jun 10 14:19:19 2025 +0000
 
-    8358452: JNI exception pending in Java_sun_awt_screencast_ScreencastHelper_remoteDesktopKeyImpl of screencast_pipewire.c:1214 (ID: 51119)
+    8354383: C2: enable sinking of Type nodes out of loop
     
-    Reviewed-by: psadhukhan, serb, aivanov, avu
+    Reviewed-by: chagedorn, thartmann

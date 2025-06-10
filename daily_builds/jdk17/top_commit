@@ -1,7 +1,7 @@
-commit 00ee0e1df47fd87f7c1cdc787b06cd560a9ed30a
-Author: Ilarion Nakonechnyy <inakonechnyy@openjdk.org>
-Date:   Mon Jun 9 11:56:03 2025 +0000
+commit 77bc699333c257c18a73ac3de0f5286eba60550f
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Mon Jun 9 23:16:23 2025 +0000
 
-    8317804: com/sun/jdi/JdwpAllowTest.java fails on Alpine 3.17 / 3.18
+    8312191: ColorConvertOp.filter for the default destination is too slow
     
-    Backport-of: b530c0281b5082994065b10addeb8366ffa58e2f
+    Backport-of: e5f05b5a963774914751d9c241dd5693ed06af0b
