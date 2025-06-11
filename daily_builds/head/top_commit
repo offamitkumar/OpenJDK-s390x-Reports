@@ -1,7 +1,7 @@
-commit a2f99fd88bd03337e1ba73b413ffe4e39f3584cf
-Author: Roland Westrelin <roland@openjdk.org>
-Date:   Tue Jun 10 14:19:19 2025 +0000
+commit e5196fc24d2ec9e581af7803ac47036111fee029
+Author: Alan Bateman <alanb@openjdk.org>
+Date:   Wed Jun 11 14:09:45 2025 +0000
 
-    8354383: C2: enable sinking of Type nodes out of loop
+    8358764: (sc) SocketChannel.close when thread blocked in read causes connection to be reset (win)
     
-    Reviewed-by: chagedorn, thartmann
+    Reviewed-by: jpai, vyazici
