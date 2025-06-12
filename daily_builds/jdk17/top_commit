@@ -1,6 +1,8 @@
-commit bf595bd4417883ad45274e86dd048213c3aea34d
-Merge: 51b32f3cc14 de454c7faa2
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jun 11 07:17:01 2025 +0000
+commit 4241313127be05704eeebcc6454120742cc93753
+Author: Francesco Andreuzzi <andreuzzi.francesco@gmail.com>
+Date:   Thu Jun 12 16:21:01 2025 +0000
 
-    Merge
+    8354941: Build failure with glibc 2.42 due to uabs() name collision
+    
+    Reviewed-by: phh
+    Backport-of: 38bb8adf4f632b08af15f2d8530b35f05f86a020

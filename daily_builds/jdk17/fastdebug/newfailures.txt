@@ -3,4 +3,5 @@
 java/util/zip/CloseInflaterDeflaterTest.java 
 # newfailures.txt
 # newfailures.txt
+gtest/GTestWrapper.java 
 # newfailures.txt

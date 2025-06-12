@@ -1,6 +1,8 @@
-commit 2462bdfa50ddce156709c14973df95b941f03643
-Merge: 81018884222 e62f2f4f0f5
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jun 11 07:05:37 2025 +0000
+commit 8a6ea1b36909479b06f1ed273ed2c0dd8e34e364
+Author: Jan Kratochvil <jkratochvil@openjdk.org>
+Date:   Thu Jun 12 12:39:05 2025 +0000
 
-    Merge
+    8302744: Refactor Hotspot container detection code
+    
+    Reviewed-by: sgehwolf
+    Backport-of: 3d4eb159e6d597f37081faf21b7e3f0f1af299e5
