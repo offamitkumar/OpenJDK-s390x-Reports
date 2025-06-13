@@ -1,8 +1,7 @@
-commit 8a6ea1b36909479b06f1ed273ed2c0dd8e34e364
-Author: Jan Kratochvil <jkratochvil@openjdk.org>
-Date:   Thu Jun 12 12:39:05 2025 +0000
+commit f0521e4552d761a9a134340365c4334a177bebad
+Author: Bara' Hasheesh <bara.hasheesh@gmail.com>
+Date:   Fri Jun 13 14:59:46 2025 +0000
 
-    8302744: Refactor Hotspot container detection code
+    8353655: Clean up and open source KeyEvent related tests (Part 1)
     
-    Reviewed-by: sgehwolf
-    Backport-of: 3d4eb159e6d597f37081faf21b7e3f0f1af299e5
+    Backport-of: ad7c475fb1e23f583a33d58f0bd73ea0fb56740c

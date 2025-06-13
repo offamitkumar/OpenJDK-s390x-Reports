@@ -1,7 +1,7 @@
-commit 3c53057fa63e0f8bf3634e4286fe2085d2f4ee9e
-Author: David Briemann <dbriemann@openjdk.org>
-Date:   Thu Jun 12 15:27:44 2025 +0000
+commit 417f8ecf072daabe0f79d145ffab121e5336988f
+Author: Albert Mingkun Yang <ayang@openjdk.org>
+Date:   Fri Jun 13 13:40:43 2025 +0000
 
-    8359232: [PPC64] C2: Clean up ppc.ad: add instr sizes, remove comments
+    8359224: G1: Incorrect size unit in logging of G1CollectedHeap::alloc_archive_region
     
-    Reviewed-by: mdoerr
+    Reviewed-by: tschatzl, shade
