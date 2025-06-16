@@ -1,7 +1,7 @@
-commit 95fe05a32508fc2ac2eb235a236111e6b9a4eba7
-Author: Daniel Hu <costmuch@amazon.com>
-Date:   Fri Jun 13 14:44:00 2025 +0000
+commit 37b986700f5cdc95eaf31e0c6145fa3f6ca05cbf
+Author: Paul Hohensee <phh@openjdk.org>
+Date:   Mon Jun 16 11:20:50 2025 +0000
 
-    8136895: Writer not closed with disk full error, file resource leaked
+    8335252: Reduce size of j.u.Formatter.Conversion#isValid
     
-    Backport-of: d55d7e8d87670043dd22ec6a3fb6cc49b39000cd
+    Backport-of: 5d866bf17d96bd0f0e4545d7eee5912eda2e3a94

@@ -1,7 +1,7 @@
-commit 26848a7d6ce4c573b679a690fd36e6d7082243f6
-Author: Raffaello Giulietti <rgiulietti@openjdk.org>
-Date:   Sat Jun 14 08:15:12 2025 +0000
+commit 9652ae9a8d48924a90d25e9daffcdb7f582ff503
+Author: Kevin Walls <kevinw@openjdk.org>
+Date:   Mon Jun 16 15:25:51 2025 +0000
 
-    8358804: Improve the API Note of BigDecimal.valueOf(double)
+    8347114: JMXServiceURL should require an explicit protocol
     
-    Reviewed-by: bpb, darcy, iris
+    Reviewed-by: dfuchs, sspitsyn

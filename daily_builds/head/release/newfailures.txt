@@ -1,14 +1,10 @@
 # newfailures.txt
 # newfailures.txt
-java/util/ResourceBundle/modules/visibility/VisibilityTest.java 
-java/util/ServiceLoader/basic/ServiceLoaderBasicTest.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/prefs/AddNodeChangeListener.java 
-java/util/stream/GatherersMapConcurrentTest.java 
-java/util/zip/EntryCount64k.java 
 # newfailures.txt
+tools/javac/patterns/SOEDeeplyNestedBlocksTest.java 
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt
 # newfailures.txt
