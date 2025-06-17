@@ -1,7 +1,7 @@
-commit b9a683831bca7b3d0a9502deb19df957f46db364
-Author: Daniel Hu <costmuch@amazon.com>
-Date:   Mon Jun 16 16:18:48 2025 +0000
+commit 3711d2b8cf114667293f1c8443ffbdc55068f5cc
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Tue Jun 17 16:27:45 2025 +0000
 
-    8309627: Incorrect sorting of DirtyCardQueue buffers
+    8342330: C2: "node pinned on loop exit test?" assert failure
     
-    Backport-of: b94b679e9a82ff2ee6daee9631ce707e9b9eaf6b
+    Backport-of: 004aaea76db091569aa88eeb6b08db3408f288cd

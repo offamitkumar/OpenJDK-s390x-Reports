@@ -1,7 +1,7 @@
-commit 37b986700f5cdc95eaf31e0c6145fa3f6ca05cbf
-Author: Paul Hohensee <phh@openjdk.org>
-Date:   Mon Jun 16 11:20:50 2025 +0000
+commit 81874f35484448772c181e40f6cb972525ff3b11
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Tue Jun 17 16:26:35 2025 +0000
 
-    8335252: Reduce size of j.u.Formatter.Conversion#isValid
+    8342330: C2: "node pinned on loop exit test?" assert failure
     
-    Backport-of: 5d866bf17d96bd0f0e4545d7eee5912eda2e3a94
+    Backport-of: 004aaea76db091569aa88eeb6b08db3408f288cd

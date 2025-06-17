@@ -1,7 +1,7 @@
-commit 9652ae9a8d48924a90d25e9daffcdb7f582ff503
-Author: Kevin Walls <kevinw@openjdk.org>
-Date:   Mon Jun 16 15:25:51 2025 +0000
+commit 53a83d15a1b5686ed0f2aeb3d30cd46b73f80733
+Author: Alexey Ivanov <aivanov@openjdk.org>
+Date:   Tue Jun 17 14:09:11 2025 +0000
 
-    8347114: JMXServiceURL should require an explicit protocol
+    8357799: Improve instructions for JFileChooser/HTMLFileName.java
     
-    Reviewed-by: dfuchs, sspitsyn
+    Reviewed-by: honkar, tr, kizune
