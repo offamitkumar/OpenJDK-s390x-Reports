@@ -7,4 +7,5 @@ tools/pack200/PackTestZip64.java
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
+gc/cms/TestBubbleUpRef.java 
 runtime/CheckUnhandledOops/TestVerifyOops.java 

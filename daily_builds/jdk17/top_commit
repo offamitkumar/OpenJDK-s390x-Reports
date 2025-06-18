@@ -1,7 +1,7 @@
-commit 81874f35484448772c181e40f6cb972525ff3b11
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Tue Jun 17 16:26:35 2025 +0000
+commit dab6b01b2f94aa793d9c4909e1d4e82ac349c012
+Author: SendaoYan <syan@openjdk.org>
+Date:   Wed Jun 18 06:23:27 2025 +0000
 
-    8342330: C2: "node pinned on loop exit test?" assert failure
+    8359272: Several vmTestbase/compact tests timed out on large memory machine
     
-    Backport-of: 004aaea76db091569aa88eeb6b08db3408f288cd
+    Backport-of: eb727dcb51963add7966a9d86b08520a003af0ca

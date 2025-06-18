@@ -1,5 +1,7 @@
 # other_errors.txt
 # other_errors.txt
+java/util/zip/ZipFile/ZipEntryFreeTest.java 
+java/util/zip/ZipFile/ZipSourceCache.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
