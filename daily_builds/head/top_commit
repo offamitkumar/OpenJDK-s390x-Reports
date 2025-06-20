@@ -1,7 +1,7 @@
-commit c4fb00a7be51c7a05a29d3d57d787feb5c698ddf
-Author: Nizar Benalla <nbenalla@openjdk.org>
-Date:   Thu Jun 19 10:38:24 2025 +0000
+commit c6ab63d306511c43622fc1f37e1aed6d8abaaa09
+Author: Vladimir Petko <vpetko@openjdk.org>
+Date:   Fri Jun 20 13:51:55 2025 +0000
 
-    8358769: Update --release 25 symbol information for JDK 25 build 26
+    8359735: [Ubuntu 25.10] java/lang/ProcessBuilder/Basic.java, java/lang/ProcessHandle/InfoTest.java fail due to rust-coreutils
     
-    Reviewed-by: darcy, iris
+    Reviewed-by: rriggs
