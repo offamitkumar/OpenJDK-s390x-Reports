@@ -1,7 +1,7 @@
-commit c6ab63d306511c43622fc1f37e1aed6d8abaaa09
-Author: Vladimir Petko <vpetko@openjdk.org>
-Date:   Fri Jun 20 13:51:55 2025 +0000
+commit 81985d422d3a433c1248deec18e4fd9b9f780c2c
+Author: Phil Race <prr@openjdk.org>
+Date:   Fri Jun 20 22:22:41 2025 +0000
 
-    8359735: [Ubuntu 25.10] java/lang/ProcessBuilder/Basic.java, java/lang/ProcessHandle/InfoTest.java fail due to rust-coreutils
+    8358526: Clarify behavior of java.awt.HeadlessException constructed with no-args
     
-    Reviewed-by: rriggs
+    Reviewed-by: aivanov, honkar
