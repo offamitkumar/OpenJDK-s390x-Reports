@@ -1,7 +1,10 @@
 # other_errors.txt
 # other_errors.txt
-java/util/Scanner/ScannerStreamTest.java 
-java/util/ServiceLoader/inheritance/NoInheritanceTest.java 
+jdk/internal/loader/InterruptedClassLoad.java 
+jdk/internal/math/ToDecimal/MathUtilsTest.java 
+jdk/internal/misc/ThreadFlock/ThreadFlockTest.java#platform 
+jdk/internal/misc/ThreadFlock/ThreadFlockTest.java#virtual 
+jdk/internal/misc/ThreadFlock/WithScopedValue.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
