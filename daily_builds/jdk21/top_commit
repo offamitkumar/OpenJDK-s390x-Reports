@@ -1,7 +1,8 @@
-commit 9a6ef52b82e66dfd5779f66113c28371ff2fd776
-Author: SendaoYan <syan@openjdk.org>
-Date:   Wed Jun 18 06:24:20 2025 +0000
+commit f55ff018b2f6a14e7f751d29f56205aba33e8b69
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Mon Jun 23 12:59:56 2025 +0000
 
-    8359272: Several vmTestbase/compact tests timed out on large memory machine
+    8358534: Bailout in Conv2B::Ideal when type of cmp input is not supported
     
-    Backport-of: eb727dcb51963add7966a9d86b08520a003af0ca
+    Reviewed-by: cslucas
+    Backport-of: 704b5990a750719ca927e156553db7982637e590

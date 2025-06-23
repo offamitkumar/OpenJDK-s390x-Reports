@@ -1,7 +1,7 @@
-commit 81985d422d3a433c1248deec18e4fd9b9f780c2c
-Author: Phil Race <prr@openjdk.org>
-Date:   Fri Jun 20 22:22:41 2025 +0000
+commit dfcea0547e7756a546fcf57855d99d46ecfb1925
+Author: Justin Lu <jlu@openjdk.org>
+Date:   Mon Jun 23 14:26:02 2025 +0000
 
-    8358526: Clarify behavior of java.awt.HeadlessException constructed with no-args
+    8358729: jdk/internal/loader/URLClassPath/ClassnameCharTest.java depends on Applet
     
-    Reviewed-by: aivanov, honkar
+    Reviewed-by: jpai, lancea

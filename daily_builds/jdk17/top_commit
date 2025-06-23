@@ -1,7 +1,8 @@
-commit dab6b01b2f94aa793d9c4909e1d4e82ac349c012
-Author: SendaoYan <syan@openjdk.org>
-Date:   Wed Jun 18 06:23:27 2025 +0000
+commit 6b156585e70a639930f6965c0b3871de8b1a874b
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Jun 23 12:40:12 2025 +0000
 
-    8359272: Several vmTestbase/compact tests timed out on large memory machine
+    8288746: HttpClient resources could be reclaimed more eagerly
     
-    Backport-of: eb727dcb51963add7966a9d86b08520a003af0ca
+    Reviewed-by: rschmelter
+    Backport-of: f3f078846feae66d3504d50081353f74bd4891d7
