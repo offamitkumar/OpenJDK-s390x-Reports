@@ -1,8 +1,7 @@
-commit 6b156585e70a639930f6965c0b3871de8b1a874b
+commit ee991b7607b8011599e6d6d0334afb4199f42328
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Jun 23 12:40:12 2025 +0000
+Date:   Mon Jun 30 13:19:43 2025 +0000
 
-    8288746: HttpClient resources could be reclaimed more eagerly
+    8301169: java/net/httpclient/ThrowingSubscribersAsInputStream.java,ThrowingSubscribersAsInputStreamAsync.java, and other httpclient tests failing on windows: Unable to establish loopback connection
     
-    Reviewed-by: rschmelter
-    Backport-of: f3f078846feae66d3504d50081353f74bd4891d7
+    Backport-of: 98e8616a0c27ac73caf8f91cc83adc88b3490dcb

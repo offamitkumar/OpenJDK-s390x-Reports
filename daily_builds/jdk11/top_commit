@@ -1,6 +1,9 @@
-commit 501f90c4902e41ff8fd5fdbfb8fd694771496f5b
-Merge: e61f97d3ac e00605fceb
-Author: Andrew John Hughes <andrew@openjdk.org>
-Date:   Tue Jun 17 18:07:14 2025 +0000
+commit 0927ca70e66ef27b38cbf5c0dd2851c796218067
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Fri Jun 27 12:01:25 2025 +0000
 
-    Merge
+    8358538: Update GHA Windows runner to 2025
+    8360042: GHA: Bump MSVC to 14.44
+    
+    Reviewed-by: sgehwolf
+    Backport-of: b787ff6def08a050b690b60e4a0ceb3aec2b73c8

@@ -1,7 +1,7 @@
-commit dfcea0547e7756a546fcf57855d99d46ecfb1925
-Author: Justin Lu <jlu@openjdk.org>
-Date:   Mon Jun 23 14:26:02 2025 +0000
+commit aa1911191cf8c2b855268a76baf0757909d66d1b
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Mon Jun 30 12:55:36 2025 +0000
 
-    8358729: jdk/internal/loader/URLClassPath/ClassnameCharTest.java depends on Applet
+    8360867: CTW: Disable inline cache verification
     
-    Reviewed-by: jpai, lancea
+    Reviewed-by: kvn, thartmann
