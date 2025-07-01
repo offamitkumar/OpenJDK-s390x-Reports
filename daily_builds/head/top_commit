@@ -1,7 +1,7 @@
-commit aa1911191cf8c2b855268a76baf0757909d66d1b
+commit e138297323de3f6990c4c536b1cefd209ce3a69c
 Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Mon Jun 30 12:55:36 2025 +0000
+Date:   Tue Jul 1 14:30:20 2025 +0000
 
-    8360867: CTW: Disable inline cache verification
+    8359436: AOTCompileEagerly should not be diagnostic
     
-    Reviewed-by: kvn, thartmann
+    Reviewed-by: kvn, syan, dholmes

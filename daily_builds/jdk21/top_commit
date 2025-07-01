@@ -1,7 +1,7 @@
-commit bc224e2631838bdb0595d4986ac6176e2fe47cb5
-Author: SendaoYan <syan@openjdk.org>
-Date:   Mon Jun 30 13:09:46 2025 +0000
+commit ee0c1167d1a51a54207b07eb6c338cf9a3d8e98a
+Author: Timofei Pushkin <tpushkin@openjdk.org>
+Date:   Tue Jul 1 13:56:30 2025 +0000
 
-    8351601: [JMH] test UnixSocketChannelReadWrite failed for 2 threads config
+    8339460: CDS error when module is located in a directory with space in the name
     
-    Backport-of: 03105fc92505e9e367354e763b99cbe02bf473d6
+    Backport-of: aceae76fb5853ab65851225aeb35a425af8f7af8
