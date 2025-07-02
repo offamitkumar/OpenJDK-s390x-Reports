@@ -1,7 +1,7 @@
-commit ee0c1167d1a51a54207b07eb6c338cf9a3d8e98a
-Author: Timofei Pushkin <tpushkin@openjdk.org>
-Date:   Tue Jul 1 13:56:30 2025 +0000
+commit dbed35f41583f19c70645632a688d0c8ae1bd36a
+Author: Daniel Hu <costmuch@amazon.com>
+Date:   Wed Jul 2 16:27:18 2025 +0000
 
-    8339460: CDS error when module is located in a directory with space in the name
+    8320859: gtest high malloc footprint caused by BufferNodeAllocator stress test
     
-    Backport-of: aceae76fb5853ab65851225aeb35a425af8f7af8
+    Backport-of: abf2e4909733550c228bd66ccebe33a492269e7f

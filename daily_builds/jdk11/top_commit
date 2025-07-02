@@ -1,9 +1,7 @@
-commit 0927ca70e66ef27b38cbf5c0dd2851c796218067
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Fri Jun 27 12:01:25 2025 +0000
+commit 646b6b5ed967de67ebf90592eadf08c749c7e364
+Author: Antonio Vieiro <avieirov@redhat.com>
+Date:   Wed Jul 2 14:52:05 2025 +0000
 
-    8358538: Update GHA Windows runner to 2025
-    8360042: GHA: Bump MSVC to 14.44
+    8360816: [11u] Use default value for ProgramFiles(x86) in GHA
     
     Reviewed-by: sgehwolf
-    Backport-of: b787ff6def08a050b690b60e4a0ceb3aec2b73c8

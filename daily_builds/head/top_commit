@@ -1,7 +1,7 @@
-commit e138297323de3f6990c4c536b1cefd209ce3a69c
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Tue Jul 1 14:30:20 2025 +0000
+commit 549b8758661e760a7475fb398fd5b036e561fed6
+Author: Joe Darcy <darcy@openjdk.org>
+Date:   Wed Jul 2 15:24:29 2025 +0000
 
-    8359436: AOTCompileEagerly should not be diagnostic
+    8361112: Use exact float -> Float16 conversion method in Float16 tests
     
-    Reviewed-by: kvn, syan, dholmes
+    Reviewed-by: liach, rgiulietti
