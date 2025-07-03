@@ -1,7 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/TimeZone/SimpleTimeZoneCloneRaceTest.java 
-java/util/TimeZone/ThreeLetterZoneID.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

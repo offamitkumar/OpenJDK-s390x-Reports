@@ -1,7 +1,7 @@
-commit dbed35f41583f19c70645632a688d0c8ae1bd36a
-Author: Daniel Hu <costmuch@amazon.com>
-Date:   Wed Jul 2 16:27:18 2025 +0000
+commit 65e9d36d8074d0a23de0dbb6ddf5f0de9ce5e5fd
+Author: Jan Kratochvil <jkratochvil@openjdk.org>
+Date:   Thu Jul 3 13:46:24 2025 +0000
 
-    8320859: gtest high malloc footprint caused by BufferNodeAllocator stress test
+    8322420: [Linux] cgroup v2: Limits in parent nested control groups are not detected
     
-    Backport-of: abf2e4909733550c228bd66ccebe33a492269e7f
+    Backport-of: fd80e759e8b0a471c0eeaaa63a62d3bc5e4cb372

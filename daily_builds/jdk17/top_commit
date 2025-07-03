@@ -1,7 +1,7 @@
-commit ee991b7607b8011599e6d6d0334afb4199f42328
+commit ca47598016470bb997038b378a5dbde923b40e28
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Jun 30 13:19:43 2025 +0000
+Date:   Thu Jul 3 13:57:51 2025 +0000
 
-    8301169: java/net/httpclient/ThrowingSubscribersAsInputStream.java,ThrowingSubscribersAsInputStreamAsync.java, and other httpclient tests failing on windows: Unable to establish loopback connection
+    8226919: attach in linux hangs due to permission denied accessing /proc/pid/root
     
-    Backport-of: 98e8616a0c27ac73caf8f91cc83adc88b3490dcb
+    Backport-of: ac4607ed81eb75f43e7d1062e38506972738d086

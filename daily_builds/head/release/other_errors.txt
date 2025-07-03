@@ -1,5 +1,7 @@
 # other_errors.txt
 # other_errors.txt
+java/util/Scanner/ScanTest.java 
+java/util/ServiceLoader/nouses/NoUsesTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
