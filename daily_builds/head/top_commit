@@ -1,8 +1,7 @@
-commit 24117c6e9aa862bad839e93eff70810a75605ac5
-Author: Rajat Mahajan <rmahajan@openjdk.org>
-Date:   Thu Jul 3 14:24:52 2025 +0000
+commit f2d2eef988c57cc9f6194a8fd5b2b422035ee68f
+Author: Nizar Benalla <nbenalla@openjdk.org>
+Date:   Fri Jul 4 15:10:22 2025 +0000
 
-    8349188: LineBorder does not scale correctly
+    8177100: APIs duplicated in JavaDoc
     
-    Co-authored-by: Alexey Ivanov <aivanov@openjdk.org>
-    Reviewed-by: aivanov, serb
+    Reviewed-by: liach, hannesw

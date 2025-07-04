@@ -1,15 +1,40 @@
 # newfailures.txt
 # newfailures.txt
-java/util/ResourceBundle/modules/visibility/VisibilityTest.java 
-java/util/Scanner/ScannerStreamTest.java 
-java/util/ServiceLoader/inheritance/NoInheritanceTest.java 
+java/foreign/TestDowncallScope.java 
+java/foreign/TestDowncallStack.java 
+java/foreign/TestUpcallScope.java 
+java/foreign/TestUpcallStack.java 
+java/lang/ClassLoader/loadLibraryDeadlock/TestLoadLibraryDeadlock.java 
+java/lang/ClassLoader/nativeLibrary/NativeLibraryTest.java 
+java/lang/StackWalker/NativeMethod.java 
+java/lang/String/nativeEncoding/StringPlatformChars.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
 java/util/stream/GatherersMapConcurrentTest.java 
-jdk/internal/reflect/CallerSensitive/CheckCSMs.java 
+java/util/zip/FlaterTest.java 
+jdk/internal/loader/NativeLibraries/Main.java 
+jdk/internal/reflect/Reflection/GetCallerClassTest.java#id0 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt
-gtest/NMTGtests.java#nmt-detail 
+gtest/GTestWrapper.java 
+runtime/Nestmates/privateConstructors/TestJNI.java 
+runtime/Nestmates/privateFields/TestJNI.java 
+runtime/Nestmates/privateMethods/TestJNI.java 
+runtime/Nestmates/privateMethods/TestJNIHierarchy.java 
+runtime/Nestmates/privateStaticFields/TestJNI.java 
+runtime/Nestmates/privateStaticMethods/TestJNI.java 
+runtime/SameObject/SameObject.java 
+runtime/XCheckJniJsig/XCheckJSig.java 
+runtime/clinit/ClassInitBarrier.java 
+runtime/jni/FindClass/FindClassFromBoot.java 
+runtime/jni/FindClassUtf8/FindClassUtf8.java 
+runtime/jni/checked/TestCharArrayReleasing.java 
+runtime/jni/checked/TestCheckedJniExceptionCheck.java 
+runtime/jni/checked/TestCheckedReleaseArrayElements.java 
+runtime/jni/checked/TestLargeUTF8Length.java 
+runtime/jni/checked/TestPrimitiveArrayCriticalWithBadParam.java 
+runtime/jni/nativeStack/TestNativeStack.java 
+runtime/posixSig/TestPosixSig.java 
 # newfailures.txt
