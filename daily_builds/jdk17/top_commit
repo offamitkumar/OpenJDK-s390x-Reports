@@ -1,8 +1,7 @@
-commit 0e9b1df4d75b9d233c0297b0763b052e9fde55ed
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Fri Jul 4 13:24:52 2025 +0000
+commit 0b8af09d5ed6b901d3a940c91a6c4d5673b48bcc
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Sat Jul 5 16:21:32 2025 +0000
 
-    8351997: AArch64: Interpreter volatile reference stores with G1 are not sequentially consistent
+    8317522: Test logic for BODY_CF in AbstractThrowingSubscribers.java is wrong
     
-    Reviewed-by: eosterlund, adinn
-    Backport-of: 83b15da2eb3cb6c8937f517c9b75eaa9eeece314
+    Backport-of: 4c5b66dceab15ce27f742c4173e14156249eb61a

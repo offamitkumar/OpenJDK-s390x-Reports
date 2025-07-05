@@ -8,11 +8,12 @@ java/lang/ClassLoader/loadLibraryDeadlock/TestLoadLibraryDeadlock.java
 java/lang/ClassLoader/nativeLibrary/NativeLibraryTest.java 
 java/lang/StackWalker/NativeMethod.java 
 java/lang/String/nativeEncoding/StringPlatformChars.java 
-java/util/ResourceBundle/modules/visibility/VisibilityTest.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
 java/util/stream/GatherersMapConcurrentTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/CollectionAndMapModifyStreamTest.java 
+java/util/zip/EntryCount64k.java 
 java/util/zip/FlaterTest.java 
 jdk/internal/loader/NativeLibraries/Main.java 
 # newfailures.txt
