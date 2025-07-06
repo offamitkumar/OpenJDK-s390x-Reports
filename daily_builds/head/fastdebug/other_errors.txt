@@ -1,12 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntPrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntReduceTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntSliceOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntUniqOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IterateTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/LongPrimitiveOpsTests.java 
-jdk/classfile/AccessFlagsTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

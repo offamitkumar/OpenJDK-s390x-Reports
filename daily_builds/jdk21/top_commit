@@ -1,8 +1,7 @@
-commit 2d30662c5dff99c2fa06fc9e06426a9baabd2b57
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Jul 4 13:03:07 2025 +0000
+commit bb0d4c13b89f764b0a6dd3b24a1cbdaf60f94eaa
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Sun Jul 6 09:04:49 2025 +0000
 
-    8344137: Update XML Security for Java to 3.0.5
+    8319067: ProblemList serviceability/AsyncGetCallTrace/MyPackage/ASGCTBaseTest.java on linux-aarch64 in Xcomp mode
     
-    Reviewed-by: mbaesken
-    Backport-of: 18e0b343ab002b193d4db3be226394ee7dbe9f19
+    Backport-of: ce0ca476416cb6f96d4b6b4852144382d6abf717

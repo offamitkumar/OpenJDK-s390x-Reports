@@ -11,7 +11,6 @@ java/lang/String/nativeEncoding/StringPlatformChars.java
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/stream/GatherersMapConcurrentTest.java 
 java/util/zip/FlaterTest.java 
 jdk/internal/loader/NativeLibraries/Main.java 
 # newfailures.txt
