@@ -1,43 +1,14 @@
 # newfailures.txt
 # newfailures.txt
-java/foreign/TestDowncallScope.java 
-java/foreign/TestDowncallStack.java 
-java/foreign/TestUpcallScope.java 
-java/foreign/TestUpcallStack.java 
-java/lang/ClassLoader/loadLibraryDeadlock/TestLoadLibraryDeadlock.java 
-java/lang/ClassLoader/nativeLibrary/NativeLibraryTest.java 
-java/lang/StackWalker/NativeMethod.java 
-java/lang/String/nativeEncoding/StringPlatformChars.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/stream/GatherersMapConcurrentTest.java 
-java/util/zip/FlaterTest.java 
-java/util/zip/ZipFile/TestCleaner.java 
-jdk/internal/loader/NativeLibraries/Main.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/StreamParSeqTest.java 
 # newfailures.txt
+tools/javac/patterns/SOEDeeplyNestedBlocksTest.java 
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt
 compiler/c2/TestMergeStores.java#id1 
 compiler/c2/TestMergeStores.java#id2 
 compiler/startup/StartupOutput.java 
-gtest/GTestWrapper.java 
-runtime/Nestmates/privateConstructors/TestJNI.java 
-runtime/Nestmates/privateFields/TestJNI.java 
-runtime/Nestmates/privateMethods/TestJNI.java 
-runtime/Nestmates/privateMethods/TestJNIHierarchy.java 
-runtime/Nestmates/privateStaticFields/TestJNI.java 
-runtime/Nestmates/privateStaticMethods/TestJNI.java 
-runtime/SameObject/SameObject.java 
-runtime/XCheckJniJsig/XCheckJSig.java 
-runtime/clinit/ClassInitBarrier.java 
-runtime/jni/FindClass/FindClassFromBoot.java 
-runtime/jni/FindClassUtf8/FindClassUtf8.java 
-runtime/jni/checked/TestCharArrayReleasing.java 
-runtime/jni/checked/TestCheckedJniExceptionCheck.java 
-runtime/jni/checked/TestCheckedReleaseArrayElements.java 
-runtime/jni/checked/TestLargeUTF8Length.java 
-runtime/jni/checked/TestPrimitiveArrayCriticalWithBadParam.java 
-runtime/jni/nativeStack/TestNativeStack.java 
-runtime/posixSig/TestPosixSig.java 
 # newfailures.txt

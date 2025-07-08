@@ -1,7 +1,7 @@
-commit 646b6b5ed967de67ebf90592eadf08c749c7e364
-Author: Antonio Vieiro <avieirov@redhat.com>
-Date:   Wed Jul 2 14:52:05 2025 +0000
+commit 1468cfa950cb9252103b265fee91ad04fb316008
+Author: Francesco Andreuzzi <andreuzzi.francesco@gmail.com>
+Date:   Tue Jul 8 12:00:35 2025 +0000
 
-    8360816: [11u] Use default value for ProgramFiles(x86) in GHA
+    8211328: Different declaration and definition of ClassLoaderData::classes_do() leads to build failures
     
-    Reviewed-by: sgehwolf
+    Backport-of: d35eda31e345142a26f7a5cf12e7606883f15224

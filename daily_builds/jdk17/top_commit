@@ -1,7 +1,7 @@
-commit 0b8af09d5ed6b901d3a940c91a6c4d5673b48bcc
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Sat Jul 5 16:21:32 2025 +0000
+commit 8b306de46d88219722a57f6e72d0b4456eb6faf0
+Author: Daniel Huang <dahuangy@amazon.com>
+Date:   Tue Jul 8 15:56:13 2025 +0000
 
-    8317522: Test logic for BODY_CF in AbstractThrowingSubscribers.java is wrong
+    8282144: RandomSupport.convertSeedBytesToLongs sign extension overwrites previous bytes
     
-    Backport-of: 4c5b66dceab15ce27f742c4173e14156249eb61a
+    Backport-of: 5fab27e1b8fdf2ea27cb3b349bd339a4a6ec828b

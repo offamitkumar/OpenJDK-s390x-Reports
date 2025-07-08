@@ -1,5 +1,11 @@
 # other_errors.txt
 # other_errors.txt
+java/util/stream/test/org/openjdk/tests/java/util/stream/StreamSpliteratorTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/TeeOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/ToArrayOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/ToListOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/WhileOpStatefulTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/WhileOpTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

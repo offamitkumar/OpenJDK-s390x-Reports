@@ -1,7 +1,7 @@
-commit f3e0588d0b825a68a4ad61ddf806877f46da69dc
-Author: Erik Gahlin <egahlin@openjdk.org>
-Date:   Sun Jul 6 15:21:35 2025 +0000
+commit 853319439e7887ddd54f8c4a3d79aa62ec51fd64
+Author: Jan Lahoda <jlahoda@openjdk.org>
+Date:   Tue Jul 8 14:33:14 2025 +0000
 
-    8361338: JFR: Min and max time in MethodTime event is confusing
+    8361570: Incorrect 'sealed is not allowed here' compile-time error
     
-    Reviewed-by: mgronlun
+    Reviewed-by: mcimadamore, vromero
