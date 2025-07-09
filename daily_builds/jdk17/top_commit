@@ -1,7 +1,7 @@
-commit 8b306de46d88219722a57f6e72d0b4456eb6faf0
-Author: Daniel Huang <dahuangy@amazon.com>
-Date:   Tue Jul 8 15:56:13 2025 +0000
+commit b956b89b7a18ce990e397868463155e1c0283110
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Jul 9 05:37:24 2025 +0000
 
-    8282144: RandomSupport.convertSeedBytesToLongs sign extension overwrites previous bytes
+    8353235: Test jdk/jfr/api/metadata/annotations/TestPeriod.java fails with IllegalArgumentException
     
-    Backport-of: 5fab27e1b8fdf2ea27cb3b349bd339a4a6ec828b
+    Backport-of: b7ca76ef4bfc640668492e655acc6d755411a92f

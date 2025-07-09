@@ -1,7 +1,8 @@
-commit 829d6d99a3029c9bd65fd1cdb1552004c00277ba
-Author: Severin Gehwolf <sgehwolf@openjdk.org>
-Date:   Tue Jul 8 11:08:04 2025 +0000
+commit 56f04e1a54ed99ca1834c812ce0e6b7df331fb1c
+Author: Ekaterina Vergizova <evergizova@openjdk.org>
+Date:   Wed Jul 9 13:48:26 2025 +0000
 
-    8340092: [Linux] containers/systemd/SystemdMemoryAwarenessTest.java failing on some systems
+    8337506: Disable "best-fit" mapping on Windows command line
     
-    Backport-of: 64275e6bbf1377c9a9d77fe3c3ed8d4143138f11
+    Reviewed-by: mbalao
+    Backport-of: ff634a967027cfa56b666d31c45db9a4acc09ea4

@@ -1,7 +1,7 @@
-commit 853319439e7887ddd54f8c4a3d79aa62ec51fd64
-Author: Jan Lahoda <jlahoda@openjdk.org>
-Date:   Tue Jul 8 14:33:14 2025 +0000
+commit a41d35073ee6da0dde4dd731c1ab4c25245d075a
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Wed Jul 9 14:49:20 2025 +0000
 
-    8361570: Incorrect 'sealed is not allowed here' compile-time error
+    8357473: Compilation spike leaves many CompileTasks in free list
     
-    Reviewed-by: mcimadamore, vromero
+    Reviewed-by: kvn, chagedorn
