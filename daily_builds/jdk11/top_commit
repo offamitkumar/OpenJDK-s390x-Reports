@@ -1,7 +1,8 @@
-commit 1468cfa950cb9252103b265fee91ad04fb316008
-Author: Francesco Andreuzzi <andreuzzi.francesco@gmail.com>
-Date:   Tue Jul 8 12:00:35 2025 +0000
+commit 7ff53b5d990bf8d30df130a88e7c4bf15d591275
+Author: Taizo Kurashige <tkurashige@openjdk.org>
+Date:   Thu Jul 10 10:55:19 2025 +0000
 
-    8211328: Different declaration and definition of ClassLoaderData::classes_do() leads to build failures
+    8352942: jdk/jfr/startupargs/TestMemoryOptions.java fails with 32-bit build
     
-    Backport-of: d35eda31e345142a26f7a5cf12e7606883f15224
+    Reviewed-by: shade, phh
+    Backport-of: c3de94cee12471a11c457c11dd55c547633de5cb

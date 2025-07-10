@@ -1,7 +1,7 @@
-commit a41d35073ee6da0dde4dd731c1ab4c25245d075a
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Wed Jul 9 14:49:20 2025 +0000
+commit cbc7090b91f4ce84117a04036028076373ab805e
+Author: Kevin Walls <kevinw@openjdk.org>
+Date:   Thu Jul 10 15:21:04 2025 +0000
 
-    8357473: Compilation spike leaves many CompileTasks in free list
+    8359809: AttributeList, RoleList and UnresolvedRoleList should never accept other types of Object
     
-    Reviewed-by: kvn, chagedorn
+    Reviewed-by: sspitsyn

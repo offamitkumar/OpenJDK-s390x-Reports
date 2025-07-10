@@ -1,8 +1,7 @@
-commit 56f04e1a54ed99ca1834c812ce0e6b7df331fb1c
-Author: Ekaterina Vergizova <evergizova@openjdk.org>
-Date:   Wed Jul 9 13:48:26 2025 +0000
+commit 28276ac5465f54816dd00f1de0ced8f443829f75
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Jul 10 12:40:50 2025 +0000
 
-    8337506: Disable "best-fit" mapping on Windows command line
+    8355475: UNCTest should use an existing UNC path
     
-    Reviewed-by: mbalao
-    Backport-of: ff634a967027cfa56b666d31c45db9a4acc09ea4
+    Backport-of: e6cea4025b6743538da76f056fa831b02705f423
