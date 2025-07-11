@@ -1,5 +1,6 @@
 # other_errors.txt
 # other_errors.txt
+java/util/stream/test/org/openjdk/tests/java/lang/invoke/DeserializeMethodTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

@@ -1,7 +1,7 @@
-commit cbc7090b91f4ce84117a04036028076373ab805e
-Author: Kevin Walls <kevinw@openjdk.org>
-Date:   Thu Jul 10 15:21:04 2025 +0000
+commit a86dd56de34f730b42593236f17118ef5ce4985a
+Author: Evgeny Astigeevich <eastigeevich@openjdk.org>
+Date:   Fri Jul 11 15:25:22 2025 +0000
 
-    8359809: AttributeList, RoleList and UnresolvedRoleList should never accept other types of Object
+    8360936: Test compiler/onSpinWait/TestOnSpinWaitAArch64.java fails after JDK-8359435
     
-    Reviewed-by: sspitsyn
+    Reviewed-by: shade, aph

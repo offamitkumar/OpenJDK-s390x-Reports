@@ -1,7 +1,7 @@
-commit 78c4c3a9a3243aa320d39c72bc0ca3bb0340bc63
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Jul 10 12:48:45 2025 +0000
+commit d9fa9cf83979d91845f238e19dc3438972be59ee
+Author: Daniel Huang <dahuangy@amazon.com>
+Date:   Fri Jul 11 15:57:08 2025 +0000
 
-    8355475: UNCTest should use an existing UNC path
+    8294509: The sign extension bug applies to 'public static int[] convertSeedBytesToInts(byte[] seed, int n, int z)' in RandomSupport
     
-    Backport-of: e6cea4025b6743538da76f056fa831b02705f423
+    Backport-of: 5a9cd33632862aa2249794902d4168a7fe143054
