@@ -1,7 +1,7 @@
-commit a86dd56de34f730b42593236f17118ef5ce4985a
-Author: Evgeny Astigeevich <eastigeevich@openjdk.org>
-Date:   Fri Jul 11 15:25:22 2025 +0000
+commit 917d0182cb5ea6066afd396381ca4650371e64b0
+Author: Richard Reingruber <rrich@openjdk.org>
+Date:   Sat Jul 12 05:40:51 2025 +0000
 
-    8360936: Test compiler/onSpinWait/TestOnSpinWaitAArch64.java fails after JDK-8359435
+    8361602: [TESTBUG] serviceability/HeapDump/UnmountedVThreadNativeMethodAtTop.java deadlocks on exception
     
-    Reviewed-by: shade, aph
+    Reviewed-by: cjplummer, clanger, dholmes

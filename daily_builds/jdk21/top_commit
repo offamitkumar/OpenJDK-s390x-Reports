@@ -1,7 +1,7 @@
-commit 28276ac5465f54816dd00f1de0ced8f443829f75
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Jul 10 12:40:50 2025 +0000
+commit 06ff0d6bd232f8db9c46b2a8343b3e9dc7fd17d7
+Author: Radek Cap <rcap@redhat.com>
+Date:   Fri Jul 11 21:01:09 2025 +0000
 
-    8355475: UNCTest should use an existing UNC path
+    8348328: Update IANA Language Subtag Registry to Version 2025-05-15
     
-    Backport-of: e6cea4025b6743538da76f056fa831b02705f423
+    Backport-of: f318868268f32934a2f0c4e26a6c75360d8e74b1
