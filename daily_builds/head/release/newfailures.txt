@@ -1,15 +1,12 @@
 # newfailures.txt
 # newfailures.txt
+java/util/ResourceBundle/modules/basic/BasicTest.java 
 java/util/ResourceBundle/modules/visibility/VisibilityTest.java 
-java/util/Scanner/ScanTest.java 
+java/util/ServiceLoader/ModulesTest.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-jdk/internal/loader/URLClassPath/JarCheckTest.java 
-jdk/internal/misc/ThreadFlock/ThreadFlockTest.java#virtual 
-jdk/internal/ref/Cleaner/CleanableListTest.java 
-jdk/internal/reflect/CallerSensitive/CallerSensitiveFinder.java 
-jdk/internal/reflect/CallerSensitive/CheckCSMs.java 
+java/util/zip/DeInflate.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt

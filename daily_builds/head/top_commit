@@ -1,7 +1,7 @@
-commit 917d0182cb5ea6066afd396381ca4650371e64b0
-Author: Richard Reingruber <rrich@openjdk.org>
-Date:   Sat Jul 12 05:40:51 2025 +0000
+commit bc828c8fb6693760c153a75188f96b1c9d201c8a
+Author: Prasanta Sadhukhan <psadhukhan@openjdk.org>
+Date:   Sun Jul 13 11:02:19 2025 +0000
 
-    8361602: [TESTBUG] serviceability/HeapDump/UnmountedVThreadNativeMethodAtTop.java deadlocks on exception
+    6955128: Spec for javax.swing.plaf.basic.BasicTextUI.getVisibleEditorRect contains inappropriate wording
     
-    Reviewed-by: cjplummer, clanger, dholmes
+    Reviewed-by: aivanov, prr, dnguyen, abhiscxk, tr

@@ -1,14 +1,6 @@
 # other_errors.txt
 # other_errors.txt
-java/util/TimeZone/AvailableIDsTest.java 
-java/util/TimeZone/Bug8149452.java 
-java/util/TimeZone/Bug8167143.java 
-java/util/TimeZone/HongKong.java 
-java/util/Timer/NameConstructors.java 
-java/util/TreeMap/SubMap.java 
-java/util/TreeMap/SubMapClear.java 
-java/util/UUID/Serial.java 
-java/util/UUID/UUIDTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/MinMaxTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

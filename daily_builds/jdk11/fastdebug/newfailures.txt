@@ -7,6 +7,4 @@ tools/pack200/PackTestZip64.java
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt
-gc/stress/gcbasher/TestGCBasherWithCMS.java 
-gc/stress/gcold/TestGCOldWithCMS.java 
 runtime/CheckUnhandledOops/TestVerifyOops.java 
