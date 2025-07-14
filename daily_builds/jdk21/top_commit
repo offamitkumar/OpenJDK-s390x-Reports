@@ -1,7 +1,7 @@
-commit 06ff0d6bd232f8db9c46b2a8343b3e9dc7fd17d7
-Author: Radek Cap <rcap@redhat.com>
-Date:   Fri Jul 11 21:01:09 2025 +0000
+commit 90bd1acaf16f6ba090c55d4255428857451bcf89
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Jul 14 08:25:10 2025 +0000
 
-    8348328: Update IANA Language Subtag Registry to Version 2025-05-15
+    8358617: java/net/HttpURLConnection/HttpURLConnectionExpectContinueTest.java fails with 403 due to system proxies
     
-    Backport-of: f318868268f32934a2f0c4e26a6c75360d8e74b1
+    Backport-of: a377773fa76b46ac98533c61bc1410485390115e

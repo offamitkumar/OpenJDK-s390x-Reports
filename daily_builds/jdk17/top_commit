@@ -1,7 +1,7 @@
-commit d9fa9cf83979d91845f238e19dc3438972be59ee
-Author: Daniel Huang <dahuangy@amazon.com>
-Date:   Fri Jul 11 15:57:08 2025 +0000
+commit 94f8a744e03d7cbe6527e35b0df6ffc33c29ff06
+Author: Ekaterina Vergizova <evergizova@openjdk.org>
+Date:   Mon Jul 14 13:13:37 2025 +0000
 
-    8294509: The sign extension bug applies to 'public static int[] convertSeedBytesToInts(byte[] seed, int n, int z)' in RandomSupport
+    8337506: Disable "best-fit" mapping on Windows command line
     
-    Backport-of: 5a9cd33632862aa2249794902d4168a7fe143054
+    Backport-of: ff634a967027cfa56b666d31c45db9a4acc09ea4

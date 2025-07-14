@@ -1,7 +1,7 @@
-commit bc828c8fb6693760c153a75188f96b1c9d201c8a
-Author: Prasanta Sadhukhan <psadhukhan@openjdk.org>
-Date:   Sun Jul 13 11:02:19 2025 +0000
+commit a10ee46e6dd94a279e0821d431944bb096493664
+Author: Alexander Matveev <almatvee@openjdk.org>
+Date:   Mon Jul 14 15:07:43 2025 +0000
 
-    6955128: Spec for javax.swing.plaf.basic.BasicTextUI.getVisibleEditorRect contains inappropriate wording
+    8361224: [macos] MacSignTest.testMultipleCertificates failed
     
-    Reviewed-by: aivanov, prr, dnguyen, abhiscxk, tr
+    Reviewed-by: asemenyuk

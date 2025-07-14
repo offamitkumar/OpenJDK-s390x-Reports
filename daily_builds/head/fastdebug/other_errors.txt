@@ -1,6 +1,10 @@
 # other_errors.txt
 # other_errors.txt
-java/util/stream/test/org/openjdk/tests/java/util/stream/MinMaxTest.java 
+java/util/TimeZone/AvailableIDsTest.java 
+java/util/TimeZone/ThreeLetterZoneID.java 
+java/util/TimeZone/TimeZoneBoundaryTest.java 
+java/util/TreeMap/HeadTailTypeError.java 
+java/util/TreeMap/SubMapClear.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
