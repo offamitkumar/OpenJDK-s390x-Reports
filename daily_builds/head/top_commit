@@ -1,7 +1,7 @@
-commit a10ee46e6dd94a279e0821d431944bb096493664
-Author: Alexander Matveev <almatvee@openjdk.org>
-Date:   Mon Jul 14 15:07:43 2025 +0000
+commit b65fdf5af0a5e1cf0d66d7551c6df63e8d07c5fa
+Author: Ian Graves <igraves@openjdk.org>
+Date:   Tue Jul 15 14:33:37 2025 +0000
 
-    8361224: [macos] MacSignTest.testMultipleCertificates failed
+    8358768: [vectorapi] Make VectorOperators.SUADD an Associative
     
-    Reviewed-by: asemenyuk
+    Reviewed-by: psandoz
