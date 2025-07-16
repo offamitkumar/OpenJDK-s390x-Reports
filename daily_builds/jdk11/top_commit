@@ -1,8 +1,7 @@
-commit 7ff53b5d990bf8d30df130a88e7c4bf15d591275
-Author: Taizo Kurashige <tkurashige@openjdk.org>
-Date:   Thu Jul 10 10:55:19 2025 +0000
+commit 315ea00062963f4a194b7cdb4308401f06bd4d32
+Author: Kerem Kat <krk@openjdk.org>
+Date:   Wed Jul 16 16:47:01 2025 +0000
 
-    8352942: jdk/jfr/startupargs/TestMemoryOptions.java fails with 32-bit build
+    8268463: Windows 32bit build fails in DynamicCodeGenerated\libDynamicCodeGenerated.cpp
     
-    Reviewed-by: shade, phh
-    Backport-of: c3de94cee12471a11c457c11dd55c547633de5cb
+    Backport-of: 78b09ab04929871605abba3026ce9833c6e75789

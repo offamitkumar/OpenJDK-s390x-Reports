@@ -1,7 +1,7 @@
-commit b65fdf5af0a5e1cf0d66d7551c6df63e8d07c5fa
-Author: Ian Graves <igraves@openjdk.org>
-Date:   Tue Jul 15 14:33:37 2025 +0000
+commit 10ae6029444c1381f7b1b3dcb6b6f32a4ae57efa
+Author: Gerard Ziemski <gziemski@openjdk.org>
+Date:   Wed Jul 16 15:27:29 2025 +0000
 
-    8358768: [vectorapi] Make VectorOperators.SUADD an Associative
+    8362276: NMT tests should have locks for the entire tests
     
-    Reviewed-by: psandoz
+    Reviewed-by: shade, coleenp

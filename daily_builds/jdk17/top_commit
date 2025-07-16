@@ -1,7 +1,6 @@
-commit 94f8a744e03d7cbe6527e35b0df6ffc33c29ff06
-Author: Ekaterina Vergizova <evergizova@openjdk.org>
-Date:   Mon Jul 14 13:13:37 2025 +0000
+commit ba2bd83beef7ceff59397047df3bbd5f90143c73
+Merge: 94f8a744e03 162dbac82cf
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Jul 16 11:02:04 2025 +0000
 
-    8337506: Disable "best-fit" mapping on Windows command line
-    
-    Backport-of: ff634a967027cfa56b666d31c45db9a4acc09ea4
+    Merge
