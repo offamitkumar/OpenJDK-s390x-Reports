@@ -1,6 +1,7 @@
-commit b2e77eac09da72454a4016b897f7d1b4fe8ef01e
-Merge: 90bd1acaf16 54f2095960f
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jul 16 10:15:36 2025 +0000
+commit 72bcd824606d8a9bc25fb088e73de4c25738ecea
+Author: Richard Reingruber <rrich@openjdk.org>
+Date:   Thu Jul 17 09:37:49 2025 +0000
 
-    Merge
+    8352800: [PPC] OpenJDK fails to build on PPC after JDK-8350106
+    
+    Backport-of: 9a87e2134ef531a6906454186517d3eee2e487c2

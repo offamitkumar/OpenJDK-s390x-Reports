@@ -1,6 +1,7 @@
-commit ba2bd83beef7ceff59397047df3bbd5f90143c73
-Merge: 94f8a744e03 162dbac82cf
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jul 16 11:02:04 2025 +0000
+commit a0b8865e326a8267499b251aa8c10e8edabc0d3b
+Author: SendaoYan <syan@openjdk.org>
+Date:   Thu Jul 17 12:40:10 2025 +0000
 
-    Merge
+    8274453: (sctp) com/sun/nio/sctp/SctpChannel/CloseDescriptors.java test should be resilient to lsof warnings
+    
+    Backport-of: b1b66965f1ec6eae547cc4f70f8271bd39ded6da

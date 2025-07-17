@@ -1,7 +1,7 @@
-commit 10ae6029444c1381f7b1b3dcb6b6f32a4ae57efa
-Author: Gerard Ziemski <gziemski@openjdk.org>
-Date:   Wed Jul 16 15:27:29 2025 +0000
+commit 5ed72775a775d6c96be6de7d9540dc0a80cdd67b
+Author: Albert Mingkun Yang <ayang@openjdk.org>
+Date:   Thu Jul 17 13:55:47 2025 +0000
 
-    8362276: NMT tests should have locks for the entire tests
+    8361404: Parallel: Group all class unloading logc at the end of marking phase
     
-    Reviewed-by: shade, coleenp
+    Reviewed-by: tschatzl, iwalulya

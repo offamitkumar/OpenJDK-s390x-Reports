@@ -1,8 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/SequencedCollection/Basic.java 
-java/util/ServiceLoader/inheritance/NoInheritanceTest.java 
-java/util/ServiceLoader/nouses/NoUsesTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

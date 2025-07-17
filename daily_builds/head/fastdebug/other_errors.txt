@@ -1,12 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/stream/test/org/openjdk/tests/java/util/stream/ForEachOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/GroupByOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/InfiniteStreamWithLimitOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntPrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntReduceTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntSliceOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IterateTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
