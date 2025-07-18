@@ -1,7 +1,7 @@
-commit 5ed72775a775d6c96be6de7d9540dc0a80cdd67b
-Author: Albert Mingkun Yang <ayang@openjdk.org>
-Date:   Thu Jul 17 13:55:47 2025 +0000
+commit 9dc62825b5e7300542d22df0b87b79116f3562d3
+Author: Jorn Vernee <jvernee@openjdk.org>
+Date:   Fri Jul 18 14:54:10 2025 +0000
 
-    8361404: Parallel: Group all class unloading logc at the end of marking phase
+    8362169: Pointer passed to upcall may get wrong scope
     
-    Reviewed-by: tschatzl, iwalulya
+    Reviewed-by: mcimadamore
