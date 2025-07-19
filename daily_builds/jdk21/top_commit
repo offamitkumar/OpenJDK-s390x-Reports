@@ -1,7 +1,7 @@
-commit 72bcd824606d8a9bc25fb088e73de4c25738ecea
-Author: Richard Reingruber <rrich@openjdk.org>
-Date:   Thu Jul 17 09:37:49 2025 +0000
+commit 965f545b7c10a613dd788de7297d710f44afcd99
+Author: SendaoYan <syan@openjdk.org>
+Date:   Sat Jul 19 03:07:39 2025 +0000
 
-    8352800: [PPC] OpenJDK fails to build on PPC after JDK-8350106
+    8359402: Test CloseDescriptors.java should throw SkippedException when there is no lsof/sctp
     
-    Backport-of: 9a87e2134ef531a6906454186517d3eee2e487c2
+    Backport-of: 36b185a93065a83ea6f93fbed6382a8465657810
