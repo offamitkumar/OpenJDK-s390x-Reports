@@ -1,9 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/ServiceLoader/ReloadTest.java 
-java/util/spi/ToolProviderDescriptionTest.java 
-jdk/internal/reflect/Reflection/GetCallerClassTest.java#id0 
-jdk/internal/reflect/Reflection/GetCallerClassTest.java#id1 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
