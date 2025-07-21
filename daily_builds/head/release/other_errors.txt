@@ -1,5 +1,11 @@
 # other_errors.txt
 # other_errors.txt
+java/util/spi/ResourceBundleControlProvider/UserDefaultControlTest.java 
+jdk/internal/reflect/Reflection/GetCallerClassTest.java#id1 
+jdk/modules/incubator/ImageModules.java 
+jdk/modules/open/Basic.java 
+jdk/modules/scenarios/container/ContainerTest.java 
+sun/invoke/util/ValueConversionsTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

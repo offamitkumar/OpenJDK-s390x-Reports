@@ -1,7 +1,7 @@
-commit 441dbde2c3c915ffd916e39a5b4a91df5620d7f3
-Author: Erik Gahlin <egahlin@openjdk.org>
-Date:   Sat Jul 19 15:09:28 2025 +0000
+commit 15b5b54ac707ba0d4e473fd6eb02c38a8efe705c
+Author: Dingli Zhang <dzhang@openjdk.org>
+Date:   Mon Jul 21 13:34:24 2025 +0000
 
-    8362556: New test jdk/jfr/event/io/TestIOTopFrame.java is failing on all platforms
+    8357694: RISC-V: Several IR verification tests fail when vlen=128
     
-    Reviewed-by: mgronlun, shade
+    Reviewed-by: mhaessig, fyang, mli
