@@ -1,7 +1,7 @@
-commit 965f545b7c10a613dd788de7297d710f44afcd99
-Author: SendaoYan <syan@openjdk.org>
-Date:   Sat Jul 19 03:07:39 2025 +0000
+commit 8198de3d9b5c856277b2b5a8d9f211795dcc0076
+Author: Taizo Kurashige <tkurashige@openjdk.org>
+Date:   Tue Jul 22 15:53:23 2025 +0000
 
-    8359402: Test CloseDescriptors.java should throw SkippedException when there is no lsof/sctp
+    8353698: Output of Simple Web Server is garbled if the console's encoding is not UTF-8
     
-    Backport-of: 36b185a93065a83ea6f93fbed6382a8465657810
+    Backport-of: f7fa05f577a28870202ccaa3544c34b58bd4adfe

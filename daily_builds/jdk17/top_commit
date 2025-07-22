@@ -1,7 +1,7 @@
-commit 769bf0c3c783a25bcfa51d4f054508dbead40422
+commit 36b9eba330058ebe0b982014a585587877f25391
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Jul 18 20:02:59 2025 +0000
+Date:   Tue Jul 22 12:00:38 2025 +0000
 
-    8355515: Clarify the purpose of forcePass() and forceFail() methods
+    8249825: Tests sun/security/ssl/SSLSocketImpl/SetClientMode.java and NonAutoClose.java marked with @ignore
     
-    Backport-of: 1a97eb429b520b7c4e625b97553c954d065c00cb
+    Backport-of: 86f39ab5bb58a1d1e720badd7261365398134151

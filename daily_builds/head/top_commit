@@ -1,7 +1,7 @@
-commit 15b5b54ac707ba0d4e473fd6eb02c38a8efe705c
-Author: Dingli Zhang <dzhang@openjdk.org>
-Date:   Mon Jul 21 13:34:24 2025 +0000
+commit d714b5d3dad58f7f6550d7a95fdc2b3f964a4129
+Author: Sean Mullan <mullan@openjdk.org>
+Date:   Tue Jul 22 15:13:06 2025 +0000
 
-    8357694: RISC-V: Several IR verification tests fail when vlen=128
+    8356557: Update CodeSource::implies API documentation and deprecate java.net.SocketPermission class for removal
     
-    Reviewed-by: mhaessig, fyang, mli
+    Reviewed-by: jpai
