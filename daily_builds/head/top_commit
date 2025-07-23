@@ -1,7 +1,7 @@
-commit d714b5d3dad58f7f6550d7a95fdc2b3f964a4129
-Author: Sean Mullan <mullan@openjdk.org>
-Date:   Tue Jul 22 15:13:06 2025 +0000
+commit e6ebefaa404daa4160bdc1c5d9c954c040e2c0c2
+Author: Anthony Scarpino <ascarpino@openjdk.org>
+Date:   Wed Jul 23 15:24:38 2025 +0000
 
-    8356557: Update CodeSource::implies API documentation and deprecate java.net.SocketPermission class for removal
+    8333857: Test sun/security/ssl/SSLSessionImpl/ResumeChecksServer.java failed: Existing session was used
     
-    Reviewed-by: jpai
+    Reviewed-by: hchao
