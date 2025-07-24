@@ -1,7 +1,7 @@
-commit e6ebefaa404daa4160bdc1c5d9c954c040e2c0c2
-Author: Anthony Scarpino <ascarpino@openjdk.org>
-Date:   Wed Jul 23 15:24:38 2025 +0000
+commit 2f1aed2a165259a873636792cff7c9de4e1f334e
+Author: Ayush Rigal <ayush.rigal@oracle.com>
+Date:   Thu Jul 24 14:57:33 2025 +0000
 
-    8333857: Test sun/security/ssl/SSLSessionImpl/ResumeChecksServer.java failed: Existing session was used
+    8361423: Add IPSupport::printPlatformSupport to java/net/NetworkInterface/IPv4Only.java
     
-    Reviewed-by: hchao
+    Reviewed-by: jpai

@@ -1,7 +1,7 @@
-commit 20ff119c0528cfda4c5e333327d1c018ce21d426
+commit dce29c30cc7bd4b5c251d6303a478f3da3e9ae11
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jul 23 12:04:08 2025 +0000
+Date:   Thu Jul 24 09:33:25 2025 +0000
 
-    8327826: Convert javax/swing/border/Test4243289.java applet test to main
+    8357672: Extreme font sizes can cause font substitution
     
-    Backport-of: a43c3cc3476f18c048809bcd08f81fc4288ca399
+    Backport-of: a4eb15195ceeadf311fe81e622a54f4733b90df2

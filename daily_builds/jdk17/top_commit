@@ -1,7 +1,8 @@
-commit 1799d23de701c2c64f8ecfe5309b487149060806
+commit d2dad32242dfd6e76ea5c487345d73848776cd22
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Jul 23 12:09:11 2025 +0000
+Date:   Thu Jul 24 15:02:52 2025 +0000
 
-    8327826: Convert javax/swing/border/Test4243289.java applet test to main
+    8362839: [21u] Problem list more tests that fail in 21 and would be fixed by 8309622
     
-    Backport-of: a43c3cc3476f18c048809bcd08f81fc4288ca399
+    Reviewed-by: mbaesken
+    Backport-of: bbb8a6ad2908c807d868a24b39eaec2f7bad7327
