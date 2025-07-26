@@ -1,7 +1,7 @@
-commit 9e209fef86fe75fb09734c9112fd1d8490c22413
-Author: Albert Mingkun Yang <ayang@openjdk.org>
-Date:   Fri Jul 25 14:50:55 2025 +0000
+commit d288ca28be7bfba3abe9f54cefbe53e73c25707e
+Author: Jaikiran Pai <jpai@openjdk.org>
+Date:   Sat Jul 26 02:17:13 2025 +0000
 
-    8364110: Remove unused methods in GCCause
+    8358048: java/net/httpclient/HttpsTunnelAuthTest.java incorrectly calls Thread::stop
     
-    Reviewed-by: kbarrett
+    Reviewed-by: djelinski, alanb, vyazici
