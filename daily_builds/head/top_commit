@@ -1,7 +1,7 @@
-commit d288ca28be7bfba3abe9f54cefbe53e73c25707e
-Author: Jaikiran Pai <jpai@openjdk.org>
-Date:   Sat Jul 26 02:17:13 2025 +0000
+commit 4189fcbac40943f3b26c3a01938837b4e4762285
+Author: Yuri Gaevsky <yuri.gaevsky@gmail.com>
+Date:   Sun Jul 27 14:54:52 2025 +0000
 
-    8358048: java/net/httpclient/HttpsTunnelAuthTest.java incorrectly calls Thread::stop
+    8362596: RISC-V: Improve _vectorizedHashCode intrinsic
     
-    Reviewed-by: djelinski, alanb, vyazici
+    Reviewed-by: fyang, fjiang
