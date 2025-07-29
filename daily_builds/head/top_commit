@@ -1,7 +1,7 @@
-commit 70ebb5e8c9d99e17e84da798fed01626bc7f9ea0
-Author: Albert Mingkun Yang <ayang@openjdk.org>
-Date:   Mon Jul 28 14:18:47 2025 +0000
+commit c239c0ab00196da8c7c5f6099c8189a778874588
+Author: Jiangli Zhou <jiangli@openjdk.org>
+Date:   Tue Jul 29 14:48:52 2025 +0000
 
-    8364019: Add alignment precondition to Universe::reserve_heap
+    8362564: hotspot/jtreg/compiler/c2/TestLWLockingCodeGen.java fails on static JDK on x86_64 with AVX instruction extensions
     
-    Reviewed-by: tschatzl, jsikstro
+    Reviewed-by: rasbold

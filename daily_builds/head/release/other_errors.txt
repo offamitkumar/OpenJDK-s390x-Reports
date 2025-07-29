@@ -1,8 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/ServiceLoader/BadProvidersTest.java 
-java/util/ServiceLoader/nouses/NoUsesTest.java 
-sun/misc/UnsafeFieldOffsets.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

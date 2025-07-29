@@ -1,8 +1,8 @@
-commit d2dad32242dfd6e76ea5c487345d73848776cd22
+commit c90978b8ec00bc19f467e6002528496283186579
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Jul 24 15:02:52 2025 +0000
+Date:   Tue Jul 29 09:31:28 2025 +0000
 
-    8362839: [21u] Problem list more tests that fail in 21 and would be fixed by 8309622
+    8341964: Add mechanism to disable different parts of TLS cipher suite
     
     Reviewed-by: mbaesken
-    Backport-of: bbb8a6ad2908c807d868a24b39eaec2f7bad7327
+    Backport-of: 697f27c5d53dbe275685b87c8ed1bcfe4da6e4d0

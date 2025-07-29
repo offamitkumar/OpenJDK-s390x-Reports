@@ -1,7 +1,7 @@
-commit efeef29e0839c4605b7c013d98f78718ab6e95a4
+commit da71a5c611e4daacdf599fccba8bf5a8e44f3e15
 Author: SendaoYan <syan@openjdk.org>
-Date:   Fri Jul 25 02:36:25 2025 +0000
+Date:   Tue Jul 29 14:25:02 2025 +0000
 
-    8304674: File java.c compile error with -fsanitize=address -O0
+    8350858: [IR Framework] Some tests failed on Cascade Lake
     
-    Backport-of: 9076673d7df3c20bdb6e7fdf253030bc19a3d9dc
+    Backport-of: 3c9d64eb07c5bc9006ef05b0ab81bdc318cccc20
