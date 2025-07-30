@@ -1,7 +1,7 @@
-commit da71a5c611e4daacdf599fccba8bf5a8e44f3e15
-Author: SendaoYan <syan@openjdk.org>
-Date:   Tue Jul 29 14:25:02 2025 +0000
+commit e57fbd42eb89c12fbac4fd96a0308916fa50408b
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Tue Jul 29 16:53:24 2025 +0000
 
-    8350858: [IR Framework] Some tests failed on Cascade Lake
+    8341311: [Accessibility,macOS,VoiceOver] VoiceOver announces incorrect number of items in submenu of JPopupMenu
     
-    Backport-of: 3c9d64eb07c5bc9006ef05b0ab81bdc318cccc20
+    Backport-of: e33eeeea04fc7899bf66b0a2fdaccc30060854b4

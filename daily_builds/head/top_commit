@@ -1,7 +1,7 @@
-commit c239c0ab00196da8c7c5f6099c8189a778874588
-Author: Jiangli Zhou <jiangli@openjdk.org>
-Date:   Tue Jul 29 14:48:52 2025 +0000
+commit a2e86ff3c56209a14c6e9730781eecd12c81d170
+Author: Francesco Andreuzzi <andreuzzi.francesco@gmail.com>
+Date:   Wed Jul 30 13:43:47 2025 +0000
 
-    8362564: hotspot/jtreg/compiler/c2/TestLWLockingCodeGen.java fails on static JDK on x86_64 with AVX instruction extensions
+    8364037: Sort share includes: adlc, libadt, metaprogramming
     
-    Reviewed-by: rasbold
+    Reviewed-by: ayang, chagedorn

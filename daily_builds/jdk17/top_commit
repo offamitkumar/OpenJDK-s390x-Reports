@@ -1,8 +1,8 @@
-commit c90978b8ec00bc19f467e6002528496283186579
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Jul 29 09:31:28 2025 +0000
+commit 6a2ed7c2f60c60af3a566f59f1c9b809ba592b07
+Author: Taizo Kurashige <tkurashige@openjdk.org>
+Date:   Wed Jul 30 13:12:12 2025 +0000
 
-    8341964: Add mechanism to disable different parts of TLS cipher suite
+    8355249: Remove the use of WMIC from the entire source code
     
-    Reviewed-by: mbaesken
-    Backport-of: 697f27c5d53dbe275685b87c8ed1bcfe4da6e4d0
+    Reviewed-by: asemenyuk, phh
+    Backport-of: 4458719a108f45d3744d47a6ea081fe9ec3e675e
