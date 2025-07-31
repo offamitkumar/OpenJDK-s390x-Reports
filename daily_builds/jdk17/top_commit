@@ -1,8 +1,7 @@
-commit 6a2ed7c2f60c60af3a566f59f1c9b809ba592b07
-Author: Taizo Kurashige <tkurashige@openjdk.org>
-Date:   Wed Jul 30 13:12:12 2025 +0000
+commit 01d92b50513262fce2e2782213d769e2738daf31
+Author: Zdenek Zambersky <zzambers@openjdk.org>
+Date:   Thu Jul 31 16:41:32 2025 +0000
 
-    8355249: Remove the use of WMIC from the entire source code
+    8343618: Stack smashing in awt_InputMethod.c on Linux s390x
     
-    Reviewed-by: asemenyuk, phh
-    Backport-of: 4458719a108f45d3744d47a6ea081fe9ec3e675e
+    Backport-of: ee6891456ed672305d9b48846b5a7977373e1284

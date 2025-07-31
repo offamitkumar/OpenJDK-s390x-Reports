@@ -1,7 +1,7 @@
-commit a2e86ff3c56209a14c6e9730781eecd12c81d170
-Author: Francesco Andreuzzi <andreuzzi.francesco@gmail.com>
-Date:   Wed Jul 30 13:43:47 2025 +0000
+commit 1b9efaa11e660317240bdeda7527b23c7d52da0f
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Thu Jul 31 15:17:51 2025 +0000
 
-    8364037: Sort share includes: adlc, libadt, metaprogramming
+    8364183: Shenandoah: Improve commit/uncommit handling
     
-    Reviewed-by: ayang, chagedorn
+    Reviewed-by: wkemper, xpeng
