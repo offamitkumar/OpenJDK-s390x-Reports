@@ -1,12 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/stream/test/org/openjdk/tests/java/util/stream/CountTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/DistinctOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/DoublePrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/FilterOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/FindFirstOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/FlatMapOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/ForEachOpTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

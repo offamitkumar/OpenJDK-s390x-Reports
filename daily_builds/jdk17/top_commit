@@ -1,7 +1,8 @@
-commit 01d92b50513262fce2e2782213d769e2738daf31
-Author: Zdenek Zambersky <zzambers@openjdk.org>
-Date:   Thu Jul 31 16:41:32 2025 +0000
+commit 4b2d777a3468b2f6a2cc75db814f679df343c4fc
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Aug 1 13:16:48 2025 +0000
 
-    8343618: Stack smashing in awt_InputMethod.c on Linux s390x
+    8335181: Incorrect handling of HTTP/2 GOAWAY frames in HttpClient
     
-    Backport-of: ee6891456ed672305d9b48846b5a7977373e1284
+    Reviewed-by: rschmelter, abakhtin
+    Backport-of: 209939a90e9b804da4c37ebd978b088cb8f41ead

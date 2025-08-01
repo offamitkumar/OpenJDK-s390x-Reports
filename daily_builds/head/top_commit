@@ -1,7 +1,7 @@
-commit 1b9efaa11e660317240bdeda7527b23c7d52da0f
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Thu Jul 31 15:17:51 2025 +0000
+commit ee3665bca026fe53409df8391d49477c64ae23a2
+Author: Coleen Phillimore <coleenp@openjdk.org>
+Date:   Fri Aug 1 15:21:45 2025 +0000
 
-    8364183: Shenandoah: Improve commit/uncommit handling
+    8364187: Make getClassAccessFlagsRaw non-native
     
-    Reviewed-by: wkemper, xpeng
+    Reviewed-by: thartmann, rriggs, liach
