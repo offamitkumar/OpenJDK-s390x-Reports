@@ -1,6 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-jdk/internal/misc/ThreadFlock/WithScopedValue.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

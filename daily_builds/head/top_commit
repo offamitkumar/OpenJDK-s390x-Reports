@@ -1,7 +1,7 @@
-commit ee3665bca026fe53409df8391d49477c64ae23a2
-Author: Coleen Phillimore <coleenp@openjdk.org>
-Date:   Fri Aug 1 15:21:45 2025 +0000
+commit f40381e41d1356f92546a21c0d24060f8606b9b3
+Author: erfang <erfang@nvidia.com>
+Date:   Sat Aug 2 07:54:42 2025 +0000
 
-    8364187: Make getClassAccessFlagsRaw non-native
+    8356760: VectorAPI: Optimize VectorMask.fromLong for all-true/all-false cases
     
-    Reviewed-by: thartmann, rriggs, liach
+    Reviewed-by: xgong, jbhateja
