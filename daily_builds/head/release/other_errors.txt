@@ -1,6 +1,7 @@
 # other_errors.txt
 # other_errors.txt
-java/util/Scanner/ScannerStreamTest.java 
+java/util/ServiceLoader/ModulesTest.java 
+java/util/spi/ToolProviderTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

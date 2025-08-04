@@ -1,7 +1,7 @@
-commit b60e6685f299fceafae6e2b615a177b42ddc4ba3
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Jul 30 22:44:43 2025 +0000
+commit 3daec2546c499ffd92891d2c276bca21c038ed21
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Mon Aug 4 08:01:29 2025 +0000
 
-    8342238: Test javax/crypto/CryptoPermissions/InconsistentEntries.java writes files in tested JDK dir
+    8363965: GHA: Switch cross-compiling sysroots to Debian bookworm
     
-    Backport-of: 16033ea79a01b27a7f5cbb31d64da0e80afc7dc3
+    Backport-of: 3fe0d29ec3b5b327d633726677ba1809eec27665

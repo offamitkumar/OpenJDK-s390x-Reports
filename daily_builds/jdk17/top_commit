@@ -1,8 +1,7 @@
-commit 4b2d777a3468b2f6a2cc75db814f679df343c4fc
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Aug 1 13:16:48 2025 +0000
+commit 35ea32b6fb44252c6d0314274f8e995088a7597f
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Mon Aug 4 08:00:53 2025 +0000
 
-    8335181: Incorrect handling of HTTP/2 GOAWAY frames in HttpClient
+    8363965: GHA: Switch cross-compiling sysroots to Debian bookworm
     
-    Reviewed-by: rschmelter, abakhtin
-    Backport-of: 209939a90e9b804da4c37ebd978b088cb8f41ead
+    Backport-of: 3fe0d29ec3b5b327d633726677ba1809eec27665

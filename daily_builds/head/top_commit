@@ -1,7 +1,7 @@
-commit 1a206d2a6cade07249f6922072ac9d29aa56bc43
-Author: Chen Liang <liach@openjdk.org>
-Date:   Sun Aug 3 13:23:43 2025 +0000
+commit 6c52b73465b0d0daeafc54c3c6cec3062bf490c5
+Author: Artur Barashev <abarashev@openjdk.org>
+Date:   Mon Aug 4 13:55:58 2025 +0000
 
-    8364545: tools/javac/launcher/SourceLauncherTest.java fails frequently
+    8209992: Align SSLSocket and SSLEngine Javadocs
     
-    Reviewed-by: cstein, jpai
+    Reviewed-by: wetmore

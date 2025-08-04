@@ -1,5 +1,6 @@
 # other_errors.txt
 # other_errors.txt
+jdk/classfile/LowAdaptTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
