@@ -1,7 +1,7 @@
-commit 35ea32b6fb44252c6d0314274f8e995088a7597f
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Mon Aug 4 08:00:53 2025 +0000
+commit 32fa287948f6ff1435e2310bcf84b3b8c7e2c5dd
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Aug 5 09:10:30 2025 +0000
 
-    8363965: GHA: Switch cross-compiling sysroots to Debian bookworm
+    8334016: Make PrintNullString.java automatic
     
-    Backport-of: 3fe0d29ec3b5b327d633726677ba1809eec27665
+    Backport-of: f5e6d2c93c3274e465c42709b7634463899fdf2e

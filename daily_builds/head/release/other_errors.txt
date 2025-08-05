@@ -1,7 +1,7 @@
 # other_errors.txt
 # other_errors.txt
-java/util/ServiceLoader/ModulesTest.java 
-java/util/spi/ToolProviderTest.java 
+java/util/stream/boottest/java.base/java/util/stream/FlagOpTest.java 
+sun/util/calendar/CalendarSystemDeadLockTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

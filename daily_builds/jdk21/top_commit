@@ -1,7 +1,7 @@
-commit 3daec2546c499ffd92891d2c276bca21c038ed21
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Mon Aug 4 08:01:29 2025 +0000
+commit aab1e218d39371971efd7424827d6fa6f57cae7e
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Aug 5 09:01:07 2025 +0000
 
-    8363965: GHA: Switch cross-compiling sysroots to Debian bookworm
+    8358452: JNI exception pending in Java_sun_awt_screencast_ScreencastHelper_remoteDesktopKeyImpl of screencast_pipewire.c:1214 (ID: 51119)
     
-    Backport-of: 3fe0d29ec3b5b327d633726677ba1809eec27665
+    Backport-of: 2103dc15cb662fd8795b1b51d9cb61c389bed7a0
