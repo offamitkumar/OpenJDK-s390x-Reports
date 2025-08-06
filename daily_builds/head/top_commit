@@ -1,7 +1,7 @@
-commit 8a571ee7f2d9a46ff485fd9f3658c552e2d20817
-Author: Erik Gahlin <egahlin@openjdk.org>
-Date:   Tue Aug 5 14:33:30 2025 +0000
+commit 72d1066ae385ce511a70e762ed68afaa72e96ec4
+Author: Albert Mingkun Yang <ayang@openjdk.org>
+Date:   Wed Aug 6 12:21:16 2025 +0000
 
-    8364667: JFR: Throttle doesn't work with dynamic events
+    8364722: Parallel: Move CLDG mark clearing to the end of full GC
     
-    Reviewed-by: mgronlun
+    Reviewed-by: tschatzl, zgu

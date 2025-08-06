@@ -1,6 +1,7 @@
-commit 626cb3b1d16d694dd39a78044aa1ca2724a200af
-Merge: 315ea00062 141d7af9cd
-Author: Andrew John Hughes <andrew@openjdk.org>
-Date:   Thu Jul 17 11:28:46 2025 +0000
+commit 3ff903a37cc0bbe4cb5e2a6b08faa48fde71445f
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Wed Aug 6 14:42:25 2025 +0000
 
-    Merge
+    8363965: GHA: Switch cross-compiling sysroots to Debian bookworm
+    
+    Backport-of: 3fe0d29ec3b5b327d633726677ba1809eec27665
