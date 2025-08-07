@@ -1,7 +1,7 @@
-commit 72d1066ae385ce511a70e762ed68afaa72e96ec4
-Author: Albert Mingkun Yang <ayang@openjdk.org>
-Date:   Wed Aug 6 12:21:16 2025 +0000
+commit 83953c458eb65b2af184340dd460325f2b56e5b9
+Author: Guanqiang Han <ghan@openjdk.org>
+Date:   Thu Aug 7 14:11:46 2025 +0000
 
-    8364722: Parallel: Move CLDG mark clearing to the end of full GC
+    8364822: Comment cleanup, stale references to closeDescriptors and UNIXProcess.c
     
-    Reviewed-by: tschatzl, zgu
+    Reviewed-by: kevinw, rriggs

@@ -1,7 +1,7 @@
-commit 3ff903a37cc0bbe4cb5e2a6b08faa48fde71445f
+commit a7e7709bb346d6d0e4dc9e2b9d4eeb60f884f782
 Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Wed Aug 6 14:42:25 2025 +0000
+Date:   Thu Aug 7 06:55:40 2025 +0000
 
-    8363965: GHA: Switch cross-compiling sysroots to Debian bookworm
+    8340185: Use make -k on GHA to catch more build errors
     
-    Backport-of: 3fe0d29ec3b5b327d633726677ba1809eec27665
+    Backport-of: e1a4a6beb61c70228c3aa54ddf2d9310fd5020e2

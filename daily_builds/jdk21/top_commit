@@ -1,7 +1,8 @@
-commit 2ae23bd27868136040508aa4cdc8bac0287a6ee4
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Aug 6 03:26:20 2025 +0000
+commit 52a0b1143f8b6650a51c7b72891e3f148324d0e5
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Thu Aug 7 12:45:20 2025 +0000
 
-    8310264: In PhaseChaitin::Split defs and phis are leaked
+    8357826: Avoid running some jtreg tests when asan is configured
     
-    Backport-of: 02b17d793bfcea611c654049c9ab680b70fb5685
+    Reviewed-by: rschmelter
+    Backport-of: d7aa34982053bad37b3b726539f1245d054258f4

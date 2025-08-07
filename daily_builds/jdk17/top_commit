@@ -1,7 +1,7 @@
-commit 32fa287948f6ff1435e2310bcf84b3b8c7e2c5dd
+commit f9aa44224c9b8ac7b7f3de89ee21985fb2fcf3e0
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Aug 5 09:10:30 2025 +0000
+Date:   Thu Aug 7 09:31:01 2025 +0000
 
-    8334016: Make PrintNullString.java automatic
+    8358697: TextLayout/MyanmarTextTest.java passes if no Myanmar font is found
     
-    Backport-of: f5e6d2c93c3274e465c42709b7634463899fdf2e
+    Backport-of: bcad87eacbd7fbfd3254479b7e061bab34e64aec
