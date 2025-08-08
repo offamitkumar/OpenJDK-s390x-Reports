@@ -1,7 +1,7 @@
-commit f9aa44224c9b8ac7b7f3de89ee21985fb2fcf3e0
+commit 8160986c28f77293a0a246cfa51efc1bb627dcc2
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Aug 7 09:31:01 2025 +0000
+Date:   Fri Aug 8 10:04:04 2025 +0000
 
-    8358697: TextLayout/MyanmarTextTest.java passes if no Myanmar font is found
+    8328328: Convert javax/swing/JTabbedPane/4666224/bug4666224.java applet test to main
     
-    Backport-of: bcad87eacbd7fbfd3254479b7e061bab34e64aec
+    Backport-of: 65d9f119c401c26c9a6436f5c9a513f91bb8c753

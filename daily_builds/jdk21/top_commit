@@ -1,8 +1,7 @@
-commit 52a0b1143f8b6650a51c7b72891e3f148324d0e5
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Thu Aug 7 12:45:20 2025 +0000
+commit d90297a828dff468afc34e2767439e51379f4f95
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Aug 8 09:36:50 2025 +0000
 
-    8357826: Avoid running some jtreg tests when asan is configured
+    8361212: Remove AffirmTrust root CAs
     
-    Reviewed-by: rschmelter
-    Backport-of: d7aa34982053bad37b3b726539f1245d054258f4
+    Backport-of: 3bdac5317815b84d6f693d972f73d77dd069a891

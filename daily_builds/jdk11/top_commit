@@ -1,7 +1,7 @@
-commit a7e7709bb346d6d0e4dc9e2b9d4eeb60f884f782
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Thu Aug 7 06:55:40 2025 +0000
+commit 0e8228dc80a8482bbc172d8c13725b2af276d351
+Author: Daniel Hu <costmuch@amazon.com>
+Date:   Fri Aug 8 16:11:38 2025 +0000
 
-    8340185: Use make -k on GHA to catch more build errors
+    8318605: Enable parallelism in vmTestbase/nsk/stress/stack tests
     
-    Backport-of: e1a4a6beb61c70228c3aa54ddf2d9310fd5020e2
+    Backport-of: d9aa1deac8474f87dd867809f7265b9496917c6f

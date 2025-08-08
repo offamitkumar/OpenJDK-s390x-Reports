@@ -1,7 +1,7 @@
-commit 83953c458eb65b2af184340dd460325f2b56e5b9
-Author: Guanqiang Han <ghan@openjdk.org>
-Date:   Thu Aug 7 14:11:46 2025 +0000
+commit 241808e13fb032b0ec192e0b7ff94891a653ac94
+Author: Andrew Dinn <adinn@openjdk.org>
+Date:   Fri Aug 8 09:12:08 2025 +0000
 
-    8364822: Comment cleanup, stale references to closeDescriptors and UNIXProcess.c
+    8364269: Simplify code cache API by storing adapter entry offsets in blob
     
-    Reviewed-by: kevinw, rriggs
+    Reviewed-by: kvn, shade, asmehra
