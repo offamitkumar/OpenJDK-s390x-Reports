@@ -1,7 +1,7 @@
-commit 241808e13fb032b0ec192e0b7ff94891a653ac94
-Author: Andrew Dinn <adinn@openjdk.org>
-Date:   Fri Aug 8 09:12:08 2025 +0000
+commit f83454cd61538b653656ccf81759b3cc7286ed67
+Author: Jaikiran Pai <jpai@openjdk.org>
+Date:   Sat Aug 9 02:00:58 2025 +0000
 
-    8364269: Simplify code cache API by storing adapter entry offsets in blob
+    8364786: Test java/net/vthread/HttpALot.java intermittently fails - 24999 handled, expected 25000
     
-    Reviewed-by: kvn, shade, asmehra
+    Reviewed-by: dfuchs, alanb, vyazici
