@@ -6,5 +6,4 @@ tools/javac/tree/SourceDocTreeScannerTest.java
 # newfailures.txt
 compiler/c2/irTests/TestAutoVectorization2DArray.java 
 runtime/ErrorHandling/TestDwarf.java#dontCheckDecoder 
-runtime/locking/TestRecursiveMonitorChurn.java 
 # newfailures.txt
