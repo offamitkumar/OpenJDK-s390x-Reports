@@ -1,7 +1,8 @@
-commit 0e8228dc80a8482bbc172d8c13725b2af276d351
-Author: Daniel Hu <costmuch@amazon.com>
-Date:   Fri Aug 8 16:11:38 2025 +0000
+commit d2a17d1acc47020e1be9f2ff31693930802a9caa
+Author: Taizo Kurashige <tkurashige@openjdk.org>
+Date:   Mon Aug 11 17:53:29 2025 +0000
 
-    8318605: Enable parallelism in vmTestbase/nsk/stress/stack tests
+    8355249: Remove the use of WMIC from the entire source code
     
-    Backport-of: d9aa1deac8474f87dd867809f7265b9496917c6f
+    Reviewed-by: phh
+    Backport-of: 4458719a108f45d3744d47a6ea081fe9ec3e675e

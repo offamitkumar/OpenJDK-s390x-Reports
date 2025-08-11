@@ -1,7 +1,7 @@
-commit 022e29a77533aacabd56820d00ecffa9646a8362
-Author: Jaikiran Pai <jpai@openjdk.org>
-Date:   Sun Aug 10 04:22:10 2025 +0000
+commit 23985c29b44b489472dcd3aad2cb98d9ce003a7b
+Author: Magnus Ihse Bursie <ihse@openjdk.org>
+Date:   Mon Aug 11 14:12:55 2025 +0000
 
-    8365086: CookieStore.getURIs() and get(URI) should return an immutable List
+    8357979: Compile jdk.internal.vm.ci targeting the Boot JDK version
     
-    Reviewed-by: liach, vyazici, dfuchs
+    Reviewed-by: erikj, dnsimon

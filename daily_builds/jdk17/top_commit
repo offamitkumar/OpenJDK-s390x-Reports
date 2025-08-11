@@ -1,7 +1,7 @@
-commit 8160986c28f77293a0a246cfa51efc1bb627dcc2
+commit 2927a673e7ead625b0a86ad5098a99f44a62fcfc
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Aug 8 10:04:04 2025 +0000
+Date:   Mon Aug 11 09:00:19 2025 +0000
 
-    8328328: Convert javax/swing/JTabbedPane/4666224/bug4666224.java applet test to main
+    8351277: Remove pipewire from AIX build
     
-    Backport-of: 65d9f119c401c26c9a6436f5c9a513f91bb8c753
+    Backport-of: 0c697daf474b580cd447db1cb86b09c85a251175
