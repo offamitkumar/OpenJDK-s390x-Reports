@@ -1,7 +1,7 @@
-commit 23985c29b44b489472dcd3aad2cb98d9ce003a7b
-Author: Magnus Ihse Bursie <ihse@openjdk.org>
-Date:   Mon Aug 11 14:12:55 2025 +0000
+commit a382996bb496d50b4eb5a6be9f61e5c2f8aaae2d
+Author: Erik Gahlin <egahlin@openjdk.org>
+Date:   Tue Aug 12 13:42:53 2025 +0000
 
-    8357979: Compile jdk.internal.vm.ci targeting the Boot JDK version
+    8364993: JFR: Disable jdk.ModuleExport in default.jfc
     
-    Reviewed-by: erikj, dnsimon
+    Reviewed-by: mgronlun

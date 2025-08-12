@@ -1,7 +1,8 @@
-commit 2927a673e7ead625b0a86ad5098a99f44a62fcfc
+commit ef27cae10a214e0c81820b9abe7fa5a9bc5016ef
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Aug 11 09:00:19 2025 +0000
+Date:   Tue Aug 12 08:45:32 2025 +0000
 
-    8351277: Remove pipewire from AIX build
+    8307648: java/net/httpclient/ExpectContinueTest.java timed out
     
-    Backport-of: 0c697daf474b580cd447db1cb86b09c85a251175
+    Reviewed-by: rschmelter
+    Backport-of: 04b0e785f6b9b4629b77bb19f2b072434be4951c
