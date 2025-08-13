@@ -1,7 +1,7 @@
-commit d90297a828dff468afc34e2767439e51379f4f95
+commit 02a45b0d311fe7a93ab086b30dc58b33d568fe28
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Aug 8 09:36:50 2025 +0000
+Date:   Wed Aug 13 12:26:11 2025 +0000
 
-    8361212: Remove AffirmTrust root CAs
+    8357253: Test test/jdk/sun/security/ssl/SSLSessionImpl/ResumeClientTLS12withSNI.java writes in src dir
     
-    Backport-of: 3bdac5317815b84d6f693d972f73d77dd069a891
+    Backport-of: 566e3b21ed14748cb0d9117b6bd58b4bfcf625c6

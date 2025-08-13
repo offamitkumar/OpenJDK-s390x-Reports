@@ -1,6 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/zip/ZipFile/ZipFileSharedSourceTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

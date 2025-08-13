@@ -1,8 +1,7 @@
-commit ef27cae10a214e0c81820b9abe7fa5a9bc5016ef
+commit 7845f08e72c7e3935ee5a531114d0afeecf4d112
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Aug 12 08:45:32 2025 +0000
+Date:   Wed Aug 13 12:32:14 2025 +0000
 
-    8307648: java/net/httpclient/ExpectContinueTest.java timed out
+    8357253: Test test/jdk/sun/security/ssl/SSLSessionImpl/ResumeClientTLS12withSNI.java writes in src dir
     
-    Reviewed-by: rschmelter
-    Backport-of: 04b0e785f6b9b4629b77bb19f2b072434be4951c
+    Backport-of: 566e3b21ed14748cb0d9117b6bd58b4bfcf625c6

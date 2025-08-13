@@ -1,8 +1,8 @@
-commit d2a17d1acc47020e1be9f2ff31693930802a9caa
-Author: Taizo Kurashige <tkurashige@openjdk.org>
-Date:   Mon Aug 11 17:53:29 2025 +0000
+commit 341fc38ff1ec271b43fc777708b1944aeba9c1ac
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Wed Aug 13 00:12:08 2025 +0000
 
-    8355249: Remove the use of WMIC from the entire source code
+    8355051: Problemlist java/awt/Graphics2D/CopyAreaOOB.java on macosx-aarch64
     
     Reviewed-by: phh
-    Backport-of: 4458719a108f45d3744d47a6ea081fe9ec3e675e
+    Backport-of: abbf1a02cb00ae98ed7fdb7105aa4806756f898f

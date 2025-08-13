@@ -1,7 +1,7 @@
-commit a382996bb496d50b4eb5a6be9f61e5c2f8aaae2d
-Author: Erik Gahlin <egahlin@openjdk.org>
-Date:   Tue Aug 12 13:42:53 2025 +0000
+commit 001aaa1e49f2692061cad44d68c9e81a27ea3b98
+Author: Boris Ulasevich <bulasevich@openjdk.org>
+Date:   Wed Aug 13 12:45:48 2025 +0000
 
-    8364993: JFR: Disable jdk.ModuleExport in default.jfc
+    8365166: ARM32: missing os::fetch_bcp_from_context implementation
     
-    Reviewed-by: mgronlun
+    Reviewed-by: shade
