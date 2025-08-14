@@ -1,7 +1,7 @@
-commit 7845f08e72c7e3935ee5a531114d0afeecf4d112
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Aug 13 12:32:14 2025 +0000
+commit 860896a11bdd0947a5796ba627f210f65dcd5941
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Thu Aug 14 15:41:26 2025 +0000
 
-    8357253: Test test/jdk/sun/security/ssl/SSLSessionImpl/ResumeClientTLS12withSNI.java writes in src dir
+    8352677: Opensource JMenu tests - series2
     
-    Backport-of: 566e3b21ed14748cb0d9117b6bd58b4bfcf625c6
+    Backport-of: cfc648bd17cc79b1c3e6f69d3559749e937261b2

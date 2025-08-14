@@ -1,7 +1,7 @@
-commit 001aaa1e49f2692061cad44d68c9e81a27ea3b98
-Author: Boris Ulasevich <bulasevich@openjdk.org>
-Date:   Wed Aug 13 12:45:48 2025 +0000
+commit b0f98df75aee1e94a8c4b3eb8d0b1f4e715011ae
+Author: Phil Race <prr@openjdk.org>
+Date:   Thu Aug 14 15:20:47 2025 +0000
 
-    8365166: ARM32: missing os::fetch_bcp_from_context implementation
+    8365416: java.desktop no longer needs preview feature access
     
-    Reviewed-by: shade
+    Reviewed-by: alanb, jpai
