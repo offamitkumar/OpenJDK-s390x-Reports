@@ -1,7 +1,7 @@
-commit b0f98df75aee1e94a8c4b3eb8d0b1f4e715011ae
-Author: Phil Race <prr@openjdk.org>
-Date:   Thu Aug 14 15:20:47 2025 +0000
+commit dbae90c950200cb417aebeab65e5fce7a7e5f94f
+Author: Francesco Andreuzzi <andreuzzi.francesco@gmail.com>
+Date:   Fri Aug 15 10:45:00 2025 +0000
 
-    8365416: java.desktop no longer needs preview feature access
+    8364723: Sort share/interpreter includes
     
-    Reviewed-by: alanb, jpai
+    Reviewed-by: shade, ayang

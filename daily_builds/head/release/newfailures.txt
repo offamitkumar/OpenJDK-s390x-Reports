@@ -3,7 +3,8 @@
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-jdk/modules/scenarios/container/ContainerTest.java 
+java/util/spi/ToolProviderTest.java 
+java/util/zip/DeInflate.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt

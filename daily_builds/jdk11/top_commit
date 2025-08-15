@@ -1,8 +1,8 @@
-commit 11307901d42905bb250e8a36527a2e6ee7a9a721
+commit 42fb66459137e4ed3926ba235091a3febc999b1c
 Author: Sergey Bylokhov <serb@openjdk.org>
-Date:   Thu Aug 14 15:03:29 2025 +0000
+Date:   Fri Aug 15 01:09:54 2025 +0000
 
-    8356053: Test java/awt/Toolkit/Headless/HeadlessToolkit.java fails by timeout
+    8316497: ColorConvertOp - typo for non-ICC conversions needs one-line fix
     
     Reviewed-by: phh
-    Backport-of: 375f3dc9ed0f1704e726d0d704420c38a0a5513c
+    Backport-of: 574e1ad734409bdcf1b78f0c6b53a7196b3b0d66

@@ -1,7 +1,7 @@
-commit 860896a11bdd0947a5796ba627f210f65dcd5941
+commit 56e1f4b0f4c1ac172a834eb67757a35b0fe1af04
 Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Thu Aug 14 15:41:26 2025 +0000
+Date:   Fri Aug 15 17:22:09 2025 +0000
 
-    8352677: Opensource JMenu tests - series2
+    8352860: Open source events tests batch0
     
-    Backport-of: cfc648bd17cc79b1c3e6f69d3559749e937261b2
+    Backport-of: d4d18350f367a18813d0d418169e852c1530418e
