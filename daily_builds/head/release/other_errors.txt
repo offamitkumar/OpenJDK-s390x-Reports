@@ -1,8 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/ServiceLoader/ReloadTest.java 
-java/util/Spliterator/IteratorFromSpliteratorTest.java 
-java/util/spi/ToolProviderDescriptionTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

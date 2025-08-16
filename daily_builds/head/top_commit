@@ -1,7 +1,7 @@
-commit dbae90c950200cb417aebeab65e5fce7a7e5f94f
-Author: Francesco Andreuzzi <andreuzzi.francesco@gmail.com>
-Date:   Fri Aug 15 10:45:00 2025 +0000
+commit 57210af9bceb582be112564465ab66cebd43a4c0
+Author: Alexey Semenyuk <asemenyuk@openjdk.org>
+Date:   Sat Aug 16 04:41:25 2025 +0000
 
-    8364723: Sort share/interpreter includes
+    8365555: Cleanup redundancies in jpackage implementation
     
-    Reviewed-by: shade, ayang
+    Reviewed-by: almatvee
