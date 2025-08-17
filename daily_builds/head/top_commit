@@ -1,7 +1,7 @@
-commit 57210af9bceb582be112564465ab66cebd43a4c0
-Author: Alexey Semenyuk <asemenyuk@openjdk.org>
-Date:   Sat Aug 16 04:41:25 2025 +0000
+commit bd65d483df4742bb7ce79b613f10f70a45117f84
+Author: Kim Barrett <kbarrett@openjdk.org>
+Date:   Sun Aug 17 12:56:42 2025 +0000
 
-    8365555: Cleanup redundancies in jpackage implementation
+    8365245: Move size reducing operations to GrowableArrayWithAllocator
     
-    Reviewed-by: almatvee
+    Reviewed-by: jsjolen, stefank
