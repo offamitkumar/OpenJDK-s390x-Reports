@@ -1,5 +1,7 @@
 # other_errors.txt
 # other_errors.txt
+java/util/stream/test/org/openjdk/tests/java/util/FillableStringTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/WhileOpTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
