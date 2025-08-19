@@ -1,7 +1,8 @@
-commit 56e1f4b0f4c1ac172a834eb67757a35b0fe1af04
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Aug 15 17:22:09 2025 +0000
+commit 9b71cd68dc750f2996334300e716deec091eda04
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Aug 19 09:14:18 2025 +0000
 
-    8352860: Open source events tests batch0
+    8343855: HTTP/2 ConnectionWindowUpdateSender may miss some unprocessed DataFrames from closed streams
     
-    Backport-of: d4d18350f367a18813d0d418169e852c1530418e
+    Reviewed-by: phh, rschmelter
+    Backport-of: bd6152f5967107d7b32db9bcfa224fc07314f098

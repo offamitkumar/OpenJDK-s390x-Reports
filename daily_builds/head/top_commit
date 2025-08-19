@@ -1,7 +1,7 @@
-commit 81c6ed38828940d51c872c354c29dc13ed62a5ac
-Author: Jaikiran Pai <jpai@openjdk.org>
-Date:   Mon Aug 18 13:40:42 2025 +0000
+commit 4ed268ff9aa6059221d76291c031b0fd29e20b95
+Author: Chris Plummer <cjplummer@openjdk.org>
+Date:   Tue Aug 19 15:05:25 2025 +0000
 
-    8365533: Remove outdated jdk.internal.javac package export to several modules from java.base
+    8362304: Fix JDWP spec w.r.t. OPAQUE_FRAME and INVALID_SLOT errors
     
-    Reviewed-by: alanb, liach
+    Reviewed-by: sspitsyn, alanb, amenkov
