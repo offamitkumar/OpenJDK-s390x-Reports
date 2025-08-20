@@ -1,8 +1,8 @@
-commit 9b71cd68dc750f2996334300e716deec091eda04
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Aug 19 09:14:18 2025 +0000
+commit 688c36b0e53525ccc43750b2e4e90e7a01908cb1
+Author: Radek Cap <rcap@redhat.com>
+Date:   Wed Aug 20 17:17:11 2025 +0000
 
-    8343855: HTTP/2 ConnectionWindowUpdateSender may miss some unprocessed DataFrames from closed streams
+    8348328: Update IANA Language Subtag Registry to Version 2025-05-15
     
-    Reviewed-by: phh, rschmelter
-    Backport-of: bd6152f5967107d7b32db9bcfa224fc07314f098
+    Reviewed-by: andrew
+    Backport-of: f318868268f32934a2f0c4e26a6c75360d8e74b1

@@ -1,7 +1,9 @@
-commit 4ed268ff9aa6059221d76291c031b0fd29e20b95
-Author: Chris Plummer <cjplummer@openjdk.org>
-Date:   Tue Aug 19 15:05:25 2025 +0000
+commit 3e60ab51fea17098d852931a06f4f5a827ae0e78
+Author: Archie Cobbs <acobbs@openjdk.org>
+Date:   Wed Aug 20 15:04:48 2025 +0000
 
-    8362304: Fix JDWP spec w.r.t. OPAQUE_FRAME and INVALID_SLOT errors
+    8348611: Eliminate DeferredLintHandler and emit warnings after attribution
+    8224228: No way to locally suppress lint warnings in parser/tokenizer or preview features
+    8353758: Missing calls to Log.useSource() in JavacTrees
     
-    Reviewed-by: sspitsyn, alanb, amenkov
+    Reviewed-by: mcimadamore, vromero, jlahoda
