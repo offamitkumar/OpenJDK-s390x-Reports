@@ -1,9 +1,7 @@
-commit 3e60ab51fea17098d852931a06f4f5a827ae0e78
-Author: Archie Cobbs <acobbs@openjdk.org>
-Date:   Wed Aug 20 15:04:48 2025 +0000
+commit fb651fd6d246e69b42363e050eb8d96afb633eed
+Author: Jonas Norlinder <jonas.norlinder@oracle.com>
+Date:   Thu Aug 21 14:05:36 2025 +0000
 
-    8348611: Eliminate DeferredLintHandler and emit warnings after attribution
-    8224228: No way to locally suppress lint warnings in parser/tokenizer or preview features
-    8353758: Missing calls to Log.useSource() in JavacTrees
+    8364638: Refactor and make accumulated GC CPU time code generic
     
-    Reviewed-by: mcimadamore, vromero, jlahoda
+    Reviewed-by: ayang, sjohanss
