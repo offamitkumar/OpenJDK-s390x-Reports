@@ -1,7 +1,7 @@
-commit fb651fd6d246e69b42363e050eb8d96afb633eed
-Author: Jonas Norlinder <jonas.norlinder@oracle.com>
-Date:   Thu Aug 21 14:05:36 2025 +0000
+commit e1c58f858a64853c2d454fd00a84455ca6700055
+Author: Martin Doerr <mdoerr@openjdk.org>
+Date:   Fri Aug 22 09:01:21 2025 +0000
 
-    8364638: Refactor and make accumulated GC CPU time code generic
+    8360540: nmethod entry barriers of new nmethods should be disarmed
     
-    Reviewed-by: ayang, sjohanss
+    Reviewed-by: eosterlund, tschatzl

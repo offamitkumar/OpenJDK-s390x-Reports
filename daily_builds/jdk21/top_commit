@@ -1,7 +1,8 @@
-commit 0da7a731e5dedfb7d248b74283339769080c08e0
+commit 82601638c283a34153532c0f5283deef8813c0f4
 Author: SendaoYan <syan@openjdk.org>
-Date:   Thu Aug 21 09:08:20 2025 +0000
+Date:   Fri Aug 22 02:02:12 2025 +0000
 
-    8365811: test/jdk/java/net/CookieHandler/B6644726.java failure - "Should have 5 cookies. Got only 4, expires probably didn't parse correctly"
+    8358004: Delete applications/scimark/Scimark.java test
     
-    Backport-of: b453eb63c641e1e69b4aef57a220ebe45b9d1693
+    Reviewed-by: phh
+    Backport-of: f1f6452e01e5a4521cb333d7456333f00cd9680c
