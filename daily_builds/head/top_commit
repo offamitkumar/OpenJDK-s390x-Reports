@@ -1,7 +1,7 @@
-commit e1c58f858a64853c2d454fd00a84455ca6700055
-Author: Martin Doerr <mdoerr@openjdk.org>
-Date:   Fri Aug 22 09:01:21 2025 +0000
+commit 09aad0aea8b9f9fda14c5b18ae67b30ffce817d9
+Author: SendaoYan <syan@openjdk.org>
+Date:   Sat Aug 23 02:43:23 2025 +0000
 
-    8360540: nmethod entry barriers of new nmethods should be disarmed
+    8365834: Mark java/net/httpclient/ManyRequests.java  as intermittent
     
-    Reviewed-by: eosterlund, tschatzl
+    Reviewed-by: jpai

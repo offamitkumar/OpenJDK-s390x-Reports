@@ -1,8 +1,7 @@
-commit 82601638c283a34153532c0f5283deef8813c0f4
-Author: SendaoYan <syan@openjdk.org>
-Date:   Fri Aug 22 02:02:12 2025 +0000
+commit e4cd10bba6bd8a17f8122d07e9d331daab9668a7
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Aug 22 16:55:34 2025 +0000
 
-    8358004: Delete applications/scimark/Scimark.java test
+    8353293: Open source several swing tests batch4
     
-    Reviewed-by: phh
-    Backport-of: f1f6452e01e5a4521cb333d7456333f00cd9680c
+    Backport-of: a551cc929426590bfbbcaa4bd8bee5e4e8cfe16d
