@@ -1,7 +1,7 @@
-commit e4cd10bba6bd8a17f8122d07e9d331daab9668a7
+commit 369105417379e1a0012cb9821e27bc6849ccc738
 Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Aug 22 16:55:34 2025 +0000
+Date:   Mon Aug 25 16:24:45 2025 +0000
 
-    8353293: Open source several swing tests batch4
+    8353748: Open source several swing tests batch6
     
-    Backport-of: a551cc929426590bfbbcaa4bd8bee5e4e8cfe16d
+    Backport-of: 38f9b3a9738de7896d840fc114a76ced3b77c269

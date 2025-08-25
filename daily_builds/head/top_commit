@@ -1,7 +1,7 @@
-commit 09aad0aea8b9f9fda14c5b18ae67b30ffce817d9
-Author: SendaoYan <syan@openjdk.org>
-Date:   Sat Aug 23 02:43:23 2025 +0000
+commit d24449f696c86bca53cca8a77cc3c4eb58a73ced
+Author: Erik Gahlin <egahlin@openjdk.org>
+Date:   Mon Aug 25 15:10:50 2025 +0000
 
-    8365834: Mark java/net/httpclient/ManyRequests.java  as intermittent
+    8365815: JFR: Update metadata.xml with 'jfr query' examples
     
-    Reviewed-by: jpai
+    Reviewed-by: mgronlun
