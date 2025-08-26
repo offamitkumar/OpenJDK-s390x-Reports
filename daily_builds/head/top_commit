@@ -1,7 +1,7 @@
-commit d24449f696c86bca53cca8a77cc3c4eb58a73ced
-Author: Erik Gahlin <egahlin@openjdk.org>
-Date:   Mon Aug 25 15:10:50 2025 +0000
+commit caaef3a04ce1a9a8c80d9aade96de43416ab058e
+Author: Hannes Wallnöfer <hannesw@openjdk.org>
+Date:   Tue Aug 26 15:00:20 2025 +0000
 
-    8365815: JFR: Update metadata.xml with 'jfr query' examples
+    8350920: Allow inherited member summaries to be viewed inline
     
-    Reviewed-by: mgronlun
+    Reviewed-by: liach, nbenalla
