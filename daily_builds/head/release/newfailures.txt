@@ -1,9 +1,11 @@
 # newfailures.txt
 # newfailures.txt
+java/util/ResourceBundle/modules/visibility/VisibilityTest.java 
+java/util/ServiceLoader/basic/ServiceLoaderBasicTest.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/zip/DeflateIn_InflateOut.java 
+java/util/stream/GatherersMapConcurrentTest.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt

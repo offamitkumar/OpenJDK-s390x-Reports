@@ -1,7 +1,7 @@
-commit caaef3a04ce1a9a8c80d9aade96de43416ab058e
-Author: Hannes Wallnöfer <hannesw@openjdk.org>
-Date:   Tue Aug 26 15:00:20 2025 +0000
+commit b43c2c663567e59f8b5c84b1b45536078190605b
+Author: Manuel Hässig <mhaessig@openjdk.org>
+Date:   Wed Aug 27 14:48:33 2025 +0000
 
-    8350920: Allow inherited member summaries to be viewed inline
+    8366225: Linux Alpine (fast)debug build fails after JDK-8365909
     
-    Reviewed-by: liach, nbenalla
+    Reviewed-by: mbaesken, thartmann

@@ -1,7 +1,8 @@
-commit e81cda232306cc255741d5b91b043816b42c8485
-Author: SendaoYan <syan@openjdk.org>
-Date:   Mon Aug 25 09:46:31 2025 +0000
+commit 5173435bfd0db5db0113a6209f2f827b16598596
+Author: Antonio Vieiro <avieiro@openjdk.org>
+Date:   Wed Aug 27 09:38:15 2025 +0000
 
-    8365811: test/jdk/java/net/CookieHandler/B6644726.java failure - "Should have 5 cookies. Got only 4, expires probably didn't parse correctly"
+    8361212: Remove AffirmTrust root CAs
     
-    Backport-of: b453eb63c641e1e69b4aef57a220ebe45b9d1693
+    Reviewed-by: sgehwolf
+    Backport-of: d21c6cf5986b699ec56922ebc109e176cf56733e

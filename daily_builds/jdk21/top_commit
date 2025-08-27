@@ -1,7 +1,8 @@
-commit 369105417379e1a0012cb9821e27bc6849ccc738
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Aug 25 16:24:45 2025 +0000
+commit dfab0632f2fe53d524bd74a1c42cb00fcb00a672
+Author: Feilong Jiang <fjiang@openjdk.org>
+Date:   Wed Aug 27 10:59:43 2025 +0000
 
-    8353748: Open source several swing tests batch6
+    8362838: RISC-V: Incorrect matching rule leading to improper oop instruction encoding
     
-    Backport-of: 38f9b3a9738de7896d840fc114a76ced3b77c269
+    Reviewed-by: fyang
+    Backport-of: 0ba2942c6e7aadc3d091c40f6bd8d9f7502f5f76
