@@ -1,8 +1,7 @@
-commit dfab0632f2fe53d524bd74a1c42cb00fcb00a672
-Author: Feilong Jiang <fjiang@openjdk.org>
-Date:   Wed Aug 27 10:59:43 2025 +0000
+commit 678244244c9663e0c06b2d3e50ef7ad7818ed4f8
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Thu Aug 28 11:55:03 2025 +0000
 
-    8362838: RISC-V: Incorrect matching rule leading to improper oop instruction encoding
+    8338939: Simplify processing of hidden class names
     
-    Reviewed-by: fyang
-    Backport-of: 0ba2942c6e7aadc3d091c40f6bd8d9f7502f5f76
+    Backport-of: 0f667103db7842fe9d3399f56baee0a5def4529e

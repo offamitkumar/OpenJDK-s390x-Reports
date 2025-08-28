@@ -1,7 +1,7 @@
-commit ce191028c379abc1f1d6247c4a76a99fa58c5939
-Author: SendaoYan <syan@openjdk.org>
-Date:   Wed Aug 27 11:06:42 2025 +0000
+commit 307d5489a1bbd389546ac45bfc7f3dd323d830d7
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Wed Aug 27 17:29:58 2025 +0000
 
-    8358004: Delete applications/scimark/Scimark.java test
+    8355429: Open source ProgressMonitor test
     
-    Backport-of: 82601638c283a34153532c0f5283deef8813c0f4
+    Backport-of: 3b7f43f95e061274020deaa1eecdb8182a6b64e1

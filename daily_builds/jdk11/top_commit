@@ -1,8 +1,7 @@
-commit 5173435bfd0db5db0113a6209f2f827b16598596
-Author: Antonio Vieiro <avieiro@openjdk.org>
-Date:   Wed Aug 27 09:38:15 2025 +0000
+commit 37123ee7a5058ec81f2ef85a68fe9ae43b0ba216
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Wed Aug 27 20:42:41 2025 +0000
 
-    8361212: Remove AffirmTrust root CAs
+    8312518: [macos13] setFullScreenWindow() shows black screen on macOS 13 & above
     
-    Reviewed-by: sgehwolf
-    Backport-of: d21c6cf5986b699ec56922ebc109e176cf56733e
+    Backport-of: 999e556be4302de4b6911e6d62ee5ca556a76469

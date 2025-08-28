@@ -1,6 +1,7 @@
 # other_errors.txt
 # other_errors.txt
-java/util/ServiceLoader/BadProvidersTest.java 
+sun/util/calendar/CalendarSystemDeadLockTest.java 
+sun/util/resources/TimeZone/Bug4858517.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
