@@ -1,7 +1,9 @@
-commit 37123ee7a5058ec81f2ef85a68fe9ae43b0ba216
-Author: Sergey Bylokhov <serb@openjdk.org>
-Date:   Wed Aug 27 20:42:41 2025 +0000
+commit e41de3f1f7fa9fc1e5ede4f561906485a38fa4f1
+Author: Antonio Vieiro <avieiro@openjdk.org>
+Date:   Fri Aug 29 13:35:50 2025 +0000
 
-    8312518: [macos13] setFullScreenWindow() shows black screen on macOS 13 & above
+    8348597: Update HarfBuzz to 10.4.0
+    8319197: Exclude hb-subset and hb-style from compilation
     
-    Backport-of: 999e556be4302de4b6911e6d62ee5ca556a76469
+    Reviewed-by: sgehwolf, andrew
+    Backport-of: f4e99de33e35826ec1fb368d6ad96005d7bd5cc4

@@ -1,7 +1,7 @@
-commit 993babb326f937dc1630a5a8fa5e469a64c51206
-Author: Mikhail Yankelevich <myankelevich@openjdk.org>
-Date:   Thu Aug 28 13:54:21 2025 +0000
+commit ae9607725c8c6a1b2f2728dbb5f7993722497da7
+Author: Chen Liang <liach@openjdk.org>
+Date:   Fri Aug 29 14:35:45 2025 +0000
 
-    8365863: /test/jdk/sun/security/pkcs11/Cipher tests skip without SkippedException
+    8361614: Missing sub-int value validation in the Class-File API
     
-    Reviewed-by: weijun, djelinski
+    Reviewed-by: asotona

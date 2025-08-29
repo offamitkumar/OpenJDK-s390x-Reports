@@ -1,7 +1,7 @@
-commit 678244244c9663e0c06b2d3e50ef7ad7818ed4f8
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Thu Aug 28 11:55:03 2025 +0000
+commit c3a37618d2ed48039734529467cd92e7075697ed
+Author: Thomas Stuefe <stuefe@openjdk.org>
+Date:   Thu Aug 28 17:05:48 2025 +0000
 
-    8338939: Simplify processing of hidden class names
+    8352765: G1CollectedHeap::expand_and_allocate() may fail to allocate even after heap expansion succeeds
     
-    Backport-of: 0f667103db7842fe9d3399f56baee0a5def4529e
+    Backport-of: 804a8fa4e96a32be2b38c2d0906dc5861a292007

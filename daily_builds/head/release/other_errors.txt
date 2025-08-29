@@ -1,7 +1,6 @@
 # other_errors.txt
 # other_errors.txt
-sun/util/calendar/CalendarSystemDeadLockTest.java 
-sun/util/resources/TimeZone/Bug4858517.java 
+jdk/internal/misc/Unsafe/CopyMemoryLarge.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
