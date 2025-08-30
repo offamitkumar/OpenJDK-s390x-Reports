@@ -1,9 +1,8 @@
-commit e41de3f1f7fa9fc1e5ede4f561906485a38fa4f1
-Author: Antonio Vieiro <avieiro@openjdk.org>
-Date:   Fri Aug 29 13:35:50 2025 +0000
+commit 2c32878f38c7078ce16079eda53a3ab6627aa489
+Author: Radek Cap <rcap@redhat.com>
+Date:   Fri Aug 29 22:06:28 2025 +0000
 
-    8348597: Update HarfBuzz to 10.4.0
-    8319197: Exclude hb-subset and hb-style from compilation
+    8348328: Update IANA Language Subtag Registry to Version 2025-05-15
     
-    Reviewed-by: sgehwolf, andrew
-    Backport-of: f4e99de33e35826ec1fb368d6ad96005d7bd5cc4
+    Reviewed-by: andrew
+    Backport-of: f318868268f32934a2f0c4e26a6c75360d8e74b1
