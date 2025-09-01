@@ -1,7 +1,8 @@
-commit 307d5489a1bbd389546ac45bfc7f3dd323d830d7
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Aug 27 17:29:58 2025 +0000
+commit c3f99054ed9d430c737c267134367bca440ec773
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Sep 1 11:36:47 2025 +0000
 
-    8355429: Open source ProgressMonitor test
+    8355370: Include server name in HTTP test server thread names to improve diagnostics
     
-    Backport-of: 3b7f43f95e061274020deaa1eecdb8182a6b64e1
+    Reviewed-by: rschmelter
+    Backport-of: 7d9a43839ad190a53efdbcc7afd1728760c14e21

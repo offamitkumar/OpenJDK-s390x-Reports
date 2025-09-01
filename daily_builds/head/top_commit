@@ -1,7 +1,7 @@
-commit bdc39818ce7b3c3bad10f4682a2a52fbb696f247
-Author: Anass Baya <abaya@openjdk.org>
-Date:   Sun Aug 31 04:34:04 2025 +0000
+commit b06459d3a83c13c0fbc7a0a7698435f17265982e
+Author: Kevin Walls <kevinw@openjdk.org>
+Date:   Mon Sep 1 14:21:33 2025 +0000
 
-    8361521: BogusFocusableWindowState.java fails with StackOverflowError on Linux
+    8364227: MBeanServer registerMBean throws NPE
     
-    Reviewed-by: aivanov, serb
+    Reviewed-by: alanb
