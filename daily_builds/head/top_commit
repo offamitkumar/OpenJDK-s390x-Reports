@@ -1,7 +1,7 @@
-commit b06459d3a83c13c0fbc7a0a7698435f17265982e
-Author: Kevin Walls <kevinw@openjdk.org>
-Date:   Mon Sep 1 14:21:33 2025 +0000
+commit ecf05ca541b32736ab8e8a38d4be4f037a56361d
+Author: Volkan Yazici <vyazici@openjdk.org>
+Date:   Tue Sep 2 15:26:48 2025 +0000
 
-    8364227: MBeanServer registerMBean throws NPE
+    8366693: Backout recent JavaLangAccess changes breaking the build
     
-    Reviewed-by: alanb
+    Reviewed-by: jpai, serb, alanb, syan, rriggs, jwaters
