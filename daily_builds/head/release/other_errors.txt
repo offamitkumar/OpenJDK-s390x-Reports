@@ -1,6 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/stream/boottest/java.base/java/util/stream/FlagOpTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

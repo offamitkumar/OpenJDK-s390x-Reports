@@ -1,8 +1,7 @@
-commit 48f48ec7f2507cb8335b190c9178446cfd55b027
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Tue Sep 2 11:49:51 2025 +0000
+commit 5eed5714803d75c8c4bc1a8dd941075c60e459d4
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Sep 3 07:56:56 2025 +0000
 
-    8360518: Docker tests do not work when asan is configured
+    8366231: Bump update version for OpenJDK: jdk-21.0.10
     
-    Reviewed-by: rschmelter
-    Backport-of: 01b15bc1f961f43ae11db0c15f45763c4ec4180b
+    Reviewed-by: sgehwolf
