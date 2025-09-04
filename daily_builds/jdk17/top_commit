@@ -1,7 +1,7 @@
-commit 3625d2ce6a4a56920a256390292a1aa450a4e070
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Sep 3 16:50:03 2025 +0000
+commit 7842c7d7b2c20f68138042c29c4eebe91c716060
+Author: Roman Marchenko <rmarchenko@openjdk.org>
+Date:   Wed Sep 3 20:17:14 2025 +0000
 
-    8354472: Clean up and open source KeyEvent related tests (Part 3)
+    8347826: Introspector shows wrong method list after 8071693
     
-    Backport-of: cd2d49f7119459f07844ce8201ca2320850cd51f
+    Backport-of: c5f235c000db6654493ea109008dbccf97f01678

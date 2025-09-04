@@ -1,7 +1,8 @@
-commit 5eed5714803d75c8c4bc1a8dd941075c60e459d4
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Sep 3 07:56:56 2025 +0000
+commit e6b4beb5415bb3f8581f6396c56bf350bcee3f91
+Author: Timofei Pushkin <tpushkin@openjdk.org>
+Date:   Thu Sep 4 16:12:28 2025 +0000
 
-    8366231: Bump update version for OpenJDK: jdk-21.0.10
+    8348240: Remove SystemDictionaryShared::lookup_super_for_unregistered_class()
     
-    Reviewed-by: sgehwolf
+    Reviewed-by: iklam
+    Backport-of: 7f16a0875ced8669b9d2131c67496a66e74ea36f
