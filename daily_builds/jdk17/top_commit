@@ -1,7 +1,7 @@
-commit 7842c7d7b2c20f68138042c29c4eebe91c716060
-Author: Roman Marchenko <rmarchenko@openjdk.org>
-Date:   Wed Sep 3 20:17:14 2025 +0000
+commit a9cadcdb345c28a028dd28ba5275063b78cdc192
+Author: SendaoYan <syan@openjdk.org>
+Date:   Fri Sep 5 07:47:34 2025 +0000
 
-    8347826: Introspector shows wrong method list after 8071693
+    8362855: Test java/net/ipv6tests/TcpTest.java should report SkippedException when there no ia4addr  or ia6addr
     
-    Backport-of: c5f235c000db6654493ea109008dbccf97f01678
+    Backport-of: 0f49f65af3ac85b93ccf140dcfad823fb03b5ce1

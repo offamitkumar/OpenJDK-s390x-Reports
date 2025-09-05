@@ -1,7 +1,7 @@
-commit e19035577724f40aca14ef7d5dad0906ce9e89ab
-Author: David Beaumont <david.beaumont@oracle.com>
-Date:   Thu Sep 4 13:19:12 2025 +0000
+commit ceacf6f7852514dc9877cfe284f9550c179d913a
+Author: Christian Hagedorn <chagedorn@openjdk.org>
+Date:   Fri Sep 5 15:26:13 2025 +0000
 
-    8365467: Issues with jrtfs implementation for exploded run-time images
+    8366890: C2: Split through phi printing with TraceLoopOpts misses line break
     
-    Reviewed-by: rriggs, sundar
+    Reviewed-by: rcastanedalo, mhaessig, epeter

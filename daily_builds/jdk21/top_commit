@@ -1,8 +1,7 @@
-commit e6b4beb5415bb3f8581f6396c56bf350bcee3f91
-Author: Timofei Pushkin <tpushkin@openjdk.org>
-Date:   Thu Sep 4 16:12:28 2025 +0000
+commit 8169077ff46e6ef2d404efbb1c3d36c76d57058a
+Author: Rui Li <ruiamzn@amazon.com>
+Date:   Fri Sep 5 15:35:04 2025 +0000
 
-    8348240: Remove SystemDictionaryShared::lookup_super_for_unregistered_class()
+    8353013: java.net.URI.create(String) may have low performance to scan the host/domain name from URI string when the hostname starts with number
     
-    Reviewed-by: iklam
-    Backport-of: 7f16a0875ced8669b9d2131c67496a66e74ea36f
+    Backport-of: 84458ec18ce33295636f7b26b8e3ff25ecb349f2
