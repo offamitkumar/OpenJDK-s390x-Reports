@@ -1,7 +1,7 @@
-commit ceacf6f7852514dc9877cfe284f9550c179d913a
-Author: Christian Hagedorn <chagedorn@openjdk.org>
-Date:   Fri Sep 5 15:26:13 2025 +0000
+commit e8c7d2aaf3cdbbe07b8cdcc68dd7ec9645956bf2
+Author: Magnus Ihse Bursie <ihse@openjdk.org>
+Date:   Sat Sep 6 09:00:51 2025 +0000
 
-    8366890: C2: Split through phi printing with TraceLoopOpts misses line break
+    8332872: SetupExecute should cd to temp directory
     
-    Reviewed-by: rcastanedalo, mhaessig, epeter
+    Reviewed-by: erikj
