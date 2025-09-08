@@ -1,7 +1,7 @@
-commit e8c7d2aaf3cdbbe07b8cdcc68dd7ec9645956bf2
-Author: Magnus Ihse Bursie <ihse@openjdk.org>
-Date:   Sat Sep 6 09:00:51 2025 +0000
+commit 166ef5e7b1c6d6a9f0f1f29fedb7f65b94f53119
+Author: Mikhail Yankelevich <myankelevich@openjdk.org>
+Date:   Mon Sep 8 14:37:25 2025 +0000
 
-    8332872: SetupExecute should cd to temp directory
+    8366159: SkippedException is treated as a pass for pkcs11/KeyStore, pkcs11/SecretKeyFactory and pkcs11/SecureRandom
     
-    Reviewed-by: erikj
+    Reviewed-by: weijun

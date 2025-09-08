@@ -1,7 +1,7 @@
-commit 8169077ff46e6ef2d404efbb1c3d36c76d57058a
+commit 361f17979bb18ddca1df3b234e522d9d40d0f6a4
 Author: Rui Li <ruiamzn@amazon.com>
-Date:   Fri Sep 5 15:35:04 2025 +0000
+Date:   Mon Sep 8 15:25:52 2025 +0000
 
-    8353013: java.net.URI.create(String) may have low performance to scan the host/domain name from URI string when the hostname starts with number
+    8352533: Report useful IOExceptions when jspawnhelper fails
     
-    Backport-of: 84458ec18ce33295636f7b26b8e3ff25ecb349f2
+    Backport-of: 5c73dfc28cbd6801ac85c6685fb8c77aad3ab0b7
