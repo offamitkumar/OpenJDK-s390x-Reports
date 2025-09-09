@@ -1,7 +1,7 @@
-commit 361f17979bb18ddca1df3b234e522d9d40d0f6a4
-Author: Rui Li <ruiamzn@amazon.com>
-Date:   Mon Sep 8 15:25:52 2025 +0000
+commit d1aa40f774551cd778b0904b18d83a5f5392e251
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Mon Sep 8 16:50:04 2025 +0000
 
-    8352533: Report useful IOExceptions when jspawnhelper fails
+    8354214: Open source Swing tests Batch 2
     
-    Backport-of: 5c73dfc28cbd6801ac85c6685fb8c77aad3ab0b7
+    Backport-of: 2be5bc847a444f08a4ebb41b58e8a2bf4553d621

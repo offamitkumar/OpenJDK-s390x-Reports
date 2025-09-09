@@ -1,7 +1,7 @@
-commit d9d075b03b559a290e9c5ce8d8f92b1bc72e825b
+commit 86b167cd35cc666a6d5e28ac90d1b3558133b78d
 Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Sep 8 16:49:09 2025 +0000
+Date:   Tue Sep 9 16:29:00 2025 +0000
 
-    8354653: Clean up and open source KeyEvent related tests (Part 4)
+    8354418: Open source Swing tests Batch 4
     
-    Backport-of: a7128d86eac2c40dbfa79811234ab6226fb4d080
+    Backport-of: dda4b5a4ade2e5d7225117e58fce4038bb0e0f1b

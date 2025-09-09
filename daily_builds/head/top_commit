@@ -1,7 +1,7 @@
-commit 166ef5e7b1c6d6a9f0f1f29fedb7f65b94f53119
-Author: Mikhail Yankelevich <myankelevich@openjdk.org>
-Date:   Mon Sep 8 14:37:25 2025 +0000
+commit cc6d34b2fa299a68a05e65e25c1f41dffa67c118
+Author: Daniel Jeliński <djelinski@openjdk.org>
+Date:   Tue Sep 9 15:08:30 2025 +0000
 
-    8366159: SkippedException is treated as a pass for pkcs11/KeyStore, pkcs11/SecretKeyFactory and pkcs11/SecureRandom
+    8366971: C2: Remove unused nop_list from PhaseOutput::init_buffer
     
-    Reviewed-by: weijun
+    Reviewed-by: epeter, dlong
