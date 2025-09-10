@@ -1,7 +1,6 @@
-commit 86b167cd35cc666a6d5e28ac90d1b3558133b78d
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Tue Sep 9 16:29:00 2025 +0000
+commit 74c029695019fcfc4a0aa3160e5f0aa311c5998c
+Merge: 86b167cd35c 3758e584e70
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Sep 10 07:54:17 2025 +0000
 
-    8354418: Open source Swing tests Batch 4
-    
-    Backport-of: dda4b5a4ade2e5d7225117e58fce4038bb0e0f1b
+    Merge

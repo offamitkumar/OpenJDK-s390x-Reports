@@ -1,7 +1,7 @@
-commit cc6d34b2fa299a68a05e65e25c1f41dffa67c118
-Author: Daniel Jeliński <djelinski@openjdk.org>
-Date:   Tue Sep 9 15:08:30 2025 +0000
+commit 5cd7721ad448cc4bdac37b0456252335f6b9d9f5
+Author: Kerem Kat <krk@openjdk.org>
+Date:   Wed Sep 10 14:36:11 2025 +0000
 
-    8366971: C2: Remove unused nop_list from PhaseOutput::init_buffer
+    8366154: Validate thread type requirements in debug commands
     
-    Reviewed-by: epeter, dlong
+    Reviewed-by: dholmes, simonis, kevinw
