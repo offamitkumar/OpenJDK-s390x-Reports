@@ -1,6 +1,7 @@
-commit a6014d03692ee258525adff6f2e9684f3e3eb8f9
-Merge: 20d85d79697 98dbb49926d
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Sep 10 07:36:20 2025 +0000
+commit 3a6b4ef9433ef5f89583924d4e16daecea6b1f03
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Wed Sep 10 16:45:16 2025 +0000
 
-    Merge
+    8354340: Open source Swing Tests - Set 6
+    
+    Backport-of: 76dec47f00230214e9ba58714be5a3ad26f8308d

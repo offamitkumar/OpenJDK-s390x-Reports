@@ -1,7 +1,7 @@
-commit 5cd7721ad448cc4bdac37b0456252335f6b9d9f5
-Author: Kerem Kat <krk@openjdk.org>
-Date:   Wed Sep 10 14:36:11 2025 +0000
+commit e172e6a4e37cf06afee662625a01193f5528a2b1
+Author: Guanqiang Han <ghan@openjdk.org>
+Date:   Thu Sep 11 15:08:42 2025 +0000
 
-    8366154: Validate thread type requirements in debug commands
+    8352969: G1: Improve testability of optional collections
     
-    Reviewed-by: dholmes, simonis, kevinw
+    Reviewed-by: ayang, tschatzl
