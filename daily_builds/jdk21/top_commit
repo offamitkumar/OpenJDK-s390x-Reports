@@ -1,7 +1,7 @@
-commit 3a6b4ef9433ef5f89583924d4e16daecea6b1f03
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Sep 10 16:45:16 2025 +0000
+commit 0ec4708743cca64c4f51a8aa88956064e3ccee10
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Sep 12 09:26:01 2025 +0000
 
-    8354340: Open source Swing Tests - Set 6
+    8361748: Enforce limits on the size of an XBM image
     
-    Backport-of: 76dec47f00230214e9ba58714be5a3ad26f8308d
+    Backport-of: c71be802b530034169d17325478dba6e2f1c3238

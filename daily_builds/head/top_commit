@@ -1,7 +1,7 @@
-commit e172e6a4e37cf06afee662625a01193f5528a2b1
+commit 44aad0786bc85e11eded1da4cf4eb96698424c8b
 Author: Guanqiang Han <ghan@openjdk.org>
-Date:   Thu Sep 11 15:08:42 2025 +0000
+Date:   Fri Sep 12 14:46:12 2025 +0000
 
-    8352969: G1: Improve testability of optional collections
+    8328874: Class::forName0 should validate the class name length early
     
-    Reviewed-by: ayang, tschatzl
+    Reviewed-by: rriggs, liach, ayang

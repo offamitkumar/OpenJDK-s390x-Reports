@@ -1,7 +1,7 @@
-commit ca3ad0ef1ecf4ba87ad4758c6a24c2b51a341547
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Sep 10 16:44:35 2025 +0000
+commit 8bdebb058ae152a1666a0268bd5e4ce6b862b9fd
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Sep 12 09:34:34 2025 +0000
 
-    8353486: Open source Swing Tests - Set 4
+    8297936: Use reachabilityFence to manage liveness in ClassUnload tests
     
-    Backport-of: 486a66469bc0c814d07e03ce0e7231b408a4d579
+    Backport-of: 5085bd5f05ca70e08c6764ed208d574c556b6c57
