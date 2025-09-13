@@ -1,7 +1,7 @@
-commit 8bdebb058ae152a1666a0268bd5e4ce6b862b9fd
+commit c6d28bf1eba30b1794d4b8e14a9b9fab9d89607c
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Sep 12 09:34:34 2025 +0000
+Date:   Sat Sep 13 06:14:24 2025 +0000
 
-    8297936: Use reachabilityFence to manage liveness in ClassUnload tests
+    8328562: Convert java/awt/InputMethods/DiacriticsTest/DiacriticsTest.java applet test to main
     
-    Backport-of: 5085bd5f05ca70e08c6764ed208d574c556b6c57
+    Backport-of: fb8f2a0a929ebe7f65c69741712b89bbb403ade9

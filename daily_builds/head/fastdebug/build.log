@@ -1,19 +1,19 @@
 Building target 'images' in configuration 'linux-s390x-server-fastdebug'
-Compiling up to 1 files for BUILD_TOOLS_HOTSPOT
 Compiling up to 9 files for BUILD_TOOLS_LANGTOOLS
+Compiling up to 1 files for BUILD_TOOLS_HOTSPOT
 Creating hotspot/variant-server/tools/adlc/adlc from 13 file(s)
 Compiling up to 2 files for BUILD_JVMTI_TOOLS
-Generating classes for compiler.properties launcher.properties
+Compiling 10 properties into resource bundles for jdk.jshell
 Compiling 17 properties into resource bundles for jdk.javadoc
+Generating classes for compiler.properties launcher.properties
 Generating FlagsEnum
 Compiling 15 properties into resource bundles for jdk.jdeps
-Compiling 10 properties into resource bundles for jdk.jshell
 Compiling 19 properties into resource bundles for jdk.compiler
-Compiling up to 136 files for BUILD_java.compiler.interim
 Compiling up to 360 files for BUILD_jdk.compiler.interim
 Compiling up to 145 files for BUILD_jdk.internal.md.interim
 Compiling up to 213 files for BUILD_jdk.javadoc.interim
 Compiling up to 17 files for BUILD_JAVAC_SERVER
+Compiling up to 136 files for BUILD_java.compiler.interim
 Creating support/modules_libs/java.base/server/libjvm.so from 1012 file(s)
 Creating hotspot/variant-server/libjvm/libgtest/libgtest.a from 2 file(s)
 Creating hotspot/variant-server/libjvm/gtest/libjvm.so from 195 file(s)
@@ -23,16 +23,16 @@ Compiling up to 190 files for BUILD_TOOLS_JDK
 Compiling up to 2 files for COMPILE_DEPEND
 Creating support/modules_libs/java.base/jrt-fs.jar
 Compiling up to 2 files for BUILD_BREAKITERATOR_BASE
-Compiling up to 2 files for BUILD_BREAKITERATOR_LD
 Compiling 11 properties into resource bundles for java.logging
+Compiling up to 2 files for BUILD_BREAKITERATOR_LD
 Compiling 4 properties into resource bundles for jdk.httpserver
 Compiling 11 properties into resource bundles for jdk.jartool
 Compiling 4 properties into resource bundles for jdk.jartool
 Compiling 11 properties into resource bundles for jdk.management.agent
+Compiling 4 properties into resource bundles for jdk.jdi
 Compiling 9 properties into resource bundles for jdk.jlink
 Compiling 4 properties into resource bundles for jdk.jlink
 Compiling 4 properties into resource bundles for jdk.jlink
-Compiling 4 properties into resource bundles for jdk.jdi
 Compiling 11 properties into resource bundles for java.base
 Compiling 3 properties into resource bundles for java.base
 Compiling 22 properties into resource bundles for java.base
@@ -41,31 +41,29 @@ Compiling 89 properties into resource bundles for java.desktop
 Compiling up to 3388 files for java.base
 Updating support/src.zip
 Compiling up to 10 files for java.instrument
-Compiling up to 3 files for jdk.internal.ed
-Compiling up to 5 files for java.transaction.xa
 Compiling up to 18 files for java.datatransfer
 Compiling up to 22 files for java.smartcardio
 Compiling up to 35 files for java.logging
-Compiling up to 1 files for jdk.jdwp.agent
-Compiling up to 56 files for jdk.incubator.vector
-Compiling up to 81 files for jdk.crypto.cryptoki
-Compiling up to 61 files for jdk.internal.jvmstat
 Compiling up to 125 files for jdk.charsets
-Compiling up to 148 files for java.net.http
-Compiling up to 14 files for jdk.zipfs
-Compiling up to 9 files for jdk.net
-Compiling up to 52 files for jdk.internal.opt
+Compiling up to 5 files for java.transaction.xa
 Compiling up to 15 files for java.scripting
+Compiling up to 61 files for jdk.internal.jvmstat
+Compiling up to 148 files for java.net.http
 Compiling up to 1 files for jdk.crypto.ec
-Compiling up to 3 files for jdk.nio.mapmode
-Compiling up to 33 files for jdk.sctp
-Compiling up to 58 files for jdk.httpserver
-Compiling up to 328 files for java.management
-Compiling up to 9 files for jdk.unsupported
+Compiling up to 52 files for jdk.internal.opt
 Compiling up to 136 files for java.compiler
-Compiling up to 118 files for jdk.internal.le
+Compiling up to 14 files for jdk.zipfs
+Compiling up to 3 files for jdk.internal.ed
+Compiling up to 81 files for jdk.crypto.cryptoki
+Compiling up to 56 files for jdk.incubator.vector
+Compiling up to 9 files for jdk.net
+Compiling up to 1 files for jdk.jdwp.agent
+Compiling up to 58 files for jdk.httpserver
+Compiling up to 9 files for jdk.unsupported
+Compiling up to 33 files for jdk.sctp
+Compiling up to 3 files for jdk.nio.mapmode
+Compiling up to 328 files for java.management
 Compiling up to 321 files for jdk.jfr
-Compiling up to 1542 files for jdk.localedata
 Creating support/modules_libs/java.base/libverify.so from 1 file(s)
 Creating support/modules_libs/java.base/libjava.so from 66 file(s)
 Creating support/modules_libs/java.base/libzip.so from 5 file(s)
@@ -75,65 +73,67 @@ Creating support/modules_libs/java.base/libnet.so from 13 file(s)
 Creating support/modules_libs/java.base/libnio.so from 23 file(s)
 Creating support/modules_libs/java.base/libjsig.so from 1 file(s)
 Creating support/modules_libs/java.base/libsyslookup.so from 1 file(s)
+Compiling up to 118 files for jdk.internal.le
+Compiling up to 1542 files for jdk.localedata
 Compiling up to 1848 files for java.xml
 Compiling up to 28 files for jdk.jartool
 Creating support/modules_cmds/jdk.httpserver/jwebserver from 1 file(s)
-Creating support/modules_cmds/jdk.javadoc/javadoc from 1 file(s)
-Creating support/modules_libs/java.smartcardio/libj2pcsc.so from 2 file(s)
-Creating support/modules_cmds/jdk.jartool/jar from 1 file(s)
-Creating support/modules_cmds/jdk.jconsole/jconsole from 1 file(s)
-Creating support/modules_cmds/jdk.jartool/jarsigner from 1 file(s)
-Creating support/modules_cmds/java.rmi/rmiregistry from 1 file(s)
-Creating support/modules_cmds/jdk.jpackage/jpackage from 1 file(s)
-Creating support/modules_cmds/jdk.jdi/jdb from 1 file(s)
-Creating support/modules_cmds/jdk.compiler/javac from 1 file(s)
-Creating support/modules_cmds/jdk.compiler/serialver from 1 file(s)
 Creating support/modules_cmds/java.scripting/jrunscript from 1 file(s)
+Creating support/modules_cmds/jdk.javadoc/javadoc from 1 file(s)
+Creating support/modules_cmds/jdk.jdi/jdb from 1 file(s)
+Creating support/modules_cmds/jdk.jconsole/jconsole from 1 file(s)
+Creating support/modules_cmds/java.rmi/rmiregistry from 1 file(s)
+Creating support/modules_cmds/jdk.jshell/jshell from 1 file(s)
+Creating support/modules_cmds/jdk.jpackage/jpackage from 1 file(s)
+Creating support/modules_cmds/jdk.jartool/jar from 1 file(s)
+Creating support/modules_cmds/jdk.jartool/jarsigner from 1 file(s)
+Creating support/modules_libs/jdk.net/libextnet.so from 1 file(s)
+Creating support/modules_cmds/jdk.jstatd/jstatd from 1 file(s)
+Creating support/modules_cmds/jdk.jdeps/javap from 1 file(s)
+Creating support/modules_cmds/jdk.jdeps/jdeps from 1 file(s)
+Creating support/modules_cmds/java.base/java from 1 file(s)
+Creating support/modules_cmds/java.base/keytool from 1 file(s)
+Creating support/modules_cmds/jdk.jdeps/jdeprscan from 1 file(s)
+Creating support/modules_libs/java.base/jexec from 1 file(s)
+Creating support/modules_libs/java.base/jspawnhelper from 1 file(s)
+Creating support/modules_cmds/jdk.jfr/jfr from 1 file(s)
+Creating support/modules_libs/java.smartcardio/libj2pcsc.so from 2 file(s)
+Creating support/modules_cmds/jdk.jdeps/jnativescan from 1 file(s)
 Creating support/modules_cmds/jdk.jlink/jimage from 1 file(s)
 Creating support/modules_cmds/jdk.jlink/jlink from 1 file(s)
 Creating support/modules_cmds/jdk.jlink/jmod from 1 file(s)
-Creating support/modules_cmds/jdk.jstatd/jstatd from 1 file(s)
-Creating support/modules_libs/java.instrument/libinstrument.so from 12 file(s)
-Creating support/modules_cmds/jdk.jshell/jshell from 1 file(s)
-Creating support/modules_cmds/java.base/java from 1 file(s)
-Creating support/modules_cmds/java.base/keytool from 1 file(s)
-Creating support/modules_cmds/jdk.jfr/jfr from 1 file(s)
+Creating support/modules_libs/jdk.sctp/libsctp.so from 2 file(s)
 Creating support/modules_libs/jdk.jdwp.agent/libdt_socket.so from 2 file(s)
 Creating support/modules_libs/jdk.jdwp.agent/libjdwp.so from 43 file(s)
-Creating support/modules_libs/java.base/jexec from 1 file(s)
-Creating support/modules_libs/java.base/jspawnhelper from 1 file(s)
-Creating support/modules_cmds/jdk.jdeps/javap from 1 file(s)
-Creating support/modules_cmds/jdk.jdeps/jdeps from 1 file(s)
-Creating support/modules_libs/jdk.net/libextnet.so from 1 file(s)
-Creating support/modules_cmds/jdk.jdeps/jdeprscan from 1 file(s)
-Creating support/modules_cmds/jdk.jdeps/jnativescan from 1 file(s)
+Creating support/modules_cmds/jdk.compiler/javac from 1 file(s)
+Creating support/modules_cmds/jdk.compiler/serialver from 1 file(s)
+Creating support/modules_libs/java.instrument/libinstrument.so from 12 file(s)
 Creating support/modules_cmds/jdk.jcmd/jinfo from 1 file(s)
 Creating support/modules_cmds/jdk.jcmd/jmap from 1 file(s)
 Creating support/modules_cmds/jdk.jcmd/jps from 1 file(s)
+Compiling up to 15 files for jdk.attach
 Creating support/modules_cmds/jdk.jcmd/jstack from 1 file(s)
 Creating support/modules_cmds/jdk.jcmd/jstat from 1 file(s)
 Creating support/modules_cmds/jdk.jcmd/jcmd from 1 file(s)
-Compiling up to 15 files for jdk.attach
 Compiling up to 30 files for java.security.sasl
 Compiling up to 67 files for jdk.dynalink
-Compiling up to 4 files for COMPILE_CREATE_SYMBOLS
 Compiling up to 105 files for java.rmi
-Creating support/modules_libs/jdk.sctp/libsctp.so from 2 file(s)
 Compiling up to 369 files for jdk.compiler
+Compiling up to 4 files for COMPILE_CREATE_SYMBOLS
 Creating support/modules_libs/jdk.crypto.cryptoki/libj2pkcs11.so from 14 file(s)
-Compiling up to 41 files for jdk.jcmd
 Creating support/modules_libs/jdk.attach/libattach.so from 1 file(s)
+Compiling up to 41 files for jdk.jcmd
 Compiling up to 254 files for jdk.jdi
 Compiling up to 204 files for java.naming
-Compiling up to 11 files for jdk.jstatd
 Creating support/modules_libs/java.rmi/librmi.so from 1 file(s)
+Compiling up to 11 files for jdk.jstatd
 Compiling up to 27 files for jdk.management
 Creating support/modules_libs/java.management/libmanagement.so from 9 file(s)
 Compiling up to 15 files for jdk.management.jfr
 Creating support/modules_libs/jdk.management/libmanagement_ext.so from 8 file(s)
+Compiling up to 16 files for java.management.rmi
 Compiling up to 8 files for jdk.naming.rmi
 Compiling up to 16 files for jdk.naming.dns
-Compiling up to 16 files for java.management.rmi
 Compiling up to 211 files for java.security.jgss
 Compiling up to 30 files for jdk.management.agent
 Creating support/modules_libs/jdk.management.agent/libmanagement_agent.so from 1 file(s)
@@ -147,8 +147,8 @@ Compiling up to 80 files for jdk.jdeps
 Compiling up to 213 files for jdk.javadoc
 Compiling up to 100 files for jdk.jlink
 Compiling up to 15 files for java.prefs
-Compiling up to 77 files for java.sql
 Compiling up to 94 files for jdk.xml.dom
+Compiling up to 77 files for java.sql
 Compiling up to 272 files for java.xml.crypto
 Creating support/modules_libs/java.prefs/libprefs.so from 1 file(s)
 Compiling up to 103 files for jdk.jshell
@@ -170,35 +170,35 @@ Creating support/modules_libs/java.desktop/libjavajpeg.so from 46 file(s)
 Creating support/modules_libs/java.desktop/libsplashscreen.so from 67 file(s)
 Creating support/modules_libs/java.desktop/libfontmanager.so from 64 file(s)
 Creating support/modules_libs/java.desktop/libjsound.so from 18 file(s)
+Compiling up to 4 files for COMPILE_CREATE_SYMBOLS
 Creating jdk/modules/jdk.jpackage/jdk/jpackage/internal/resources/jpackageapplauncher from 3 file(s)
 Creating jdk/modules/jdk.jpackage/jdk/jpackage/internal/resources/libjpackageapplauncheraux.so from 19 file(s)
-Compiling up to 4 files for COMPILE_CREATE_SYMBOLS
 #
 # A fatal error has been detected by the Java Runtime Environment:
 #
-#  SIGILL (0x4) at pc=0x000003ff9df154b2, pid=542372, tid=542602
+#  SIGILL (0x4) at pc=0x000003ff998154b2, pid=2250767, tid=2251114
 #
 # JRE version: OpenJDK Runtime Environment (26.0) (fastdebug build 26-internal-adhoc.amit.jdk)
 # Java VM: OpenJDK 64-Bit Server VM (fastdebug 26-internal-adhoc.amit.jdk, mixed mode, tiered, compressed oops, compressed class ptrs, g1 gc, linux-s390x)
 # Problematic frame:
 # V  [libjvm.so+0x4154b6]  BarrierSetNMethod::set_guard_value(nmethod*, int, int)+0xfe
 #
-# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport -p%p -s%s -c%c -d%d -P%P -u%u -g%g -F%F -- %E" (or dumping to /home/amit/head/jdk/make/core.542372)
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport -p%p -s%s -c%c -d%d -P%P -u%u -g%g -F%F -- %E" (or dumping to /home/amit/head/jdk/make/core.2250767)
 #
 # An error report file with more information is saved as:
-# /home/amit/head/jdk/make/hs_err_pid542372.log
+# /home/amit/head/jdk/make/hs_err_pid2250767.log
      Locks owned:
-    Mutex: [0x000003ff9f774950] CodeCache_lock - owner: 0x000003ff98750950 allow_vm_block nosafepoint-2
-    Mutex: [0x000003ff9f774e78] Compile_lock - owner: 0x000003ff98750950 safepoint-1
-    Mutex: [0x000003ff9f772010] MethodCompileQueue_lock - owner: 0x000003ff98750950 safepoint
+    Mutex: [0x000003ff9b074950] CodeCache_lock - owner: 0x000003ff94750950 allow_vm_block nosafepoint-2
+    Mutex: [0x000003ff9b074e78] Compile_lock - owner: 0x000003ff94750950 safepoint-1
+    Mutex: [0x000003ff9b072010] MethodCompileQueue_lock - owner: 0x000003ff94750950 safepoint
 #
 # Compiler replay data is saved as:
-# /home/amit/head/jdk/make/replay_pid542372.log
+# /home/amit/head/jdk/make/replay_pid2250767.log
 #
 # If you would like to submit a bug report, please visit:
 #   https://bugreport.java.com/bugreport/crash.jsp
 #
-/usr/bin/bash: line 1: 542372 Aborted                 (core dumped) /home/amit/head/jdk/build/linux-s390x-server-fastdebug/jdk/bin/javac -J-Djava.io.tmpdir=/home/amit/head/jdk/build/linux-s390x-server-fastdebug/support/javatmp -g -Xlint:all -source 26 -target 26 -implicit:none -Xprefer:source -XDignore.symbol.file=true --add-modules jdk.compiler,jdk.jdeps --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED -encoding utf-8 -Werror -Xlint:-options -XDmodifiedInputs=/home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch.modfiles.fixed -d /home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac @/home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch.filelist > >(/usr/bin/tee -a /home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch.log) 2> >(/usr/bin/tee -a /home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch.log >&2)
+/usr/bin/bash: line 1: 2250767 Aborted                 (core dumped) /home/amit/head/jdk/build/linux-s390x-server-fastdebug/jdk/bin/javac -J-Djava.io.tmpdir=/home/amit/head/jdk/build/linux-s390x-server-fastdebug/support/javatmp -g -Xlint:all -source 26 -target 26 -implicit:none -Xprefer:source -XDignore.symbol.file=true --add-modules jdk.compiler,jdk.jdeps --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED -encoding utf-8 -Werror -Xlint:-options -XDmodifiedInputs=/home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch.modfiles.fixed -d /home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac @/home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch.filelist > >(/usr/bin/tee -a /home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch.log) 2> >(/usr/bin/tee -a /home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch.log >&2)
 gmake[3]: *** [modules/jdk.compiler/Gendata.gmk:60: /home/amit/head/jdk/build/linux-s390x-server-fastdebug/buildtools/create_symbols_javac/_the.COMPILE_CREATE_SYMBOLS_batch] Error 134
 gmake[2]: *** [make/Main.gmk:136: jdk.compiler-gendata] Error 2
 gmake[2]: *** Waiting for unfinished jobs....

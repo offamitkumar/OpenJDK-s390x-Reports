@@ -1,7 +1,7 @@
-commit 0ec4708743cca64c4f51a8aa88956064e3ccee10
+commit 192abe9c409c50053da94c955b6f27ffa0cf24b3
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Sep 12 09:26:01 2025 +0000
+Date:   Sat Sep 13 06:13:05 2025 +0000
 
-    8361748: Enforce limits on the size of an XBM image
+    8328562: Convert java/awt/InputMethods/DiacriticsTest/DiacriticsTest.java applet test to main
     
-    Backport-of: c71be802b530034169d17325478dba6e2f1c3238
+    Backport-of: fb8f2a0a929ebe7f65c69741712b89bbb403ade9
