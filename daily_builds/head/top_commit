@@ -1,7 +1,7 @@
-commit 44aad0786bc85e11eded1da4cf4eb96698424c8b
-Author: Guanqiang Han <ghan@openjdk.org>
-Date:   Fri Sep 12 14:46:12 2025 +0000
+commit 5271448b3a013b2e3edcd619a4a3b975b292dae1
+Author: Prasanta Sadhukhan <psadhukhan@openjdk.org>
+Date:   Sun Sep 14 04:29:30 2025 +0000
 
-    8328874: Class::forName0 should validate the class name length early
+    8023263: [TESTBUG] Test closed/java/awt/Focus/InactiveWindowTest/InactiveFocusRace fails due to not enough time to initialize graphic components
     
-    Reviewed-by: rriggs, liach, ayang
+    Reviewed-by: serb
