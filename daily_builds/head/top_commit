@@ -1,7 +1,7 @@
-commit 5271448b3a013b2e3edcd619a4a3b975b292dae1
-Author: Prasanta Sadhukhan <psadhukhan@openjdk.org>
-Date:   Sun Sep 14 04:29:30 2025 +0000
+commit e8dda2b67524b6575124581464921d46335dcad7
+Author: Albert Mingkun Yang <ayang@openjdk.org>
+Date:   Mon Sep 15 15:25:00 2025 +0000
 
-    8023263: [TESTBUG] Test closed/java/awt/Focus/InactiveWindowTest/InactiveFocusRace fails due to not enough time to initialize graphic components
+    8367629: Parallel: Remove logging in PSAdjustWeakRootsClosure
     
-    Reviewed-by: serb
+    Reviewed-by: stefank

@@ -1,7 +1,8 @@
-commit 168024359375be044ec76c6c7a0781ddec1db689
-Author: Andrew John Hughes <andrew@openjdk.org>
-Date:   Wed Sep 3 10:50:03 2025 +0000
+commit 43b28ee9ecf3152c29c28fee8b04f7a29a1eb1d9
+Author: John Jiang <jjiang@openjdk.org>
+Date:   Mon Sep 15 15:30:47 2025 +0000
 
-    8366572: Bump update version of OpenJDK: 11.0.30
+    8364597: Replace THL A29 Limited with Tencent
     
-    Reviewed-by: sgehwolf
+    Reviewed-by: andrew
+    Backport-of: 4c9eaddaef83c6ba30e27ae3e0d16caeeec206cb

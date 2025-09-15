@@ -1,7 +1,7 @@
-commit 74af8f5d8a2dc9daf98c1f9ad8ff7b3033a48f12
-Author: SendaoYan <syan@openjdk.org>
-Date:   Sun Sep 14 08:19:20 2025 +0000
+commit 1ae053ff4cb423dfd0e983386b9fb795a43a7bbb
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Sep 15 12:35:15 2025 +0000
 
-    8364786: Test java/net/vthread/HttpALot.java intermittently fails - 24999 handled, expected 25000
+    8364235: Fix for JDK-8361447 breaks the alignment requirements for GuardedMemory
     
-    Backport-of: f83454cd61538b653656ccf81759b3cc7286ed67
+    Backport-of: 078d0d4968e26bb7a15417f1c4e891869c69dc6c
