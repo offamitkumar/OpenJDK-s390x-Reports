@@ -1,7 +1,7 @@
-commit e8dda2b67524b6575124581464921d46335dcad7
-Author: Albert Mingkun Yang <ayang@openjdk.org>
-Date:   Mon Sep 15 15:25:00 2025 +0000
+commit 58007c0bcc03f4609ce202cfb9f89b8438055dac
+Author: Guanqiang Han <ghan@openjdk.org>
+Date:   Tue Sep 16 14:57:42 2025 +0000
 
-    8367629: Parallel: Remove logging in PSAdjustWeakRootsClosure
+    8367619: String.format in outOfRangeException uses wrong format specifier for String argument
     
-    Reviewed-by: stefank
+    Reviewed-by: fandreuzzi, rriggs, liach

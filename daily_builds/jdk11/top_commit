@@ -1,8 +1,7 @@
-commit 43b28ee9ecf3152c29c28fee8b04f7a29a1eb1d9
-Author: John Jiang <jjiang@openjdk.org>
-Date:   Mon Sep 15 15:30:47 2025 +0000
+commit 465fb7df15176dfe7a044241c8f44411b307df4c
+Author: SendaoYan <syan@openjdk.org>
+Date:   Tue Sep 16 01:53:37 2025 +0000
 
-    8364597: Replace THL A29 Limited with Tencent
+    8359402: Test CloseDescriptors.java should throw SkippedException when there is no lsof/sctp
     
-    Reviewed-by: andrew
-    Backport-of: 4c9eaddaef83c6ba30e27ae3e0d16caeeec206cb
+    Backport-of: 36b185a93065a83ea6f93fbed6382a8465657810

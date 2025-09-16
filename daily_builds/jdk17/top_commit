@@ -1,7 +1,8 @@
-commit fa91cf48e58a231e9c1149ec4830d17a8ff308dd
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Sep 15 12:51:05 2025 +0000
+commit 2e0b13fbf3dc7af25364a4fcffeac47bfd1596f8
+Author: Jan Kratochvil <jkratochvil@openjdk.org>
+Date:   Tue Sep 16 14:16:50 2025 +0000
 
-    8325647: [IR framework] Only prints stdout if exitCode is 134
+    8347377: Add validation checks for ICC_Profile header fields
     
-    Backport-of: 3b271981662df2a7fdf04ffd75d017964425607c
+    Co-authored-by: Anton Voznia <avoznia@azul.com>
+    Backport-of: ed8945a68a67dd51a7cfa332905941afccc12b36

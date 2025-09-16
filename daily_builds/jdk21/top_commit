@@ -1,7 +1,7 @@
-commit 1ae053ff4cb423dfd0e983386b9fb795a43a7bbb
+commit e4bb47bcbbfe55dee4825d00a5b5eb76125a6ef5
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Sep 15 12:35:15 2025 +0000
+Date:   Tue Sep 16 12:00:27 2025 +0000
 
-    8364235: Fix for JDK-8361447 breaks the alignment requirements for GuardedMemory
+    8322140: javax/swing/JTable/JTableScrollPrintTest.java does not print the rows and columns of the table in Nimbus and Aqua LookAndFeel
     
-    Backport-of: 078d0d4968e26bb7a15417f1c4e891869c69dc6c
+    Backport-of: 717a07b932e3dcabbad130d299b15cb963d50a67
