@@ -1,7 +1,7 @@
-commit e4bb47bcbbfe55dee4825d00a5b5eb76125a6ef5
+commit 961e4b82eb95d96017e6f6af6c68a81dca043f40
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Sep 16 12:00:27 2025 +0000
+Date:   Wed Sep 17 13:11:22 2025 +0000
 
-    8322140: javax/swing/JTable/JTableScrollPrintTest.java does not print the rows and columns of the table in Nimbus and Aqua LookAndFeel
+    8361754: New test runtime/jni/checked/TestCharArrayReleasing.java can cause disk full errors
     
-    Backport-of: 717a07b932e3dcabbad130d299b15cb963d50a67
+    Backport-of: 2a53f5a5c2544d4f7a77186d99addae110b06bab
