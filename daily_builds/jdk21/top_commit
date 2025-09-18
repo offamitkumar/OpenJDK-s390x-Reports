@@ -1,7 +1,7 @@
-commit 961e4b82eb95d96017e6f6af6c68a81dca043f40
+commit 10df11a53aa01ac15386f072dd45fddc3bb03c17
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Sep 17 13:11:22 2025 +0000
+Date:   Thu Sep 18 10:18:52 2025 +0000
 
-    8361754: New test runtime/jni/checked/TestCharArrayReleasing.java can cause disk full errors
+    8365913: Support latest MSC_VER in abstract_vm_version.cpp
     
-    Backport-of: 2a53f5a5c2544d4f7a77186d99addae110b06bab
+    Backport-of: af532cc1b227c56cd03caca7d7558d58687d8584

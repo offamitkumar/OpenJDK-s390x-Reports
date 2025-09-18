@@ -1,7 +1,7 @@
-commit 1275f321b650114074376e17ff4e5e33cab517d9
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Sep 17 13:23:35 2025 +0000
+commit ec6528e9cf66abe34b9c293359ca11a4b550b7a8
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Wed Sep 17 16:27:37 2025 +0000
 
-    8359687: Use PassFailJFrame for java/awt/print/Dialog/DialogType.java
+    8353011: Open source Swing JButton tests - Set 1
     
-    Backport-of: de34bb8e66253cef90ba79831dadec0252595b35
+    Backport-of: f7155183d7f7c6fcea2090f906de69e02973a6d9
