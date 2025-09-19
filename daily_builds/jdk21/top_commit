@@ -1,7 +1,7 @@
-commit 10df11a53aa01ac15386f072dd45fddc3bb03c17
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Sep 18 10:18:52 2025 +0000
+commit dfc02762c9f301ec0b67bfe330618f9ed81acee6
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Sep 19 16:29:36 2025 +0000
 
-    8365913: Support latest MSC_VER in abstract_vm_version.cpp
+    8352793: Open source several AWT TextComponent tests - Batch 1
     
-    Backport-of: af532cc1b227c56cd03caca7d7558d58687d8584
+    Backport-of: f880fa91dce7b8844cfa4e95caa3a982e280165a

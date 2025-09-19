@@ -1,7 +1,7 @@
-commit 72e5ad3d21effff6a4efae8ab3ed45c4f6bfba76
-Author: Ben Perez <bperez@openjdk.org>
-Date:   Thu Sep 18 15:23:05 2025 +0000
+commit 16458b60c9ccdfac60140c8186f31d5d8a57f2f9
+Author: Leonid Mesnik <lmesnik@openjdk.org>
+Date:   Fri Sep 19 15:20:34 2025 +0000
 
-    8365581: Optimize Java implementation of P256 arithmetic
+    8367725: Incorrect reading of oop in SuspendResumeManager::suspend while thread is blocked
     
-    Reviewed-by: jnimeh
+    Reviewed-by: pchilanomate, dholmes, sspitsyn
