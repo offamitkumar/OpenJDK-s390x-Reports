@@ -4,6 +4,7 @@ java/foreign/TestConcurrentClose.java
 java/foreign/TestHandshake.java 
 java/foreign/TestSegmentAllocators.java 
 java/lang/CompressExpandTest.java 
+java/util/Spliterator/SpliteratorCollisions.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 

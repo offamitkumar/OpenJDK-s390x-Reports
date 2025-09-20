@@ -1,6 +1,8 @@
 # other_errors.txt
 # other_errors.txt
+java/util/Spliterator/SpliteratorTraversingAndSplittingTest.java 
 java/util/zip/DeInflate.java 
 # other_errors.txt
 # other_errors.txt
+compiler/loopopts/superword/TestAliasingFuzzer.java#random-flags 
 # other_errors.txt

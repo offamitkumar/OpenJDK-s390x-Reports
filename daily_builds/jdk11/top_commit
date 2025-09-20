@@ -1,7 +1,8 @@
-commit 465fb7df15176dfe7a044241c8f44411b307df4c
-Author: SendaoYan <syan@openjdk.org>
-Date:   Tue Sep 16 01:53:37 2025 +0000
+commit 26a8acad1f45bec90ad6c4ff5cd41f4e7450a962
+Author: Francesco Andreuzzi <fandreuzzi@openjdk.org>
+Date:   Fri Sep 19 20:51:55 2025 +0000
 
-    8359402: Test CloseDescriptors.java should throw SkippedException when there is no lsof/sctp
+    8354941: Build failure with glibc 2.42 due to uabs() name collision
     
-    Backport-of: 36b185a93065a83ea6f93fbed6382a8465657810
+    Reviewed-by: andrew
+    Backport-of: 38bb8adf4f632b08af15f2d8530b35f05f86a020

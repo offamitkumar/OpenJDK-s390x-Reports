@@ -1,7 +1,7 @@
-commit 16458b60c9ccdfac60140c8186f31d5d8a57f2f9
-Author: Leonid Mesnik <lmesnik@openjdk.org>
-Date:   Fri Sep 19 15:20:34 2025 +0000
+commit b03b6f54c5f538146c3088c4dc2cea70ba70d07a
+Author: Francesco Andreuzzi <fandreuzzi@openjdk.org>
+Date:   Sat Sep 20 14:02:31 2025 +0000
 
-    8367725: Incorrect reading of oop in SuspendResumeManager::suspend while thread is blocked
+    8367988: NewFileSystemTests.readOnlyZipFileFailure fails when run by root user
     
-    Reviewed-by: pchilanomate, dholmes, sspitsyn
+    Reviewed-by: jpai, bpb

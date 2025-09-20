@@ -1,7 +1,7 @@
-commit 45113702f40129fbe43da5787010bb1869582a01
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Sep 19 16:29:08 2025 +0000
+commit e4bea56bdd2fbe7a852dbf788909270ab443d621
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Sat Sep 20 15:26:07 2025 +0000
 
-    8353957: Open source several AWT ScrollPane tests - Batch 1
+    8365913: Support latest MSC_VER in abstract_vm_version.cpp
     
-    Backport-of: d1d7d2569c1745aef778c9b5a62c1bd50735e8a7
+    Backport-of: af532cc1b227c56cd03caca7d7558d58687d8584
