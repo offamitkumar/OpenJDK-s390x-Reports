@@ -1,7 +1,7 @@
-commit b03b6f54c5f538146c3088c4dc2cea70ba70d07a
-Author: Francesco Andreuzzi <fandreuzzi@openjdk.org>
-Date:   Sat Sep 20 14:02:31 2025 +0000
+commit cc65836d00de7041e7d32e7f15d98108b1ae47a0
+Author: Ioi Lam <iklam@openjdk.org>
+Date:   Sat Sep 20 17:28:05 2025 +0000
 
-    8367988: NewFileSystemTests.readOnlyZipFileFailure fails when run by root user
+    8367719: Refactor JNI code that uses class_to_verify_considering_redefinition()
     
-    Reviewed-by: jpai, bpb
+    Reviewed-by: coleenp, dholmes, sspitsyn

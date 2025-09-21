@@ -4,7 +4,6 @@ java/foreign/TestConcurrentClose.java
 java/foreign/TestHandshake.java 
 java/foreign/TestSegmentAllocators.java 
 java/lang/CompressExpandTest.java 
-java/util/Spliterator/SpliteratorCollisions.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
@@ -19,6 +18,7 @@ compiler/c2/gvn/MissedOptWithShiftConvCastAnd.java#id0
 compiler/c2/gvn/MissedOptWithShiftConvCastAnd.java#id1 
 compiler/locks/TestSynchronizeWithEmptyBlock.java 
 compiler/loopopts/parallel_iv/TestParallelIvInIntCountedLoop.java 
+compiler/loopopts/superword/TestAliasingFuzzer.java#vanilla 
 compiler/loopopts/superword/TestMemorySegment.java#native 
 compiler/loopopts/superword/TestMemorySegment.java#native-AlignVector 
 compiler/loopopts/superword/TestMemorySegment.java#native-AlignVector-NoShortRunningLongLoop 
