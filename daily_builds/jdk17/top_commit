@@ -1,7 +1,7 @@
-commit d1f2fafa3390b20a2e28c4b4a74d20926c002227
+commit dca33960959f71ef646d346e328acd27196f5bef
 Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Sat Sep 20 21:00:10 2025 +0000
+Date:   Mon Sep 22 16:32:46 2025 +0000
 
-    8342782: AWTEventMulticaster throws StackOverflowError using AquaButtonUI
+    8353445: Open source several AWT Menu tests - Batch 1
     
-    Backport-of: 5b703c702323bc50452d3f6fd27b165b74006c3e
+    Backport-of: 367bcc5df83722231106b635068a17f92404477b

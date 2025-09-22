@@ -3,5 +3,6 @@
 java/util/zip/DeInflate.java 
 # other_errors.txt
 # other_errors.txt
-compiler/loopopts/superword/TestAliasingFuzzer.java#random-flags 
+compiler/c2/StackOverflowInSetNextCall.java 
+compiler/loopopts/superword/TestAliasingFuzzer.java#vanilla 
 # other_errors.txt

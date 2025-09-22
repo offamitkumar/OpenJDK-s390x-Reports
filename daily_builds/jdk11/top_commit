@@ -1,8 +1,8 @@
-commit 26a8acad1f45bec90ad6c4ff5cd41f4e7450a962
-Author: Francesco Andreuzzi <fandreuzzi@openjdk.org>
-Date:   Fri Sep 19 20:51:55 2025 +0000
+commit 156d9982412c0983a8d1f4eee7b4eacb98017662
+Author: Zdenek Zambersky <zzambers@openjdk.org>
+Date:   Mon Sep 22 13:22:19 2025 +0000
 
-    8354941: Build failure with glibc 2.42 due to uabs() name collision
+    8224087: Compile C code for at least C99 Standard compliance
     
     Reviewed-by: andrew
-    Backport-of: 38bb8adf4f632b08af15f2d8530b35f05f86a020
+    Backport-of: 03428d73fc3618202627bbe9d9880a63221c1811

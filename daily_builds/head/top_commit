@@ -1,7 +1,7 @@
-commit cc65836d00de7041e7d32e7f15d98108b1ae47a0
-Author: Ioi Lam <iklam@openjdk.org>
-Date:   Sat Sep 20 17:28:05 2025 +0000
+commit e365b7d69c58f8a4d85dde15b6ca335f9d85c0b2
+Author: Alexey Ivanov <aivanov@openjdk.org>
+Date:   Mon Sep 22 15:08:45 2025 +0000
 
-    8367719: Refactor JNI code that uses class_to_verify_considering_redefinition()
+    8366369: Add @requires linux for GTK L&F tests
     
-    Reviewed-by: coleenp, dholmes, sspitsyn
+    Reviewed-by: serb, prr, tr
