@@ -3,4 +3,5 @@
 java/util/zip/CloseInflaterDeflaterTest.java 
 # newfailures.txt
 # newfailures.txt
+serviceability/jvmti/RedefineClasses/ClassVersionAfterRedefine.java 
 # newfailures.txt

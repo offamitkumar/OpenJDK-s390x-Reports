@@ -1,7 +1,7 @@
-commit dca33960959f71ef646d346e328acd27196f5bef
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Sep 22 16:32:46 2025 +0000
+commit 78cafc3138f09de208a786b7e55bed585e42ade8
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Sep 23 09:10:17 2025 +0000
 
-    8353445: Open source several AWT Menu tests - Batch 1
+    8364484: misc tests fail with Received fatal alert: handshake_failure
     
-    Backport-of: 367bcc5df83722231106b635068a17f92404477b
+    Backport-of: 724e8c076e1aed05de893ef9366af0e62cc2ac2b

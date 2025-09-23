@@ -1,7 +1,7 @@
-commit e365b7d69c58f8a4d85dde15b6ca335f9d85c0b2
-Author: Alexey Ivanov <aivanov@openjdk.org>
-Date:   Mon Sep 22 15:08:45 2025 +0000
+commit 82bdef16390deaa6863cdf8ecf26e6e99f6cb0a2
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Tue Sep 23 15:07:59 2025 +0000
 
-    8366369: Add @requires linux for GTK L&F tests
+    8367913: LIBDL dependency seems to be not needed for some jdk libs
     
-    Reviewed-by: serb, prr, tr
+    Reviewed-by: aivanov, ihse, clanger, mdoerr

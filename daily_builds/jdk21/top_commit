@@ -1,7 +1,10 @@
-commit 516688cf3bcfc9345ba0aee964eb4ee812718af5
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Sep 22 16:30:59 2025 +0000
+commit 3e41a78da726325cfac10a22ab10195aa7b6ba03
+Author: Francisco Ferrari Bihurriet <fferrari@openjdk.org>
+Date:   Tue Sep 23 14:23:29 2025 +0000
 
-    8353445: Open source several AWT Menu tests - Batch 1
+    8339280: jarsigner -verify performs cross-checking between CEN and LOC
+    8353299: VerifyJarEntryName.java test fails
+    8367782: VerifyJarEntryName.java: Fix modifyJarEntryName to operate on bytes and re-introduce verifySignatureEntryName
     
-    Backport-of: 367bcc5df83722231106b635068a17f92404477b
+    Reviewed-by: sgehwolf, abakhtin
+    Backport-of: bbd5b174c50346152a624317b6bd76ec48f7e551

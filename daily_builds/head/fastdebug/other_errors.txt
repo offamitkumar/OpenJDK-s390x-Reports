@@ -1,7 +1,11 @@
 # other_errors.txt
 # other_errors.txt
+java/util/concurrent/forkjoin/AsyncShutdownNowInvokeAnyRace.java 
 java/util/stream/GatherersMapConcurrentTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/DoublePrimitiveOpsTests.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/MapOpTest.java 
 # other_errors.txt
+tools/javac/completionDeps/DepsAndAnno.java 
 # other_errors.txt
 compiler/c2/irTests/ConvF2HFIdealizationTests.java 
 # other_errors.txt

@@ -2,7 +2,7 @@
 Test summary
 ==============================
    TEST                                              TOTAL  PASS  FAIL ERROR   
-   jtreg:test/hotspot/jtreg:tier1                     1772  1772     0     0   
+>> jtreg:test/hotspot/jtreg:tier1                     1772  1771     1     0 <<
 >> jtreg:test/jdk:tier1                               2063  2062     1     0 <<
    jtreg:test/langtools:tier1                         4244  4244     0     0   
    jtreg:test/jaxp:tier1                                 0     0     0     0   
