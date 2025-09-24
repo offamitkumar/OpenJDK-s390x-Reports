@@ -1,10 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/ResourceBundle/Bug4083270Test.java 
-java/util/ResourceBundle/UTF8Properties/IllegalSequenceTest.java 
-java/util/zip/DeInflate.java 
 # other_errors.txt
 # other_errors.txt
-compiler/loopopts/superword/TestAliasingFuzzer.java#random-flags 
-compiler/loopopts/superword/TestAliasingFuzzer.java#vanilla 
 # other_errors.txt

@@ -1,7 +1,6 @@
-commit 78cafc3138f09de208a786b7e55bed585e42ade8
+commit 074a2060c78a88fcc05969452bce197bf34e7e2a
+Merge: 78cafc3138f baf3bb0737c
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Sep 23 09:10:17 2025 +0000
+Date:   Wed Sep 24 08:00:23 2025 +0000
 
-    8364484: misc tests fail with Received fatal alert: handshake_failure
-    
-    Backport-of: 724e8c076e1aed05de893ef9366af0e62cc2ac2b
+    Merge

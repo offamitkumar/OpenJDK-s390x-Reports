@@ -3,12 +3,11 @@
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/stream/test/org/openjdk/tests/java/util/stream/CountTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntSliceOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/lang/invoke/MHProxiesTest.java 
 # newfailures.txt
+tools/javac/patterns/SOEDeeplyNestedBlocksTest.java 
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt
-compiler/c1/TestLargeMonitorOffset.java 
 compiler/c2/TestMergeStores.java#id1 
 compiler/c2/TestMergeStores.java#id2 
 # newfailures.txt

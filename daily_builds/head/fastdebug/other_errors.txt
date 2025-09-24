@@ -1,9 +1,8 @@
 # other_errors.txt
 # other_errors.txt
-java/util/concurrent/forkjoin/AsyncShutdownNowInvokeAnyRace.java 
+com/sun/crypto/provider/Cipher/DES/PerformanceTest.java 
 java/util/stream/GatherersMapConcurrentTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/DoublePrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/MapOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/IntReduceTest.java 
 # other_errors.txt
 tools/javac/completionDeps/DepsAndAnno.java 
 # other_errors.txt

@@ -1,10 +1,6 @@
-commit 3e41a78da726325cfac10a22ab10195aa7b6ba03
-Author: Francisco Ferrari Bihurriet <fferrari@openjdk.org>
-Date:   Tue Sep 23 14:23:29 2025 +0000
+commit 89bd3fc6a160f395c262cf6dbcc66b3f0cdd6014
+Merge: 49f108130b3 dea855e1635
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Sep 24 07:58:59 2025 +0000
 
-    8339280: jarsigner -verify performs cross-checking between CEN and LOC
-    8353299: VerifyJarEntryName.java test fails
-    8367782: VerifyJarEntryName.java: Fix modifyJarEntryName to operate on bytes and re-introduce verifySignatureEntryName
-    
-    Reviewed-by: sgehwolf, abakhtin
-    Backport-of: bbd5b174c50346152a624317b6bd76ec48f7e551
+    Merge

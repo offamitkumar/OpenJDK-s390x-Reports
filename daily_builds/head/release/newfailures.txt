@@ -1,34 +1,9 @@
 # newfailures.txt
 # newfailures.txt
-java/foreign/TestConcurrentClose.java 
-java/foreign/TestHandshake.java 
-java/foreign/TestSegmentAllocators.java 
-java/lang/CompressExpandTest.java 
-java/util/ResourceBundle/modules/visibility/VisibilityTest.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/stream/GatherersMapConcurrentTest.java 
-java/util/zip/EntryCount64k.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt
-compiler/c1/TestLargeMonitorOffset.java 
-compiler/c2/Test6880034.java 
-compiler/c2/TestMergeStoresMemorySegment.java#native 
-compiler/c2/gvn/MissedOptWithShiftConvAnd.java#id0 
-compiler/c2/gvn/MissedOptWithShiftConvCastAnd.java#id0 
-compiler/c2/gvn/MissedOptWithShiftConvCastAnd.java#id1 
-compiler/locks/TestSynchronizeWithEmptyBlock.java 
-compiler/loopopts/parallel_iv/TestParallelIvInIntCountedLoop.java 
-compiler/loopopts/superword/TestMemorySegment.java#native 
-compiler/loopopts/superword/TestMemorySegment.java#native-AlignVector 
-compiler/loopopts/superword/TestMemorySegment.java#native-AlignVector-NoShortRunningLongLoop 
-compiler/loopopts/superword/TestMemorySegment.java#native-AlignVector-NoSpeculativeAliasingCheck 
-compiler/loopopts/superword/TestMemorySegment.java#native-NoShortRunningLongLoop 
-compiler/loopopts/superword/TestMemorySegment.java#native-NoSpeculativeAliasingCheck 
-compiler/loopopts/superword/TestMemorySegment.java#native-NoSpeculativeAliasingCheck-NoShortRunningLongLoop 
-compiler/loopopts/superword/TestMemorySegmentUnalignedAddress.java#native 
-compiler/loopopts/superword/TestMemorySegmentUnalignedAddress.java#native-AlignVector 
-compiler/loopopts/superword/TestMemorySegmentUnalignedAddress.java#native-VerifyAlignVector 
 # newfailures.txt
