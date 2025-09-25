@@ -1,8 +1,6 @@
 # other_errors.txt
 # other_errors.txt
-com/sun/crypto/provider/Cipher/DES/PerformanceTest.java 
-java/util/stream/GatherersMapConcurrentTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntReduceTest.java 
+java/lang/Character/CheckScript.java 
 # other_errors.txt
 tools/javac/completionDeps/DepsAndAnno.java 
 # other_errors.txt

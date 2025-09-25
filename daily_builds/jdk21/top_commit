@@ -1,6 +1,7 @@
-commit 89bd3fc6a160f395c262cf6dbcc66b3f0cdd6014
-Merge: 49f108130b3 dea855e1635
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Sep 24 07:58:59 2025 +0000
+commit a908bb4d0da3f924ffc78a65257da68f027f8e88
+Author: Daniel Hu <92710734+cost0much@users.noreply.github.com>
+Date:   Thu Sep 25 11:50:46 2025 +0000
 
-    Merge
+    8320577: Improve MessageHeader's toString() function to make HttpURLConnection's debug log readable
+    
+    Backport-of: aac43184319d852eb792c83dfb52d74a3126108d
