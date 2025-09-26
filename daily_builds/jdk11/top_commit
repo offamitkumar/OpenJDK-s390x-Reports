@@ -1,8 +1,8 @@
-commit 2721380614d587396ca39cdb0a5958142b091ea5
-Author: Timofei Pushkin <tpushkin@openjdk.org>
-Date:   Tue Sep 23 15:32:01 2025 +0000
+commit 78b8b2431e050b2eaa943ec819c47649c1ba6701
+Author: Severin Gehwolf <sgehwolf@openjdk.org>
+Date:   Fri Sep 26 08:23:31 2025 +0000
 
-    8271456: Avoid looking up standard charsets in "java.desktop" module
+    8336854: CAInterop.java#actalisauthenticationrootca conflicted with /manual and /timeout
     
-    Reviewed-by: abakhtin, sgehwolf
-    Backport-of: 6b55ef3b58ae405c46f440e06b5adb03cec3a500
+    Reviewed-by: syan, andrew
+    Backport-of: ada58fa55bb265aa62bbe9389d08cbc39e3e32e0
