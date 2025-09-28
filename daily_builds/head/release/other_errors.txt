@@ -1,5 +1,8 @@
 # other_errors.txt
 # other_errors.txt
+java/util/prefs/CodePointZeroPrefsTest.java 
+java/util/prefs/CommentsInXml.java 
+java/util/prefs/ConflictInFlush.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
