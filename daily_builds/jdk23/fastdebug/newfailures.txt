@@ -5,4 +5,5 @@ java/util/zip/CloseInflaterDeflaterTest.java
 jdk/jshell/ToolProviderTest.java 
 # newfailures.txt
 compiler/c2/irTests/TestAutoVectorization2DArray.java 
+serviceability/jvmti/RedefineClasses/ClassVersionAfterRedefine.java 
 # newfailures.txt
