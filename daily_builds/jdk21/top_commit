@@ -1,7 +1,7 @@
-commit ddda5e121b3cebe569b8a0b98e755c85076e1a90
-Author: Daniel Hu <92710734+cost0much@users.noreply.github.com>
-Date:   Fri Sep 26 22:07:20 2025 +0000
+commit f47a3506b908c926353c42e02b1c86d00ce8520c
+Author: Rui Li <ruiamzn@amazon.com>
+Date:   Mon Sep 29 17:25:27 2025 +0000
 
-    8321183: Incorrect warning from cds about the modules file
+    8347277: java/awt/Focus/ComponentLostFocusTest.java fails intermittently
     
-    Backport-of: fd31f6a1663de0e06accdf015a71086346aa0d98
+    Backport-of: e2a503e26ee2a3c428c5db0cd4cbe71cdc7d837f
