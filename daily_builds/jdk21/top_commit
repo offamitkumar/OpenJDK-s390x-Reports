@@ -1,7 +1,7 @@
-commit f47a3506b908c926353c42e02b1c86d00ce8520c
-Author: Rui Li <ruiamzn@amazon.com>
-Date:   Mon Sep 29 17:25:27 2025 +0000
+commit 04046b185003a99e93905d54964b7018ae892147
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Wed Oct 1 16:31:45 2025 +0000
 
-    8347277: java/awt/Focus/ComponentLostFocusTest.java fails intermittently
+    8328247: Remove redundant dir for tests converted from applet to main
     
-    Backport-of: e2a503e26ee2a3c428c5db0cd4cbe71cdc7d837f
+    Backport-of: ece4124f25f676da9bf2d1b7fd8e4394dd7d31af

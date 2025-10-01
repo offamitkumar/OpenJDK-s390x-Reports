@@ -1,5 +1,7 @@
 # other_errors.txt
 # other_errors.txt
+java/util/prefs/ExportNode.java 
+java/util/prefs/ExportSubtree.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

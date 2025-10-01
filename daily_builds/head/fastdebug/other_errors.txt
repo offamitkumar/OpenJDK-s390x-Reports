@@ -1,10 +1,8 @@
 # other_errors.txt
 # other_errors.txt
-java/lang/StringBuilder/RacingSBThreads.java 
-java/util/concurrent/forkjoin/AsyncShutdownNowInvokeAnyRace.java 
+com/sun/crypto/provider/Cipher/AEAD/GCMParameterSpecTest.java 
 java/util/stream/GatherersMapConcurrentTest.java 
 # other_errors.txt
-jdk/jshell/ToolFormatTest.java 
 tools/javac/completionDeps/DepsAndAnno.java 
 # other_errors.txt
 compiler/c2/irTests/ConvF2HFIdealizationTests.java 

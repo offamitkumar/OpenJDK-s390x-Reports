@@ -1,7 +1,7 @@
-commit 2d7cdacb1db0dfdffddc7ca95fc93406cb28006c
-Author: Rui Li <ruiamzn@amazon.com>
-Date:   Mon Sep 29 17:24:07 2025 +0000
+commit d22557924ec5dfc5c8248f21504c9fa80c1d22bf
+Author: Elif Aslan <elifasln@amazon.com>
+Date:   Wed Oct 1 16:30:30 2025 +0000
 
-    8347277: java/awt/Focus/ComponentLostFocusTest.java fails intermittently
+    8297302: gtest/AsyncLogGtest.java fails AsyncLogTest.stdoutOutput_vm
     
-    Backport-of: e2a503e26ee2a3c428c5db0cd4cbe71cdc7d837f
+    Backport-of: 9412c0a2caf7d1c279f933e1f767eb3689a2a1ca
