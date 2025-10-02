@@ -1,7 +1,6 @@
-commit d22557924ec5dfc5c8248f21504c9fa80c1d22bf
-Author: Elif Aslan <elifasln@amazon.com>
-Date:   Wed Oct 1 16:30:30 2025 +0000
+commit 5c4b47c0d25f04c2b0314eb746765793b638395c
+Merge: d22557924ec ba6bbe5cf55
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Oct 1 21:51:59 2025 +0000
 
-    8297302: gtest/AsyncLogGtest.java fails AsyncLogTest.stdoutOutput_vm
-    
-    Backport-of: 9412c0a2caf7d1c279f933e1f767eb3689a2a1ca
+    Merge

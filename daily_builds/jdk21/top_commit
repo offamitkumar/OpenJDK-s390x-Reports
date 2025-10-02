@@ -1,7 +1,7 @@
-commit 04046b185003a99e93905d54964b7018ae892147
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Oct 1 16:31:45 2025 +0000
+commit e2a9bb18c9724b6ca31239ef6899bd925760e585
+Author: Christoph Langer <clanger@openjdk.org>
+Date:   Thu Oct 2 12:57:26 2025 +0000
 
-    8328247: Remove redundant dir for tests converted from applet to main
+    8346875: Test jdk/jdk/jfr/event/os/TestCPULoad.java fails on macOS
     
-    Backport-of: ece4124f25f676da9bf2d1b7fd8e4394dd7d31af
+    Backport-of: a3eef6c2416eb0e02fbd154d84c98b12bcb66e97

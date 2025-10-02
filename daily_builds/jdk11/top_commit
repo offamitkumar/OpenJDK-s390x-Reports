@@ -1,8 +1,7 @@
-commit 78b8b2431e050b2eaa943ec819c47649c1ba6701
-Author: Severin Gehwolf <sgehwolf@openjdk.org>
-Date:   Fri Sep 26 08:23:31 2025 +0000
+commit 8a139678771b9136bd7c05bcf4f72e48be6300c6
+Author: Dmitry Chuyko <dchuyko@openjdk.org>
+Date:   Thu Oct 2 17:17:39 2025 +0000
 
-    8336854: CAInterop.java#actalisauthenticationrootca conflicted with /manual and /timeout
+    8351933: Inaccurate masking of TC subfield decrement in ForkJoinPool
     
-    Reviewed-by: syan, andrew
-    Backport-of: ada58fa55bb265aa62bbe9389d08cbc39e3e32e0
+    Reviewed-by: phh, dl
