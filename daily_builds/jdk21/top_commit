@@ -1,7 +1,7 @@
-commit e2a9bb18c9724b6ca31239ef6899bd925760e585
-Author: Christoph Langer <clanger@openjdk.org>
-Date:   Thu Oct 2 12:57:26 2025 +0000
+commit a4ae3e9d95af01e01fef6f04b252cddd8b613173
+Author: Rui Li <ruiamzn@amazon.com>
+Date:   Thu Oct 2 21:10:13 2025 +0000
 
-    8346875: Test jdk/jdk/jfr/event/os/TestCPULoad.java fails on macOS
+    8363720: Follow up to JDK-8360411 with post review comments
     
-    Backport-of: a3eef6c2416eb0e02fbd154d84c98b12bcb66e97
+    Backport-of: a5e0c9d0c52e028321bb38e471ce98e389e67fe1

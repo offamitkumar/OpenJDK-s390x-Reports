@@ -1,6 +1,8 @@
-commit 5c4b47c0d25f04c2b0314eb746765793b638395c
-Merge: d22557924ec ba6bbe5cf55
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Oct 1 21:51:59 2025 +0000
+commit c363d3f14fda2945021ea374383a660964b2b1c4
+Author: Richard Reingruber <rrich@openjdk.org>
+Date:   Fri Oct 3 06:22:17 2025 +0000
 
-    Merge
+    8350106: [PPC] Avoid ticks_unknown_not_Java AsyncGetCallTrace() if JavaFrameAnchor::_last_Java_pc not set
+    
+    Reviewed-by: mdoerr
+    Backport-of: d5908231ebc16f443b3fc9b2ebf03cc4deb67373
