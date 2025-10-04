@@ -1,5 +1,7 @@
 # other_errors.txt
 # other_errors.txt
+java/util/ServiceLoader/ReloadTest.java 
+java/util/Spliterator/SpliteratorCollisions.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
