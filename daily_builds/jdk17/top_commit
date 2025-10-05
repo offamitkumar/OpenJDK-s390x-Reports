@@ -1,8 +1,7 @@
-commit c363d3f14fda2945021ea374383a660964b2b1c4
-Author: Richard Reingruber <rrich@openjdk.org>
-Date:   Fri Oct 3 06:22:17 2025 +0000
+commit 94a79aaeb6fcb5b6a2e32b6a01568df6f65fe5c4
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Sat Oct 4 23:05:48 2025 +0000
 
-    8350106: [PPC] Avoid ticks_unknown_not_Java AsyncGetCallTrace() if JavaFrameAnchor::_last_Java_pc not set
+    8362204: test/jdk/sun/awt/font/TestDevTransform.java fails on Ubuntu 24.04
     
-    Reviewed-by: mdoerr
-    Backport-of: d5908231ebc16f443b3fc9b2ebf03cc4deb67373
+    Backport-of: 89af6e13f2354d6e32872791d157144cd478a88f
