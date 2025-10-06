@@ -1,6 +1,7 @@
 # newfailures.txt
 # newfailures.txt
 java/util/zip/CloseInflaterDeflaterTest.java 
+java/util/zip/DeflateIn_InflateOut.java 
 # newfailures.txt
 # newfailures.txt
 # newfailures.txt

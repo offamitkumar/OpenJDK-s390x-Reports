@@ -1,11 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/ServiceLoader/nouses/NoUsesTest.java 
-jdk/internal/misc/VM/RuntimeArguments.java 
-jdk/internal/ref/Cleaner/CleanableListTest.java 
-jdk/internal/reflect/CallerSensitive/CallerSensitiveFinder.java 
-jdk/internal/util/ModifiedUtfTest.java 
-jdk/internal/util/ReferencedKeyTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt
