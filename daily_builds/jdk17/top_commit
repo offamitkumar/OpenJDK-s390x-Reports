@@ -1,7 +1,7 @@
-commit 138c1f58d3e326397bd9bd0b354cb2748e9daa99
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Oct 6 16:10:15 2025 +0000
+commit 78287797bff8f469b16ebef80cc7f211501724b0
+Author: Severin Gehwolf <sgehwolf@openjdk.org>
+Date:   Tue Oct 7 16:55:04 2025 +0000
 
-    8355333: Some Problem list entries point to non-existent / wrong files
+    8347129: cpuset cgroups controller is required for no good reason
     
-    Backport-of: 32a597b36f994d6e720e0576ad110dac4a5304fe
+    Backport-of: be245be258cda7e06366b4051eec24ad6df04f20

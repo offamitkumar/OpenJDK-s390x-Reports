@@ -1,7 +1,8 @@
-commit 8a139678771b9136bd7c05bcf4f72e48be6300c6
-Author: Dmitry Chuyko <dchuyko@openjdk.org>
-Date:   Thu Oct 2 17:17:39 2025 +0000
+commit b638bb35cc124122e84ba0583c1218a08c60bf93
+Author: Jan Kratochvil <jkratochvil@openjdk.org>
+Date:   Tue Oct 7 15:13:59 2025 +0000
 
-    8351933: Inaccurate masking of TC subfield decrement in ForkJoinPool
+    8263622: The java.awt.color.ICC_Profile#setData invert the order of bytes for the "head" tag
     
-    Reviewed-by: phh, dl
+    Co-authored-by: Anton Voznia <avoznia@azul.com>
+    Backport-of: 01ddf3d28004834d57f4cee92d0e055fb544a292

@@ -1,7 +1,7 @@
-commit ee59cd680d2f6db25bd24b398832415a2d5ca484
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Oct 6 16:10:37 2025 +0000
+commit f2474dfd045952e34153bead436def7c82608429
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Tue Oct 7 12:44:09 2025 +0000
 
-    8353586: Open source several toolkit tests
+    8366092: [GCC static analyzer] UnixOperatingSystem.c warning: use of uninitialized value 'systemTicks'
     
-    Backport-of: 2ba80d2403f749a7d8d4e64139b796737bbb62bf
+    Backport-of: a6e2a329a07c71582ac696809fb5349c6a0b681c
