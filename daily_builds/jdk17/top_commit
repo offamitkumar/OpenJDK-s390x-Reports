@@ -1,7 +1,7 @@
-commit 78287797bff8f469b16ebef80cc7f211501724b0
-Author: Severin Gehwolf <sgehwolf@openjdk.org>
-Date:   Tue Oct 7 16:55:04 2025 +0000
+commit 73413029211c198f451f1d6ef3e21780ed3ac44f
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Oct 8 07:30:32 2025 +0000
 
-    8347129: cpuset cgroups controller is required for no good reason
+    8349188: LineBorder does not scale correctly
     
-    Backport-of: be245be258cda7e06366b4051eec24ad6df04f20
+    Backport-of: 24117c6e9aa862bad839e93eff70810a75605ac5

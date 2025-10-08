@@ -1,9 +1,7 @@
 # other_errors.txt
 # other_errors.txt
-com/sun/crypto/provider/Cipher/AEAD/AEADBufferTest.java 
-java/util/stream/GatherersMapConcurrentTest.java 
+java/util/concurrent/forkjoin/AsyncShutdownNowInvokeAnyRace.java 
 # other_errors.txt
-tools/javac/completionDeps/DepsAndAnno.java 
 # other_errors.txt
 compiler/c2/irTests/ConvF2HFIdealizationTests.java 
 # other_errors.txt

@@ -1,7 +1,8 @@
-commit f2474dfd045952e34153bead436def7c82608429
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Tue Oct 7 12:44:09 2025 +0000
+commit d29762266330884a9e037b5744751690d773ab37
+Author: Timofei Pushkin <tpushkin@openjdk.org>
+Date:   Wed Oct 8 15:41:25 2025 +0000
 
-    8366092: [GCC static analyzer] UnixOperatingSystem.c warning: use of uninitialized value 'systemTicks'
+    8315130: java.lang.IllegalAccessError when processing classlist to create CDS archive
     
-    Backport-of: a6e2a329a07c71582ac696809fb5349c6a0b681c
+    Reviewed-by: iklam
+    Backport-of: 46a12e781edcbe9da7bd39eb9e101fc680053cef
