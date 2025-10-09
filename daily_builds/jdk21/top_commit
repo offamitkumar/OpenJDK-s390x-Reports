@@ -1,8 +1,7 @@
-commit d29762266330884a9e037b5744751690d773ab37
-Author: Timofei Pushkin <tpushkin@openjdk.org>
-Date:   Wed Oct 8 15:41:25 2025 +0000
+commit 77a30729797f8f8afb1068f1573b6c6c18cd9dfc
+Author: Sergey Chernyshev <schernyshev@openjdk.org>
+Date:   Thu Oct 9 08:16:16 2025 +0000
 
-    8315130: java.lang.IllegalAccessError when processing classlist to create CDS archive
+    8351382: New test containers/docker/TestMemoryWithSubgroups.java is failing
     
-    Reviewed-by: iklam
-    Backport-of: 46a12e781edcbe9da7bd39eb9e101fc680053cef
+    Backport-of: 46b3d1d8cfd03e01d993be19d725cdbcafef7865

@@ -1,7 +1,7 @@
-commit 73413029211c198f451f1d6ef3e21780ed3ac44f
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Oct 8 07:30:32 2025 +0000
+commit 207dd315f22fa094f48da44cc1aafac0ea4c44f0
+Author: SendaoYan <syan@openjdk.org>
+Date:   Thu Oct 9 12:29:08 2025 +0000
 
-    8349188: LineBorder does not scale correctly
+    8365834: Mark java/net/httpclient/ManyRequests.java  as intermittent
     
-    Backport-of: 24117c6e9aa862bad839e93eff70810a75605ac5
+    Backport-of: 09aad0aea8b9f9fda14c5b18ae67b30ffce817d9
