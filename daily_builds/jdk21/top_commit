@@ -1,7 +1,7 @@
-commit 77a30729797f8f8afb1068f1573b6c6c18cd9dfc
-Author: Sergey Chernyshev <schernyshev@openjdk.org>
-Date:   Thu Oct 9 08:16:16 2025 +0000
+commit 7a85f61204067e9b6d5a3fe6fc7ee549fc8928fe
+Author: Liam Miller-Cushon <cushon@openjdk.org>
+Date:   Fri Oct 10 10:21:59 2025 +0000
 
-    8351382: New test containers/docker/TestMemoryWithSubgroups.java is failing
+    8342934: TYPE_USE annotations printed with error causing "," in toString output
     
-    Backport-of: 46b3d1d8cfd03e01d993be19d725cdbcafef7865
+    Backport-of: ff165f9f0cf519144d7361b766bcce53d04c518e

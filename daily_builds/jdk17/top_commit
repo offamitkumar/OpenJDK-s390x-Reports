@@ -1,7 +1,7 @@
-commit 207dd315f22fa094f48da44cc1aafac0ea4c44f0
-Author: SendaoYan <syan@openjdk.org>
-Date:   Thu Oct 9 12:29:08 2025 +0000
+commit 700368436db0d74ae5de4b9ef624504c9b1cddde
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Oct 10 16:38:28 2025 +0000
 
-    8365834: Mark java/net/httpclient/ManyRequests.java  as intermittent
+    8354928: Clean up and open source some miscellaneous AWT tests
     
-    Backport-of: 09aad0aea8b9f9fda14c5b18ae67b30ffce817d9
+    Backport-of: 1b8f760d1b60e63c1391dcad42753a7ebb3f80ec
