@@ -1,8 +1,5 @@
 # other_errors.txt
 # other_errors.txt
-java/util/stream/boottest/java.base/java/util/stream/StreamFlagsTest.java 
-java/util/stream/test/org/openjdk/tests/java/lang/invoke/DeserializeMethodTest.java 
-java/util/stream/test/org/openjdk/tests/java/lang/invoke/MHProxiesTest.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

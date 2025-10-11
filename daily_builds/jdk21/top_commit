@@ -1,7 +1,7 @@
-commit 7a85f61204067e9b6d5a3fe6fc7ee549fc8928fe
-Author: Liam Miller-Cushon <cushon@openjdk.org>
-Date:   Fri Oct 10 10:21:59 2025 +0000
+commit f84d76961ca3d1676263246494cfd0704406abb9
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Oct 10 16:39:12 2025 +0000
 
-    8342934: TYPE_USE annotations printed with error causing "," in toString output
+    8354928: Clean up and open source some miscellaneous AWT tests
     
-    Backport-of: ff165f9f0cf519144d7361b766bcce53d04c518e
+    Backport-of: 1b8f760d1b60e63c1391dcad42753a7ebb3f80ec
