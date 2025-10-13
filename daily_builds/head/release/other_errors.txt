@@ -1,8 +1,6 @@
 # other_errors.txt
 # other_errors.txt
-java/util/ServiceLoader/inheritance/NoInheritanceTest.java 
-java/util/spi/ToolProviderDescriptionTest.java 
-java/util/spi/ToolProviderTest.java 
+sun/misc/UnsafeMemoryAccessWarnings.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

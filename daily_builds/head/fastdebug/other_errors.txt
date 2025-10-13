@@ -1,24 +1,7 @@
 # other_errors.txt
 # other_errors.txt
-java/util/stream/test/org/openjdk/tests/java/util/stream/GroupByOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/InfiniteStreamWithLimitOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntPrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntReduceTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntSliceOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntUniqOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IterateTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/LongPrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/MapOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/MatchOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/MinMaxTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/PrimitiveAverageOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/PrimitiveSumTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/RangeTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/ReduceByOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/ReduceTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/SegmentTestDataProvider.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/SequentialOpTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/mapMultiOpTest.java 
+com/sun/crypto/provider/Cipher/AES/TestGHASH.java 
+java/util/stream/GatherersMapConcurrentTest.java 
 # other_errors.txt
 tools/javac/completionDeps/DepsAndAnno.java 
 # other_errors.txt

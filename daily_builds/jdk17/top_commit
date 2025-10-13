@@ -1,7 +1,7 @@
-commit 700368436db0d74ae5de4b9ef624504c9b1cddde
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Oct 10 16:38:28 2025 +0000
+commit 27170348b1b07124b0530353fcc4ebb2b4b03914
+Author: Rui Li <ruiamzn@amazon.com>
+Date:   Mon Oct 13 16:12:25 2025 +0000
 
-    8354928: Clean up and open source some miscellaneous AWT tests
+    8362533: Tests sun/management/jmxremote/bootstrap/* duplicate VM flags
     
-    Backport-of: 1b8f760d1b60e63c1391dcad42753a7ebb3f80ec
+    Backport-of: 458f033d4dd3c646028b2f9bab88f9a308cad4af
