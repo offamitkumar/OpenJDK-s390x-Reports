@@ -1,7 +1,8 @@
-commit 865205a61265741c3cdbc86376ba4271a35e1889
-Author: Rui Li <ruiamzn@amazon.com>
-Date:   Mon Oct 13 16:12:11 2025 +0000
+commit 2cdc9ed6d687cee343a5792a066a24839c6baccf
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Oct 14 14:15:13 2025 +0000
 
-    8362533: Tests sun/management/jmxremote/bootstrap/* duplicate VM flags
+    8343875: Minor improvements of jpackage test library
     
-    Backport-of: 458f033d4dd3c646028b2f9bab88f9a308cad4af
+    Reviewed-by: mbaesken
+    Backport-of: 95a00f8a188048952871a10dc428566b18b91cb8
