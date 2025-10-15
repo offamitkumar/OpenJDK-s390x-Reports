@@ -3,7 +3,6 @@
 java/util/concurrent/forkjoin/AsyncShutdownNowInvokeAnyRace.java 
 java/util/stream/GatherersMapConcurrentTest.java 
 # other_errors.txt
-tools/javac/completionDeps/DepsAndAnno.java 
 # other_errors.txt
 compiler/c2/irTests/ConvF2HFIdealizationTests.java 
 # other_errors.txt

@@ -1,8 +1,7 @@
-commit 2cdc9ed6d687cee343a5792a066a24839c6baccf
+commit 983dea44649846f90a2ec8cb7f827b66c73d041c
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Oct 14 14:15:13 2025 +0000
+Date:   Wed Oct 15 08:48:52 2025 +0000
 
-    8343875: Minor improvements of jpackage test library
+    8361423: Add IPSupport::printPlatformSupport to java/net/NetworkInterface/IPv4Only.java
     
-    Reviewed-by: mbaesken
-    Backport-of: 95a00f8a188048952871a10dc428566b18b91cb8
+    Backport-of: 2f1aed2a165259a873636792cff7c9de4e1f334e
