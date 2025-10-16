@@ -1,7 +1,7 @@
-commit 983dea44649846f90a2ec8cb7f827b66c73d041c
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Wed Oct 15 08:48:52 2025 +0000
+commit 74acd38886c59060c0263380bfa48eb60772f594
+Author: Daniel Hu <costmuch@amazon.com>
+Date:   Thu Oct 16 15:19:05 2025 +0000
 
-    8361423: Add IPSupport::printPlatformSupport to java/net/NetworkInterface/IPv4Only.java
+    8342582: user.region for formatting number no longer works for 21.0.5
     
-    Backport-of: 2f1aed2a165259a873636792cff7c9de4e1f334e
+    Backport-of: e64f0798be64d334b3ec2a918687aafc2031a8b7
