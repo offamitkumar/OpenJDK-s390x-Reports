@@ -1,7 +1,7 @@
-commit 74acd38886c59060c0263380bfa48eb60772f594
-Author: Daniel Hu <costmuch@amazon.com>
-Date:   Thu Oct 16 15:19:05 2025 +0000
+commit f94493cc51ed9a4bbad426ab987837097541a73e
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Fri Oct 17 13:47:01 2025 +0000
 
-    8342582: user.region for formatting number no longer works for 21.0.5
+    8365615: Improve JMenuBar/RightLeftOrientation.java
     
-    Backport-of: e64f0798be64d334b3ec2a918687aafc2031a8b7
+    Backport-of: afa8e79ba1a76066cf969cb3b5f76ea804780872

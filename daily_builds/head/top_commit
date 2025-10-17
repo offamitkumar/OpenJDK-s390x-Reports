@@ -1,8 +1,7 @@
-commit faf6df5462d6c915434128a876e76fa48f7e3599
-Author: Daniel Lundén <dlunden@openjdk.org>
-Date:   Wed Sep 24 15:02:40 2025 +0000
+commit cc6f8f1307476886aa3c43a2b966fc7bff2be04e
+Author: Brian Burkhalter <bpb@openjdk.org>
+Date:   Fri Oct 17 15:12:27 2025 +0000
 
-    8325467: Support methods with many arguments in C2
+    8369997: Tests that use custom scheduler should use jdk.test.lib.thread.VThreadScheduler
     
-    Co-authored-by: Roberto Castañeda Lozano <rcastanedalo@openjdk.org>
-    Reviewed-by: rcastanedalo, kvn, epeter
+    Reviewed-by: sspitsyn, alanb
