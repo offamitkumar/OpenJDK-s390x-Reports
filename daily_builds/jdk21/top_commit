@@ -1,7 +1,7 @@
-commit f94493cc51ed9a4bbad426ab987837097541a73e
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Fri Oct 17 13:47:01 2025 +0000
+commit 38baaa916c65fcebeb28b9555b98e4daf3ea85ae
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Oct 17 17:58:09 2025 +0000
 
-    8365615: Improve JMenuBar/RightLeftOrientation.java
+    8339366: [jittester] Make it possible to generate tests without execution
     
-    Backport-of: afa8e79ba1a76066cf969cb3b5f76ea804780872
+    Backport-of: 559fc711e03cf0086bea399ffb40cf294cbbb6e1

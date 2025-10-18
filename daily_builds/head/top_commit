@@ -1,7 +1,7 @@
-commit cc6f8f1307476886aa3c43a2b966fc7bff2be04e
-Author: Brian Burkhalter <bpb@openjdk.org>
-Date:   Fri Oct 17 15:12:27 2025 +0000
+commit eff6439e75d79c67370e79638024296e01101b48
+Author: Alexey Semenyuk <asemenyuk@openjdk.org>
+Date:   Sat Oct 18 01:14:42 2025 +0000
 
-    8369997: Tests that use custom scheduler should use jdk.test.lib.thread.VThreadScheduler
+    8370120: Make jpackage tests output more stable
     
-    Reviewed-by: sspitsyn, alanb
+    Reviewed-by: almatvee

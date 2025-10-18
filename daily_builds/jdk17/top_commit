@@ -1,7 +1,7 @@
-commit a63ed59692d110781f2bf7152a265e7a109021cd
-Author: Rui Li <ruiamzn@amazon.com>
-Date:   Fri Oct 17 15:51:11 2025 +0000
+commit ff97f224875ce0cd6800227aeaf1d9344b9e4fb9
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Oct 17 17:59:36 2025 +0000
 
-    8201778: Speed up test javax/net/ssl/DTLS/PacketLossRetransmission.java
+    8339366: [jittester] Make it possible to generate tests without execution
     
-    Backport-of: fc3e3e26c515ae0f9ae32aec504974fba393928d
+    Backport-of: 559fc711e03cf0086bea399ffb40cf294cbbb6e1
