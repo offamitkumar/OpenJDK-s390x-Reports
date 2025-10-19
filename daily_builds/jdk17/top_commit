@@ -1,7 +1,7 @@
-commit ff97f224875ce0cd6800227aeaf1d9344b9e4fb9
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Oct 17 17:59:36 2025 +0000
+commit 207dd0f5b8b9bf52e22dd3e597a60af19975fe1f
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Sat Oct 18 17:34:31 2025 +0000
 
-    8339366: [jittester] Make it possible to generate tests without execution
+    8361754: New test runtime/jni/checked/TestCharArrayReleasing.java can cause disk full errors
     
-    Backport-of: 559fc711e03cf0086bea399ffb40cf294cbbb6e1
+    Backport-of: 2a53f5a5c2544d4f7a77186d99addae110b06bab

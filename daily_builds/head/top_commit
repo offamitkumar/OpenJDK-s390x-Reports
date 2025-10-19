@@ -1,7 +1,7 @@
-commit eff6439e75d79c67370e79638024296e01101b48
-Author: Alexey Semenyuk <asemenyuk@openjdk.org>
-Date:   Sat Oct 18 01:14:42 2025 +0000
+commit c2fde517b44e2315385a5ffe17fcf9ab57e12786
+Author: Anass Baya <abaya@openjdk.org>
+Date:   Sun Oct 19 11:47:55 2025 +0000
 
-    8370120: Make jpackage tests output more stable
+    8357390: java/awt/Toolkit/ScreenInsetsTest/ScreenInsetsTest.java Test failing on Ubuntu 24.04 Vm Hosts used by Oracle's internal CI system
     
-    Reviewed-by: almatvee
+    Reviewed-by: honkar, serb
