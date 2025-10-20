@@ -1,7 +1,8 @@
-commit 207dd0f5b8b9bf52e22dd3e597a60af19975fe1f
+commit 057135156c1780d068bb4c97c61aa6d8ca8799d3
 Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Sat Oct 18 17:34:31 2025 +0000
+Date:   Mon Oct 20 12:24:39 2025 +0000
 
-    8361754: New test runtime/jni/checked/TestCharArrayReleasing.java can cause disk full errors
+    8359477: com/sun/net/httpserver/Test12.java appears to have a temp file race
     
-    Backport-of: 2a53f5a5c2544d4f7a77186d99addae110b06bab
+    Reviewed-by: rrich
+    Backport-of: e1681c48287bcce6c8f617d9c0c25354dd62870a

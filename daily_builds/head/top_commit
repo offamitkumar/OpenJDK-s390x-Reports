@@ -1,7 +1,7 @@
-commit c2fde517b44e2315385a5ffe17fcf9ab57e12786
-Author: Anass Baya <abaya@openjdk.org>
-Date:   Sun Oct 19 11:47:55 2025 +0000
+commit a1be29791156645fdcad69a4b7ab770a05f0fe0e
+Author: Brian Burkhalter <bpb@openjdk.org>
+Date:   Mon Oct 20 15:25:49 2025 +0000
 
-    8357390: java/awt/Toolkit/ScreenInsetsTest/ScreenInsetsTest.java Test failing on Ubuntu 24.04 Vm Hosts used by Oracle's internal CI system
+    8369854: (ch) Refine specification of behavior of {Gathering,Writable}ByteChannel.write
     
-    Reviewed-by: honkar, serb
+    Reviewed-by: alanb

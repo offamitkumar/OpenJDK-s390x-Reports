@@ -1,7 +1,8 @@
-commit 38baaa916c65fcebeb28b9555b98e4daf3ea85ae
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Oct 17 17:58:09 2025 +0000
+commit 50537aefc736db43e4b08133dcd181ba69f10e8d
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Mon Oct 20 12:20:00 2025 +0000
 
-    8339366: [jittester] Make it possible to generate tests without execution
+    8347841: Test fixes that use deprecated time zone IDs
     
-    Backport-of: 559fc711e03cf0086bea399ffb40cf294cbbb6e1
+    Reviewed-by: rrich
+    Backport-of: 81912e958ba77c1c9371305ecfedad13aaa3fa6a
