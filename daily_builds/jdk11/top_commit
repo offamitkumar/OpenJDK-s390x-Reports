@@ -1,8 +1,8 @@
-commit b638bb35cc124122e84ba0583c1218a08c60bf93
-Author: Jan Kratochvil <jkratochvil@openjdk.org>
-Date:   Tue Oct 7 15:13:59 2025 +0000
+commit fd23a93481a813f2ba1c634cec209dddcb4ab078
+Author: Timofei Pushkin <tpushkin@openjdk.org>
+Date:   Tue Oct 21 14:39:22 2025 +0000
 
-    8263622: The java.awt.color.ICC_Profile#setData invert the order of bytes for the "head" tag
+    8274893: Update java.desktop classes to use try-with-resources
     
-    Co-authored-by: Anton Voznia <avoznia@azul.com>
-    Backport-of: 01ddf3d28004834d57f4cee92d0e055fb544a292
+    Reviewed-by: abakhtin
+    Backport-of: 70c6df6be431fe11c5441986ed04040f9ec3b750

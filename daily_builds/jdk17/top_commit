@@ -1,8 +1,7 @@
-commit 057135156c1780d068bb4c97c61aa6d8ca8799d3
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Oct 20 12:24:39 2025 +0000
+commit 141a1cf6c3fc04ee9dad7924d55c56468dc6fb3a
+Author: SendaoYan <syan@openjdk.org>
+Date:   Tue Oct 21 10:15:38 2025 +0000
 
-    8359477: com/sun/net/httpserver/Test12.java appears to have a temp file race
+    8366359: Test should throw SkippedException when there is no lpstat
     
-    Reviewed-by: rrich
-    Backport-of: e1681c48287bcce6c8f617d9c0c25354dd62870a
+    Backport-of: f23c150709fbd6d9b84261a7c99b67d7d08334b9
