@@ -1,8 +1,7 @@
-commit 50537aefc736db43e4b08133dcd181ba69f10e8d
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Oct 20 12:20:00 2025 +0000
+commit 886d96ef3080c8ec5208b4dd2c94b5fa93f3361d
+Author: Daniel Hu <costmuch@amazon.com>
+Date:   Wed Oct 22 10:26:41 2025 +0000
 
-    8347841: Test fixes that use deprecated time zone IDs
+    8323803: ConstantOopReadValue::print_on should print 'null' instead of 'nullptr'
     
-    Reviewed-by: rrich
-    Backport-of: 81912e958ba77c1c9371305ecfedad13aaa3fa6a
+    Backport-of: 7620b129888d57514d9ef588e0681f1d43377236

@@ -1,7 +1,7 @@
-commit 141a1cf6c3fc04ee9dad7924d55c56468dc6fb3a
-Author: SendaoYan <syan@openjdk.org>
-Date:   Tue Oct 21 10:15:38 2025 +0000
+commit 3fa8f01c87fc1c690fc2f75f5f445a7ea62b6389
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Wed Oct 22 11:43:16 2025 +0000
 
-    8366359: Test should throw SkippedException when there is no lpstat
+    8366092: [GCC static analyzer] UnixOperatingSystem.c warning: use of uninitialized value 'systemTicks'
     
-    Backport-of: f23c150709fbd6d9b84261a7c99b67d7d08334b9
+    Backport-of: a6e2a329a07c71582ac696809fb5349c6a0b681c
