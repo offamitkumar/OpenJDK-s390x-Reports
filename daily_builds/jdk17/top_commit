@@ -1,7 +1,7 @@
-commit 3fa8f01c87fc1c690fc2f75f5f445a7ea62b6389
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Wed Oct 22 11:43:16 2025 +0000
+commit 0b3561a675fb902400b0105fe87341ea7e738c1e
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Wed Oct 22 16:30:02 2025 +0000
 
-    8366092: [GCC static analyzer] UnixOperatingSystem.c warning: use of uninitialized value 'systemTicks'
+    8355387: [jittester] Disable downcasts by default
     
-    Backport-of: a6e2a329a07c71582ac696809fb5349c6a0b681c
+    Backport-of: b41e0b17490b203b19787a0d0742318fc0d03b33

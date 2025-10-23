@@ -1,7 +1,7 @@
-commit 886d96ef3080c8ec5208b4dd2c94b5fa93f3361d
-Author: Daniel Hu <costmuch@amazon.com>
-Date:   Wed Oct 22 10:26:41 2025 +0000
+commit 2a7c7bfd667a2697477bf8855a3ce565793a493e
+Author: Chris Dennis <chris.w.dennis@gmail.com>
+Date:   Thu Oct 23 11:43:05 2025 +0000
 
-    8323803: ConstantOopReadValue::print_on should print 'null' instead of 'nullptr'
+    8362123: ClassLoader Leak via Executors.newSingleThreadExecutor(...)
     
-    Backport-of: 7620b129888d57514d9ef588e0681f1d43377236
+    Backport-of: d5a207994b9c374e6638e57826326f8f4593b96b

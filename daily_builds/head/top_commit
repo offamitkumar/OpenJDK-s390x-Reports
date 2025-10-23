@@ -1,7 +1,7 @@
-commit 92e380c59c2498b1bc94e26658b07b383deae59a
-Author: Coleen Phillimore <coleenp@openjdk.org>
-Date:   Wed Oct 22 12:34:17 2025 +0000
+commit aaa9fbf6b5a0dda0773a657a986246b407402fa1
+Author: Thomas Stuefe <stuefe@openjdk.org>
+Date:   Thu Oct 23 13:03:31 2025 +0000
 
-    8361451: Test vmTestbase/metaspace/stressHierarchy/stressHierarchy012/TestDescription.java fails with OutOfMemoryError: Metaspace
+    8368365: ASAN errors should produce hs-err files and core dumps
     
-    Reviewed-by: dholmes, lmesnik, iklam, syan
+    Reviewed-by: mbaesken, asmehra

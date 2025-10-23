@@ -3,11 +3,12 @@
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/zip/DeInflate.java 
 # newfailures.txt
+tools/javac/patterns/SOEDeeplyNestedBlocksTest.java 
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt
-compiler/c1/TestLargeMonitorOffset.java 
 compiler/c2/TestMergeStores.java#id1 
 compiler/c2/TestMergeStores.java#id2 
+compiler/loopopts/superword/TestDoNotFilterNaNSummands.java 
+compiler/loopopts/superword/TestMemorySegmentFilterSummands.java 
 # newfailures.txt
