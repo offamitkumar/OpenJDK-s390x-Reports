@@ -1,7 +1,7 @@
-commit 0b3561a675fb902400b0105fe87341ea7e738c1e
+commit 1ab83e6e15f8d1539e64a5316a67e8c856c5097d
 Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Oct 22 16:30:02 2025 +0000
+Date:   Fri Oct 24 16:25:00 2025 +0000
 
-    8355387: [jittester] Disable downcasts by default
+    8354365: Opensource few Modal and Full Screen related tests
     
-    Backport-of: b41e0b17490b203b19787a0d0742318fc0d03b33
+    Backport-of: e21387e0454e821e5720e781138dcc4c24a14ec7

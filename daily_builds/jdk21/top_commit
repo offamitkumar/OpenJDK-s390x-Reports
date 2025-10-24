@@ -1,7 +1,7 @@
-commit 2a7c7bfd667a2697477bf8855a3ce565793a493e
-Author: Chris Dennis <chris.w.dennis@gmail.com>
-Date:   Thu Oct 23 11:43:05 2025 +0000
+commit 38fd5695623f4a8e75e97137ff3adb064d200dcd
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Oct 24 16:25:35 2025 +0000
 
-    8362123: ClassLoader Leak via Executors.newSingleThreadExecutor(...)
+    8354365: Opensource few Modal and Full Screen related tests
     
-    Backport-of: d5a207994b9c374e6638e57826326f8f4593b96b
+    Backport-of: e21387e0454e821e5720e781138dcc4c24a14ec7
