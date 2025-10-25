@@ -3,10 +3,8 @@
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/prefs/CodePointZeroPrefsTest.java 
 java/util/stream/GatherersMapConcurrentTest.java 
 java/util/stream/boottest/java.base/java/util/stream/LongNodeTest.java 
-jdk/modules/scenarios/container/ContainerTest.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt

@@ -3,6 +3,10 @@
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
+java/util/stream/test/org/openjdk/tests/java/util/stream/ConcatOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/IntUniqOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/MatchOpTest.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/MinMaxTest.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt

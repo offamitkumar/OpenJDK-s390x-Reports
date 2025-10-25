@@ -1,7 +1,7 @@
-commit cc9483b4da1a0f65f8773d0c7f35f2e6a7e1bd4f
-Author: Matthew Donovan <mdonovan@openjdk.org>
-Date:   Fri Oct 24 11:10:59 2025 +0000
+commit c3449de23f4fa74590494b8677f6832d47f12dea
+Author: Mikhail Yankelevich <myankelevich@openjdk.org>
+Date:   Sat Oct 25 15:27:03 2025 +0000
 
-    8366182: Some PKCS11Tests are being skipped when they shouldn't
+    8360395: sun/security/tools/keytool/i18n.java user country is current user location instead of the language
     
     Reviewed-by: rhalade

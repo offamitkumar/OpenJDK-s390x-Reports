@@ -1,7 +1,7 @@
-commit 1ab83e6e15f8d1539e64a5316a67e8c856c5097d
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Oct 24 16:25:00 2025 +0000
+commit f4c80e318a4a72f5308310d352e5504414716fa4
+Author: SendaoYan <syan@openjdk.org>
+Date:   Sat Oct 25 02:46:15 2025 +0000
 
-    8354365: Opensource few Modal and Full Screen related tests
+    8367869: Test java/io/FileDescriptor/Sync.java timed out
     
-    Backport-of: e21387e0454e821e5720e781138dcc4c24a14ec7
+    Backport-of: 61c5245bf7d6626b0c816612adcb0d94d6863644
