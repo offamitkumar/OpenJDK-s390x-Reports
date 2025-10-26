@@ -1,5 +1,8 @@
 # other_errors.txt
 # other_errors.txt
+java/util/stream/boottest/java.base/java/util/stream/FlagOpTest.java 
+jdk/lambda/ArrayCtorRefTest.java 
+jdk/lambda/MethodReferenceTestCallerSensitive.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

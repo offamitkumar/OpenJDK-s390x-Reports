@@ -1,7 +1,7 @@
-commit c3449de23f4fa74590494b8677f6832d47f12dea
-Author: Mikhail Yankelevich <myankelevich@openjdk.org>
-Date:   Sat Oct 25 15:27:03 2025 +0000
+commit e7c7892b9f0fcee37495cce312fdd67dc800f9c9
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Sun Oct 26 06:04:02 2025 +0000
 
-    8360395: sun/security/tools/keytool/i18n.java user country is current user location instead of the language
+    8370197: Add missing @Override annotations in com.sun.beans package
     
-    Reviewed-by: rhalade
+    Reviewed-by: prr
