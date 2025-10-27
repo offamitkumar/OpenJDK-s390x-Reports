@@ -1,7 +1,9 @@
-commit f0a16d490a3804cb62817e561e1e88eb04bd5879
-Author: SendaoYan <syan@openjdk.org>
-Date:   Sat Oct 25 02:46:53 2025 +0000
+commit 088f46dccbcd71c179adf9d6bf6dc0745fa9d2ca
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Mon Oct 27 16:27:43 2025 +0000
 
-    8367869: Test java/io/FileDescriptor/Sync.java timed out
+    8352678: Opensource few JMenuItem tests
+    8357305: Compilation failure in javax/swing/JMenuItem/bug6197830.java
     
-    Backport-of: 61c5245bf7d6626b0c816612adcb0d94d6863644
+    Reviewed-by: shade
+    Backport-of: 8a40498d79a18dcf91cf4979d34c3583a6c39322

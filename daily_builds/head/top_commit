@@ -1,7 +1,7 @@
-commit e7c7892b9f0fcee37495cce312fdd67dc800f9c9
-Author: Sergey Bylokhov <serb@openjdk.org>
-Date:   Sun Oct 26 06:04:02 2025 +0000
+commit 1e49376ece39e8f9b5c72b58688b1e195a0014be
+Author: Igor Veresov <iveresov@openjdk.org>
+Date:   Mon Oct 27 15:09:59 2025 +0000
 
-    8370197: Add missing @Override annotations in com.sun.beans package
+    8368321: Rethink compilation delay strategy for lukewarm methods
     
-    Reviewed-by: prr
+    Reviewed-by: kvn, vlivanov
