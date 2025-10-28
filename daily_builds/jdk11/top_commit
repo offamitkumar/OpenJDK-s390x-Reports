@@ -1,7 +1,7 @@
-commit 085a7f1851a3d451222fccb0a8973140d387642b
-Author: Timofei Pushkin <tpushkin@openjdk.org>
-Date:   Wed Oct 22 17:23:57 2025 +0000
+commit 94dfb3e3d22a064a83c533ab7d7504b432fad02f
+Author: Roman Marchenko <rmarchenko@openjdk.org>
+Date:   Mon Oct 27 21:12:05 2025 +0000
 
-    8347911: Limit the length of inflated text chunks
+    8350813: Rendering of bulky sound bank from MIDI sequence can cause OutOfMemoryError
     
-    Backport-of: 398a580518b4e7961bdddf733e0a89ff25bc437a
+    Backport-of: fcc2a24291d499f7149debad1250903ddc369d91

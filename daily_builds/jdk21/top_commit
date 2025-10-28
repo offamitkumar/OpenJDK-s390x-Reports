@@ -1,9 +1,8 @@
-commit 088f46dccbcd71c179adf9d6bf6dc0745fa9d2ca
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Oct 27 16:27:43 2025 +0000
+commit 34a5b8773c0f0f3baeccca5b1f4fb4342204c086
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Oct 28 16:05:04 2025 +0000
 
-    8352678: Opensource few JMenuItem tests
-    8357305: Compilation failure in javax/swing/JMenuItem/bug6197830.java
+    8306579: Consider building with /Zc:throwingNew
     
-    Reviewed-by: shade
-    Backport-of: 8a40498d79a18dcf91cf4979d34c3583a6c39322
+    Reviewed-by: rschmelter
+    Backport-of: a289bcfe7e2786d05c338712b818fc4ef12cb4ac

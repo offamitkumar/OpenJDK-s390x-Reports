@@ -1,7 +1,7 @@
-commit e391c81abf71af84ccfdef71beb55e082eedb694
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Mon Oct 27 16:26:47 2025 +0000
+commit d1813cce59cafe53f70808d47fc7029e0351e7bc
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Oct 28 14:08:09 2025 +0000
 
-    8354493: Opensource Several MultiScreen and Insets related tests
+    8369992: JFR: Disable Placeholder-, LoaderConstraints- and ProtectionDomainCacheTableStatistics in default.jfc
     
-    Backport-of: e9c8986a65df534ee2a396cb3b49fe3dbcaf6a44
+    Reviewed-by: mbaesken

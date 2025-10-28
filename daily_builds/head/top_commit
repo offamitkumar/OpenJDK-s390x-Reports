@@ -1,7 +1,7 @@
-commit 1e49376ece39e8f9b5c72b58688b1e195a0014be
-Author: Igor Veresov <iveresov@openjdk.org>
-Date:   Mon Oct 27 15:09:59 2025 +0000
+commit c3c0a676e53dbafd82e8614a20f6c47df7fc2108
+Author: Erik Österlund <eosterlund@openjdk.org>
+Date:   Tue Oct 28 13:41:38 2025 +0000
 
-    8368321: Rethink compilation delay strategy for lukewarm methods
+    8370500: Change windows x64 implementation of os::current_stack_pointer()
     
-    Reviewed-by: kvn, vlivanov
+    Reviewed-by: aboldtch, dholmes, kvn, adinn
