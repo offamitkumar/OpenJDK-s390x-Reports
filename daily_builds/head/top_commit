@@ -1,7 +1,7 @@
-commit c3c0a676e53dbafd82e8614a20f6c47df7fc2108
-Author: Erik Österlund <eosterlund@openjdk.org>
-Date:   Tue Oct 28 13:41:38 2025 +0000
+commit eab5644a96e20409f31622d2e6c33636a7a49768
+Author: Hamlin Li <mli@openjdk.org>
+Date:   Wed Oct 29 15:00:16 2025 +0000
 
-    8370500: Change windows x64 implementation of os::current_stack_pointer()
+    8370481: C2 SuperWord: Long/Integer.compareUnsigned return wrong value in SLP
     
-    Reviewed-by: aboldtch, dholmes, kvn, adinn
+    Reviewed-by: epeter, tonyp

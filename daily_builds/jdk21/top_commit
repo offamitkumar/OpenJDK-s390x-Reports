@@ -1,8 +1,7 @@
-commit 34a5b8773c0f0f3baeccca5b1f4fb4342204c086
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Oct 28 16:05:04 2025 +0000
+commit d29794f9974632fd7bb24a09c2cbd2916f2ed65c
+Author: SendaoYan <syan@openjdk.org>
+Date:   Wed Oct 29 01:44:27 2025 +0000
 
-    8306579: Consider building with /Zc:throwingNew
+    8325277: [21u] Backout test change of JDK-8291809
     
-    Reviewed-by: rschmelter
-    Backport-of: a289bcfe7e2786d05c338712b818fc4ef12cb4ac
+    Reviewed-by: phh

@@ -1,7 +1,7 @@
-commit d1813cce59cafe53f70808d47fc7029e0351e7bc
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Oct 28 14:08:09 2025 +0000
+commit be5ae4cb0e9df4df3e07de2364359b442a42b184
+Author: Matthias Baesken <mbaesken@openjdk.org>
+Date:   Wed Oct 29 13:01:32 2025 +0000
 
-    8369992: JFR: Disable Placeholder-, LoaderConstraints- and ProtectionDomainCacheTableStatistics in default.jfc
+    8363676: [GCC static analyzer] missing return value check of malloc in OGLContext_SetTransform
     
-    Reviewed-by: mbaesken
+    Backport-of: d25ad881ebfec40ca6b0a73f78d1f9d2cb722e01
