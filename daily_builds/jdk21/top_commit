@@ -1,7 +1,7 @@
-commit d29794f9974632fd7bb24a09c2cbd2916f2ed65c
-Author: SendaoYan <syan@openjdk.org>
-Date:   Wed Oct 29 01:44:27 2025 +0000
+commit 382181a28c787bd6c998f9e50565ce6cc00f33ea
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Oct 30 08:59:43 2025 +0000
 
-    8325277: [21u] Backout test change of JDK-8291809
+    8333526: Restructure java/nio/channels/DatagramChannel/StressNativeSignal.java to a fail fast exception handling policy
     
-    Reviewed-by: phh
+    Backport-of: 4f4030a423d04c8f488d143f0eda4a8de9dbd469

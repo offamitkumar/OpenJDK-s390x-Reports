@@ -1,7 +1,7 @@
-commit be5ae4cb0e9df4df3e07de2364359b442a42b184
-Author: Matthias Baesken <mbaesken@openjdk.org>
-Date:   Wed Oct 29 13:01:32 2025 +0000
+commit f796f9e33961dfc1348fac8d0139b19098731e93
+Author: Roland Mesde <mesde@amazon.com>
+Date:   Thu Oct 30 16:41:19 2025 +0000
 
-    8363676: [GCC static analyzer] missing return value check of malloc in OGLContext_SetTransform
+    8318467: [jmh] tests concurrent.Queues and concurrent.ProducerConsumer hang with 101+ threads
     
-    Backport-of: d25ad881ebfec40ca6b0a73f78d1f9d2cb722e01
+    Backport-of: e05cafda78a37dbeb2df2edd791be19d22edaece

@@ -1,7 +1,7 @@
-commit eab5644a96e20409f31622d2e6c33636a7a49768
-Author: Hamlin Li <mli@openjdk.org>
-Date:   Wed Oct 29 15:00:16 2025 +0000
+commit bb9aeedd880d4ae81d301edbbc903c3cb53c0526
+Author: Kevin Walls <kevinw@openjdk.org>
+Date:   Thu Oct 30 15:22:28 2025 +0000
 
-    8370481: C2 SuperWord: Long/Integer.compareUnsigned return wrong value in SLP
+    8370908: Remove test javax/management/remote/mandatory/connection/DeadLockTest.java from ProblemList-Virtual
     
-    Reviewed-by: epeter, tonyp
+    Reviewed-by: cjplummer
