@@ -1,7 +1,7 @@
-commit bb9aeedd880d4ae81d301edbbc903c3cb53c0526
-Author: Kevin Walls <kevinw@openjdk.org>
-Date:   Thu Oct 30 15:22:28 2025 +0000
+commit 8236800deb5b99a027b0944f6c512c0f31d030df
+Author: Chad Rakoczy <chadrako@amazon.com>
+Date:   Fri Oct 31 14:11:13 2025 +0000
 
-    8370908: Remove test javax/management/remote/mandatory/connection/DeadLockTest.java from ProblemList-Virtual
+    8370527: Memory leak after 8316694: Implement relocation of nmethod within CodeCache
     
-    Reviewed-by: cjplummer
+    Reviewed-by: shade, eastigeevich, kvn

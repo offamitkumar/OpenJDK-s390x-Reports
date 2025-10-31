@@ -1,7 +1,7 @@
-commit f796f9e33961dfc1348fac8d0139b19098731e93
-Author: Roland Mesde <mesde@amazon.com>
-Date:   Thu Oct 30 16:41:19 2025 +0000
+commit dbfdc506ff446ef52b45bd0e151ee7a3c4acef09
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Oct 31 16:44:00 2025 +0000
 
-    8318467: [jmh] tests concurrent.Queues and concurrent.ProducerConsumer hang with 101+ threads
+    8353832: Opensource FontClass, Selection and Icon tests
     
-    Backport-of: e05cafda78a37dbeb2df2edd791be19d22edaece
+    Backport-of: 8c6b611f35af22af5b6c3eb663b30985857c1da3
