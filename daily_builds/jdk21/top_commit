@@ -1,7 +1,8 @@
-commit aeef439dfc6121ee77346b88adc5ce674e786905
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Oct 31 16:41:49 2025 +0000
+commit 485ced0d5b240d45640906a4a101ec94c18820ba
+Author: Feilong Jiang <fjiang@openjdk.org>
+Date:   Sat Nov 1 12:34:50 2025 +0000
 
-    8353832: Opensource FontClass, Selection and Icon tests
+    8369947: Bytecode rewriting causes Java heap corruption on RISC-V
     
-    Backport-of: 8c6b611f35af22af5b6c3eb663b30985857c1da3
+    Reviewed-by: fyang
+    Backport-of: 462519935827e25475f2fb35746ad81a14bc5da7
