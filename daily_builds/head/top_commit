@@ -1,7 +1,7 @@
-commit 13b3d2fca1af71d0aa9908e19630c2e965dd7134
-Author: Mikhail Yankelevich <myankelevich@openjdk.org>
-Date:   Sat Nov 1 10:06:14 2025 +0000
+commit e8a1a8707ee6192c85ac62a2a51c815e07613c38
+Author: Kim Barrett <kbarrett@openjdk.org>
+Date:   Sun Nov 2 07:02:06 2025 +0000
 
-    8368625: com/sun/net/httpserver/ServerStopTerminationTest.java fails intermittently
+    8369186: HotSpot Style Guide should permit some uses of the C++ Standard Library
     
-    Reviewed-by: dfuchs
+    Reviewed-by: jrose, lkorinth, iwalulya, kvn, stefank
