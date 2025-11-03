@@ -1,7 +1,6 @@
-commit 94dfb3e3d22a064a83c533ab7d7504b432fad02f
-Author: Roman Marchenko <rmarchenko@openjdk.org>
-Date:   Mon Oct 27 21:12:05 2025 +0000
+commit 9c5f0dd4d7f5c28c57ae0b28f06bb4b90a496d5c
+Merge: 94dfb3e3d2 d3b1c2be9e
+Author: Andrew John Hughes <andrew@openjdk.org>
+Date:   Sun Nov 2 22:50:34 2025 +0000
 
-    8350813: Rendering of bulky sound bank from MIDI sequence can cause OutOfMemoryError
-    
-    Backport-of: fcc2a24291d499f7149debad1250903ddc369d91
+    Merge

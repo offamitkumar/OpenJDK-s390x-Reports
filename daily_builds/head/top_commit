@@ -1,7 +1,7 @@
-commit e8a1a8707ee6192c85ac62a2a51c815e07613c38
-Author: Kim Barrett <kbarrett@openjdk.org>
-Date:   Sun Nov 2 07:02:06 2025 +0000
+commit 02a7217491755e25f3ae7ff3924f85e26698720d
+Author: Artur Barashev <abarashev@openjdk.org>
+Date:   Mon Nov 3 15:05:16 2025 +0000
 
-    8369186: HotSpot Style Guide should permit some uses of the C++ Standard Library
+    8366364: Return enabled signature schemes with SSLConfiguration#getSSLParameters() call
     
-    Reviewed-by: jrose, lkorinth, iwalulya, kvn, stefank
+    Reviewed-by: mullan
