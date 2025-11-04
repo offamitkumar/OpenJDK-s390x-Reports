@@ -2,6 +2,5 @@
 # newfailures.txt
 java/util/zip/CloseInflaterDeflaterTest.java 
 # newfailures.txt
-tools/javac/tree/SourceDocTreeScannerTest.java 
 # newfailures.txt
 # newfailures.txt

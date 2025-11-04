@@ -1,7 +1,7 @@
-commit 02a7217491755e25f3ae7ff3924f85e26698720d
-Author: Artur Barashev <abarashev@openjdk.org>
-Date:   Mon Nov 3 15:05:16 2025 +0000
+commit c0c76703bc10d5caa1cda7e2820d0702df5b8008
+Author: Fernando Guallini <fguallini@openjdk.org>
+Date:   Tue Nov 4 15:20:22 2025 +0000
 
-    8366364: Return enabled signature schemes with SSLConfiguration#getSSLParameters() call
+    8366817: test/jdk/javax/net/ssl/TLSCommon/interop/JdkProcServer.java and JdkProcClient.java should not delete logs
     
-    Reviewed-by: mullan
+    Reviewed-by: syan, rhalade
