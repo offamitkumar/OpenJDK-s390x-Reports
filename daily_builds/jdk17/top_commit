@@ -1,8 +1,7 @@
-commit a3442fd77f524a2ccbb499ab0120b11c30642708
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Tue Nov 4 11:05:32 2025 +0000
+commit 9449e0b9f20e26020c66beb783a5ca2ae1886a22
+Author: Vladimir Petko <vpetko@openjdk.org>
+Date:   Thu Nov 6 16:11:23 2025 +0000
 
-    8294594: Fix cast-function-type warnings in signal handling code
+    8369450: [Ubuntu 25.10] openjdk fails to build due to rust-coreutils date
     
-    Reviewed-by: mdoerr
-    Backport-of: b06f1b149c8f8a49d4e42c4b782a4b3a22aa79f6
+    Backport-of: b73228b51c1b1c59c8cd8ee7b14522edc12d564a

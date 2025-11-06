@@ -1,8 +1,7 @@
-commit 485ced0d5b240d45640906a4a101ec94c18820ba
-Author: Feilong Jiang <fjiang@openjdk.org>
-Date:   Sat Nov 1 12:34:50 2025 +0000
+commit dd269de3e77d42bfd9f424523ba400175ac6bfd4
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Wed Nov 5 18:35:07 2025 +0000
 
-    8369947: Bytecode rewriting causes Java heap corruption on RISC-V
+    8352905: Open some JComboBox bugs 1
     
-    Reviewed-by: fyang
-    Backport-of: 462519935827e25475f2fb35746ad81a14bc5da7
+    Backport-of: a55ccd267cdfbb7a52c0647fa3b2f93b36b1805f
