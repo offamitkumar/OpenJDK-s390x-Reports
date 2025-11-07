@@ -1,7 +1,10 @@
-commit a5864582da7e19b941bf55c294a414bc1a0c7a84
-Author: Archie Cobbs <acobbs@openjdk.org>
-Date:   Thu Nov 6 15:28:01 2025 +0000
+commit c8656449c28581ae9c3d815105e338e42253bb43
+Author: Erik Österlund <eosterlund@openjdk.org>
+Date:   Fri Nov 7 15:28:51 2025 +0000
 
-    8155591: Misleading warning when not overriding close method in interface extending AutoCloseable
+    8365932: Implementation of JEP 516: Ahead-of-Time Object Caching with Any GC
     
-    Reviewed-by: jlahoda
+    Co-authored-by: Axel Boldt-Christmas <aboldtch@openjdk.org>
+    Co-authored-by: Joel Sikström <jsikstro@openjdk.org>
+    Co-authored-by: Stefan Karlsson <stefank@openjdk.org>
+    Reviewed-by: aboldtch, iklam, kvn

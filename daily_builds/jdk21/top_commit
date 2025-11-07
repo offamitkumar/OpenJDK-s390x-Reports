@@ -1,7 +1,7 @@
-commit dd269de3e77d42bfd9f424523ba400175ac6bfd4
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Wed Nov 5 18:35:07 2025 +0000
+commit a04888abdae5b4ac7fe636b177f10ac1afa4ea5d
+Author: Roland Mesde <mesde@amazon.com>
+Date:   Fri Nov 7 16:13:45 2025 +0000
 
-    8352905: Open some JComboBox bugs 1
+    8316422: TestIntegerUnsignedDivMod.java triggers "invalid layout" assert in FrameValues::validate
     
-    Backport-of: a55ccd267cdfbb7a52c0647fa3b2f93b36b1805f
+    Backport-of: 5e1b771a19962042a0020a9148e94e14d63025ee

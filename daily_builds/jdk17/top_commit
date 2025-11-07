@@ -1,7 +1,7 @@
-commit 9449e0b9f20e26020c66beb783a5ca2ae1886a22
-Author: Vladimir Petko <vpetko@openjdk.org>
-Date:   Thu Nov 6 16:11:23 2025 +0000
+commit 9bf2571e7bc9d8752e0c10fcde4973df2f7688ea
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Nov 7 04:30:44 2025 +0000
 
-    8369450: [Ubuntu 25.10] openjdk fails to build due to rust-coreutils date
+    8328299: Convert DnDFileGroupDescriptor.html applet test to main
     
-    Backport-of: b73228b51c1b1c59c8cd8ee7b14522edc12d564a
+    Backport-of: 75195aab497a2d23548128e03f6887283dcaa7e1
