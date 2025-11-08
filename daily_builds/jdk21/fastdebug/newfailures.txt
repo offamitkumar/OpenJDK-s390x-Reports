@@ -5,5 +5,6 @@ java/util/zip/CloseInflaterDeflaterTest.java
 tools/javac/tree/SourceDocTreeScannerTest.java 
 # newfailures.txt
 compiler/c2/irTests/TestAutoVectorization2DArray.java 
+gtest/GTestWrapper.java 
 runtime/ErrorHandling/TestDwarf.java#dontCheckDecoder 
 # newfailures.txt
