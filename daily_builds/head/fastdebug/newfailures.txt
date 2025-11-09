@@ -4,9 +4,6 @@ java/foreign/sharedclosejfr/TestSharedCloseJFR.java
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/stream/test/org/openjdk/tests/java/util/stream/DoublePrimitiveOpsTests.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IterateTest.java 
-java/util/stream/test/org/openjdk/tests/java/util/stream/LongPrimitiveOpsTests.java 
 # newfailures.txt
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 
 # newfailures.txt
