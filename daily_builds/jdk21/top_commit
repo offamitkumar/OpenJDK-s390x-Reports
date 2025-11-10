@@ -1,7 +1,7 @@
-commit a04888abdae5b4ac7fe636b177f10ac1afa4ea5d
-Author: Roland Mesde <mesde@amazon.com>
-Date:   Fri Nov 7 16:13:45 2025 +0000
+commit b2eccbc3e6c5a901a8d9ec5950dc1220ae76325a
+Author: David Briemann <dbriemann@openjdk.org>
+Date:   Mon Nov 10 14:32:43 2025 +0000
 
-    8316422: TestIntegerUnsignedDivMod.java triggers "invalid layout" assert in FrameValues::validate
+    8361599: [PPC64] enable missing tests via jtreg requires
     
-    Backport-of: 5e1b771a19962042a0020a9148e94e14d63025ee
+    Backport-of: 83feb7a2388e33835b2071cfe0e51ba8b43e241f

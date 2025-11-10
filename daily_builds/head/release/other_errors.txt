@@ -1,5 +1,9 @@
 # other_errors.txt
 # other_errors.txt
+java/util/stream/test/org/openjdk/tests/java/util/stream/CollectorExample.java 
+java/util/stream/test/org/openjdk/tests/java/util/stream/CollectorsTest.java 
+jdk/internal/reflect/Reflection/GetCallerClassTest.java#id0 
+jdk/internal/util/ArraysSupport/NewLength.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

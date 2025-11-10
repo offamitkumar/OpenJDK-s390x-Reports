@@ -1,7 +1,7 @@
-commit 4a14c81a06ab2be1d56cd01288135fbd369eb9c7
-Author: Prasanta Sadhukhan <psadhukhan@openjdk.org>
-Date:   Sun Nov 9 07:23:10 2025 +0000
+commit 6e838d6f9a59e4f14d4d1a6d4ff6ea857c0615e9
+Author: Jorn Vernee <jvernee@openjdk.org>
+Date:   Mon Nov 10 14:57:27 2025 +0000
 
-    8299304: Test "java/awt/print/PrinterJob/PageDialogTest.java" fails on macOS 13 x64 because the Page Dialog blocks the Toolkit
+    8371474: Wrong object class or methodID passed to JNI call in TestSharedCloseJvmti with -Xshare:off
     
-    Reviewed-by: tr
+    Reviewed-by: alanb, mdoerr
