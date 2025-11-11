@@ -9,6 +9,7 @@ tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java
 # newfailures.txt
 compiler/c2/TestMergeStores.java#id1 
 compiler/c2/TestMergeStores.java#id2 
+compiler/c2/cr7200264/TestIntVect.java 
 compiler/intrinsics/TestReturnOopSetForJFRWriteCheckpoint.java 
 compiler/loopopts/superword/TestDoNotFilterNaNSummands.java 
 compiler/loopopts/superword/TestMemorySegmentFilterSummands.java 

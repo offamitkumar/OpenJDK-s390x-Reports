@@ -1,7 +1,7 @@
-commit 6e838d6f9a59e4f14d4d1a6d4ff6ea857c0615e9
-Author: Jorn Vernee <jvernee@openjdk.org>
-Date:   Mon Nov 10 14:57:27 2025 +0000
+commit bbeb6bf0ac8952feaf8afc9c9b25a9a372c2c798
+Author: Ashutosh Mehra <asmehra@openjdk.org>
+Date:   Tue Nov 11 15:07:10 2025 +0000
 
-    8371474: Wrong object class or methodID passed to JNI call in TestSharedCloseJvmti with -Xshare:off
+    8371493: Simplify search for  AdapterHandlerEntry
     
-    Reviewed-by: alanb, mdoerr
+    Reviewed-by: kvn, adinn
