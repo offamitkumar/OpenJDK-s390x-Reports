@@ -1,7 +1,7 @@
-commit bbeb6bf0ac8952feaf8afc9c9b25a9a372c2c798
-Author: Ashutosh Mehra <asmehra@openjdk.org>
-Date:   Tue Nov 11 15:07:10 2025 +0000
+commit 56a27d11971d935e8b28ac9d701cf9890014a949
+Author: Daniel Lundén <dlunden@openjdk.org>
+Date:   Wed Nov 12 14:45:22 2025 +0000
 
-    8371493: Simplify search for  AdapterHandlerEntry
+    8341039: compiler/cha/TypeProfileFinalMethod.java fails with assertEquals expected: 0 but was: 2
     
-    Reviewed-by: kvn, adinn
+    Reviewed-by: rcastanedalo, dfenacci

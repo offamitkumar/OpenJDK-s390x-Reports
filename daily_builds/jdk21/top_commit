@@ -1,7 +1,8 @@
-commit b2eccbc3e6c5a901a8d9ec5950dc1220ae76325a
-Author: David Briemann <dbriemann@openjdk.org>
-Date:   Mon Nov 10 14:32:43 2025 +0000
+commit 8374d1f6fff541bef426b668978c31186405089b
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Wed Nov 12 12:28:38 2025 +0000
 
-    8361599: [PPC64] enable missing tests via jtreg requires
+    8347300: Don't exclude the "PATH" var from the environment when running app launchers in jpackage tests
     
-    Backport-of: 83feb7a2388e33835b2071cfe0e51ba8b43e241f
+    Reviewed-by: mbaesken
+    Backport-of: d69463e4bcbddd346b9486059c5ad3a1cb555632

@@ -1,10 +1,8 @@
-commit c40bce3c5f56204ca23efbc072526e2bd3581d36
-Author: Francisco Ferrari Bihurriet <fferrari@openjdk.org>
-Date:   Thu Nov 6 16:11:27 2025 +0000
+commit 89b48ae81ffc4a08f047aa897a2d7719afa52011
+Author: Aleksey Shipilev <shade@openjdk.org>
+Date:   Wed Nov 12 15:12:45 2025 +0000
 
-    8339280: jarsigner -verify performs cross-checking between CEN and LOC
-    8353299: VerifyJarEntryName.java test fails
-    8367782: VerifyJarEntryName.java: Fix modifyJarEntryName to operate on bytes and re-introduce verifySignatureEntryName
+    8341861: GHA: Use only retention mechanism to remove bundles
     
-    Reviewed-by: abakhtin, sgehwolf
-    Backport-of: bbd5b174c50346152a624317b6bd76ec48f7e551
+    Reviewed-by: phh
+    Backport-of: 29ae26517f9c1fd5e641b3a560aa93e370920506

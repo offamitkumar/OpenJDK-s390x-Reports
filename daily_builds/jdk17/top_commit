@@ -1,8 +1,7 @@
-commit e3c50e1b14afde0d02d8d39b3ae8569c97d1855b
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Mon Nov 10 20:11:46 2025 +0000
+commit c9f4ceb83efd55c40b164b147aaa6feb4fc4daf9
+Author: Elif Aslan <elifasln@amazon.com>
+Date:   Wed Nov 12 17:04:44 2025 +0000
 
-    8358764: (sc) SocketChannel.close when thread blocked in read causes connection to be reset (win)
+    8310915: Typo in aarch64.ad: "envcodings"
     
-    Reviewed-by: mdoerr
-    Backport-of: 83f9c250221f707be484e0163fe9040f99474412
+    Backport-of: 6f325db49365d3d06add5d194d4696a1428675fa
