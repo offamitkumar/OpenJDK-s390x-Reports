@@ -1,7 +1,8 @@
-commit c9f4ceb83efd55c40b164b147aaa6feb4fc4daf9
-Author: Elif Aslan <elifasln@amazon.com>
-Date:   Wed Nov 12 17:04:44 2025 +0000
+commit 22fef0ac3e55d5c5f3af59b620c98a16db4c73eb
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Thu Nov 13 17:01:45 2025 +0000
 
-    8310915: Typo in aarch64.ad: "envcodings"
+    8347300: Don't exclude the "PATH" var from the environment when running app launchers in jpackage tests
     
-    Backport-of: 6f325db49365d3d06add5d194d4696a1428675fa
+    Reviewed-by: mbaesken
+    Backport-of: 8374d1f6fff541bef426b668978c31186405089b

@@ -1,8 +1,7 @@
-commit 89b48ae81ffc4a08f047aa897a2d7719afa52011
-Author: Aleksey Shipilev <shade@openjdk.org>
-Date:   Wed Nov 12 15:12:45 2025 +0000
+commit 912a12be6407be18a27df70d9954cfdf3e5f009c
+Author: Sergey Bylokhov <serb@openjdk.org>
+Date:   Thu Nov 13 06:56:37 2025 +0000
 
-    8341861: GHA: Use only retention mechanism to remove bundles
+    8357657: [11u][windows] cannot stat '/jdk.crypto.ec/*': No such file or directory
     
-    Reviewed-by: phh
-    Backport-of: 29ae26517f9c1fd5e641b3a560aa93e370920506
+    Reviewed-by: shade

@@ -1,6 +1,7 @@
 # other_errors.txt
 # other_errors.txt
-jdk/internal/misc/CDS/ArchivedEnumTest.java 
+java/util/stream/boottest/java.base/java/util/stream/FlagOpTest.java 
+jdk/internal/loader/URLClassPath/LargeClasspathWithPkgPrefix.java 
 # other_errors.txt
 # other_errors.txt
 # other_errors.txt

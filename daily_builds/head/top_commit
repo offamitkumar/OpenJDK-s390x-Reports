@@ -1,7 +1,7 @@
-commit 56a27d11971d935e8b28ac9d701cf9890014a949
-Author: Daniel Lundén <dlunden@openjdk.org>
-Date:   Wed Nov 12 14:45:22 2025 +0000
+commit 8102f436f5586253302cd8cef49bfe2b4af41693
+Author: Vicente Romero <vromero@openjdk.org>
+Date:   Thu Nov 13 15:28:08 2025 +0000
 
-    8341039: compiler/cha/TypeProfileFinalMethod.java fails with assertEquals expected: 0 but was: 2
+    8371480: VerifyError after JDK-8369654
     
-    Reviewed-by: rcastanedalo, dfenacci
+    Reviewed-by: mcimadamore
