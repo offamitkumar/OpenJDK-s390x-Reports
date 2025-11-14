@@ -1,8 +1,7 @@
-commit ce312b3ecbbacaf23f4b2893898ce8de8cd53daa
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Thu Nov 13 17:02:38 2025 +0000
+commit 634d3fa7f147fc6fb1a7765755a3feed82ffaf50
+Author: Voznia Anton <avoznia@azul.com>
+Date:   Thu Nov 13 21:13:43 2025 +0000
 
-    8333569: jpackage tests must run app launchers with retries on Linux only
+    8351359: OperatingSystemMXBean: values from getCpuLoad and getProcessCpuLoad are stale after 24.8 days (Windows)
     
-    Reviewed-by: mbaesken
-    Backport-of: aad6664bb6d2b311b3e0cb056afaa9b6534bdbbb
+    Backport-of: 900b3ff7ee933520efe2438fb7c841a4e6a93d17

@@ -1,7 +1,7 @@
-commit 8102f436f5586253302cd8cef49bfe2b4af41693
-Author: Vicente Romero <vromero@openjdk.org>
-Date:   Thu Nov 13 15:28:08 2025 +0000
+commit 466cb383144edf0baa202dc5a2cac37e7572e2db
+Author: Thomas Stuefe <stuefe@openjdk.org>
+Date:   Fri Nov 14 14:53:19 2025 +0000
 
-    8371480: VerifyError after JDK-8369654
+    8371885: Mark UseCompressedClassPointers as obsolete for JDK 27
     
-    Reviewed-by: mcimadamore
+    Reviewed-by: mdoerr, coleenp
