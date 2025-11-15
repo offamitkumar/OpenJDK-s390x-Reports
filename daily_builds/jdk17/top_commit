@@ -1,7 +1,7 @@
-commit 23ee787c9e26b2b43bcab425f06908e97603fe30
-Author: Min Choi <mmmchoi920@gmail.com>
-Date:   Thu Nov 13 21:30:42 2025 +0000
+commit cb258e5fba3767c343ed4bf54f3d2d6de6de2704
+Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
+Date:   Fri Nov 14 23:42:07 2025 +0000
 
-    8324861: Exceptions::wrap_dynamic_exception() doesn't have ResourceMark
+    8305778: javax/swing/JTableHeader/6884066/bug6884066.java: Unexpected header's value; index = 4 value = E
     
-    Backport-of: 7d1a48807a482cd19156298ce21d9492f0d912da
+    Backport-of: 2d7c50791bd79d9a140df12e38050c851423992c

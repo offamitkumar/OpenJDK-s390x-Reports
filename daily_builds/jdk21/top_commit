@@ -1,7 +1,7 @@
-commit 634d3fa7f147fc6fb1a7765755a3feed82ffaf50
-Author: Voznia Anton <avoznia@azul.com>
-Date:   Thu Nov 13 21:13:43 2025 +0000
+commit db16554afc2bf284697f4f9f10672b37f0e464a6
+Author: Elif Aslan <elifasln@amazon.com>
+Date:   Fri Nov 14 20:34:51 2025 +0000
 
-    8351359: OperatingSystemMXBean: values from getCpuLoad and getProcessCpuLoad are stale after 24.8 days (Windows)
+    8353661: Open source several swing tests batch5
     
-    Backport-of: 900b3ff7ee933520efe2438fb7c841a4e6a93d17
+    Backport-of: 924638c471b0bf4a00a890ce6a3fd7e118cdd578
