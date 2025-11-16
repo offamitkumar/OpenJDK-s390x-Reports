@@ -1,7 +1,7 @@
-commit f510b4a3bafa3f0d2c9ebf0b33d48f57f3bdef95
-Author: Quan Anh Mai <qamai@openjdk.org>
-Date:   Sat Nov 15 12:59:04 2025 +0000
+commit 7d35a283cf2497565d230e3d5426f563f7e5870d
+Author: Tobias Hartmann <thartmann@openjdk.org>
+Date:   Sun Nov 16 10:31:23 2025 +0000
 
-    8355574: Fatal error in abort_verify_int_in_range due to Invalid CastII
+    8371958: [BACKOUT] 8371709: Add CTW to hotspot_compiler testing
     
-    Reviewed-by: vlivanov, roland
+    Reviewed-by: ayang
