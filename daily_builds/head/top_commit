@@ -1,7 +1,7 @@
-commit 7d35a283cf2497565d230e3d5426f563f7e5870d
-Author: Tobias Hartmann <thartmann@openjdk.org>
-Date:   Sun Nov 16 10:31:23 2025 +0000
+commit 52ffe8a09637701cf93d3425b69089ced5ad4dcb
+Author: Mark Powers <mpowers@openjdk.org>
+Date:   Mon Nov 17 14:59:30 2025 +0000
 
-    8371958: [BACKOUT] 8371709: Add CTW to hotspot_compiler testing
+    8371156: PBKDF2 default values should not be DER encoded
     
-    Reviewed-by: ayang
+    Reviewed-by: weijun
