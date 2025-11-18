@@ -1,7 +1,7 @@
-commit cb258e5fba3767c343ed4bf54f3d2d6de6de2704
-Author: Satyen Subramaniam <ssubramaniam@openjdk.org>
-Date:   Fri Nov 14 23:42:07 2025 +0000
+commit a0082e675ddf14540bcdc70fb7b56663943631ca
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Nov 18 09:03:47 2025 +0000
 
-    8305778: javax/swing/JTableHeader/6884066/bug6884066.java: Unexpected header's value; index = 4 value = E
+    8366844: Update and automate MouseDraggedOriginatedByScrollBarTest.java
     
-    Backport-of: 2d7c50791bd79d9a140df12e38050c851423992c
+    Backport-of: f1ee1b4a3d7c47b6f61b36b78504e3ec997a925a

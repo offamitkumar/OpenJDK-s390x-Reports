@@ -1,7 +1,7 @@
-commit 52ffe8a09637701cf93d3425b69089ced5ad4dcb
-Author: Mark Powers <mpowers@openjdk.org>
-Date:   Mon Nov 17 14:59:30 2025 +0000
+commit 1f99cf942449728cdeb9918b93fd9a97a51eb0b6
+Author: Chen Liang <liach@openjdk.org>
+Date:   Tue Nov 18 15:14:49 2025 +0000
 
-    8371156: PBKDF2 default values should not be DER encoded
+    8372002: VarHandle for receiver's superclass instance fields fails describeConstable
     
-    Reviewed-by: weijun
+    Reviewed-by: psandoz, jvernee

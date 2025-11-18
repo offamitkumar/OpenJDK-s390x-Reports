@@ -1,7 +1,7 @@
-commit db16554afc2bf284697f4f9f10672b37f0e464a6
-Author: Elif Aslan <elifasln@amazon.com>
-Date:   Fri Nov 14 20:34:51 2025 +0000
+commit 46687d38472dafe8cacda2de61fb34a2b73ee194
+Author: Goetz Lindenmaier <goetz@openjdk.org>
+Date:   Tue Nov 18 08:59:57 2025 +0000
 
-    8353661: Open source several swing tests batch5
+    8366844: Update and automate MouseDraggedOriginatedByScrollBarTest.java
     
-    Backport-of: 924638c471b0bf4a00a890ce6a3fd7e118cdd578
+    Backport-of: f1ee1b4a3d7c47b6f61b36b78504e3ec997a925a
