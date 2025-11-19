@@ -1,7 +1,7 @@
-commit 1f99cf942449728cdeb9918b93fd9a97a51eb0b6
+commit f0afd89f66c0b42ff06fbb76378a5b2028b76a10
 Author: Chen Liang <liach@openjdk.org>
-Date:   Tue Nov 18 15:14:49 2025 +0000
+Date:   Wed Nov 19 15:19:04 2025 +0000
 
-    8372002: VarHandle for receiver's superclass instance fields fails describeConstable
+    8357728: Avoid caching synthesized names in synthesized parameters
     
-    Reviewed-by: psandoz, jvernee
+    Reviewed-by: jvernee
