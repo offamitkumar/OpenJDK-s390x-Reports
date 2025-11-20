@@ -1,7 +1,7 @@
-commit a0082e675ddf14540bcdc70fb7b56663943631ca
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Nov 18 09:03:47 2025 +0000
+commit 4272f8c6f56fae56543e1d071bce90a05bc5798e
+Author: Roland Mesde <mesde@amazon.com>
+Date:   Wed Nov 19 18:31:01 2025 +0000
 
-    8366844: Update and automate MouseDraggedOriginatedByScrollBarTest.java
+    8292043: Incorrect decoding near EOF for stateful decoders like UTF-16
     
-    Backport-of: f1ee1b4a3d7c47b6f61b36b78504e3ec997a925a
+    Backport-of: aa9b8f04bf74d5fa00f2b27895e7369abea3a930

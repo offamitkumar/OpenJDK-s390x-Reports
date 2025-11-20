@@ -1,11 +1,10 @@
 # newfailures.txt
 # newfailures.txt
+com/sun/crypto/provider/Cipher/HPKE/KAT9180.java 
 java/foreign/sharedclosejfr/TestSharedCloseJFR.java 
 java/util/concurrent/tck/JSR166TestCase.java#default 
 java/util/concurrent/tck/JSR166TestCase.java#forkjoinpool-common-parallelism 
 java/util/concurrent/tck/JSR166TestCase.java#others 
-java/util/stream/test/org/openjdk/tests/java/util/stream/IntPrimitiveOpsTests.java 
-java/util/zip/ZipFile/ManyEntries.java 
 # newfailures.txt
 tools/javac/patterns/SOEDeeplyNestedBlocksTest.java 
 tools/javac/platform/createsymbols/CreateSymbolsReproducibleTest.java 

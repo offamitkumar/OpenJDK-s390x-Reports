@@ -1,7 +1,7 @@
-commit 46687d38472dafe8cacda2de61fb34a2b73ee194
-Author: Goetz Lindenmaier <goetz@openjdk.org>
-Date:   Tue Nov 18 08:59:57 2025 +0000
+commit c578eb2e09c75901076f93de668f74a3dcb3c026
+Author: Roland Mesde <mesde@amazon.com>
+Date:   Wed Nov 19 17:03:26 2025 +0000
 
-    8366844: Update and automate MouseDraggedOriginatedByScrollBarTest.java
+    8280482: Window transparency bug on Linux
     
-    Backport-of: f1ee1b4a3d7c47b6f61b36b78504e3ec997a925a
+    Backport-of: 0a3c6d6bd010231d02e92016037149e85fb1db3f

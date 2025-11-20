@@ -1,7 +1,8 @@
-commit f0afd89f66c0b42ff06fbb76378a5b2028b76a10
-Author: Chen Liang <liach@openjdk.org>
-Date:   Wed Nov 19 15:19:04 2025 +0000
+commit a89018582160a9d876f66925618c8b8f93190e67
+Author: Alexey Semenyuk <asemenyuk@openjdk.org>
+Date:   Thu Nov 20 15:17:44 2025 +0000
 
-    8357728: Avoid caching synthesized names in synthesized parameters
+    8333727: Use JOpt in jpackage to parse command line
+    8371384: libapplauncher.so is copied to a wrong location in two step packaging when --install-dir=/usr
     
-    Reviewed-by: jvernee
+    Reviewed-by: almatvee
