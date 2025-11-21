@@ -1,7 +1,7 @@
-commit c578eb2e09c75901076f93de668f74a3dcb3c026
-Author: Roland Mesde <mesde@amazon.com>
-Date:   Wed Nov 19 17:03:26 2025 +0000
+commit 1d3a2a9ffe4a88d117682b39af0ced8c25aabd9e
+Author: SendaoYan <syan@openjdk.org>
+Date:   Fri Nov 21 01:39:17 2025 +0000
 
-    8280482: Window transparency bug on Linux
+    8368668: Several vmTestbase/vm/gc/compact tests timed out on large memory machine
     
-    Backport-of: 0a3c6d6bd010231d02e92016037149e85fb1db3f
+    Backport-of: 9093d3a04cd2b66425cefb44de2990cb5362a29f

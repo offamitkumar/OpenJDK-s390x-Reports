@@ -1,8 +1,7 @@
-commit a89018582160a9d876f66925618c8b8f93190e67
+commit e439909b7d3ee8db3a09c3d3354ead56dd5397d7
 Author: Alexey Semenyuk <asemenyuk@openjdk.org>
-Date:   Thu Nov 20 15:17:44 2025 +0000
+Date:   Fri Nov 21 14:58:46 2025 +0000
 
-    8333727: Use JOpt in jpackage to parse command line
-    8371384: libapplauncher.so is copied to a wrong location in two step packaging when --install-dir=/usr
+    8372292: Remove redundant "throws ConfigException"
     
     Reviewed-by: almatvee
