@@ -1,7 +1,7 @@
-commit e439909b7d3ee8db3a09c3d3354ead56dd5397d7
-Author: Alexey Semenyuk <asemenyuk@openjdk.org>
-Date:   Fri Nov 21 14:58:46 2025 +0000
+commit ee9d553e51c01529495b8ca34b296b6e684e905d
+Author: Igor Rudenko <iostream64@gmail.com>
+Date:   Fri Nov 21 21:45:58 2025 +0000
 
-    8372292: Remove redundant "throws ConfigException"
+    8372307: Clean up the leftover code comment references to file.encoding in java_props_md.c
     
-    Reviewed-by: almatvee
+    Reviewed-by: naoto
