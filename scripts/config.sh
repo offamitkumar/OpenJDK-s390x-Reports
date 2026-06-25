@@ -60,9 +60,10 @@ ADOPTIUM_NIGHTLY_URL="https://api.adoptium.net/v3/binary/latest/25/ea/${ADOPTIUM
 # ---------------------------------------------------------------------------
 # Latest successful build artifact base URL from ci.adoptium.net
 JTREG_ARTIFACT_BASE="https://ci.adoptium.net/view/Dependencies/job/dependency_pipeline/lastSuccessfulBuild/artifact/jtreg"
-# The specific archive to download (jtreg.zip contains the full jtreg tree)
-JTREG_ARCHIVE_NAME="jtreg.zip"
+# jtregtip.tar.gz is the rolling "tip" build — always the latest jtreg
+JTREG_ARCHIVE_NAME="jtregtip.tar.gz"
 JTREG_DOWNLOAD_URL="${JTREG_ARTIFACT_BASE}/${JTREG_ARCHIVE_NAME}"
+JTREG_SHA256_URL="${JTREG_ARTIFACT_BASE}/${JTREG_ARCHIVE_NAME}.sha256sum.txt"
 
 # ---------------------------------------------------------------------------
 # Git settings

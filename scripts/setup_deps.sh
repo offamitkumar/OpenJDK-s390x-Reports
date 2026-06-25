@@ -25,7 +25,7 @@ die()     { echo "[ERROR] $*" >&2; exit 1; }
 # ---------------------------------------------------------------------------
 check_tools() {
   local missing=()
-  for tool in curl unzip tar sha256sum; do
+  for tool in curl tar sha256sum; do
     command -v "$tool" &>/dev/null || missing+=("$tool")
   done
   if [[ ${#missing[@]} -gt 0 ]]; then
@@ -41,15 +41,21 @@ setup_boot_jdk() {
 
   local tmp_dir
   tmp_dir="$(mktemp -d)"
+  # shellcheck disable=SC2064
   trap "rm -rf ${tmp_dir}" RETURN
 
   local archive="${tmp_dir}/boot_jdk.tar.gz"
 
   info "  URL: ${ADOPTIUM_NIGHTLY_URL}"
   if ! curl --fail --silent --show-error --location \
+       --max-time 300 \
        --output "${archive}" \
        "${ADOPTIUM_NIGHTLY_URL}"; then
     die "Failed to download Adoptium nightly boot JDK."
+  fi
+
+  if [[ ! -s "${archive}" ]]; then
+    die "Downloaded boot JDK archive is empty."
   fi
 
   info "  Extracting to ${BOOT_JDK_DIR} …"
@@ -62,44 +68,69 @@ setup_boot_jdk() {
 }
 
 # ---------------------------------------------------------------------------
-# Download latest jtreg from ci.adoptium.net
+# Download latest jtreg (jtregtip.tar.gz) from ci.adoptium.net
+#
+# The archive expands to a single top-level directory named 'jtreg/';
+# we install it with --strip-components=1 directly into JTREG_DIR.
+# A SHA-256 checksum file is downloaded and verified before extraction.
 # ---------------------------------------------------------------------------
 setup_jtreg() {
-  info "Fetching latest jtreg from ci.adoptium.net …"
+  info "Fetching latest jtreg (jtregtip) from ci.adoptium.net …"
 
   local tmp_dir
   tmp_dir="$(mktemp -d)"
+  # shellcheck disable=SC2064
   trap "rm -rf ${tmp_dir}" RETURN
 
-  local archive="${tmp_dir}/${JTREG_ARCHIVE_NAME}"
+  local archive="${tmp_dir}/jtregtip.tar.gz"
+  local sha_file="${tmp_dir}/jtregtip.tar.gz.sha256sum.txt"
 
-  info "  URL: ${JTREG_DOWNLOAD_URL}"
+  info "  Archive URL : ${JTREG_DOWNLOAD_URL}"
+  info "  Checksum URL: ${JTREG_SHA256_URL}"
+
+  # Download archive
   if ! curl --fail --silent --show-error --location \
+       --max-time 120 \
        --output "${archive}" \
        "${JTREG_DOWNLOAD_URL}"; then
-    die "Failed to download jtreg."
+    die "Failed to download jtreg archive."
+  fi
+
+  if [[ ! -s "${archive}" ]]; then
+    die "Downloaded jtreg archive is empty."
+  fi
+
+  # Download and verify SHA-256 checksum
+  if ! curl --fail --silent --show-error --location \
+       --max-time 30 \
+       --output "${sha_file}" \
+       "${JTREG_SHA256_URL}"; then
+    warn "Could not download jtreg checksum file — skipping verification."
+  else
+    # The checksum file contains an absolute build-machine path; extract only the hash
+    local expected_sha
+    expected_sha="$(awk '{print $1}' "${sha_file}")"
+    local actual_sha
+    actual_sha="$(sha256sum "${archive}" | awk '{print $1}')"
+
+    if [[ "${expected_sha}" != "${actual_sha}" ]]; then
+      die "jtreg SHA-256 mismatch!
+  expected: ${expected_sha}
+  actual:   ${actual_sha}"
+    fi
+    info "  SHA-256 verified: ${actual_sha}"
   fi
 
   info "  Extracting to ${JTREG_DIR} …"
   rm -rf "${JTREG_DIR}"
-  mkdir -p "$(dirname "${JTREG_DIR}")"
+  mkdir -p "${JTREG_DIR}"
 
-  unzip -q "${archive}" -d "$(dirname "${JTREG_DIR}")"
-
-  # The zip may expand to a folder named 'jtreg' already; normalise
-  local extracted
-  extracted="$(unzip -Z1 "${archive}" | head -1 | cut -d/ -f1)"
-  local extracted_path
-  extracted_path="$(dirname "${JTREG_DIR}")/${extracted}"
-
-  if [[ "${extracted_path}" != "${JTREG_DIR}" && -d "${extracted_path}" ]]; then
-    mv "${extracted_path}" "${JTREG_DIR}"
-  fi
+  # The tar contains a single top-level 'jtreg/' dir; strip it
+  tar --strip-components=1 -xzf "${archive}" -C "${JTREG_DIR}"
 
   success "jtreg installed at ${JTREG_DIR}"
   "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null || \
-    "${JTREG_DIR}/lib/jtreg.jar" 2>/dev/null || \
-    info "  (version check skipped)"
+    info "  (version check skipped — jtreg binary not in PATH yet)"
 }
 
 # ---------------------------------------------------------------------------
