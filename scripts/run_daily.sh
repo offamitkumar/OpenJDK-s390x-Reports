@@ -10,7 +10,8 @@
 #        a. Pull latest source from upstream
 #        b. Build fastdebug image → run tier1 → collect artefacts
 #        c. Build release   image → run tier1 → collect artefacts
-#   4. Commit and push all new report files to the main branch
+#   4. Write run-summary.txt covering every stream × level combination
+#   5. Commit and push all new report files to the main branch
 #
 # Usage:
 #   bash scripts/run_daily.sh [--stream head] [--level fastdebug]
@@ -69,6 +70,37 @@ done
 trap 'cd "${REPORTS_REPO_ROOT}"' EXIT
 
 # ---------------------------------------------------------------------------
+# Run-summary state tracking
+#
+# STREAM_STATUS is an associative array keyed by "label/level".
+# Possible values:
+#   SKIPPED_EOL          — version not in Adoptium active support set
+#   SKIPPED_FILTER       — excluded by --stream or --level flag
+#   SKIPPED_DRY_RUN      — dry-run mode; nothing executed
+#   SKIPPED_SOURCE_FAIL  — git pull/clone failed; tests never ran
+#   BUILD_FAILED         — configure or make images failed; no test results
+#   TEST_FAILED          — build OK; tier1 ran but had failures or errors
+#   TEST_PASSED          — build OK; all tier1 tests passed
+# ---------------------------------------------------------------------------
+declare -A STREAM_STATUS=()
+declare -A STREAM_STATUS_DETAIL=()   # optional one-line reason / extra info
+
+# All registered stream labels (from config.sh) — populated at startup
+ALL_REGISTERED_LABELS=()
+for _entry in "${JDK_STREAMS[@]}"; do
+    ALL_REGISTERED_LABELS+=("$(echo "${_entry}" | cut -d'|' -f1)")
+done
+
+record_status() {
+    local label="$1"
+    local level="$2"
+    local status="$3"
+    local detail="${4:-}"
+    STREAM_STATUS["${label}/${level}"]="${status}"
+    STREAM_STATUS_DETAIL["${label}/${level}"]="${detail}"
+}
+
+# ---------------------------------------------------------------------------
 # Step 1 — Refresh dependencies
 # ---------------------------------------------------------------------------
 refresh_deps() {
@@ -89,6 +121,7 @@ refresh_deps() {
 #
 # Pipes the JDK_STREAMS registry through resolve_streams.py, which calls the
 # Adoptium API and filters out any version no longer in active support.
+# Streams absent from the active set are recorded as SKIPPED_EOL immediately.
 # Returns the filtered list in ACTIVE_STREAMS array.
 # ---------------------------------------------------------------------------
 resolve_active_streams() {
@@ -103,13 +136,36 @@ resolve_active_streams() {
     local filtered
     filtered="$(echo "${registry_input}" | python3 "${SCRIPT_DIR}/resolve_streams.py")"
 
-    # Apply --stream filter if given
+    # Build a set of active labels
+    declare -A active_set=()
+    while IFS= read -r line; do
+        [[ -z "${line}" ]] && continue
+        local lbl
+        lbl="$(echo "${line}" | cut -d'|' -f1)"
+        active_set["${lbl}"]=1
+    done <<< "${filtered}"
+
+    # Any registered label NOT in the active set → SKIPPED_EOL
+    for lbl in "${ALL_REGISTERED_LABELS[@]}"; do
+        if [[ -z "${active_set[${lbl}]+_}" ]]; then
+            for level in "${BUILD_LEVELS[@]}"; do
+                record_status "${lbl}" "${level}" "SKIPPED_EOL" \
+                    "Version not in Adoptium active support set (EOL)"
+            done
+        fi
+    done
+
+    # Apply --stream filter and build ACTIVE_STREAMS array
     ACTIVE_STREAMS=()
     while IFS= read -r line; do
         [[ -z "${line}" ]] && continue
         local label
         label="$(echo "${line}" | cut -d'|' -f1)"
         if [[ -n "${FILTER_STREAM}" && "${label}" != "${FILTER_STREAM}" ]]; then
+            for level in "${BUILD_LEVELS[@]}"; do
+                record_status "${label}" "${level}" "SKIPPED_FILTER" \
+                    "Excluded by --stream ${FILTER_STREAM}"
+            done
             continue
         fi
         ACTIVE_STREAMS+=("${line}")
@@ -170,6 +226,8 @@ run_level() {
     # Apply --level filter
     if [[ -n "${FILTER_LEVEL}" && "${debug_level}" != "${FILTER_LEVEL}" ]]; then
         info "[${label}] Skipping ${debug_level} (--level filter)"
+        record_status "${label}" "${debug_level}" "SKIPPED_FILTER" \
+            "Excluded by --level ${FILTER_LEVEL}"
         return 0
     fi
 
@@ -179,7 +237,9 @@ run_level() {
     log "[${label}] Starting build+test: ${debug_level} …"
 
     if ${DRY_RUN}; then
-        info "[${label}] DRY-RUN: would run build_and_test_jdk ${src_dir} ${label} ${debug_level} ${out_dir} ${extra_flags[*]:-}"
+        info "[${label}] DRY-RUN: would build+test ${label}/${debug_level}"
+        record_status "${label}" "${debug_level}" "SKIPPED_DRY_RUN" \
+            "--dry-run flag set; no build or test executed"
         return 0
     fi
 
@@ -189,13 +249,29 @@ run_level() {
         "${label}" \
         "${debug_level}" \
         "${out_dir}" \
-        "${extra_flags[@]}" \
+        "${extra_flags[@]+"${extra_flags[@]}"}" \
         || exit_code=$?
 
     if [[ ${exit_code} -ne 0 ]]; then
         warn "[${label}] Build/setup error (exit=${exit_code}) — recorded, continuing."
         echo "BUILD/SETUP ERROR — exit ${exit_code}" >> "${out_dir}/build.log"
         echo "Build failed (exit ${exit_code})"      >  "${out_dir}/test-summary.txt"
+        record_status "${label}" "${debug_level}" "BUILD_FAILED" \
+            "configure or make images exited ${exit_code}; tier1 tests did not run"
+    else
+        # Determine pass/fail from the test-summary.txt written by build_test.sh
+        local summary_file="${out_dir}/test-summary.txt"
+        local test_exit_line
+        test_exit_line="$(grep '^test_exit:' "${out_dir}/run-metadata.txt" 2>/dev/null \
+            | awk '{print $2}' || echo "0")"
+
+        if [[ "${test_exit_line}" != "0" ]]; then
+            record_status "${label}" "${debug_level}" "TEST_FAILED" \
+                "tier1 completed with failures/errors (jtreg exit=${test_exit_line}); see newfailures.txt"
+        else
+            record_status "${label}" "${debug_level}" "TEST_PASSED" \
+                "all tier1 tests passed"
+        fi
     fi
 
     log "[${label}] Finished ${debug_level} (exit=${exit_code})"
@@ -217,10 +293,18 @@ process_streams() {
         local out_base="${REPORTS_DIR}/${year}/${month}/${day}/${label}"
         mkdir -p "${out_base}"
 
-        # Pull source
+        # Pull source — if this fails, mark all levels and move on
         local top_commit
-        top_commit="$(prepare_source "${label}" "${src_subdir}" "${git_url}")" \
-            || { warn "[${label}] Source preparation failed — skipping."; continue; }
+        if ! top_commit="$(prepare_source "${label}" "${src_subdir}" "${git_url}" 2>&1)"; then
+            warn "[${label}] Source preparation failed — skipping all levels."
+            for level in "${BUILD_LEVELS[@]}"; do
+                record_status "${label}" "${level}" "SKIPPED_SOURCE_FAIL" \
+                    "git pull/clone failed; no build attempted"
+                echo "SOURCE PREPARATION FAILED" > "${out_base}/${level}/test-summary.txt" 2>/dev/null || true
+            done
+            echo "SOURCE PREPARATION FAILED" > "${out_base}/top_commit"
+            continue
+        fi
         echo "${top_commit}" > "${out_base}/top_commit"
 
         # Split extra_flags string into array (may be empty)
@@ -241,7 +325,118 @@ process_streams() {
 }
 
 # ---------------------------------------------------------------------------
-# Step 4 — Commit and push all new report files
+# Step 4 — Write run-summary.txt
+#
+# Written to: reports/YYYY/Month/DD/run-summary.txt
+#
+# Covers every (stream × level) combination — both those that ran and those
+# that were skipped for any reason, with a clear explanation for each skip.
+# ---------------------------------------------------------------------------
+write_run_summary() {
+    local year month day
+    year="$(date +%Y)"; month="$(date +%B)"; day="$(date +%d)"
+    local summary_dir="${REPORTS_DIR}/${year}/${month}/${day}"
+    local summary_file="${summary_dir}/run-summary.txt"
+    mkdir -p "${summary_dir}"
+
+    local run_date
+    run_date="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+    local boot_jdk_ver="n/a"
+    local jtreg_ver="n/a"
+    if [[ -x "${BOOT_JDK_DIR}/bin/java" ]]; then
+        boot_jdk_ver="$("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
+    fi
+    if [[ -x "${JTREG_DIR}/bin/jtreg" ]]; then
+        jtreg_ver="$(JAVA_HOME="${BOOT_JDK_DIR}" "${JTREG_DIR}/bin/jtreg" \
+            -version 2>/dev/null | head -1 || echo 'n/a')"
+    fi
+
+    {
+        echo "========================================================"
+        echo "  OpenJDK s390x CI — Run Summary"
+        echo "========================================================"
+        echo "  Date      : ${run_date}"
+        echo "  Host      : $(hostname)"
+        echo "  Boot JDK  : ${boot_jdk_ver}"
+        echo "  jtreg     : ${jtreg_ver}"
+        [[ -n "${FILTER_STREAM}" ]] && echo "  --stream  : ${FILTER_STREAM}"
+        [[ -n "${FILTER_LEVEL}"  ]] && echo "  --level   : ${FILTER_LEVEL}"
+        ${DRY_RUN}                  && echo "  Mode      : DRY-RUN"
+        ${SKIP_DEPS}                && echo "  Deps      : skipped (--skip-deps)"
+        echo ""
+        echo "  Legend:"
+        echo "    TEST_PASSED         All tier1 tests passed"
+        echo "    TEST_FAILED         Tier1 ran; failures or errors recorded"
+        echo "    BUILD_FAILED        configure/make failed; tests did not run"
+        echo "    SKIPPED_SOURCE_FAIL git pull/clone failed; nothing ran"
+        echo "    SKIPPED_FILTER      Excluded by --stream / --level flag"
+        echo "    SKIPPED_DRY_RUN     Dry-run mode; no build or test executed"
+        echo "    SKIPPED_EOL         Version no longer in Adoptium active support"
+        echo "========================================================"
+        echo ""
+
+        # ---- Per-stream table -------------------------------------------
+        # Collect all unique labels in a defined order:
+        # first the registered order, then any extras in the status map
+        declare -A seen_labels=()
+        local ordered_labels=()
+        for lbl in "${ALL_REGISTERED_LABELS[@]}"; do
+            if [[ -z "${seen_labels[${lbl}]+_}" ]]; then
+                ordered_labels+=("${lbl}")
+                seen_labels["${lbl}"]=1
+            fi
+        done
+
+        for lbl in "${ordered_labels[@]}"; do
+            echo "  ── ${lbl} ──────────────────────────────────────────"
+            local any_found=false
+            for level in "${BUILD_LEVELS[@]}"; do
+                local key="${lbl}/${level}"
+                if [[ -n "${STREAM_STATUS[${key}]+_}" ]]; then
+                    any_found=true
+                    local status="${STREAM_STATUS[${key}]}"
+                    local detail="${STREAM_STATUS_DETAIL[${key}]:-}"
+                    printf "    %-12s  %-20s  %s\n" "${level}" "${status}" "${detail}"
+                fi
+            done
+            if ! ${any_found}; then
+                echo "    (no status recorded — stream may have been added mid-run)"
+            fi
+            echo ""
+        done
+
+        # ---- Counts summary -------------------------------------------
+        local n_passed=0 n_failed=0 n_build_fail=0 n_skipped=0
+        for key in "${!STREAM_STATUS[@]}"; do
+            case "${STREAM_STATUS[${key}]}" in
+                TEST_PASSED)         (( n_passed++    )) ;;
+                TEST_FAILED)         (( n_failed++    )) ;;
+                BUILD_FAILED)        (( n_build_fail++)) ;;
+                SKIPPED_*)           (( n_skipped++   )) ;;
+            esac
+        done
+        local n_total=$(( n_passed + n_failed + n_build_fail + n_skipped ))
+
+        echo "========================================================"
+        echo "  Totals  (stream × level combinations)"
+        printf "    %-24s %d\n" "Combinations tracked:" "${n_total}"
+        printf "    %-24s %d\n" "TEST_PASSED:"          "${n_passed}"
+        printf "    %-24s %d\n" "TEST_FAILED:"          "${n_failed}"
+        printf "    %-24s %d\n" "BUILD_FAILED:"         "${n_build_fail}"
+        printf "    %-24s %d\n" "Skipped (any reason):" "${n_skipped}"
+        echo "========================================================"
+
+    } > "${summary_file}"
+
+    success "Run summary written to ${summary_file}"
+    # Print it to stdout too so it appears in the CI log
+    echo ""
+    cat "${summary_file}"
+    echo ""
+}
+
+# ---------------------------------------------------------------------------
+# Step 5 — Commit and push all new report files
 # ---------------------------------------------------------------------------
 publish_results() {
     if ${DRY_RUN}; then
@@ -266,10 +461,15 @@ publish_results() {
     local year month day
     year="$(date +%Y)"; month="$(date +%B)"; day="$(date +%d)"
 
-    # List which streams were run
-    local stream_list=""
-    for entry in "${ACTIVE_STREAMS[@]}"; do
-        stream_list+="  $(echo "${entry}" | cut -d'|' -f1)"$'\n'
+    # Build a compact per-stream status for the commit message
+    local status_lines=""
+    for lbl in "${ALL_REGISTERED_LABELS[@]}"; do
+        for level in "${BUILD_LEVELS[@]}"; do
+            local key="${lbl}/${level}"
+            if [[ -n "${STREAM_STATUS[${key}]+_}" ]]; then
+                status_lines+="  ${key}: ${STREAM_STATUS[${key}]}"$'\n'
+            fi
+        done
     done
 
     git \
@@ -278,9 +478,11 @@ publish_results() {
         commit -m "report: tier1 results ${year}-${month}-${day}
 
 Automated s390x CI run.
-Streams tested:
-${stream_list}Levels: fastdebug + release
-Host:   $(hostname)
+Host: $(hostname)
+
+Results per stream/level:
+${status_lines}
+See reports/${year}/${month}/${day}/run-summary.txt for full details.
 "
 
     git push origin "${GIT_RESULTS_BRANCH}"
@@ -294,14 +496,15 @@ main() {
     log "============================================================"
     log "OpenJDK s390x CI — daily tier1 run"
     log "$(date -u)"
-    ${DRY_RUN}         && log "MODE: DRY-RUN"
+    ${DRY_RUN}                  && log "MODE: DRY-RUN"
     [[ -n "${FILTER_STREAM}" ]] && log "FILTER: stream=${FILTER_STREAM}"
-    [[ -n "${FILTER_LEVEL}"  ]] && log "FILTER: level=${FILTER_LEVEL}"
+    [[ -n "${FILTER_LEVEL}"  ]]  && log "FILTER: level=${FILTER_LEVEL}"
     log "============================================================"
 
     refresh_deps
     resolve_active_streams
     process_streams
+    write_run_summary
     publish_results
 
     log "============================================================"
