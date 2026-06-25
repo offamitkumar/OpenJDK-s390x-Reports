@@ -294,10 +294,34 @@ build_and_test_jdk() {
         build_log_path="build/${conf_name}/build.log"
 
         # ---- Build images ------------------------------------------------
+        # IMPORTANT: do NOT pipe make directly into tee — the pipe would
+        # swallow make's non-zero exit code even with pipefail set, because
+        # tee exits 0.  Instead redirect stdout+stderr to the log file and
+        # also replay it to the terminal with 'tee /dev/fd/3' via a safe
+        # file-descriptor redirect, or simply let make write to its own
+        # build.log (LOG=cmdlines) and tail -f it separately.
+        #
+        # Chosen approach: run make with output going to a temp log AND to
+        # the terminal via process substitution on fd3, then propagate the
+        # real make exit code.
         current_phase="images"
         _bt_info "  Building images (CONF=${conf_name}, -j${MAKE_JOBS}) …"
+
+        local make_exit=0
+        # Write to both terminal and log without a pipe swallowing make's exit.
+        # exec 3>&1 opens fd3 pointing at the current stdout (terminal).
+        exec 3>&1
         make CONF="${conf_name}" images LOG=cmdlines 2>&1 \
-            | tee "${build_log_path}"
+            | tee /dev/fd/3 > "${build_log_path}" \
+            ; make_exit="${PIPESTATUS[0]}"
+        exec 3>&-
+
+        # Propagate build failure immediately — do not proceed to tests.
+        if [[ "${make_exit}" -ne 0 ]]; then
+            _bt_warn "  make images failed (exit=${make_exit}) — skipping tests."
+            cp "${build_log_path}" "${out_dir}/build.log" 2>/dev/null || true
+            exit "${make_exit}"
+        fi
 
         # Copy the completed build.log to out_dir
         cp "${build_log_path}" "${out_dir}/build.log"
