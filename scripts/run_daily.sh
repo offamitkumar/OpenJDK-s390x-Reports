@@ -135,7 +135,9 @@ refresh_deps() {
     log "========================================================"
 
     local deps_exit=0
-    bash "${SCRIPT_DIR}/setup_deps.sh" || deps_exit=$?
+    local deps_args=()
+    [[ -n "${FILTER_STREAM}" ]] && deps_args+=("--stream" "${FILTER_STREAM}")
+    bash "${SCRIPT_DIR}/setup_deps.sh" "${deps_args[@]}" || deps_exit=$?
 
     case "${deps_exit}" in
         0)

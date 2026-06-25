@@ -287,7 +287,7 @@ ensure_deps() {
 
     log "Step 1: Downloading dependencies …"
     local deps_exit=0
-    bash "${SCRIPT_DIR}/setup_deps.sh" || deps_exit=$?
+    bash "${SCRIPT_DIR}/setup_deps.sh" --stream "${OPT_STREAM}" || deps_exit=$?
 
     case "${deps_exit}" in
         0)

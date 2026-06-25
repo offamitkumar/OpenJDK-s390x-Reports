@@ -276,11 +276,18 @@ setup_boot_jdk() {
     # Step 2 — collect unique MIN_JDK_VERSION values from the registry.
     # JDK_STREAMS entries look like: "label|subdir|url|min_ver|extra_flags"
     # 'head' streams are mapped to tip_version.
+    # If SETUP_DEPS_STREAM is set (passed from run_daily.sh via --stream),
+    # only process that one stream to avoid downloading unused boot JDKs.
     local -A versions_needed=()   # keyed by numeric version → dest_dir
 
     for entry in "${JDK_STREAMS[@]}"; do
         local label; label="$(echo "${entry}"  | cut -d'|' -f1)"
         local min_ver; min_ver="$(echo "${entry}" | cut -d'|' -f4)"
+
+        # Skip entries that don't match the requested stream filter
+        if [[ -n "${SETUP_DEPS_STREAM:-}" && "${label}" != "${SETUP_DEPS_STREAM}" ]]; then
+            continue
+        fi
 
         if [[ "${label}" == "head" || -z "${min_ver}" || "${min_ver}" == "0" ]]; then
             # HEAD always uses the tip JDK
@@ -390,12 +397,17 @@ setup_jtreg() {
 # ---------------------------------------------------------------------------
 DO_JDK=true
 DO_JTREG=true
+# SETUP_DEPS_STREAM — when non-empty, only download the boot JDK needed for
+# that one stream label.  Set via --stream LABEL or the env var directly.
+# Unset / empty means "download all".
+: "${SETUP_DEPS_STREAM:=}"
 
-for arg in "$@"; do
-    case "$arg" in
-        --jdk-only)   DO_JTREG=false ;;
-        --jtreg-only) DO_JDK=false ;;
-        *) _die_jdk "Unknown argument: $arg" ;;
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --jdk-only)        DO_JTREG=false; shift ;;
+        --jtreg-only)      DO_JDK=false;   shift ;;
+        --stream)          SETUP_DEPS_STREAM="$2"; shift 2 ;;
+        *) _die_jdk "Unknown argument: $1" ;;
     esac
 done
 

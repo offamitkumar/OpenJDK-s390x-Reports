@@ -473,8 +473,6 @@ build_and_test_jdk() {
         build_log_path="build/${conf_name}/build.log"
 
         # ---- Build images ------------------------------------------------
-        # Strategy: redirect stdout+stderr of make to a temp file, then copy
-        # to out_dir.  Avoid pipe-tee patterns that swallow make's exit code.
         current_phase="images"
         _bt_info "  Building images (CONF=${conf_name}) …"
 
@@ -482,12 +480,15 @@ build_and_test_jdk() {
         local make_exit=0
         # Unset MAKEFLAGS/MAKEOVERRIDES — a parent make or shell alias may inject
         # -jN into the environment, which OpenJDK's wrapper explicitly rejects.
+        # Tee to the tmp file while keeping output visible on the terminal.
+        # Process substitution avoids the pipe-swallows-exit-code problem.
         MAKEFLAGS= MAKEOVERRIDES= \
         make CONF="${conf_name}" LOG=debug images \
-                > "${make_tmp}" 2>&1 || make_exit=$?
+                2>&1 | tee "${make_tmp}" || make_exit=$?
+        # tee always exits 0; re-derive exit from the make side via PIPESTATUS
+        make_exit="${PIPESTATUS[0]}"
         if [[ "${make_exit}" -ne 0 ]]; then
             cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
-            # Also place in the standard build.log location so _on_exit finds it
             cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
             _bt_warn "  make images failed (exit=${make_exit}) — skipping tests."
             exit "${make_exit}"
@@ -645,7 +646,8 @@ build_only_jdk() {
         local make_exit=0
         MAKEFLAGS= MAKEOVERRIDES= \
         make CONF="${conf_name}" LOG=debug images \
-                > "${make_tmp}" 2>&1 || make_exit=$?
+                2>&1 | tee "${make_tmp}" || make_exit=$?
+        make_exit="${PIPESTATUS[0]}"
         if [[ "${make_exit}" -ne 0 ]]; then
             cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
             cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
