@@ -217,8 +217,8 @@ setup_jtreg() {
   tar --strip-components=1 -xzf "${archive}" -C "${JTREG_DIR}"
 
   success "jtreg installed at ${JTREG_DIR}"
-  "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null || \
-    info "  (version check skipped — jtreg binary not in PATH yet)"
+  JAVA_HOME="${BOOT_JDK_DIR}" "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null || \
+    info "  (version check skipped)"
 }
 
 # ---------------------------------------------------------------------------
