@@ -25,7 +25,7 @@ die()     { echo "[ERROR] $*" >&2; exit 1; }
 # ---------------------------------------------------------------------------
 check_tools() {
   local missing=()
-  for tool in curl tar sha256sum; do
+  for tool in curl tar sha256sum python3; do
     command -v "$tool" &>/dev/null || missing+=("$tool")
   done
   if [[ ${#missing[@]} -gt 0 ]]; then
@@ -34,28 +34,107 @@ check_tools() {
 }
 
 # ---------------------------------------------------------------------------
-# Download latest Adoptium Temurin nightly boot JDK
+# Resolve the current JDK HEAD tip_version from the Adoptium API,
+# then download the latest EA nightly for that version from the
+# corresponding adoptium/temurin{N}-binaries GitHub Releases repo.
+#
+# Asset naming convention (as observed from the GitHub releases page):
+#   OpenJDK-jdk_s390x_linux_hotspot_{VER}_{BUILD}-ea.tar.gz
+# Companion SHA-256 file:
+#   OpenJDK-jdk_s390x_linux_hotspot_{VER}_{BUILD}-ea.tar.gz.sha256.txt
 # ---------------------------------------------------------------------------
 setup_boot_jdk() {
-  info "Fetching latest Adoptium Temurin nightly boot JDK for s390x …"
+  info "Resolving JDK HEAD tip_version from Adoptium API …"
 
+  # Step 1: get the current tip_version (e.g. 28)
+  local tip_version
+  tip_version="$(
+    curl --fail --silent --show-error --location \
+         --max-time 30 \
+         "${ADOPTIUM_API_BASE}/info/available_releases" \
+    | python3 -c "import sys,json; print(json.load(sys.stdin)['tip_version'])"
+  )" || die "Failed to resolve tip_version from Adoptium API."
+
+  info "  tip_version = ${tip_version} (JDK HEAD)"
+
+  # Step 2: find the latest release in temurin{N}-binaries that has a
+  #         JDK s390x linux tar.gz asset
+  local gh_api="https://api.github.com/repos/${ADOPTIUM_GITHUB_ORG}/temurin${tip_version}-binaries/releases"
+  info "  Querying GitHub releases: ${gh_api}"
+
+  local jdk_url sha_url asset_name
+  read -r asset_name jdk_url sha_url < <(
+    curl --fail --silent --show-error --location \
+         --max-time 30 \
+         "${gh_api}?per_page=5" \
+    | python3 - <<'PYEOF'
+import sys, json
+releases = json.load(sys.stdin)
+for rel in releases:
+    for a in rel.get("assets", []):
+        name = a["name"]
+        if (name.startswith("OpenJDK-jdk_s390x_linux_hotspot_")
+                and name.endswith("-ea.tar.gz")):
+            sha_name = name + ".sha256.txt"
+            sha_url = next(
+                (x["browser_download_url"] for x in rel["assets"]
+                 if x["name"] == sha_name),
+                ""
+            )
+            print(name, a["browser_download_url"], sha_url)
+            sys.exit(0)
+print("NOT_FOUND  ")
+sys.exit(1)
+PYEOF
+  ) || die "No s390x JDK asset found in temurin${tip_version}-binaries releases."
+
+  if [[ "${asset_name}" == "NOT_FOUND" ]]; then
+    die "No s390x linux JDK tar.gz found in the latest temurin${tip_version}-binaries releases."
+  fi
+
+  info "  Asset    : ${asset_name}"
+  info "  JDK URL  : ${jdk_url}"
+  info "  SHA URL  : ${sha_url}"
+
+  # Step 3: download the archive
   local archive="${CI_TMP_DIR}/boot_jdk.tar.gz"
-
-  info "  URL: ${ADOPTIUM_NIGHTLY_URL}"
   if ! curl --fail --silent --show-error --location \
        --max-time 300 \
        --output "${archive}" \
-       "${ADOPTIUM_NIGHTLY_URL}"; then
-    die "Failed to download Adoptium nightly boot JDK."
+       "${jdk_url}"; then
+    die "Failed to download boot JDK archive."
   fi
 
   if [[ ! -s "${archive}" ]]; then
     die "Downloaded boot JDK archive is empty."
   fi
 
+  # Step 4: verify SHA-256 if companion file is available
+  if [[ -n "${sha_url}" ]]; then
+    local sha_file="${CI_TMP_DIR}/boot_jdk.tar.gz.sha256.txt"
+    if curl --fail --silent --show-error --location \
+            --max-time 30 \
+            --output "${sha_file}" \
+            "${sha_url}"; then
+      local expected_sha actual_sha
+      expected_sha="$(awk '{print $1}' "${sha_file}")"
+      actual_sha="$(sha256sum "${archive}" | awk '{print $1}')"
+      if [[ "${expected_sha}" != "${actual_sha}" ]]; then
+        die "Boot JDK SHA-256 mismatch!
+  expected: ${expected_sha}
+  actual:   ${actual_sha}"
+      fi
+      info "  SHA-256 verified: ${actual_sha}"
+    else
+      warn "Could not download SHA-256 companion — skipping verification."
+    fi
+  fi
+
+  # Step 5: extract (archive has a single top-level jdk-XX+N/ dir — strip it)
   info "  Extracting to ${BOOT_JDK_DIR} …"
   mkdir -p "${BOOT_JDK_DIR}"
   tar --strip-components=1 -xzf "${archive}" -C "${BOOT_JDK_DIR}"
+
   success "Boot JDK installed at ${BOOT_JDK_DIR}"
   "${BOOT_JDK_DIR}/bin/java" -version
 }

@@ -53,11 +53,13 @@ BUILD_LEVELS=(fastdebug release)
 # ---------------------------------------------------------------------------
 # Adoptium nightly boot JDK download settings
 # ---------------------------------------------------------------------------
-# Architecture tag used in the Adoptium download URL
+# Architecture tag used in GitHub release asset names
 ADOPTIUM_ARCH="s390x"
 ADOPTIUM_OS="linux"
-# Temurin nightly API endpoint (always fetches the latest nightly for JDK HEAD)
-ADOPTIUM_NIGHTLY_URL="https://api.adoptium.net/v3/binary/latest/25/ea/${ADOPTIUM_OS}/${ADOPTIUM_ARCH}/jdk/hotspot/normal/adoptium?release_type=ea"
+# The Adoptium public API — used only to resolve tip_version dynamically
+ADOPTIUM_API_BASE="https://api.adoptium.net/v3"
+# GitHub org that publishes per-version nightly EA binaries
+ADOPTIUM_GITHUB_ORG="adoptium"
 
 # ---------------------------------------------------------------------------
 # JTREG download settings
