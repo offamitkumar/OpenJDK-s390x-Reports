@@ -25,9 +25,7 @@ _bt_warn()    { echo "[WARN]  $*" >&2; }
 # Used to apply per-version configure quirks.
 # ---------------------------------------------------------------------------
 _detect_jdk_version() {
-    # version-numbers file exists in all OpenJDK trees
     local ver_file="make/conf/version-numbers.conf"
-    # older layout
     [[ -f "${ver_file}" ]] || ver_file="make/autoconf/version-numbers"
     if [[ -f "${ver_file}" ]]; then
         grep -m1 'DEFAULT_VERSION_FEATURE\s*=' "${ver_file}" \
@@ -43,7 +41,7 @@ _detect_jdk_version() {
 _configure_jdk() {
     local debug_level="$1"
     shift
-    local extra_flags=("$@")   # stream-specific flags from registry
+    local extra_flags=("$@")
 
     local jdk_ver
     jdk_ver="$(_detect_jdk_version)"
@@ -61,8 +59,6 @@ _configure_jdk() {
         args+=("--with-gtest=${GTEST_DIR}")
     fi
 
-    # Append any stream-specific extra flags (e.g. --disable-warnings-as-errors
-    # for jdk11 which doesn't compile cleanly with modern GCC)
     for flag in "${extra_flags[@]}"; do
         [[ -n "${flag}" ]] && args+=("${flag}")
     done
@@ -77,6 +73,135 @@ _find_conf_dir() {
     local debug_level="$1"
     find build -maxdepth 1 -type d -name "*${debug_level}*" 2>/dev/null \
         | sort | head -1
+}
+
+# ---------------------------------------------------------------------------
+# Internal: write build-diagnosis.txt
+#
+# Always called — on both success and failure.  On success it documents what
+# completed cleanly; on failure it pinpoints the crash point.
+#
+# Arguments:
+#   $1  out_dir        — report output directory
+#   $2  build_log      — path to build.log (may not exist on configure failure)
+#   $3  phase          — "configure" | "images" | "test" | "unknown"
+#   $4  build_exit     — exit code of the build step (0 = success)
+#   $5  stream_label
+#   $6  debug_level
+# ---------------------------------------------------------------------------
+_write_build_diagnosis() {
+    local out_dir="$1"
+    local build_log="$2"
+    local phase="$3"
+    local build_exit="$4"
+    local stream_label="$5"
+    local debug_level="$6"
+
+    local diag_file="${out_dir}/build-diagnosis.txt"
+    mkdir -p "${out_dir}"
+
+    {
+        echo "========================================================"
+        echo "  Build Diagnosis"
+        echo "========================================================"
+        echo "  stream      : ${stream_label}"
+        echo "  debug_level : ${debug_level}"
+        echo "  phase       : ${phase}"
+        echo "  build_exit  : ${build_exit}"
+        echo "  date        : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "  build_log   : ${build_log}"
+        echo ""
+
+        if [[ "${build_exit}" -eq 0 ]]; then
+            echo "  status      : BUILD SUCCEEDED"
+            echo "========================================================"
+            echo ""
+            if [[ -f "${build_log}" ]]; then
+                echo "--- Last 20 lines of build.log ---"
+                tail -20 "${build_log}"
+            fi
+            return
+        fi
+
+        echo "  status      : BUILD FAILED"
+        echo "========================================================"
+        echo ""
+
+        if [[ ! -f "${build_log}" ]]; then
+            echo "(build.log not found — failure occurred before make started,"
+            echo " likely during 'bash configure'. Check configure output above.)"
+            return
+        fi
+
+        # ---- Last make target attempted ---------------------------------
+        # OpenJDK make prints "Building target 'foo'" lines
+        local last_target
+        last_target="$(grep -E "^(Building target|Finished building target)" "${build_log}" \
+            | tail -1 || true)"
+        if [[ -n "${last_target}" ]]; then
+            echo "--- Last make target ---"
+            echo "  ${last_target}"
+            echo ""
+        fi
+
+        # ---- Last compiler / linker command -----------------------------
+        # With LOG=cmdlines every compiler invocation is logged verbatim.
+        # Compiler drivers on s390x Linux: gcc, g++, cc, c++, ld, ar, as,
+        # plus the JDK-internal tools: javac, javah, jmod, jlink.
+        local last_cmd
+        last_cmd="$(grep -E \
+            '/(gcc|g\+\+|cc|c\+\+|ld|ar|clang|clang\+\+|javac|jmod|jlink|link\.exe) ' \
+            "${build_log}" | tail -1 || true)"
+        if [[ -n "${last_cmd}" ]]; then
+            echo "--- Last compiler/linker command ---"
+            # Wrap long lines at 120 chars for readability
+            echo "${last_cmd}" | fold -s -w 120
+            echo ""
+        fi
+
+        # ---- Error context ----------------------------------------------
+        # Extract every line containing ': error:' or '^Error' and show
+        # 8 lines of context around each (capped at 5 occurrences to keep
+        # the file readable).
+        local error_count
+        error_count="$(grep -c -E '(: error:|^Error |^make\[|^make: \*\*\*)' \
+            "${build_log}" 2>/dev/null || echo 0)"
+
+        echo "--- Error lines in build.log (${error_count} matches) ---"
+        if [[ "${error_count}" -eq 0 ]]; then
+            echo "  (no 'error:' lines found — check full build.log)"
+        else
+            # Show context around first 5 error occurrences
+            grep -n -E '(: error:|^Error |^make\[.*Error|^make: \*\*\*)' \
+                "${build_log}" \
+                | head -5 \
+                | while IFS=: read -r lineno rest; do
+                    echo ""
+                    echo "  [line ${lineno}] ${rest}"
+                    # 8 lines before and after in the actual file
+                    local start=$(( lineno - 8 ))
+                    [[ ${start} -lt 1 ]] && start=1
+                    local end=$(( lineno + 8 ))
+                    echo "  --- context (lines ${start}–${end}) ---"
+                    sed -n "${start},${end}p" "${build_log}" \
+                        | sed 's/^/  | /'
+                done
+        fi
+        echo ""
+
+        # ---- Tail of build.log ------------------------------------------
+        echo "--- Last 40 lines of build.log ---"
+        tail -40 "${build_log}"
+        echo ""
+        echo "(Full log: ${build_log})"
+
+    } > "${diag_file}"
+
+    if [[ "${build_exit}" -ne 0 ]]; then
+        _bt_warn "  Build diagnosis written to ${diag_file}"
+    else
+        _bt_info "  Build diagnosis written to ${diag_file}"
+    fi
 }
 
 # ---------------------------------------------------------------------------
@@ -111,19 +236,38 @@ build_and_test_jdk() {
 
     mkdir -p "${out_dir}"
 
-    # Run the build+test entirely in a subshell so that:
-    #  - 'cd' is scoped
-    #  - set -e failures surface as a non-zero exit from the subshell
-    #    without killing the parent (run_daily.sh captures the exit code)
     (
         set -euo pipefail
         cd "${src_dir}"
 
-        # ---- Determine expected CONF name --------------------------------
-        # s390x standard naming: linux-s390x-server-{fastdebug|release}
         local conf_name="linux-s390x-server-${debug_level}"
+        local build_log_path=""   # set once build dir exists
+        local current_phase="configure"
 
-        # ---- Clean prior build for this conf -----------------------------
+        # ---- Trap: always write diagnosis on any exit --------------------
+        # Captures the subshell's exit status at the moment of exit.
+        _on_exit() {
+            local exit_code=$?
+            # Resolve the actual build.log path (may have changed if conf_name
+            # was adjusted after configure)
+            local actual_log="${build_log_path}"
+            if [[ -z "${actual_log}" ]]; then
+                # configure may have created a conf dir — try to find it
+                local found_dir
+                found_dir="$(_find_conf_dir "${debug_level}")"
+                [[ -n "${found_dir}" ]] && actual_log="${found_dir}/build.log"
+            fi
+            _write_build_diagnosis \
+                "${out_dir}" \
+                "${actual_log:-}" \
+                "${current_phase}" \
+                "${exit_code}" \
+                "${stream_label}" \
+                "${debug_level}"
+        }
+        trap _on_exit EXIT
+
+        # ---- Clean prior build -------------------------------------------
         if [[ -d "build/${conf_name}" ]]; then
             _bt_info "  Cleaning prior build/${conf_name} …"
             make CONF="${conf_name}" dist-clean 2>/dev/null \
@@ -131,10 +275,11 @@ build_and_test_jdk() {
         fi
 
         # ---- Configure ---------------------------------------------------
+        current_phase="configure"
         _bt_info "  Running configure (debug-level=${debug_level}) …"
         _configure_jdk "${debug_level}" "${extra_configure_flags[@]}"
 
-        # Verify conf dir was created (configure may use a different name)
+        # Verify conf dir
         if [[ ! -d "build/${conf_name}" ]]; then
             local found
             found="$(_find_conf_dir "${debug_level}")"
@@ -146,18 +291,19 @@ build_and_test_jdk() {
             _bt_info "  configure used CONF=${conf_name}"
         fi
 
-        # ---- Build images ------------------------------------------------
-        _bt_info "  Building images (CONF=${conf_name}, -j${MAKE_JOBS}) …"
-        local build_log_tmp="/tmp/jdk_build_$$.log"
-        make CONF="${conf_name}" images LOG=cmdlines 2>&1 \
-            | tee "${build_log_tmp}"
+        build_log_path="build/${conf_name}/build.log"
 
-        # Copy build log
-        cp "build/${conf_name}/build.log" "${out_dir}/build.log" 2>/dev/null \
-            || cp "${build_log_tmp}" "${out_dir}/build.log"
-        rm -f "${build_log_tmp}"
+        # ---- Build images ------------------------------------------------
+        current_phase="images"
+        _bt_info "  Building images (CONF=${conf_name}, -j${MAKE_JOBS}) …"
+        make CONF="${conf_name}" images LOG=cmdlines 2>&1 \
+            | tee "${build_log_path}"
+
+        # Copy the completed build.log to out_dir
+        cp "${build_log_path}" "${out_dir}/build.log"
 
         # ---- Run tier1 tests --------------------------------------------
+        current_phase="test"
         _bt_info "  Running make run-test-tier1 (CONF=${conf_name}) …"
         local test_exit=0
         make CONF="${conf_name}" \
@@ -173,7 +319,6 @@ build_and_test_jdk() {
             echo "test-summary.txt not found" > "${out_dir}/test-summary.txt"
         fi
 
-        # Merge all per-suite newfailures / other_errors files
         {
             find "build/${conf_name}/" -name "newfailures.txt" -exec cat {} +
         } > "${out_dir}/newfailures.txt" 2>/dev/null \
