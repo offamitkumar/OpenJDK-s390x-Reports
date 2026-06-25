@@ -480,7 +480,7 @@ build_and_test_jdk() {
 
         local make_tmp="${out_dir}/build.log.tmp"
         local make_exit=0
-        make CONF="${conf_name}" images LOG=cmdlines \
+        make CONF="${conf_name}" LOG=debug images \
                 -j"${MAKE_JOBS}" \
                 > "${make_tmp}" 2>&1 || make_exit=$?
         if [[ "${make_exit}" -ne 0 ]]; then
@@ -641,7 +641,7 @@ build_only_jdk() {
 
         local make_tmp="${out_dir}/build.log.tmp"
         local make_exit=0
-        make CONF="${conf_name}" images LOG=cmdlines \
+        make CONF="${conf_name}" LOG=debug images \
                 -j"${MAKE_JOBS}" > "${make_tmp}" 2>&1 || make_exit=$?
         if [[ "${make_exit}" -ne 0 ]]; then
             cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
