@@ -37,6 +37,149 @@ _bt_success() { echo "[OK]    $*"; }
 _bt_warn()    { echo "[WARN]  $*" >&2; }
 
 # ---------------------------------------------------------------------------
+# Internal: collect tier1 test artifacts after a test run
+#
+# Parses jtreg result files into three categorised lists:
+#   out_dir/test-passed.txt      — one test name per line
+#   out_dir/test-failed.txt      — one test name per line
+#   out_dir/test-skipped.txt     — one test name per line
+#   out_dir/test-failure.log     — full failure output + hs_err notice
+#
+# hs_err files are harvested from the build tree and copied into:
+#   out_dir/hs_err/<RUN_TIMESTAMP>/
+# where RUN_TIMESTAMP is the same second-precise stamp used by jdk.sh so that
+# repeated same-day runs never overwrite each other.
+#
+# Arguments:
+#   $1  conf_dir        — build/<conf_name> (absolute or relative to CWD)
+#   $2  out_dir         — report output directory (where other artefacts live)
+#   $3  run_timestamp   — e.g. "20250604_143022" (YYYYMMDD_HHMMSS)
+# ---------------------------------------------------------------------------
+_collect_tier1_artifacts() {
+    local conf_dir="$1"
+    local out_dir="$2"
+    local run_timestamp="$3"
+
+    local results_dir="${conf_dir}/test-results"
+    local support_dir="${conf_dir}/test-support"
+
+    # ---- 1. Categorise tests from jtreg .jtr / summary files ---------------
+    # jtreg writes individual <testname>.jtr files under test-support/.
+    # The first line of a .jtr is one of:
+    #   #status:passed  #status:failed  #status:error  #status:not_run
+    # We also fall back to parsing test-summary.txt for a quick tally
+    # if no .jtr files exist (e.g. when a previous stage pre-aborted).
+
+    local passed_file="${out_dir}/test-passed.txt"
+    local failed_file="${out_dir}/test-failed.txt"
+    local skipped_file="${out_dir}/test-skipped.txt"
+
+    : > "${passed_file}"
+    : > "${failed_file}"
+    : > "${skipped_file}"
+
+    local jtr_count=0
+    if [[ -d "${support_dir}" ]]; then
+        while IFS= read -r jtr; do
+            (( jtr_count++ )) || true
+            # Extract test name: strip leading path components and .jtr suffix
+            local tname
+            tname="$(basename "${jtr}" .jtr)"
+            # First non-blank, non-comment line that looks like #status:…
+            local status_line
+            status_line="$(grep -m1 '^#status:' "${jtr}" 2>/dev/null || echo '#status:unknown')"
+            case "${status_line}" in
+                "#status:passed")   echo "${tname}" >> "${passed_file}"  ;;
+                "#status:failed")   echo "${tname}" >> "${failed_file}"  ;;
+                "#status:error")    echo "${tname}" >> "${failed_file}"  ;;
+                "#status:not_run")  echo "${tname}" >> "${skipped_file}" ;;
+                *)                  echo "${tname}" >> "${skipped_file}" ;;
+            esac
+        done < <(find "${support_dir}" -name "*.jtr" 2>/dev/null | sort)
+    fi
+
+    # If no .jtr files found, try parsing test-summary.txt for a human note
+    if [[ "${jtr_count}" -eq 0 && -f "${out_dir}/test-summary.txt" ]]; then
+        echo "(no .jtr files found — raw summary below)" >> "${skipped_file}"
+        cat "${out_dir}/test-summary.txt"               >> "${skipped_file}"
+    fi
+
+    local n_passed n_failed n_skipped
+    n_passed="$(wc -l < "${passed_file}"  | tr -d ' ')"
+    n_failed="$(wc -l < "${failed_file}"  | tr -d ' ')"
+    n_skipped="$(wc -l < "${skipped_file}" | tr -d ' ')"
+    _bt_info "  Test results: passed=${n_passed} failed=${n_failed} skipped/other=${n_skipped}"
+
+    # ---- 2. Harvest hs_err files -------------------------------------------
+    local hs_err_dest="${out_dir}/hs_err/${run_timestamp}"
+    mkdir -p "${hs_err_dest}"
+
+    local hs_count=0
+    while IFS= read -r hs_file; do
+        cp "${hs_file}" "${hs_err_dest}/" 2>/dev/null && (( hs_count++ )) || true
+    done < <(find "${conf_dir}" -name "hs_err_pid*.log" 2>/dev/null | sort)
+
+    if [[ "${hs_count}" -eq 0 ]]; then
+        echo "no hs_err file generated" > "${hs_err_dest}/no_hs_err.txt"
+        _bt_info "  hs_err: no hs_err_pid*.log files found."
+    else
+        _bt_info "  hs_err: ${hs_count} file(s) copied to ${hs_err_dest}/"
+    fi
+
+    # ---- 3. Write test-failure.log -----------------------------------------
+    local failure_log="${out_dir}/test-failure.log"
+
+    {
+        echo "========================================================"
+        echo "  Tier1 Test Failure Log"
+        echo "========================================================"
+        echo "  run_timestamp : ${run_timestamp}"
+        echo "  date          : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "  passed        : ${n_passed}"
+        echo "  failed        : ${n_failed}"
+        echo "  skipped/other : ${n_skipped}"
+        echo "  hs_err files  : ${hs_count} (in hs_err/${run_timestamp}/)"
+        echo "========================================================"
+        echo ""
+
+        if [[ "${n_failed}" -eq 0 ]]; then
+            echo "  No failures recorded."
+        else
+            echo "  Failed tests:"
+            sed 's/^/    /' "${failed_file}"
+            echo ""
+
+            # Include tail of each .jtr failure file for context
+            if [[ -d "${support_dir}" ]]; then
+                echo "  ---- Per-test failure details ----"
+                while IFS= read -r tname; do
+                    local jtr_file
+                    jtr_file="$(find "${support_dir}" -name "${tname}.jtr" \
+                                    2>/dev/null | head -1)"
+                    if [[ -f "${jtr_file}" ]]; then
+                        echo ""
+                        echo "  [${tname}]"
+                        tail -40 "${jtr_file}" | sed 's/^/    /'
+                    fi
+                done < "${failed_file}"
+                echo ""
+            fi
+        fi
+
+        echo "  hs_err location: ${hs_err_dest}/"
+        if [[ "${hs_count}" -gt 0 ]]; then
+            echo "  Files:"
+            ls "${hs_err_dest}/" | sed 's/^/    /'
+        else
+            echo "  (no hs_err file generated)"
+        fi
+
+    } > "${failure_log}"
+
+    _bt_info "  Test failure log: ${failure_log}"
+}
+
+# ---------------------------------------------------------------------------
 # Internal: detect JDK major version from source tree
 # Used to apply per-version configure quirks.
 # ---------------------------------------------------------------------------
@@ -234,6 +377,8 @@ build_and_test_jdk() {
     local jtreg_ok="${5:-true}"
     shift 5
     local extra_configure_flags=("$@")
+    # Timestamp for this specific invocation — used to namespace hs_err dirs
+    local _run_ts; _run_ts="$(date '+%Y%m%d_%H%M%S')"
 
     _bt_info "=== build_and_test_jdk ==="
     _bt_info "    stream   : ${stream_label}"
@@ -355,10 +500,17 @@ build_and_test_jdk() {
         } > "${out_dir}/other_errors.txt" \
             || echo "(none)" > "${out_dir}/other_errors.txt"
 
+        # ---- Categorise passed/failed/skipped + harvest hs_err ----------
+        if [[ "${jtreg_ok}" == "true" ]]; then
+            _collect_tier1_artifacts \
+                "build/${conf_name}" "${out_dir}" "${_run_ts}"
+        fi
+
         # ---- Write run metadata ------------------------------------------
         {
             echo "stream:       ${stream_label}"
             echo "debug_level:  ${debug_level}"
+            echo "run_ts:       ${_run_ts}"
             echo "date:         $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             echo "src_dir:      ${src_dir}"
             echo "top_commit:   $(git -C "${src_dir}" log -1 --oneline 2>/dev/null || echo 'unknown')"
@@ -510,6 +662,7 @@ run_tests_only() {
     local out_dir="$4"
     local test_target="${5:-tier1}"
     local jvm_flags="${6:-}"
+    local _run_ts; _run_ts="$(date '+%Y%m%d_%H%M%S')"
 
     _bt_info "=== run_tests_only ==="
     _bt_info "    stream      : ${stream_label}"
@@ -601,12 +754,17 @@ run_tests_only() {
         } > "${out_dir}/other_errors.txt" \
             || echo "(none)" > "${out_dir}/other_errors.txt"
 
+        # ---- Categorise passed/failed/skipped + harvest hs_err ----------
+        _collect_tier1_artifacts \
+            "build/${conf_name}" "${out_dir}" "${_run_ts}"
+
         {
             echo "stream:       ${stream_label}"
             echo "debug_level:  ${debug_level}"
             echo "mode:         test-only"
             echo "test_target:  ${test_target}"
             echo "jvm_flags:    ${jvm_flags:-(none)}"
+            echo "run_ts:       ${_run_ts}"
             echo "date:         $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             echo "src_dir:      ${src_dir}"
             echo "top_commit:   $(git -C "${src_dir}" log -1 --oneline 2>/dev/null || echo 'unknown')"

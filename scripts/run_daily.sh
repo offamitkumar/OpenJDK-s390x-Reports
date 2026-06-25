@@ -594,6 +594,14 @@ write_run_summary() {
         echo "        newfailures.txt       — failing test names"
         echo "        other_errors.txt      — erroring test names"
         echo "        run-metadata.txt      — versions, exit codes, dates"
+        echo "        test-passed.txt       — names of all passed tests"
+        echo "        test-failed.txt       — names of all failed tests"
+        echo "        test-skipped.txt      — names of all skipped tests"
+        echo "        test-failure.log      — failure detail + hs_err notice"
+        echo "        test-passed.md        — GitHub: passed tests"
+        echo "        test-failed.md        — GitHub: failed tests + days-failing"
+        echo "        test-skipped.md       — GitHub: skipped tests"
+        echo "        hs_err/<YYYYMMDD_HHmmSS>/ — JVM crash logs (local only)"
         echo "========================================================"
 
     } > "${summary_file}"
@@ -605,7 +613,33 @@ write_run_summary() {
 }
 
 # ---------------------------------------------------------------------------
-# Stage 4b — Generate GitHub-readable status pages
+# Stage 4b — Retention purge: remove reports older than 90 days
+#
+# Runs unconditionally on every pipeline execution (even --dry-run logs it).
+# Deletes stale day directories from disk and stages their removal in the git
+# index so they are wiped from GitHub on the next push.
+# Also removes local-only hs_err/ and test-support/ trees within live days.
+# ---------------------------------------------------------------------------
+purge_old_reports() {
+    log "========================================================"
+    log "Stage 4b: Retention purge (>90 days)"
+    log "========================================================"
+
+    if ${DRY_RUN}; then
+        info "DRY-RUN: would run retention purge (gen_status.py --purge-only)"
+        return 0
+    fi
+
+    if ! python3 "${SCRIPT_DIR}/gen_status.py" \
+            "${REPORTS_DIR}" "${REPORTS_REPO_ROOT}" --purge-only 2>&1; then
+        warn "Retention purge failed — continuing."
+    else
+        success "Retention purge complete."
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# Stage 4c — Generate GitHub-readable status pages
 #
 # Writes:
 #   STATUS.md                              — top-level rolling dashboard
@@ -613,7 +647,7 @@ write_run_summary() {
 # ---------------------------------------------------------------------------
 gen_status_pages() {
     log "========================================================"
-    log "Stage 4b: Generating status pages"
+    log "Stage 4c: Generating status pages"
     log "========================================================"
 
     if ! python3 "${SCRIPT_DIR}/gen_status.py" \
@@ -644,8 +678,11 @@ publish_results() {
     git checkout "${GIT_RESULTS_BRANCH}"
     git pull --ff-only origin "${GIT_RESULTS_BRANCH}"
 
-    # Stage all report artefacts + the status pages
+    # Stage all report artefacts + the status pages.
+    # Exclude hs_err/ directories — these contain JVM crash logs that are
+    # large and intended for local investigation only, never pushed to GitHub.
     git add "${REPORTS_DIR}/"
+    git reset HEAD -- "${REPORTS_DIR}"/**/hs_err/ 2>/dev/null || true
     git add --force STATUS.md 2>/dev/null || true
 
     if git diff --cached --quiet; then
@@ -682,6 +719,7 @@ publish_results() {
 Automated s390x CI run — see STATUS.md for rolling dashboard.
 Host: $(hostname)
 JTREG available: ${JTREG_OK}
+Retention: reports older than 90 days purged from repo.
 
 Results per stream/level:
 ${status_lines}
@@ -710,7 +748,8 @@ main() {
     resolve_active_streams  # Stage 2
     process_streams         # Stage 3
     write_run_summary       # Stage 4a
-    gen_status_pages        # Stage 4b — writes STATUS.md + per-run .md
+    purge_old_reports       # Stage 4b — delete reports >90 days (always runs)
+    gen_status_pages        # Stage 4c — writes STATUS.md + per-run .md
     publish_results         # Stage 5
 
     log "========================================================"

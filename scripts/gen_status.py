@@ -16,6 +16,22 @@ Outputs (both paths relative to repo_root):
     reports/<YYYY>/<Month>/<DD>/run-summary.md
         Per-run Markdown report (GitHub renders it when you browse the folder).
 
+    reports/<YYYY>/<Month>/<DD>/<stream>/<level>/test-passed.md
+        Tests that passed in this run (one per line, formatted as Markdown).
+
+    reports/<YYYY>/<Month>/<DD>/<stream>/<level>/test-failed.md
+        Tests that failed in this run; each entry annotated with how many
+        consecutive days this test has been failing (derived from history).
+
+    reports/<YYYY>/<Month>/<DD>/<stream>/<level>/test-skipped.md
+        Tests that were skipped / not-run in this run.
+
+Retention policy:
+    Day directories older than 90 days are deleted from disk and removed from
+    the git index so they are wiped from GitHub on the next push.
+    hs_err/ and test-support/ (*.jtr) subdirectories are also purged for any
+    day directory that survives but crosses the 90-day threshold mid-run.
+
 Exit codes:
     0  — both files written successfully
     1  — fatal error (e.g. reports_dir doesn't exist)
@@ -25,7 +41,9 @@ import sys
 import os
 import re
 import json
-from datetime import datetime, timezone
+import shutil
+import subprocess
+from datetime import datetime, timezone, date as _date, timedelta
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -348,20 +366,306 @@ def gen_run_md(all_records_today, run_date, host, boot_jdk, jtreg_ver,
 
 
 # ---------------------------------------------------------------------------
+# Per-test failure history: build a dict of test_name → days-failing
+# by scanning historical test-failed.txt files
+# ---------------------------------------------------------------------------
+def build_test_failure_history(reports_dir: Path, stream: str, level: str,
+                                cutoff_date) -> dict:
+    """
+    Walk all <stream>/<level>/test-failed.txt files older than cutoff_date
+    and return a dict mapping test_name → first date it was seen failing
+    (i.e. the start of its current failing streak).
+
+    We stop counting a streak when a date gap appears (i.e. the test passed
+    on a day that has a run directory but no entry in that day's failed list).
+    """
+    MONTHS = {
+        "January": 1, "February": 2, "March": 3, "April": 4,
+        "May": 5, "June": 6, "July": 7, "August": 8,
+        "September": 9, "October": 10, "November": 11, "December": 12,
+    }
+
+    # Collect (date, set_of_failed_tests) pairs sorted oldest-first
+    dated_failures: list[tuple] = []
+
+    for year_dir in sorted(reports_dir.iterdir()):
+        if not year_dir.is_dir() or not year_dir.name.isdigit():
+            continue
+        year = int(year_dir.name)
+        for month_dir in sorted(year_dir.iterdir()):
+            if not month_dir.is_dir():
+                continue
+            month_num = MONTHS.get(month_dir.name)
+            if month_num is None:
+                continue
+            for day_dir in sorted(month_dir.iterdir()):
+                if not day_dir.is_dir() or not day_dir.name.isdigit():
+                    continue
+                day = int(day_dir.name)
+                try:
+                    run_date = _date(year, month_num, day)
+                except ValueError:
+                    continue
+                failed_txt = day_dir / stream / level / "test-failed.txt"
+                if not failed_txt.exists():
+                    # No failed.txt means either tests passed or no run that day.
+                    # We record an empty set so streak detection can break.
+                    dated_failures.append((run_date, set()))
+                    continue
+                tests = set()
+                with failed_txt.open(errors="replace") as fh:
+                    for ln in fh:
+                        ln = ln.strip()
+                        if ln and not ln.startswith("("):
+                            tests.add(ln)
+                dated_failures.append((run_date, tests))
+
+    # For each test seen in the LATEST entry, walk backwards to find streak start
+    if not dated_failures:
+        return {}
+
+    latest_failed = dated_failures[-1][1]
+    first_seen: dict = {}
+    for test_name in latest_failed:
+        # Walk backward until the test is absent (streak break)
+        streak_start = dated_failures[-1][0]
+        for run_date, failed_set in reversed(dated_failures[:-1]):
+            if test_name in failed_set:
+                streak_start = run_date
+            else:
+                break
+        first_seen[test_name] = streak_start
+
+    return first_seen
+
+
+def gen_test_result_md(level_dir: Path, stream: str, level: str,
+                       reports_dir: Path, run_date) -> None:
+    """
+    Write test-passed.md, test-failed.md, and test-skipped.md into level_dir.
+
+    test-failed.md includes an annotation of how many days each test has been
+    failing, derived by scanning historical test-failed.txt files.
+    """
+    today = run_date  # already a date object (_date instance)
+
+    def _read_list(fname: str) -> list:
+        p = level_dir / fname
+        if not p.exists():
+            return []
+        lines = []
+        with p.open(errors="replace") as fh:
+            for ln in fh:
+                ln = ln.strip()
+                if ln and not ln.startswith("("):
+                    lines.append(ln)
+        return lines
+
+    passed  = _read_list("test-passed.txt")
+    failed  = _read_list("test-failed.txt")
+    skipped = _read_list("test-skipped.txt")
+
+    run_date_str = str(today)
+
+    # ---- test-passed.md -------------------------------------------------
+    lines = [f"# ✅ Tier1 Tests Passed — {run_date_str}\n\n"]
+    lines.append(f"**Stream:** `{stream}`  **Level:** `{level}`  "
+                 f"**Date:** `{run_date_str}`\n\n")
+    if passed:
+        lines.append(f"**{len(passed)} test(s) passed.**\n\n")
+        lines.append("| # | Test |\n|---|---|\n")
+        for i, t in enumerate(sorted(passed), 1):
+            lines.append(f"| {i} | `{t}` |\n")
+    else:
+        lines.append("_No passing tests recorded (tests may have been skipped or "
+                     "the run did not produce .jtr files)._\n")
+    (level_dir / "test-passed.md").write_text("".join(lines), encoding="utf-8")
+
+    # ---- test-failed.md -------------------------------------------------
+    # Build per-test "failing since" information
+    first_seen = build_test_failure_history(reports_dir, stream, level, today)
+
+    lines = [f"# ❌ Tier1 Tests Failed — {run_date_str}\n\n"]
+    lines.append(f"**Stream:** `{stream}`  **Level:** `{level}`  "
+                 f"**Date:** `{run_date_str}`\n\n")
+    if failed:
+        lines.append(f"**{len(failed)} test(s) failed.**\n\n")
+        lines.append("| # | Test | Failing since | Days failing |\n|---|---|---|---|\n")
+        for i, t in enumerate(sorted(failed), 1):
+            since = first_seen.get(t)
+            if since:
+                delta = (today - since).days
+                days_str = f"{delta} day{'s' if delta != 1 else ''}"
+                since_str = str(since)
+            else:
+                days_str = "1 (first seen today)"
+                since_str = run_date_str
+            lines.append(f"| {i} | `{t}` | {since_str} | {days_str} |\n")
+        lines.append("\n")
+        lines.append("> hs_err files (JVM crash logs) are stored locally in "
+                     "`hs_err/<run_timestamp>/` inside the level artefact directory.\n")
+    else:
+        lines.append("_No test failures recorded in this run._\n")
+    (level_dir / "test-failed.md").write_text("".join(lines), encoding="utf-8")
+
+    # ---- test-skipped.md ------------------------------------------------
+    lines = [f"# ⏭️ Tier1 Tests Skipped — {run_date_str}\n\n"]
+    lines.append(f"**Stream:** `{stream}`  **Level:** `{level}`  "
+                 f"**Date:** `{run_date_str}`\n\n")
+    if skipped:
+        lines.append(f"**{len(skipped)} test(s) skipped / not-run.**\n\n")
+        lines.append("| # | Test |\n|---|---|\n")
+        for i, t in enumerate(sorted(skipped), 1):
+            lines.append(f"| {i} | `{t}` |\n")
+    else:
+        lines.append("_No skipped tests recorded in this run._\n")
+    (level_dir / "test-skipped.md").write_text("".join(lines), encoding="utf-8")
+
+
+# ---------------------------------------------------------------------------
+# Retention purge — remove artefacts older than RETENTION_DAYS from disk
+# and from the git index so they are wiped from GitHub on the next push.
+#
+# Two-level strategy:
+#   1. Day directories whose date is > 90 days old are removed entirely
+#      (all files including any hs_err/ and .jtr files inside them).
+#   2. For day directories that are still within the 90-day window, any
+#      surviving hs_err/ or test-support/ (*.jtr) subdirectories are removed
+#      because those were explicitly excluded from earlier pushes but may
+#      exist locally and should not linger beyond 90 days either.
+#
+# git rm is run in --cached mode (removes from index / GitHub, keeps no disk
+# copy beyond what shutil.rmtree already deleted).  Errors from git rm are
+# non-fatal — the directory may never have been tracked.
+#
+# Arguments:
+#   reports_dir   — Path to the reports/ root
+#   repo_root     — Path to the repository root (for git commands)
+#   retention_days — integer, default 90
+# ---------------------------------------------------------------------------
+RETENTION_DAYS = 90
+
+_MONTH_NUMS = {
+    "January": 1, "February": 2, "March": 3,  "April": 4,
+    "May":     5, "June":     6, "July":     7, "August": 8,
+    "September": 9, "October": 10, "November": 11, "December": 12,
+}
+
+
+def _git_rm_cached(path: Path, repo_root: Path) -> None:
+    """Stage a deletion in the git index (no-op if path was never tracked)."""
+    rel = str(path.relative_to(repo_root))
+    subprocess.run(
+        ["git", "rm", "-r", "--cached", "--ignore-unmatch", "--quiet", rel],
+        cwd=str(repo_root),
+        check=False,
+        capture_output=True,
+    )
+
+
+def purge_old_data(reports_dir: Path, repo_root: Path,
+                   retention_days: int = RETENTION_DAYS) -> None:
+    """
+    Delete all report artefacts older than retention_days from both disk
+    and the git index.  Also removes hs_err/ and test-support/ trees inside
+    any day directory regardless of age (those are local-only by policy).
+    """
+    cutoff = _date.today() - timedelta(days=retention_days)
+    removed_dirs: list[Path] = []
+    local_only_dirs: list[Path] = []   # hs_err/ and test-support/ to nuke locally
+
+    for year_dir in sorted(reports_dir.iterdir()):
+        if not year_dir.is_dir() or not year_dir.name.isdigit():
+            continue
+        year = int(year_dir.name)
+
+        for month_dir in sorted(year_dir.iterdir()):
+            if not month_dir.is_dir():
+                continue
+            month_num = _MONTH_NUMS.get(month_dir.name)
+            if month_num is None:
+                continue
+
+            for day_dir in sorted(month_dir.iterdir()):
+                if not day_dir.is_dir() or not day_dir.name.isdigit():
+                    continue
+                day = int(day_dir.name)
+                try:
+                    run_date = _date(year, month_num, day)
+                except ValueError:
+                    continue
+
+                if run_date < cutoff:
+                    # Entire day directory is past retention — remove everything
+                    removed_dirs.append(day_dir)
+                else:
+                    # Day is within retention window: only purge local-only dirs
+                    for pattern in ("hs_err", "test-support"):
+                        for local_dir in day_dir.rglob(pattern):
+                            if local_dir.is_dir():
+                                local_only_dirs.append(local_dir)
+
+    # ---- Purge stale day directories (disk + git index) ------------------
+    for day_dir in removed_dirs:
+        rel = day_dir.relative_to(reports_dir)
+        print(f"[gen_status] PURGE (>{retention_days}d): {rel}", file=sys.stderr)
+        _git_rm_cached(day_dir, repo_root)
+        shutil.rmtree(day_dir, ignore_errors=True)
+
+    # Remove empty month/year parent directories left behind
+    for year_dir in sorted(reports_dir.iterdir()):
+        if not year_dir.is_dir() or not year_dir.name.isdigit():
+            continue
+        for month_dir in sorted(year_dir.iterdir()):
+            if month_dir.is_dir() and not any(month_dir.iterdir()):
+                month_dir.rmdir()
+        if year_dir.is_dir() and not any(year_dir.iterdir()):
+            year_dir.rmdir()
+
+    # ---- Purge local-only subdirs (disk only — never in index) -----------
+    for local_dir in local_only_dirs:
+        rel = local_dir.relative_to(reports_dir)
+        print(f"[gen_status] PURGE local-only: {rel}", file=sys.stderr)
+        shutil.rmtree(local_dir, ignore_errors=True)
+
+    total = len(removed_dirs) + len(local_only_dirs)
+    if total == 0:
+        print(f"[gen_status] Retention purge: nothing to remove "
+              f"(cutoff={cutoff}, window={retention_days}d).", file=sys.stderr)
+    else:
+        print(f"[gen_status] Retention purge complete: "
+              f"{len(removed_dirs)} day dir(s) removed from git+disk, "
+              f"{len(local_only_dirs)} local-only dir(s) removed from disk.",
+              file=sys.stderr)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 def main():
-    if len(sys.argv) < 3:
-        print(f"Usage: {sys.argv[0]} <reports_dir> <repo_root>", file=sys.stderr)
+    # Optional --purge-only flag: run the retention purge and exit immediately
+    # without regenerating any Markdown.  Used by run_daily.sh and jdk.sh to
+    # fire the purge as an independent early stage before gen_status_pages.
+    purge_only = "--purge-only" in sys.argv
+    args = [a for a in sys.argv[1:] if a != "--purge-only"]
+
+    if len(args) < 2:
+        print(f"Usage: {sys.argv[0]} <reports_dir> <repo_root> [--purge-only]",
+              file=sys.stderr)
         sys.exit(1)
 
-    reports_dir = Path(sys.argv[1]).resolve()
-    repo_root   = Path(sys.argv[2]).resolve()
+    reports_dir = Path(args[0]).resolve()
+    repo_root   = Path(args[1]).resolve()
 
     if not reports_dir.is_dir():
         print(f"[gen_status] ERROR: reports_dir not found: {reports_dir}",
               file=sys.stderr)
         sys.exit(1)
+
+    # ---- Retention purge (always runs; exits here when --purge-only) ------
+    purge_old_data(reports_dir, repo_root)
+    if purge_only:
+        sys.exit(0)
 
     # ---- Collect all historical run records -----------------------------
     all_records = collect_all_runs(reports_dir)
@@ -428,6 +732,19 @@ def main():
     run_md_path = today_dir / "run-summary.md"
     run_md_path.write_text(run_md, encoding="utf-8")
     print(f"[gen_status] Written: {run_md_path}", file=sys.stderr)
+
+    # ---- Write per-stream/level test result Markdown pages --------------
+    for rec in today_records:
+        level_dir = today_dir / rec.stream / rec.level
+        if level_dir.is_dir():
+            try:
+                gen_test_result_md(level_dir, rec.stream, rec.level,
+                                   reports_dir, latest_date)
+                print(f"[gen_status] Written test result MDs: {level_dir}",
+                      file=sys.stderr)
+            except Exception as exc:
+                print(f"[gen_status] WARNING: could not write test MDs for "
+                      f"{rec.stream}/{rec.level}: {exc}", file=sys.stderr)
 
 
 if __name__ == "__main__":

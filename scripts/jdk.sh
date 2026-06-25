@@ -427,12 +427,44 @@ write_summary() {
         echo "    test-summary.txt   — jtreg pass/fail totals"
         echo "    newfailures.txt    — failing test names"
         echo "    other_errors.txt   — erroring test names"
+        echo "    test-passed.txt    — names of all passed tests"
+        echo "    test-failed.txt    — names of all failed tests"
+        echo "    test-skipped.txt   — names of all skipped tests"
+        echo "    test-failure.log   — failure detail + hs_err notice"
+        echo "    test-passed.md     — GitHub: passed tests"
+        echo "    test-failed.md     — GitHub: failed tests + days-failing"
+        echo "    test-skipped.md    — GitHub: skipped tests"
+        echo "    hs_err/<timestamp>/ — JVM crash logs (local only, not pushed)"
         echo "========================================================"
     } > "${summary}"
     echo ""
     cat "${summary}"
     echo ""
     success "Summary written to: ${summary}"
+}
+
+# ---------------------------------------------------------------------------
+# Step 4b — Retention purge: remove reports older than 90 days
+#
+# Runs unconditionally for the 'run' command (the default).
+# Deletes stale day directories from disk and stages their removal in the git
+# index so they are wiped from GitHub on the next push.
+# Also removes local-only hs_err/ and test-support/ trees within live days.
+# ---------------------------------------------------------------------------
+purge_old_reports() {
+    log "Step 4b: Retention purge (>90 days) …"
+
+    if ${OPT_DRY_RUN}; then
+        info "DRY-RUN: would run retention purge (gen_status.py --purge-only)"
+        return 0
+    fi
+
+    if ! python3 "${SCRIPT_DIR}/gen_status.py" \
+            "${REPORTS_DIR}" "${REPORTS_REPO_ROOT}" --purge-only 2>&1; then
+        warn "Retention purge failed — continuing."
+    else
+        success "Retention purge complete."
+    fi
 }
 
 # ---------------------------------------------------------------------------
@@ -446,7 +478,9 @@ publish() {
 
     log "Step 5: Publishing results …"
 
-    # Regenerate STATUS.md so it reflects this run
+    # Regenerate STATUS.md and run the 90-day retention purge.
+    # gen_status.py stages git rm --cached for any day dirs past the cutoff,
+    # and removes hs_err/ / test-support/ trees from disk.
     if ! python3 "${SCRIPT_DIR}/gen_status.py" \
             "${REPORTS_DIR}" "${REPORTS_REPO_ROOT}" 2>&1; then
         warn "gen_status.py failed — STATUS.md may be stale."
@@ -456,7 +490,9 @@ publish() {
     git fetch origin "${GIT_RESULTS_BRANCH}"
     git checkout "${GIT_RESULTS_BRANCH}"
     git pull --ff-only origin "${GIT_RESULTS_BRANCH}"
+    # Exclude hs_err/ — JVM crash logs are for local investigation only
     git add "${REPORTS_DIR}/"
+    git reset HEAD -- "${REPORTS_DIR}"/**/hs_err/ 2>/dev/null || true
     git add --force STATUS.md 2>/dev/null || true
 
     if git diff --cached --quiet; then
@@ -487,6 +523,7 @@ Command: jdk.sh ${COMMAND}
 Stream : ${OPT_STREAM}  Levels: ${EFFECTIVE_LEVELS[*]}
 Target : ${OPT_TEST_TARGET}
 JVM    : ${OPT_JVM_FLAGS:-(none)}
+Retention: reports older than 90 days purged from repo.
 
 Results:
 ${result_lines}
@@ -511,8 +548,13 @@ fi
 # Step 3: execute
 run_operations
 
-# Step 4: summary
+# Step 4a: summary
 write_summary
+
+# Step 4b: retention purge — runs for 'run' command only (default)
+if [[ "${COMMAND}" == "run" ]]; then
+    purge_old_reports
+fi
 
 # Step 5: publish
 publish
