@@ -126,6 +126,6 @@ JTREG_SHA256_URL="${JTREG_ARTIFACT_BASE}/${JTREG_ARCHIVE_NAME}.sha256sum.txt"
 # ---------------------------------------------------------------------------
 # Git / reporting settings
 # ---------------------------------------------------------------------------
-GIT_RESULTS_BRANCH="main"
+GIT_RESULTS_BRANCH="ci-results"
 GIT_COMMIT_AUTHOR_NAME="${GIT_COMMIT_AUTHOR_NAME:-OpenJDK s390x CI}"
 GIT_COMMIT_AUTHOR_EMAIL="${GIT_COMMIT_AUTHOR_EMAIL:-ci@s390x}"
