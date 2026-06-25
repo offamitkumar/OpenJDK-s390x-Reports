@@ -73,17 +73,34 @@ BUILD_LEVELS=(fastdebug release)
 # To add a new stream: add a row here.
 # To retire a stream: simply remove its row (or let resolve_streams.py skip it).
 
+# Active set rule (enforced by resolve_streams.py at runtime):
+#   active = available_lts_releases  ∪  {most_recent_feature_release}
+#
+# Current picture (from api.adoptium.net/v3/info/available_releases):
+#   LTS              : 11, 17, 21, 25
+#   Feature release  : 26  (most_recent_feature_release)
+#   HEAD / tip       : 28  (tip_version — always tested, never filtered)
+#   EOL / excluded   : 8 (different build system), 23, 24 (superseded)
+#
+# To add a new stream: append a row.  resolve_streams.py will start
+# including it automatically once it appears in the Adoptium API.
+# To retire a stream: remove its row (or leave it — the resolver will
+# skip it once it drops from the API's active set).
+
 JDK_STREAMS=(
-  # HEAD — always tested, never skipped
+  # HEAD — always tested regardless of API response
   "head|jdk|https://github.com/openjdk/jdk.git|21|"
 
-  # LTS streams
+  # Active LTS streams
+  "jdk25|jdk25u|https://github.com/openjdk/jdk25u.git|21|"
   "jdk21|jdk21u-dev|https://github.com/openjdk/jdk21u-dev.git|21|"
   "jdk17|jdk17u-dev|https://github.com/openjdk/jdk17u-dev.git|17|"
   "jdk11|jdk11u-dev|https://github.com/openjdk/jdk11u-dev.git|11|--disable-warnings-as-errors"
 
-  # Current non-LTS feature release (remove when it reaches EOL)
-  "jdk23|jdk23u|https://github.com/openjdk/jdk23u.git|21|"
+  # Current non-LTS feature release
+  # resolve_streams.py keeps this active while it equals most_recent_feature_release
+  # and drops it automatically once the next release supersedes it.
+  "jdk26|jdk26u|https://github.com/openjdk/jdk26u.git|21|"
 )
 
 # ---------------------------------------------------------------------------
