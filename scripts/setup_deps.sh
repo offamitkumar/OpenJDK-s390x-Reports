@@ -39,12 +39,7 @@ check_tools() {
 setup_boot_jdk() {
   info "Fetching latest Adoptium Temurin nightly boot JDK for s390x …"
 
-  local tmp_dir
-  tmp_dir="$(mktemp -d)"
-  # shellcheck disable=SC2064
-  trap "rm -rf ${tmp_dir}" RETURN
-
-  local archive="${tmp_dir}/boot_jdk.tar.gz"
+  local archive="${CI_TMP_DIR}/boot_jdk.tar.gz"
 
   info "  URL: ${ADOPTIUM_NIGHTLY_URL}"
   if ! curl --fail --silent --show-error --location \
@@ -59,9 +54,7 @@ setup_boot_jdk() {
   fi
 
   info "  Extracting to ${BOOT_JDK_DIR} …"
-  rm -rf "${BOOT_JDK_DIR}"
   mkdir -p "${BOOT_JDK_DIR}"
-
   tar --strip-components=1 -xzf "${archive}" -C "${BOOT_JDK_DIR}"
   success "Boot JDK installed at ${BOOT_JDK_DIR}"
   "${BOOT_JDK_DIR}/bin/java" -version
@@ -77,13 +70,8 @@ setup_boot_jdk() {
 setup_jtreg() {
   info "Fetching latest jtreg (jtregtip) from ci.adoptium.net …"
 
-  local tmp_dir
-  tmp_dir="$(mktemp -d)"
-  # shellcheck disable=SC2064
-  trap "rm -rf ${tmp_dir}" RETURN
-
-  local archive="${tmp_dir}/jtregtip.tar.gz"
-  local sha_file="${tmp_dir}/jtregtip.tar.gz.sha256sum.txt"
+  local archive="${CI_TMP_DIR}/jtregtip.tar.gz"
+  local sha_file="${CI_TMP_DIR}/jtregtip.tar.gz.sha256sum.txt"
 
   info "  Archive URL : ${JTREG_DOWNLOAD_URL}"
   info "  Checksum URL: ${JTREG_SHA256_URL}"
@@ -122,7 +110,6 @@ setup_jtreg() {
   fi
 
   info "  Extracting to ${JTREG_DIR} …"
-  rm -rf "${JTREG_DIR}"
   mkdir -p "${JTREG_DIR}"
 
   # The tar contains a single top-level 'jtreg/' dir; strip it
@@ -131,6 +118,16 @@ setup_jtreg() {
   success "jtreg installed at ${JTREG_DIR}"
   "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null || \
     info "  (version check skipped — jtreg binary not in PATH yet)"
+}
+
+# ---------------------------------------------------------------------------
+# Wipe and recreate the scratch directory before every run
+# ---------------------------------------------------------------------------
+clean_ci_tmp() {
+  info "Cleaning scratch directory ${CI_TMP_DIR} …"
+  rm -rf "${CI_TMP_DIR}"
+  mkdir -p "${CI_TMP_DIR}"
+  info "  Scratch directory ready."
 }
 
 # ---------------------------------------------------------------------------
@@ -148,6 +145,7 @@ for arg in "$@"; do
 done
 
 check_tools
+clean_ci_tmp
 
 $DO_JDK   && setup_boot_jdk
 $DO_JTREG && setup_jtreg

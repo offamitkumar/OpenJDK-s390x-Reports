@@ -13,11 +13,15 @@
 # Root of the OpenJDK source trees (parent dir holding jdk/, jdk21u-dev/, …)
 : "${JDK_SOURCES_ROOT:=${HOME}/jdk-sources}"
 
-# Where the Adoptium nightly boot JDK will be installed
-: "${BOOT_JDK_DIR:=${HOME}/boot_jdk_nightly}"
+# Scratch directory — wiped and re-populated on every run.
+# Both the boot JDK and jtreg land here so nothing persists between runs.
+: "${CI_TMP_DIR:=/tmp/openjdk-s390x-ci}"
 
-# Where jtreg will be installed / kept up-to-date
-: "${JTREG_DIR:=${HOME}/jtreg}"
+# Where the Adoptium nightly boot JDK will be extracted (inside CI_TMP_DIR)
+: "${BOOT_JDK_DIR:=${CI_TMP_DIR}/boot_jdk}"
+
+# Where jtreg will be extracted (inside CI_TMP_DIR)
+: "${JTREG_DIR:=${CI_TMP_DIR}/jtreg}"
 
 # Where googletest lives (optional; only needed for hotspot tests)
 : "${GTEST_DIR:=${HOME}/googletest}"
