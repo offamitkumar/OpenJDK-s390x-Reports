@@ -13,28 +13,36 @@ repository.
 ## Repository layout
 
 ```
+STATUS.md          ← Rolling dashboard — open this on GitHub to see build health
+
 scripts/
-  config.sh        # Central configuration — edit paths here
-  setup_deps.sh    # Downloads / refreshes boot JDK and jtreg
-  build_test.sh    # Reusable build + test function (sourced, not run directly)
-  run_daily.sh     # Orchestrator — the only script you invoke
+  config.sh           # Central configuration — edit paths here
+  setup_deps.sh       # Downloads / refreshes boot JDK and jtreg
+  build_test.sh       # Build + test function (sourced by run_daily.sh)
+  run_daily.sh        # Orchestrator — the only script you invoke
+  resolve_streams.py  # Filters stream registry against Adoptium API
+  gen_status.py       # Generates STATUS.md + per-run run-summary.md
 
 reports/
   YYYY/Month/DD/
+    pipeline.log            # Full timestamped run output
+    run-summary.txt         # Machine-readable per-stream results
+    run-summary.md          # GitHub-rendered per-run report ← browse on GitHub
+    deps-failure.txt        # Present only if a dep download failed
     head/
-      top_commit          # Git log -1 of the JDK HEAD commit tested
+      top_commit            # Git log -1 of the JDK HEAD commit tested
+      commit-info.txt       # Pre/post-pull commits + bisect command
+      git-pull.log          # Git fetch/pull output
       fastdebug/
+        configure.log
         build.log
+        build-diagnosis.txt # Last compiler cmd + error context
         test-summary.txt
         newfailures.txt
         other_errors.txt
         run-metadata.txt
       release/
-        build.log
-        test-summary.txt
-        newfailures.txt
-        other_errors.txt
-        run-metadata.txt
+        (same as fastdebug/)
 ```
 
 ---
@@ -100,16 +108,23 @@ jtreg. Re-running it always fetches the freshest versions.
 bash scripts/run_daily.sh
 ```
 
-The script:
-1. Refreshes the boot JDK and jtreg.
-2. Clones (first run) or pulls (subsequent runs) JDK mainline.
-3. Builds `fastdebug` and `release` images.
-4. Runs `make run-test-tier1` for both configurations.
-5. Writes artefacts under `reports/YYYY/Month/DD/head/`.
-6. Commits and pushes the results to the `main` branch.
+The script runs five stages:
+
+| Stage | Description |
+|---|---|
+| 1 | Download fresh Adoptium nightly boot JDK + latest jtreg |
+| 2 | Query Adoptium API for active JDK streams |
+| 3 | For each active stream: git pull, configure, build, tier1 test |
+| 4a | Write `reports/YYYY/Month/DD/run-summary.txt` |
+| 4b | Run `gen_status.py` → updates **`STATUS.md`** and writes `run-summary.md` |
+| 5 | `git commit && git push` — all artefacts land on `main` |
 
 Build errors abort the affected configuration but do **not** abort the other
 one — both results are always collected.
+
+> **Tip:** The commit subject line starts with ✅ or ❌ so you can tell at a
+> glance from the GitHub commit list whether the day's run passed or failed —
+> without logging into the machine.
 
 ---
 
@@ -156,12 +171,38 @@ BOOT_JDK_DIR=/opt/my-jdk bash scripts/run_daily.sh
 
 ---
 
+## Tracking regressions without logging in
+
+Open **[`STATUS.md`](STATUS.md)** on GitHub.  It is updated on every push and shows:
+
+- 🟢 / 🔴 current status per stream × debug-level
+- **Failing since** — exact date the current streak started
+- **Last passed** — most recent passing date
+- **Consecutive failures** — how many runs in a row have failed
+- A 14-run sparkline history so you can see whether the failure is intermittent
+
+The per-run **`run-summary.md`** inside each day's directory gives the full
+breakdown for that specific run (GitHub renders it natively when you browse
+the folder in the web UI).
+
+Additionally, every commit subject starts with ✅ or ❌, so the
+[GitHub commit log](../../commits/main) itself acts as a status feed — no
+need to open any file.
+
+---
+
 ## Report artefacts explained
 
 | File | Contents |
 |---|---|
+| `STATUS.md` | Rolling dashboard — streams, last-pass, last-fail, sparkline |
+| `run-summary.md` | Per-run GitHub-rendered report |
+| `run-summary.txt` | Machine-readable per-stream status (parsed by gen_status.py) |
+| `pipeline.log` | Full timestamped run output |
 | `top_commit` | `git log -1` of the JDK commit tested |
+| `commit-info.txt` | Pre/post-pull commits + ready-to-run bisect command |
 | `build.log` | Full OpenJDK build log |
+| `build-diagnosis.txt` | Last compiler command + first error lines |
 | `test-summary.txt` | Pass/fail totals from jtreg for all tier1 suites |
 | `newfailures.txt` | Tests that failed in this run |
 | `other_errors.txt` | Tests that errored (not a clean pass/fail) |

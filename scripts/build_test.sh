@@ -6,15 +6,19 @@
 #
 # Public function:
 #   build_and_test_jdk  <src_dir> <stream_label> <debug_level> \
-#                       <out_dir> [extra_configure_flags...]
+#                       <out_dir> <jtreg_ok> [extra_configure_flags...]
+#
+#   jtreg_ok  — "true" to run tier1 tests, "false" to skip (e.g. if jtreg
+#               download failed in setup_deps.sh, exit 2 path).
 #
 # Environment expected (exported by run_daily.sh via config.sh):
 #   BOOT_JDK_DIR, JTREG_DIR, GTEST_DIR, MAKE_JOBS
 # =============================================================================
 
 # This file is sourced, not executed directly.
-# set -euo pipefail is NOT set at this level — the caller owns the outer shell.
-# Each public function runs its main body in a subshell with its own set -e.
+# set -euo pipefail is NOT set at file scope — the caller owns the outer shell.
+# Each public function runs its critical body inside a subshell with its own
+# set -e so a build failure terminates only that combination.
 
 _bt_info()    { echo "[INFO]  $*"; }
 _bt_success() { echo "[OK]    $*"; }
@@ -28,7 +32,7 @@ _detect_jdk_version() {
     local ver_file="make/conf/version-numbers.conf"
     [[ -f "${ver_file}" ]] || ver_file="make/autoconf/version-numbers"
     if [[ -f "${ver_file}" ]]; then
-        grep -m1 'DEFAULT_VERSION_FEATURE\s*=' "${ver_file}" \
+        grep -m1 'DEFAULT_VERSION_FEATURE[[:space:]]*=' "${ver_file}" \
             | grep -oE '[0-9]+' | head -1
     else
         echo "0"
@@ -36,7 +40,7 @@ _detect_jdk_version() {
 }
 
 # ---------------------------------------------------------------------------
-# Internal: build the configure argument array for a given stream + debug level
+# Internal: build the configure argument array for a given debug level
 # ---------------------------------------------------------------------------
 _configure_jdk() {
     local debug_level="$1"
@@ -129,12 +133,11 @@ _write_build_diagnosis() {
 
         if [[ ! -f "${build_log}" ]]; then
             echo "(build.log not found — failure occurred before make started,"
-            echo " likely during 'bash configure'. Check configure output above.)"
+            echo " likely during 'bash configure'. Check configure.log.)"
             return
         fi
 
         # ---- Last make target attempted ---------------------------------
-        # OpenJDK make prints "Building target 'foo'" lines
         local last_target
         last_target="$(grep -E "^(Building target|Finished building target)" "${build_log}" \
             | tail -1 || true)"
@@ -145,24 +148,17 @@ _write_build_diagnosis() {
         fi
 
         # ---- Last compiler / linker command -----------------------------
-        # With LOG=cmdlines every compiler invocation is logged verbatim.
-        # Compiler drivers on s390x Linux: gcc, g++, cc, c++, ld, ar, as,
-        # plus the JDK-internal tools: javac, javah, jmod, jlink.
         local last_cmd
         last_cmd="$(grep -E \
             '/(gcc|g\+\+|cc|c\+\+|ld|ar|clang|clang\+\+|javac|jmod|jlink|link\.exe) ' \
             "${build_log}" | tail -1 || true)"
         if [[ -n "${last_cmd}" ]]; then
             echo "--- Last compiler/linker command ---"
-            # Wrap long lines at 120 chars for readability
             echo "${last_cmd}" | fold -s -w 120
             echo ""
         fi
 
         # ---- Error context ----------------------------------------------
-        # Extract every line containing ': error:' or '^Error' and show
-        # 8 lines of context around each (capped at 5 occurrences to keep
-        # the file readable).
         local error_count
         error_count="$(grep -c -E '(: error:|^Error |^make\[|^make: \*\*\*)' \
             "${build_log}" 2>/dev/null || echo 0)"
@@ -171,14 +167,12 @@ _write_build_diagnosis() {
         if [[ "${error_count}" -eq 0 ]]; then
             echo "  (no 'error:' lines found — check full build.log)"
         else
-            # Show context around first 5 error occurrences
             grep -n -E '(: error:|^Error |^make\[.*Error|^make: \*\*\*)' \
                 "${build_log}" \
                 | head -5 \
                 | while IFS=: read -r lineno rest; do
                     echo ""
                     echo "  [line ${lineno}] ${rest}"
-                    # 8 lines before and after in the actual file
                     local start=$(( lineno - 8 ))
                     [[ ${start} -lt 1 ]] && start=1
                     local end=$(( lineno + 8 ))
@@ -212,27 +206,31 @@ _write_build_diagnosis() {
 #   $2  stream_label         — short label for reports (e.g. "head", "jdk21")
 #   $3  debug_level          — "fastdebug" or "release"
 #   $4  out_dir              — directory to write all artefacts into
-#   $5+ extra_configure_flags — passed verbatim to configure (optional)
+#   $5  jtreg_ok             — "true" to run tier1; "false" to skip tests
+#   $6+ extra_configure_flags — passed verbatim to configure (optional)
 #
 # Exit code:
-#   0   build + tests ran (test failures are recorded, not fatal)
-#   1   infrastructure / build failure
+#   0   build completed (and tests ran if jtreg_ok=true; test failures are
+#       recorded in run-metadata.txt, not propagated as a non-zero exit)
+#   1   infrastructure / build failure (configure or make images failed)
 # ---------------------------------------------------------------------------
 build_and_test_jdk() {
     local src_dir="$1"
     local stream_label="$2"
     local debug_level="$3"
     local out_dir="$4"
-    shift 4
+    local jtreg_ok="${5:-true}"
+    shift 5
     local extra_configure_flags=("$@")
 
     _bt_info "=== build_and_test_jdk ==="
-    _bt_info "    stream : ${stream_label}"
-    _bt_info "    level  : ${debug_level}"
-    _bt_info "    src    : ${src_dir}"
-    _bt_info "    output : ${out_dir}"
+    _bt_info "    stream   : ${stream_label}"
+    _bt_info "    level    : ${debug_level}"
+    _bt_info "    src      : ${src_dir}"
+    _bt_info "    output   : ${out_dir}"
+    _bt_info "    jtreg_ok : ${jtreg_ok}"
     [[ ${#extra_configure_flags[@]} -gt 0 ]] && \
-        _bt_info "    extra  : ${extra_configure_flags[*]}"
+        _bt_info "    extra    : ${extra_configure_flags[*]}"
 
     mkdir -p "${out_dir}"
 
@@ -241,18 +239,14 @@ build_and_test_jdk() {
         cd "${src_dir}"
 
         local conf_name="linux-s390x-server-${debug_level}"
-        local build_log_path=""   # set once build dir exists
+        local build_log_path=""
         local current_phase="configure"
 
         # ---- Trap: always write diagnosis on any exit --------------------
-        # Captures the subshell's exit status at the moment of exit.
         _on_exit() {
             local exit_code=$?
-            # Resolve the actual build.log path (may have changed if conf_name
-            # was adjusted after configure)
             local actual_log="${build_log_path}"
             if [[ -z "${actual_log}" ]]; then
-                # configure may have created a conf dir — try to find it
                 local found_dir
                 found_dir="$(_find_conf_dir "${debug_level}")"
                 [[ -n "${found_dir}" ]] && actual_log="${found_dir}/build.log"
@@ -277,9 +271,9 @@ build_and_test_jdk() {
         # ---- Configure ---------------------------------------------------
         current_phase="configure"
         _bt_info "  Running configure (debug-level=${debug_level}) …"
-        _configure_jdk "${debug_level}" "${extra_configure_flags[@]}"
+        _configure_jdk "${debug_level}" "${extra_configure_flags[@]+"${extra_configure_flags[@]}"}"
 
-        # Verify conf dir
+        # Verify conf dir — configure may choose a slightly different name
         if [[ ! -d "build/${conf_name}" ]]; then
             local found
             found="$(_find_conf_dir "${debug_level}")"
@@ -294,45 +288,38 @@ build_and_test_jdk() {
         build_log_path="build/${conf_name}/build.log"
 
         # ---- Build images ------------------------------------------------
-        # IMPORTANT: do NOT pipe make directly into tee — the pipe would
-        # swallow make's non-zero exit code even with pipefail set, because
-        # tee exits 0.  Instead redirect stdout+stderr to the log file and
-        # also replay it to the terminal with 'tee /dev/fd/3' via a safe
-        # file-descriptor redirect, or simply let make write to its own
-        # build.log (LOG=cmdlines) and tail -f it separately.
-        #
-        # Chosen approach: run make with output going to a temp log AND to
-        # the terminal via process substitution on fd3, then propagate the
-        # real make exit code.
+        # Strategy: redirect stdout+stderr of make to a temp file, then copy
+        # to out_dir.  Avoid pipe-tee patterns that swallow make's exit code.
         current_phase="images"
         _bt_info "  Building images (CONF=${conf_name}, -j${MAKE_JOBS}) …"
 
-        local make_exit=0
-        # Write to both terminal and log without a pipe swallowing make's exit.
-        # exec 3>&1 opens fd3 pointing at the current stdout (terminal).
-        exec 3>&1
-        make CONF="${conf_name}" images LOG=cmdlines 2>&1 \
-            | tee /dev/fd/3 > "${build_log_path}" \
-            ; make_exit="${PIPESTATUS[0]}"
-        exec 3>&-
-
-        # Propagate build failure immediately — do not proceed to tests.
-        if [[ "${make_exit}" -ne 0 ]]; then
+        local make_tmp="${out_dir}/build.log.tmp"
+        if ! make CONF="${conf_name}" images LOG=cmdlines \
+                -j"${MAKE_JOBS}" \
+                > "${make_tmp}" 2>&1; then
+            local make_exit=$?
+            cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
+            # Also place in the standard build.log location so _on_exit finds it
+            cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
             _bt_warn "  make images failed (exit=${make_exit}) — skipping tests."
-            cp "${build_log_path}" "${out_dir}/build.log" 2>/dev/null || true
             exit "${make_exit}"
         fi
 
-        # Copy the completed build.log to out_dir
-        cp "${build_log_path}" "${out_dir}/build.log"
+        cp "${make_tmp}" "${out_dir}/build.log"
+        cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
+        rm -f "${make_tmp}"
 
-        # ---- Run tier1 tests --------------------------------------------
+        # ---- Run tier1 tests (if jtreg available) -----------------------
         current_phase="test"
-        _bt_info "  Running make run-test-tier1 (CONF=${conf_name}) …"
         local test_exit=0
-        make CONF="${conf_name}" \
-             JTREG="JTR_HOME=${JTREG_DIR}" \
-             run-test-tier1 || test_exit=$?
+
+        if [[ "${jtreg_ok}" != "true" ]]; then
+            _bt_warn "  Skipping tier1 tests — jtreg not available."
+            test_exit="SKIPPED"
+        else
+            _bt_info "  Running make run-test-tier1 (CONF=${conf_name}) …"
+            make CONF="${conf_name}" run-test-tier1 || test_exit=$?
+        fi
 
         # ---- Collect test artefacts -------------------------------------
         local results_dir="build/${conf_name}/test-results"
@@ -340,17 +327,18 @@ build_and_test_jdk() {
         if [[ -f "${results_dir}/test-summary.txt" ]]; then
             cp "${results_dir}/test-summary.txt" "${out_dir}/test-summary.txt"
         else
-            echo "test-summary.txt not found" > "${out_dir}/test-summary.txt"
+            echo "test-summary.txt not found (test_exit=${test_exit})" \
+                > "${out_dir}/test-summary.txt"
         fi
 
         {
-            find "build/${conf_name}/" -name "newfailures.txt" -exec cat {} +
-        } > "${out_dir}/newfailures.txt" 2>/dev/null \
+            find "build/${conf_name}/" -name "newfailures.txt" -exec cat {} + 2>/dev/null
+        } > "${out_dir}/newfailures.txt" \
             || echo "(none)" > "${out_dir}/newfailures.txt"
 
         {
-            find "build/${conf_name}/" -name "other_errors.txt" -exec cat {} +
-        } > "${out_dir}/other_errors.txt" 2>/dev/null \
+            find "build/${conf_name}/" -name "other_errors.txt" -exec cat {} + 2>/dev/null
+        } > "${out_dir}/other_errors.txt" \
             || echo "(none)" > "${out_dir}/other_errors.txt"
 
         # ---- Write run metadata ------------------------------------------
@@ -363,10 +351,13 @@ build_and_test_jdk() {
             echo "boot_jdk:     $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
             echo "jtreg:        $(JAVA_HOME="${BOOT_JDK_DIR}" "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null | head -1 || echo 'n/a')"
             echo "extra_flags:  ${extra_configure_flags[*]:-none}"
+            echo "jtreg_ok:     ${jtreg_ok}"
             echo "test_exit:    ${test_exit}"
         } > "${out_dir}/run-metadata.txt"
 
-        if [[ ${test_exit} -ne 0 ]]; then
+        if [[ "${test_exit}" == "SKIPPED" ]]; then
+            _bt_warn "  Tier1 tests SKIPPED (jtreg not available)."
+        elif [[ "${test_exit}" -ne 0 ]]; then
             _bt_warn "  Tests finished with failures/errors (exit=${test_exit}) — recorded."
         else
             _bt_success "  All tier1 tests passed for ${stream_label}/${debug_level}."
