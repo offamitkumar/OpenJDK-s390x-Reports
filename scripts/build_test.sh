@@ -196,17 +196,23 @@ _detect_jdk_version() {
 
 # ---------------------------------------------------------------------------
 # Internal: build the configure argument array for a given debug level
+#
+# Arguments:
+#   $1  debug_level
+#   $2  boot_jdk_dir  — path to the boot JDK to use (defaults to BOOT_JDK_DIR)
+#   $3+ extra_flags
 # ---------------------------------------------------------------------------
 _configure_jdk() {
     local debug_level="$1"
-    shift
+    local boot_jdk_dir="${2:-${BOOT_JDK_DIR}}"
+    shift 2
     local extra_flags=("$@")
 
     local jdk_ver
     jdk_ver="$(_detect_jdk_version)"
 
     local args=(
-        "--with-boot-jdk=${BOOT_JDK_DIR}"
+        "--with-boot-jdk=${boot_jdk_dir}"
         "--with-jtreg=${JTREG_DIR}"
         "--with-debug-level=${debug_level}"
         "--with-native-debug-symbols=internal"
@@ -223,6 +229,24 @@ _configure_jdk() {
     done
 
     bash configure "${args[@]}"
+}
+
+# ---------------------------------------------------------------------------
+# Internal: resolve the boot JDK directory for a stream's min version.
+# Calls boot_jdk_dir_for_version() from config.sh (already sourced by caller).
+# Falls back to BOOT_JDK_DIR if the versioned dir does not exist.
+# ---------------------------------------------------------------------------
+_resolve_boot_jdk_dir() {
+    local min_ver="${1:-0}"
+    local candidate
+    candidate="$(boot_jdk_dir_for_version "${min_ver}")"
+    if [[ -x "${candidate}/bin/java" ]]; then
+        echo "${candidate}"
+    else
+        # versioned dir not ready — fall back to the global tip JDK
+        _bt_warn "  boot_jdk_${min_ver} not found at ${candidate}; falling back to ${BOOT_JDK_DIR}"
+        echo "${BOOT_JDK_DIR}"
+    fi
 }
 
 # ---------------------------------------------------------------------------
@@ -362,7 +386,8 @@ _write_build_diagnosis() {
 #   $3  debug_level          — "fastdebug" or "release"
 #   $4  out_dir              — directory to write all artefacts into
 #   $5  jtreg_ok             — "true" to run tier1; "false" to skip tests
-#   $6+ extra_configure_flags — passed verbatim to configure (optional)
+#   $6  boot_jdk_dir         — path to the boot JDK to use for this stream
+#   $7+ extra_configure_flags — passed verbatim to configure (optional)
 #
 # Exit code:
 #   0   build completed (and tests ran if jtreg_ok=true; test failures are
@@ -375,7 +400,8 @@ build_and_test_jdk() {
     local debug_level="$3"
     local out_dir="$4"
     local jtreg_ok="${5:-true}"
-    shift 5
+    local boot_jdk_dir="${6:-${BOOT_JDK_DIR}}"
+    shift 6
     local extra_configure_flags=("$@")
     # Timestamp for this specific invocation — used to namespace hs_err dirs
     local _run_ts; _run_ts="$(date '+%Y%m%d_%H%M%S')"
@@ -386,6 +412,7 @@ build_and_test_jdk() {
     _bt_info "    src      : ${src_dir}"
     _bt_info "    output   : ${out_dir}"
     _bt_info "    jtreg_ok : ${jtreg_ok}"
+    _bt_info "    boot_jdk : ${boot_jdk_dir}"
     [[ ${#extra_configure_flags[@]} -gt 0 ]] && \
         _bt_info "    extra    : ${extra_configure_flags[*]}"
 
@@ -428,7 +455,8 @@ build_and_test_jdk() {
         # ---- Configure ---------------------------------------------------
         current_phase="configure"
         _bt_info "  Running configure (debug-level=${debug_level}) …"
-        _configure_jdk "${debug_level}" "${extra_configure_flags[@]+"${extra_configure_flags[@]}"}"
+        _configure_jdk "${debug_level}" "${boot_jdk_dir}" \
+            "${extra_configure_flags[@]+"${extra_configure_flags[@]}"}"
 
         # Verify conf dir — configure may choose a slightly different name
         if [[ ! -d "build/${conf_name}" ]]; then
@@ -514,8 +542,8 @@ build_and_test_jdk() {
             echo "date:         $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             echo "src_dir:      ${src_dir}"
             echo "top_commit:   $(git -C "${src_dir}" log -1 --oneline 2>/dev/null || echo 'unknown')"
-            echo "boot_jdk:     $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
-            echo "jtreg:        $(JAVA_HOME="${BOOT_JDK_DIR}" "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null | head -1 || echo 'n/a')"
+            echo "boot_jdk:     $("${boot_jdk_dir}/bin/java" -version 2>&1 | head -1)"
+            echo "jtreg:        $(JAVA_HOME="${boot_jdk_dir}" "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null | head -1 || echo 'n/a')"
             echo "extra_flags:  ${extra_configure_flags[*]:-none}"
             echo "jtreg_ok:     ${jtreg_ok}"
             echo "test_exit:    ${test_exit}"
@@ -541,7 +569,8 @@ build_and_test_jdk() {
 #   $2  stream_label
 #   $3  debug_level
 #   $4  out_dir
-#   $5+ extra_configure_flags (optional)
+#   $5  boot_jdk_dir         — path to the boot JDK to use for this stream
+#   $6+ extra_configure_flags (optional)
 #
 # Exit code: 0 success, non-zero build failure.
 # ---------------------------------------------------------------------------
@@ -550,14 +579,16 @@ build_only_jdk() {
     local stream_label="$2"
     local debug_level="$3"
     local out_dir="$4"
-    shift 4
+    local boot_jdk_dir="${5:-${BOOT_JDK_DIR}}"
+    shift 5
     local extra_configure_flags=("$@")
 
     _bt_info "=== build_only_jdk ==="
-    _bt_info "    stream : ${stream_label}"
-    _bt_info "    level  : ${debug_level}"
-    _bt_info "    src    : ${src_dir}"
-    _bt_info "    output : ${out_dir}"
+    _bt_info "    stream   : ${stream_label}"
+    _bt_info "    level    : ${debug_level}"
+    _bt_info "    src      : ${src_dir}"
+    _bt_info "    output   : ${out_dir}"
+    _bt_info "    boot_jdk : ${boot_jdk_dir}"
     [[ ${#extra_configure_flags[@]} -gt 0 ]] && \
         _bt_info "    extra  : ${extra_configure_flags[*]}"
 
@@ -593,7 +624,7 @@ build_only_jdk() {
 
         current_phase="configure"
         _bt_info "  Running configure (debug-level=${debug_level}) …"
-        _configure_jdk "${debug_level}" \
+        _configure_jdk "${debug_level}" "${boot_jdk_dir}" \
             "${extra_configure_flags[@]+"${extra_configure_flags[@]}"}"
 
         if [[ ! -d "build/${conf_name}" ]]; then
@@ -628,7 +659,7 @@ build_only_jdk() {
             echo "date:         $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
             echo "src_dir:      ${src_dir}"
             echo "top_commit:   $(git -C "${src_dir}" log -1 --oneline 2>/dev/null || echo 'unknown')"
-            echo "boot_jdk:     $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
+            echo "boot_jdk:     $("${boot_jdk_dir}/bin/java" -version 2>&1 | head -1)"
             echo "extra_flags:  ${extra_configure_flags[*]:-none}"
             echo "test_exit:    SKIPPED (build-only mode)"
         } > "${out_dir}/run-metadata.txt"

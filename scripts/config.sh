@@ -22,8 +22,27 @@
 # Both the boot JDK and jtreg land here; nothing persists between runs.
 : "${CI_TMP_DIR:=/tmp/openjdk-s390x-ci}"
 
-# Where the Adoptium nightly boot JDK is extracted (inside CI_TMP_DIR)
-: "${BOOT_JDK_DIR:=${CI_TMP_DIR}/boot_jdk}"
+# Where the Adoptium nightly boot JDKs are extracted (inside CI_TMP_DIR).
+# Each required version gets its own sub-directory: boot_jdk_<version>
+# Use boot_jdk_dir_for_version() to resolve the path for a given version.
+: "${BOOT_JDK_BASE_DIR:=${CI_TMP_DIR}/boot_jdk}"
+
+# Legacy alias kept so any direct $BOOT_JDK_DIR references still point at
+# the tip-version JDK (used by jtreg smoke-test and run-metadata logging).
+# Prefer boot_jdk_dir_for_version() in build logic.
+: "${BOOT_JDK_DIR:=${BOOT_JDK_BASE_DIR}}"
+
+# Return the versioned boot JDK directory for a given MIN_JDK_VERSION.
+# e.g. boot_jdk_dir_for_version 21  →  /tmp/openjdk-s390x-ci/boot_jdk_21
+# Falls back to the tip-version directory (BOOT_JDK_DIR) for version 0 / "".
+boot_jdk_dir_for_version() {
+    local ver="${1:-0}"
+    if [[ -z "${ver}" || "${ver}" == "0" ]]; then
+        echo "${BOOT_JDK_DIR}"
+    else
+        echo "${BOOT_JDK_BASE_DIR}_${ver}"
+    fi
+}
 
 # Where jtreg is extracted (inside CI_TMP_DIR)
 : "${JTREG_DIR:=${CI_TMP_DIR}/jtreg}"
@@ -89,10 +108,14 @@ BUILD_LEVELS=(fastdebug release)
 
 JDK_STREAMS=(
   # HEAD — always tested regardless of API response
-  "head|jdk|https://github.com/openjdk/jdk.git|21|"
+  # min_ver is unused for "head" — it always gets the tip_version boot JDK.
+  "head|jdk|https://github.com/openjdk/jdk.git|0|"
 
   # Active LTS streams
-  "jdk25|jdk25u|https://github.com/openjdk/jdk25u.git|21|"
+  # MIN_JDK_VERSION = the minimum boot JDK version accepted by configure for
+  # that source tree (OpenJDK configure rule: boot JDK must be N-1, N, or N+1
+  # where N is the source feature version).
+  "jdk25|jdk25u|https://github.com/openjdk/jdk25u.git|24|"
   "jdk21|jdk21u-dev|https://github.com/openjdk/jdk21u-dev.git|21|"
   "jdk17|jdk17u-dev|https://github.com/openjdk/jdk17u-dev.git|17|"
   "jdk11|jdk11u-dev|https://github.com/openjdk/jdk11u-dev.git|11|--disable-warnings-as-errors"
@@ -100,7 +123,7 @@ JDK_STREAMS=(
   # Current non-LTS feature release
   # resolve_streams.py keeps this active while it equals most_recent_feature_release
   # and drops it automatically once the next release supersedes it.
-  "jdk26|jdk26u|https://github.com/openjdk/jdk26u.git|21|"
+  "jdk26|jdk26u|https://github.com/openjdk/jdk26u.git|25|"
 )
 
 # ---------------------------------------------------------------------------

@@ -227,11 +227,44 @@ resolve_stream_src() {
     return 1
 }
 
+# Return the correct boot JDK directory for the given stream label,
+# using the MIN_JDK_VERSION field from the registry.
+resolve_stream_boot_jdk() {
+    local target_label="$1"
+
+    # "head" always uses the tip JDK (BOOT_JDK_DIR)
+    if [[ "${target_label}" == "head" ]]; then
+        echo "${BOOT_JDK_DIR}"
+        return 0
+    fi
+
+    for entry in "${JDK_STREAMS[@]}"; do
+        IFS='|' read -r lbl _sub _url min_ver _flags <<< "${entry}"
+        if [[ "${lbl}" == "${target_label}" ]]; then
+            local candidate
+            candidate="$(boot_jdk_dir_for_version "${min_ver}")"
+            if [[ -x "${candidate}/bin/java" ]]; then
+                echo "${candidate}"
+            else
+                warn "[${target_label}] Versioned boot JDK not found at ${candidate}; falling back to ${BOOT_JDK_DIR}"
+                echo "${BOOT_JDK_DIR}"
+            fi
+            return 0
+        fi
+    done
+    # Stream not found — use the global default
+    echo "${BOOT_JDK_DIR}"
+}
+
 SRC_DIR=""
 if ! SRC_DIR="$(resolve_stream_src "${OPT_STREAM}")"; then
     die "Stream '${OPT_STREAM}' is not in the registry (scripts/config.sh JDK_STREAMS)."
 fi
 info "Source directory : ${SRC_DIR}"
+
+STREAM_BOOT_JDK=""
+STREAM_BOOT_JDK="$(resolve_stream_boot_jdk "${OPT_STREAM}")"
+info "Boot JDK         : ${STREAM_BOOT_JDK}"
 
 # ---------------------------------------------------------------------------
 # Step 1 — Download / verify dependencies
@@ -347,6 +380,7 @@ run_operations() {
                 build_and_test_jdk \
                     "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
                     "${level_out}" "${JTREG_OK}" \
+                    "${STREAM_BOOT_JDK}" \
                     || exit_code=$?
                 ;;
 
@@ -354,7 +388,7 @@ run_operations() {
             build)
                 build_only_jdk \
                     "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                    "${level_out}" \
+                    "${level_out}" "${STREAM_BOOT_JDK}" \
                     || exit_code=$?
                 ;;
 

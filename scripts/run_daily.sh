@@ -377,7 +377,8 @@ run_level() {
     local src_dir="$2"
     local debug_level="$3"
     local out_base="$4"
-    shift 4
+    local boot_jdk_dir="$5"
+    shift 5
     local extra_flags=("$@")
 
     # Apply --level filter
@@ -407,6 +408,7 @@ run_level() {
         "${debug_level}" \
         "${out_dir}" \
         "${JTREG_OK}" \
+        "${boot_jdk_dir}" \
         "${extra_flags[@]+"${extra_flags[@]}"}" \
         || exit_code=$?
 
@@ -436,6 +438,36 @@ run_level() {
 }
 
 # ---------------------------------------------------------------------------
+# Helper: resolve the boot JDK directory for a given stream.
+#
+# For "head" (or any stream whose min_ver is empty / 0) we need the tip JDK.
+# For versioned streams we want boot_jdk_<min_ver>; fall back to BOOT_JDK_DIR
+# if setup_deps.sh did not download that version (e.g. --skip-deps + old tree).
+# ---------------------------------------------------------------------------
+_resolve_boot_jdk_dir_for_stream() {
+    local label="$1"
+    local min_ver="${2:-0}"
+
+    # "head" always uses the tip JDK (BOOT_JDK_DIR, which setup_deps.sh
+    # keeps pointing at the newest downloaded JDK).
+    if [[ "${label}" == "head" ]]; then
+        echo "${BOOT_JDK_DIR}"
+        return
+    fi
+
+    # boot_jdk_dir_for_version is defined in config.sh (already sourced)
+    local candidate
+    candidate="$(boot_jdk_dir_for_version "${min_ver}")"
+
+    if [[ -x "${candidate}/bin/java" ]]; then
+        echo "${candidate}"
+    else
+        warn "[${label}] Versioned boot JDK not found at ${candidate}; falling back to ${BOOT_JDK_DIR}"
+        echo "${BOOT_JDK_DIR}"
+    fi
+}
+
+# ---------------------------------------------------------------------------
 # Stage 3 — Process all active streams
 # ---------------------------------------------------------------------------
 process_streams() {
@@ -444,7 +476,7 @@ process_streams() {
     log "========================================================"
 
     for entry in "${ACTIVE_STREAMS[@]}"; do
-        IFS='|' read -r label src_subdir git_url _min_ver extra_flags \
+        IFS='|' read -r label src_subdir git_url min_ver extra_flags \
             <<< "${entry}"
 
         local src_dir="${JDK_SOURCES_ROOT}/${src_subdir}"
@@ -454,6 +486,11 @@ process_streams() {
         log "----------------------------------------------------"
         log "[${label}] Starting stream"
         log "----------------------------------------------------"
+
+        # Resolve the boot JDK directory for this stream's minimum version.
+        local boot_jdk_dir
+        boot_jdk_dir="$(_resolve_boot_jdk_dir_for_stream "${label}" "${min_ver}")"
+        info "[${label}]   boot JDK : ${boot_jdk_dir}"
 
         # git pull / clone
         local top_commit
@@ -476,6 +513,7 @@ process_streams() {
 
         for level in "${BUILD_LEVELS[@]}"; do
             run_level "${label}" "${src_dir}" "${level}" "${out_base}" \
+                "${boot_jdk_dir}" \
                 "${flags_arr[@]+"${flags_arr[@]}"}"
         done
 

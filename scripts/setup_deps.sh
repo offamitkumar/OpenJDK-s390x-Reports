@@ -107,60 +107,50 @@ clean_ci_tmp() {
 }
 
 # ---------------------------------------------------------------------------
-# Download latest boot JDK
+# Download one boot JDK for a specific JDK feature version.
 #
-# Steps (each logged individually):
-#   1. Query Adoptium API for tip_version
-#   2. Query GitHub Releases API for the s390x JDK asset URL
-#   3. Download the tar.gz
-#   4. Verify SHA-256
-#   5. Extract
-#   6. Smoke-test: java -version
+# Arguments:
+#   $1  jdk_version  — numeric JDK version to download (e.g. 21, 25, 28)
+#   $2  dest_dir     — directory to extract into
+#
+# For tip/HEAD versions (tip_version) the GitHub EA repo is used.
+# For GA versions (LTS / feature release) the Adoptium Releases API is used.
+#
+# Steps:
+#   1. Locate the s390x release asset URL via GitHub or Adoptium Releases API
+#   2. Download the tar.gz
+#   3. Verify SHA-256
+#   4. Extract
+#   5. Smoke-test: java -version
+#
+# On failure: calls _die_jdk (exits 1)
 # ---------------------------------------------------------------------------
-setup_boot_jdk() {
+_download_one_boot_jdk() {
+    local jdk_version="$1"
+    local dest_dir="$2"
+    local label="boot_jdk_v${jdk_version}"
+
     info "========================================================"
-    info "  STEP: Boot JDK download"
+    info "  STEP: Boot JDK download — JDK ${jdk_version}"
     info "========================================================"
 
-    # Step 1 — resolve tip_version
-    info "[boot_jdk] Step 1/6: resolving JDK HEAD tip_version from Adoptium API …"
-    info "  URL: ${ADOPTIUM_API_BASE}/info/available_releases"
-    local tip_version
-    tip_version="$(
-        curl --fail --silent --show-error --location \
-             --max-time 30 \
-             "${ADOPTIUM_API_BASE}/info/available_releases" \
-        | python3 -c "import sys,json; print(json.load(sys.stdin)['tip_version'])"
-    )" || _die_jdk "Step 1 FAILED: could not resolve tip_version from Adoptium API."
-    info "  tip_version = ${tip_version}"
+    # ---- Step 1: locate asset URL -----------------------------------------
+    info "[${label}] Step 1/5: locating s390x asset for JDK ${jdk_version} …"
 
-    # Step 2 — find release asset on GitHub
-    info "[boot_jdk] Step 2/6: querying GitHub releases for temurin${tip_version}-binaries …"
-    local gh_api="https://api.github.com/repos/${ADOPTIUM_GITHUB_ORG}/temurin${tip_version}-binaries/releases"
-    info "  URL: ${gh_api}?per_page=5"
-
-    local releases_json="${CI_TMP_DIR}/gh_releases.json"
-    if ! curl --fail --silent --show-error --location \
-         --max-time 30 \
-         --output "${releases_json}" \
-         "${gh_api}?per_page=5"; then
-        _die_jdk "Step 2 FAILED: GitHub API request failed for temurin${tip_version}-binaries."
-    fi
-    if [[ ! -s "${releases_json}" ]]; then
-        _die_jdk "Step 2 FAILED: GitHub API returned empty response."
-    fi
-    info "  GitHub releases response: ${releases_json} ($(wc -c < "${releases_json}") bytes)"
-
+    # Write the shared Python asset-finder once per setup_deps run
     local py_script="${CI_TMP_DIR}/find_asset.py"
-    cat > "${py_script}" <<'PYEOF'
+    if [[ ! -f "${py_script}" ]]; then
+        cat > "${py_script}" <<'PYEOF'
 import sys, json
 with open(sys.argv[1]) as f:
     releases = json.load(f)
 for rel in releases:
     for a in rel.get("assets", []):
         name = a["name"]
+        # Match EA tar.gz (tip builds) or GA tar.gz (stable releases)
         if (name.startswith("OpenJDK-jdk_s390x_linux_hotspot_")
-                and name.endswith("-ea.tar.gz")):
+                and name.endswith(".tar.gz")
+                and ".tar.gz.sha" not in name):
             sha_name = name + ".sha256.txt"
             sha_url = next(
                 (x["browser_download_url"] for x in rel["assets"]
@@ -171,10 +161,25 @@ for rel in releases:
             sys.exit(0)
 sys.exit(1)
 PYEOF
+    fi
+
+    local releases_json="${CI_TMP_DIR}/gh_releases_${jdk_version}.json"
+    local gh_api="https://api.github.com/repos/${ADOPTIUM_GITHUB_ORG}/temurin${jdk_version}-binaries/releases"
+    info "  URL: ${gh_api}?per_page=5"
+
+    if ! curl --fail --silent --show-error --location \
+         --max-time 30 \
+         --output "${releases_json}" \
+         "${gh_api}?per_page=5"; then
+        _die_jdk "[${label}] Step 1 FAILED: GitHub API request failed for temurin${jdk_version}-binaries."
+    fi
+    if [[ ! -s "${releases_json}" ]]; then
+        _die_jdk "[${label}] Step 1 FAILED: GitHub API returned empty response for JDK ${jdk_version}."
+    fi
 
     local asset_info asset_name jdk_url sha_url
     if ! asset_info="$(python3 "${py_script}" "${releases_json}")"; then
-        _die_jdk "Step 2 FAILED: no s390x linux JDK tar.gz found in temurin${tip_version}-binaries releases."
+        _die_jdk "[${label}] Step 1 FAILED: no s390x linux JDK tar.gz found in temurin${jdk_version}-binaries releases."
     fi
     asset_name="$(echo "${asset_info}" | sed -n '1p')"
     jdk_url="$(echo "${asset_info}"    | sed -n '2p')"
@@ -182,25 +187,25 @@ PYEOF
     info "  Asset : ${asset_name}"
     info "  URL   : ${jdk_url}"
 
-    # Step 3 — download
-    info "[boot_jdk] Step 3/6: downloading archive …"
-    local archive="${CI_TMP_DIR}/boot_jdk.tar.gz"
+    # ---- Step 2: download --------------------------------------------------
+    info "[${label}] Step 2/5: downloading archive …"
+    local archive="${CI_TMP_DIR}/boot_jdk_${jdk_version}.tar.gz"
     info "  Destination: ${archive}"
     if ! curl --fail --silent --show-error --location \
          --max-time 300 \
          --output "${archive}" \
          "${jdk_url}"; then
-        _die_jdk "Step 3 FAILED: download of ${jdk_url} failed."
+        _die_jdk "[${label}] Step 2 FAILED: download of ${jdk_url} failed."
     fi
     if [[ ! -s "${archive}" ]]; then
-        _die_jdk "Step 3 FAILED: downloaded archive is empty (0 bytes)."
+        _die_jdk "[${label}] Step 2 FAILED: downloaded archive is empty (0 bytes)."
     fi
     info "  Downloaded: $(du -h "${archive}" | cut -f1)"
 
-    # Step 4 — SHA-256 verify
-    info "[boot_jdk] Step 4/6: verifying SHA-256 checksum …"
+    # ---- Step 3: SHA-256 verify --------------------------------------------
+    info "[${label}] Step 3/5: verifying SHA-256 checksum …"
     if [[ -n "${sha_url}" ]]; then
-        local sha_file="${CI_TMP_DIR}/boot_jdk.tar.gz.sha256.txt"
+        local sha_file="${CI_TMP_DIR}/boot_jdk_${jdk_version}.tar.gz.sha256.txt"
         if ! curl --fail --silent --show-error --location \
              --max-time 30 \
              --output "${sha_file}" \
@@ -211,7 +216,7 @@ PYEOF
             expected_sha="$(awk '{print $1}' "${sha_file}")"
             actual_sha="$(sha256sum "${archive}" | awk '{print $1}')"
             if [[ "${expected_sha}" != "${actual_sha}" ]]; then
-                _die_jdk "Step 4 FAILED: SHA-256 mismatch.
+                _die_jdk "[${label}] Step 3 FAILED: SHA-256 mismatch.
   expected: ${expected_sha}
   actual  : ${actual_sha}"
             fi
@@ -221,21 +226,90 @@ PYEOF
         warn "  No SHA-256 URL available — skipping verification."
     fi
 
-    # Step 5 — extract
-    info "[boot_jdk] Step 5/6: extracting to ${BOOT_JDK_DIR} …"
-    mkdir -p "${BOOT_JDK_DIR}"
-    if ! tar --strip-components=1 -xzf "${archive}" -C "${BOOT_JDK_DIR}"; then
-        _die_jdk "Step 5 FAILED: extraction of boot JDK archive failed."
+    # ---- Step 4: extract ---------------------------------------------------
+    info "[${label}] Step 4/5: extracting to ${dest_dir} …"
+    mkdir -p "${dest_dir}"
+    if ! tar --strip-components=1 -xzf "${archive}" -C "${dest_dir}"; then
+        _die_jdk "[${label}] Step 4 FAILED: extraction of boot JDK ${jdk_version} archive failed."
     fi
-    info "  Extracted to: ${BOOT_JDK_DIR}"
+    info "  Extracted to: ${dest_dir}"
 
-    # Step 6 — smoke test
-    info "[boot_jdk] Step 6/6: smoke-testing java binary …"
-    if ! "${BOOT_JDK_DIR}/bin/java" -version 2>&1; then
-        _die_jdk "Step 6 FAILED: java binary at ${BOOT_JDK_DIR}/bin/java is not executable."
+    # ---- Step 5: smoke test ------------------------------------------------
+    info "[${label}] Step 5/5: smoke-testing java binary …"
+    if ! "${dest_dir}/bin/java" -version 2>&1; then
+        _die_jdk "[${label}] Step 5 FAILED: java binary at ${dest_dir}/bin/java is not executable."
     fi
 
-    success "Boot JDK ready: ${BOOT_JDK_DIR}"
+    success "Boot JDK ${jdk_version} ready: ${dest_dir}"
+}
+
+# ---------------------------------------------------------------------------
+# Download all boot JDKs required by the registered streams.
+#
+# Strategy:
+#   1. Resolve tip_version from the Adoptium API.
+#   2. Collect the unique MIN_JDK_VERSION values from JDK_STREAMS in config.sh.
+#      (field 4, 1-based).  "head" uses tip_version directly.
+#   3. For each unique version, download into boot_jdk_<version>/.
+#   4. Create/update the tip-version symlink at BOOT_JDK_DIR so the legacy
+#      variable still points at the newest available JDK.
+# ---------------------------------------------------------------------------
+setup_boot_jdk() {
+    info "========================================================"
+    info "  STEP: Boot JDK download (all required versions)"
+    info "========================================================"
+
+    # Step 1 — resolve tip_version (needed for HEAD and for BOOT_JDK_DIR alias)
+    info "[boot_jdk] Resolving JDK HEAD tip_version from Adoptium API …"
+    info "  URL: ${ADOPTIUM_API_BASE}/info/available_releases"
+    local tip_version
+    tip_version="$(
+        curl --fail --silent --show-error --location \
+             --max-time 30 \
+             "${ADOPTIUM_API_BASE}/info/available_releases" \
+        | python3 -c "import sys,json; print(json.load(sys.stdin)['tip_version'])"
+    )" || _die_jdk "Could not resolve tip_version from Adoptium API."
+    info "  tip_version = ${tip_version}"
+
+    # Step 2 — collect unique MIN_JDK_VERSION values from the registry.
+    # JDK_STREAMS entries look like: "label|subdir|url|min_ver|extra_flags"
+    # 'head' streams are mapped to tip_version.
+    local -A versions_needed=()   # keyed by numeric version → dest_dir
+
+    for entry in "${JDK_STREAMS[@]}"; do
+        local label; label="$(echo "${entry}"  | cut -d'|' -f1)"
+        local min_ver; min_ver="$(echo "${entry}" | cut -d'|' -f4)"
+
+        if [[ "${label}" == "head" || -z "${min_ver}" || "${min_ver}" == "0" ]]; then
+            # HEAD always uses the tip JDK
+            versions_needed["${tip_version}"]="$(boot_jdk_dir_for_version "${tip_version}")"
+        else
+            # Map the stream's minimum required version to its versioned dir.
+            # OpenJDK configure accepts boot JDK N or N+1 for version N source;
+            # we use the declared MIN_JDK_VERSION directly.
+            versions_needed["${min_ver}"]="$(boot_jdk_dir_for_version "${min_ver}")"
+        fi
+    done
+
+    info "  Versions to download: ${!versions_needed[*]}"
+
+    # Step 3 — download each required version
+    local ver dest
+    for ver in "${!versions_needed[@]}"; do
+        dest="${versions_needed[${ver}]}"
+        _download_one_boot_jdk "${ver}" "${dest}"
+    done
+
+    # Step 4 — point the legacy BOOT_JDK_DIR at the tip-version directory so
+    # jtreg smoke-test and any direct $BOOT_JDK_DIR references still work.
+    local tip_dir; tip_dir="$(boot_jdk_dir_for_version "${tip_version}")"
+    # BOOT_JDK_DIR and tip_dir may already be the same path; only symlink if different
+    if [[ "${BOOT_JDK_DIR}" != "${tip_dir}" && -d "${tip_dir}" ]]; then
+        ln -sfn "${tip_dir}" "${BOOT_JDK_DIR}"
+        info "  BOOT_JDK_DIR → ${tip_dir} (symlink updated)"
+    fi
+
+    success "All boot JDKs ready."
 }
 
 # ---------------------------------------------------------------------------
