@@ -183,18 +183,37 @@ resolve_active_streams() {
 
 # ---------------------------------------------------------------------------
 # Step 3a — Pull (or shallow-clone) a single JDK source repo
+#
+# Writes two files into out_base/:
+#
+#   top_commit      — the HEAD commit that was built and tested
+#                     (kept for backward compatibility)
+#
+#   commit-info.txt — structured record containing:
+#       • commit_before  : HEAD before git pull (empty for fresh clone)
+#       • commit_after   : HEAD after  git pull (= what was built)
+#       • new_commits    : one-line list of every commit pulled in this run
+#                          (the range to bisect on test failure)
+#       • bisect_cmd     : ready-to-paste git bisect command
 # ---------------------------------------------------------------------------
 prepare_source() {
     local label="$1"
     local src_subdir="$2"
     local git_url="$3"
+    local out_base="$4"       # destination dir for commit-info.txt
 
     local src_dir="${JDK_SOURCES_ROOT}/${src_subdir}"
 
     log "[${label}] Preparing source at ${src_dir} …"
 
+    local commit_before=""
+    local is_fresh_clone=false
+
     if [[ -d "${src_dir}/.git" ]]; then
-        info "  Existing repo — pulling latest from origin/master …"
+        # Record HEAD before we touch anything
+        commit_before="$(git -C "${src_dir}" rev-parse HEAD)"
+        info "  Existing repo — commit before pull: ${commit_before}"
+        info "  Pulling latest from origin/master …"
         git -C "${src_dir}" fetch --prune origin
         git -C "${src_dir}" checkout master
         git -C "${src_dir}" pull --ff-only origin master
@@ -202,14 +221,68 @@ prepare_source() {
         info "  No repo found — cloning ${git_url} …"
         mkdir -p "${JDK_SOURCES_ROOT}"
         git clone --depth=1 "${git_url}" "${src_dir}"
+        is_fresh_clone=true
     fi
 
-    local top_commit
-    top_commit="$(git -C "${src_dir}" log -1 \
+    local commit_after
+    commit_after="$(git -C "${src_dir}" rev-parse HEAD)"
+
+    info "  Commit after pull : ${commit_after}"
+
+    # ---- Build commit-info.txt ------------------------------------------
+    local ci_file="${out_base}/commit-info.txt"
+    mkdir -p "${out_base}"
+    {
+        echo "stream         : ${label}"
+        echo "src_dir        : ${src_dir}"
+        echo "run_date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo ""
+
+        if ${is_fresh_clone}; then
+            echo "commit_before  : (none — fresh clone)"
+            echo "commit_after   : ${commit_after}"
+            echo ""
+            echo "# Fresh clone — full log not shown (use git log in ${src_dir})"
+        else
+            echo "commit_before  : ${commit_before}"
+            echo "commit_after   : ${commit_after}"
+            echo ""
+
+            if [[ "${commit_before}" == "${commit_after}" ]]; then
+                echo "# No new commits — repo was already up to date."
+                echo "new_commits    : (none)"
+                echo "bisect_cmd     : (not needed — no new commits)"
+            else
+                local new_commit_count
+                new_commit_count="$(git -C "${src_dir}" \
+                    rev-list --count "${commit_before}..${commit_after}")"
+                echo "new_commits    : ${new_commit_count} commit(s) pulled in this run"
+                echo "bisect_cmd     : git bisect start ${commit_after} ${commit_before}"
+                echo ""
+                echo "# Commits introduced in this pull (newest first):"
+                echo "# (If tests fail, run the bisect_cmd above in ${src_dir})"
+                echo "#"
+                git -C "${src_dir}" log \
+                    --oneline \
+                    --no-merges \
+                    "${commit_before}..${commit_after}" \
+                    | sed 's/^/#   /'
+                echo ""
+                echo "# Full details of new commits:"
+                git -C "${src_dir}" log \
+                    --format='commit %H%nauthor %an <%ae>%ndate   %ad%n%n    %s%n%n    %b' \
+                    --date=rfc \
+                    "${commit_before}..${commit_after}"
+            fi
+        fi
+    } > "${ci_file}"
+
+    info "  Commit info written to ${ci_file}"
+
+    # ---- top_commit (backward-compatible single-commit record) ----------
+    git -C "${src_dir}" log -1 \
         --format='commit %H%nauthor %an <%ae>%ndate   %ad%n%n    %s' \
-        --date=rfc)"
-    info "  Top commit: $(git -C "${src_dir}" log -1 --oneline)"
-    echo "${top_commit}"
+        --date=rfc
 }
 
 # ---------------------------------------------------------------------------
@@ -295,7 +368,7 @@ process_streams() {
 
         # Pull source — if this fails, mark all levels and move on
         local top_commit
-        if ! top_commit="$(prepare_source "${label}" "${src_subdir}" "${git_url}" 2>&1)"; then
+        if ! top_commit="$(prepare_source "${label}" "${src_subdir}" "${git_url}" "${out_base}" 2>&1)"; then
             warn "[${label}] Source preparation failed — skipping all levels."
             for level in "${BUILD_LEVELS[@]}"; do
                 record_status "${label}" "${level}" "SKIPPED_SOURCE_FAIL" \
