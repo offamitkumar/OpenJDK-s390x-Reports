@@ -58,18 +58,34 @@ setup_boot_jdk() {
   info "  tip_version = ${tip_version} (JDK HEAD)"
 
   # Step 2: find the latest release in temurin{N}-binaries that has a
-  #         JDK s390x linux tar.gz asset
+  #         JDK s390x linux tar.gz asset.
+  # We save the API response to a file first, then parse it with a
+  # python3 script file — avoids the stdin conflict that occurs when
+  # piping curl output into `python3 - <<'HEREDOC'`.
   local gh_api="https://api.github.com/repos/${ADOPTIUM_GITHUB_ORG}/temurin${tip_version}-binaries/releases"
   info "  Querying GitHub releases: ${gh_api}"
 
-  local jdk_url sha_url asset_name
-  read -r asset_name jdk_url sha_url < <(
-    curl --fail --silent --show-error --location \
-         --max-time 30 \
-         "${gh_api}?per_page=5" \
-    | python3 - <<'PYEOF'
+  local releases_json="${CI_TMP_DIR}/gh_releases.json"
+  if ! curl --fail --silent --show-error --location \
+       --max-time 30 \
+       --output "${releases_json}" \
+       "${gh_api}?per_page=5"; then
+    die "Failed to query GitHub releases for temurin${tip_version}-binaries."
+  fi
+
+  if [[ ! -s "${releases_json}" ]]; then
+    die "GitHub releases response is empty for temurin${tip_version}-binaries."
+  fi
+
+  # Write the parser to a temp file so python3 reads the script from
+  # a file descriptor and the JSON from a separate file argument.
+  local py_script="${CI_TMP_DIR}/find_asset.py"
+  cat > "${py_script}" <<'PYEOF'
 import sys, json
-releases = json.load(sys.stdin)
+
+with open(sys.argv[1]) as f:
+    releases = json.load(f)
+
 for rel in releases:
     for a in rel.get("assets", []):
         name = a["name"]
@@ -81,16 +97,22 @@ for rel in releases:
                  if x["name"] == sha_name),
                 ""
             )
-            print(name, a["browser_download_url"], sha_url)
+            print(name)
+            print(a["browser_download_url"])
+            print(sha_url)
             sys.exit(0)
-print("NOT_FOUND  ")
+
 sys.exit(1)
 PYEOF
-  ) || die "No s390x JDK asset found in temurin${tip_version}-binaries releases."
 
-  if [[ "${asset_name}" == "NOT_FOUND" ]]; then
+  local asset_name jdk_url sha_url
+  if ! asset_info="$(python3 "${py_script}" "${releases_json}")"; then
     die "No s390x linux JDK tar.gz found in the latest temurin${tip_version}-binaries releases."
   fi
+
+  asset_name="$(echo "${asset_info}" | sed -n '1p')"
+  jdk_url="$(echo "${asset_info}"    | sed -n '2p')"
+  sha_url="$(echo "${asset_info}"    | sed -n '3p')"
 
   info "  Asset    : ${asset_name}"
   info "  JDK URL  : ${jdk_url}"
