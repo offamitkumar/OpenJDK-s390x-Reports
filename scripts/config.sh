@@ -60,9 +60,6 @@ REPORTS_REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # Build configuration
 # ---------------------------------------------------------------------------
 
-# Parallel make jobs (defaults to all logical CPUs)
-: "${MAKE_JOBS:=$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || echo 4)}"
-
 # Debug levels to build and test for every stream
 BUILD_LEVELS=(fastdebug release)
 

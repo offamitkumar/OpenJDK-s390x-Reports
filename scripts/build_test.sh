@@ -24,7 +24,7 @@
 #       jvm_flags  examples: "-Xint", "-Xcomp -ea", "" (empty = none)
 #
 # Environment expected (set via config.sh):
-#   BOOT_JDK_DIR, JTREG_DIR, GTEST_DIR, MAKE_JOBS
+#   BOOT_JDK_DIR, JTREG_DIR, GTEST_DIR
 # =============================================================================
 
 # This file is sourced, not executed directly.
@@ -476,12 +476,11 @@ build_and_test_jdk() {
         # Strategy: redirect stdout+stderr of make to a temp file, then copy
         # to out_dir.  Avoid pipe-tee patterns that swallow make's exit code.
         current_phase="images"
-        _bt_info "  Building images (CONF=${conf_name}, -j${MAKE_JOBS}) …"
+        _bt_info "  Building images (CONF=${conf_name}) …"
 
         local make_tmp="${out_dir}/build.log.tmp"
         local make_exit=0
         make CONF="${conf_name}" LOG=debug images \
-                -j"${MAKE_JOBS}" \
                 > "${make_tmp}" 2>&1 || make_exit=$?
         if [[ "${make_exit}" -ne 0 ]]; then
             cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
@@ -637,12 +636,12 @@ build_only_jdk() {
         build_log_path="build/${conf_name}/build.log"
 
         current_phase="images"
-        _bt_info "  Building images (CONF=${conf_name}, -j${MAKE_JOBS}) …"
+        _bt_info "  Building images (CONF=${conf_name}) …"
 
         local make_tmp="${out_dir}/build.log.tmp"
         local make_exit=0
         make CONF="${conf_name}" LOG=debug images \
-                -j"${MAKE_JOBS}" > "${make_tmp}" 2>&1 || make_exit=$?
+                > "${make_tmp}" 2>&1 || make_exit=$?
         if [[ "${make_exit}" -ne 0 ]]; then
             cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
             cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
