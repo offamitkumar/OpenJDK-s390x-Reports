@@ -479,10 +479,11 @@ build_and_test_jdk() {
         _bt_info "  Building images (CONF=${conf_name}, -j${MAKE_JOBS}) …"
 
         local make_tmp="${out_dir}/build.log.tmp"
-        if ! make CONF="${conf_name}" images LOG=cmdlines \
+        local make_exit=0
+        make CONF="${conf_name}" images LOG=cmdlines \
                 -j"${MAKE_JOBS}" \
-                > "${make_tmp}" 2>&1; then
-            local make_exit=$?
+                > "${make_tmp}" 2>&1 || make_exit=$?
+        if [[ "${make_exit}" -ne 0 ]]; then
             cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
             # Also place in the standard build.log location so _on_exit finds it
             cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
@@ -639,9 +640,10 @@ build_only_jdk() {
         _bt_info "  Building images (CONF=${conf_name}, -j${MAKE_JOBS}) …"
 
         local make_tmp="${out_dir}/build.log.tmp"
-        if ! make CONF="${conf_name}" images LOG=cmdlines \
-                -j"${MAKE_JOBS}" > "${make_tmp}" 2>&1; then
-            local make_exit=$?
+        local make_exit=0
+        make CONF="${conf_name}" images LOG=cmdlines \
+                -j"${MAKE_JOBS}" > "${make_tmp}" 2>&1 || make_exit=$?
+        if [[ "${make_exit}" -ne 0 ]]; then
             cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
             cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
             _bt_warn "  make images failed (exit=${make_exit})."
