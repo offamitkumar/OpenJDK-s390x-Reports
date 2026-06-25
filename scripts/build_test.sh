@@ -480,6 +480,9 @@ build_and_test_jdk() {
 
         local make_tmp="${out_dir}/build.log.tmp"
         local make_exit=0
+        # Unset MAKEFLAGS/MAKEOVERRIDES — a parent make or shell alias may inject
+        # -jN into the environment, which OpenJDK's wrapper explicitly rejects.
+        MAKEFLAGS= MAKEOVERRIDES= \
         make CONF="${conf_name}" LOG=debug images \
                 > "${make_tmp}" 2>&1 || make_exit=$?
         if [[ "${make_exit}" -ne 0 ]]; then
@@ -640,6 +643,7 @@ build_only_jdk() {
 
         local make_tmp="${out_dir}/build.log.tmp"
         local make_exit=0
+        MAKEFLAGS= MAKEOVERRIDES= \
         make CONF="${conf_name}" LOG=debug images \
                 > "${make_tmp}" 2>&1 || make_exit=$?
         if [[ "${make_exit}" -ne 0 ]]; then

@@ -141,16 +141,18 @@ _download_one_boot_jdk() {
     local py_script="${CI_TMP_DIR}/find_asset.py"
     if [[ ! -f "${py_script}" ]]; then
         cat > "${py_script}" <<'PYEOF'
-import sys, json
+import sys, json, re
 with open(sys.argv[1]) as f:
     releases = json.load(f)
 for rel in releases:
     for a in rel.get("assets", []):
         name = a["name"]
-        # Match EA tar.gz (tip builds) or GA tar.gz (stable releases)
-        if (name.startswith("OpenJDK-jdk_s390x_linux_hotspot_")
-                and name.endswith(".tar.gz")
-                and ".tar.gz.sha" not in name):
+        # EA builds (tip/HEAD):  OpenJDK-jdk_s390x_linux_hotspot_28_3-ea.tar.gz
+        # GA builds (LTS/feat):  OpenJDK25U-jdk_s390x_linux_hotspot_25.0.3_9.tar.gz
+        # Both match: starts with "OpenJDK" + optional version + "U-" or "-",
+        # then "jdk_s390x_linux_hotspot_", ends with ".tar.gz" (not a checksum).
+        if (re.match(r'^OpenJDK\d*U?-jdk_s390x_linux_hotspot_', name)
+                and name.endswith(".tar.gz")):
             sha_name = name + ".sha256.txt"
             sha_url = next(
                 (x["browser_download_url"] for x in rel["assets"]
