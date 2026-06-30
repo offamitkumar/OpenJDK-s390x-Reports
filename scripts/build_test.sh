@@ -523,12 +523,12 @@ build_and_test_jdk() {
         fi
 
         {
-            find "build/${conf_name}/" -name "newfailures.txt" -exec cat {} + 2>/dev/null
+            find "${results_dir}/" -name "newfailures.txt" -exec cat {} + 2>/dev/null
         } > "${out_dir}/newfailures.txt" \
             || echo "(none)" > "${out_dir}/newfailures.txt"
 
         {
-            find "build/${conf_name}/" -name "other_errors.txt" -exec cat {} + 2>/dev/null
+            find "${results_dir}/" -name "other_errors.txt" -exec cat {} + 2>/dev/null
         } > "${out_dir}/other_errors.txt" \
             || echo "(none)" > "${out_dir}/other_errors.txt"
 
@@ -770,8 +770,20 @@ run_tests_only() {
                 || test_exit=$?
         fi
 
-        # Collect artefacts
+        # ---- Snapshot jtreg output before the next tier can overwrite it ---
+        #
+        # OpenJDK's make run-test writes into two shared directories inside the
+        # build tree:
+        #   build/<conf>/test-results/   — test-summary.txt, newfailures.txt …
+        #   build/<conf>/test-support/   — per-test .jtr files
+        #
+        # When running multiple tiers in sequence these directories are
+        # *cumulative* — each new run appends to them.  We must copy the
+        # per-tier slice out to out_dir and then purge the shared dirs so the
+        # next tier starts clean.
+
         local results_dir="build/${conf_name}/test-results"
+        local support_dir="build/${conf_name}/test-support"
 
         if [[ -f "${results_dir}/test-summary.txt" ]]; then
             cp "${results_dir}/test-summary.txt" "${out_dir}/test-summary.txt"
@@ -781,13 +793,13 @@ run_tests_only() {
         fi
 
         {
-            find "build/${conf_name}/" -name "newfailures.txt" \
+            find "${results_dir}/" -name "newfailures.txt" \
                 -exec cat {} + 2>/dev/null
         } > "${out_dir}/newfailures.txt" \
             || echo "(none)" > "${out_dir}/newfailures.txt"
 
         {
-            find "build/${conf_name}/" -name "other_errors.txt" \
+            find "${results_dir}/" -name "other_errors.txt" \
                 -exec cat {} + 2>/dev/null
         } > "${out_dir}/other_errors.txt" \
             || echo "(none)" > "${out_dir}/other_errors.txt"
@@ -795,6 +807,11 @@ run_tests_only() {
         # ---- Categorise passed/failed/skipped + harvest hs_err ----------
         _collect_tier1_artifacts \
             "build/${conf_name}" "${out_dir}" "${_run_ts}"
+
+        # ---- Purge the shared jtreg dirs so the next tier starts clean ----
+        # This is safe because we have already copied everything we need above.
+        rm -rf "${results_dir}" "${support_dir}"
+        _bt_info "  Purged shared jtreg dirs (test-results, test-support) after snapshot."
 
         {
             echo "stream:       ${stream_label}"

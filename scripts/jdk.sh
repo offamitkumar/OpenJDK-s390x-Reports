@@ -21,6 +21,8 @@
 # OPTIONS (all commands)
 # ──────────────────────
 #   --stream LABEL        Target one stream (default: head)
+#                         Any label from the JDK_STREAMS registry is accepted:
+#                           head   jdk26  jdk25  jdk21  jdk17  jdk11
 #   --level  LEVEL        fastdebug | release | both  (default: both)
 #   --skip-deps           Skip boot JDK + jtreg download (use cached)
 #   --no-push             Write report files but do not git commit/push
@@ -28,9 +30,16 @@
 #
 # OPTIONS (test / run only)
 # ─────────────────────────
-#   --test-target GROUP   jtreg test group or path
+#   --test-target GROUP   jtreg test group, path, or the special value "all".
 #                         Default: tier1
-#                         Examples:
+#
+#                         Special value:
+#                           all   Run tier1 → tier2 → tier3 → tier4 in order.
+#                                 Each tier gets its own output sub-directory
+#                                 and a separate entry in the summary.
+#                                 Works with any --stream and --level value.
+#
+#                         Standard examples:
 #                           tier1
 #                           tier2
 #                           test/jdk
@@ -59,6 +68,18 @@
 #
 #   # Re-run tier1 tests, release build only:
 #   bash scripts/jdk.sh test --level release
+#
+#   # Run all tiers (tier1–tier4) for head, both levels:
+#   bash scripts/jdk.sh test --test-target all
+#
+#   # Run all tiers for jdk21, fastdebug only:
+#   bash scripts/jdk.sh test --stream jdk21 --level fastdebug --test-target all
+#
+#   # Run all tiers for jdk17, release only, no push:
+#   bash scripts/jdk.sh test --stream jdk17 --level release --test-target all --no-push
+#
+#   # Full run (build + all tiers) for jdk21:
+#   bash scripts/jdk.sh run --stream jdk21 --test-target all
 #
 #   # Run a specific jtreg group:
 #   bash scripts/jdk.sh test --test-target test/jdk/java/lang
@@ -96,6 +117,9 @@ OPT_NO_PUSH=false
 OPT_DRY_RUN=false
 OPT_TEST_TARGET="tier1"
 OPT_JVM_FLAGS=""
+
+# Tiers executed when --test-target all is requested
+ALL_TIERS=(tier1 tier2 tier3 tier4)
 
 # ---------------------------------------------------------------------------
 # Usage
@@ -180,7 +204,7 @@ _TIME="$(date +%H%M%S)"
 # For --test-target, include the target in the dir name to make logs easy to
 # find when running the same build with different targets.
 _TARGET_SLUG="${OPT_TEST_TARGET//\//_}"   # replace / with _
-_TARGET_SLUG="${_TARGET_SLUG// /-}"       # spaces → dash
+_TARGET_SLUG="${_TARGET_SLUG// /-}"       # spaces → dash (all → "all")
 
 case "${COMMAND}" in
     run)   _RUN_LABEL="run-${_TIME}" ;;
@@ -203,7 +227,13 @@ log "jdk.sh — OpenJDK s390x manual CI"
 log "command     : ${COMMAND}"
 log "stream      : ${OPT_STREAM}"
 log "level       : ${OPT_LEVEL} → ${EFFECTIVE_LEVELS[*]}"
-[[ "${COMMAND}" != "build" ]] && log "test-target : ${OPT_TEST_TARGET}"
+if [[ "${COMMAND}" != "build" ]]; then
+    if [[ "${OPT_TEST_TARGET}" == "all" ]]; then
+        log "test-target : all (${ALL_TIERS[*]})"
+    else
+        log "test-target : ${OPT_TEST_TARGET}"
+    fi
+fi
 [[ -n "${OPT_JVM_FLAGS}" ]]   && log "jvm-flags   : ${OPT_JVM_FLAGS}"
 ${OPT_SKIP_DEPS} && log "deps        : skipped (--skip-deps)"
 ${OPT_NO_PUSH}   && log "push        : disabled (--no-push)"
@@ -357,6 +387,21 @@ prepare_src() {
 # ---------------------------------------------------------------------------
 declare -A OP_STATUS=()
 
+# _read_test_status LEVEL_OUT_DIR KEY
+# Extract the outcome string from run-metadata.txt for a given level dir.
+_read_test_status() {
+    local dir="$1"
+    local test_exit_line
+    test_exit_line="$(grep '^test_exit:' "${dir}/run-metadata.txt" \
+        2>/dev/null | awk '{print $2}' || echo "0")"
+    case "${test_exit_line}" in
+        0)           echo "PASSED" ;;
+        SKIPPED*)    echo "BUILD_ONLY (no tests)" ;;
+        NO_BUILD*)   echo "SKIPPED (no build found)" ;;
+        *)           echo "TEST_FAILURES (jtreg=${test_exit_line})" ;;
+    esac
+}
+
 run_operations() {
     for level in "${EFFECTIVE_LEVELS[@]}"; do
         local level_out="${OUT_BASE}/${level}"
@@ -367,21 +412,68 @@ run_operations() {
         log "----------------------------------------------------"
 
         if ${OPT_DRY_RUN}; then
-            info "DRY-RUN: would ${COMMAND} ${OPT_STREAM}/${level}"
-            OP_STATUS["${level}"]="DRY_RUN"
+            if [[ "${OPT_TEST_TARGET}" == "all" && "${COMMAND}" != "build" ]]; then
+                for tier in "${ALL_TIERS[@]}"; do
+                    info "DRY-RUN: would ${COMMAND} ${OPT_STREAM}/${level}/${tier}"
+                    OP_STATUS["${level}/${tier}"]="DRY_RUN"
+                done
+            else
+                info "DRY-RUN: would ${COMMAND} ${OPT_STREAM}/${level}"
+                OP_STATUS["${level}"]="DRY_RUN"
+            fi
             continue
         fi
 
         local exit_code=0
 
         case "${COMMAND}" in
-            # ---- run: full pipeline (build + tier1) ---------------
+            # ---- run: full pipeline (build + tests) ---------------
             run)
-                build_and_test_jdk \
-                    "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                    "${level_out}" "${JTREG_OK}" \
-                    "${STREAM_BOOT_JDK}" \
-                    || exit_code=$?
+                if [[ "${OPT_TEST_TARGET}" == "all" ]]; then
+                    # Build once, then run each tier in sequence
+                    build_only_jdk \
+                        "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
+                        "${level_out}" "${STREAM_BOOT_JDK}" \
+                        || { exit_code=$?; OP_STATUS["${level}/build"]="FAILED (exit=${exit_code})"; continue; }
+                    OP_STATUS["${level}/build"]="OK"
+
+                    if [[ "${JTREG_OK}" != "true" ]]; then
+                        warn "[${OPT_STREAM}/${level}] jtreg not available — skipping all tiers."
+                        for tier in "${ALL_TIERS[@]}"; do
+                            OP_STATUS["${level}/${tier}"]="SKIPPED (no jtreg)"
+                        done
+                    else
+                        for tier in "${ALL_TIERS[@]}"; do
+                            local tier_out="${level_out}/${tier}"
+                            mkdir -p "${tier_out}"
+                            log "[${OPT_STREAM}/${level}] Running ${tier} …"
+                            local tier_exit=0
+                            run_tests_only \
+                                "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
+                                "${tier_out}" \
+                                "${tier}" \
+                                "${OPT_JVM_FLAGS}" \
+                                || tier_exit=$?
+                            if [[ ${tier_exit} -ne 0 ]]; then
+                                OP_STATUS["${level}/${tier}"]="FAILED (exit=${tier_exit})"
+                            else
+                                OP_STATUS["${level}/${tier}"]="$(_read_test_status "${tier_out}")"
+                            fi
+                            log "[${OPT_STREAM}/${level}/${tier}] ${OP_STATUS["${level}/${tier}"]}"
+                        done
+                    fi
+                else
+                    build_and_test_jdk \
+                        "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
+                        "${level_out}" "${JTREG_OK}" \
+                        "${STREAM_BOOT_JDK}" \
+                        || exit_code=$?
+                    if [[ ${exit_code} -ne 0 ]]; then
+                        OP_STATUS["${level}"]="FAILED (exit=${exit_code})"
+                    else
+                        OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
+                    fi
+                fi
                 ;;
 
             # ---- build: configure + images, no tests --------------
@@ -390,35 +482,55 @@ run_operations() {
                     "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
                     "${level_out}" "${STREAM_BOOT_JDK}" \
                     || exit_code=$?
+                if [[ ${exit_code} -ne 0 ]]; then
+                    OP_STATUS["${level}"]="FAILED (exit=${exit_code})"
+                else
+                    OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
+                fi
                 ;;
 
             # ---- test: reuse build, run given target ---------------
             test)
-                run_tests_only \
-                    "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                    "${level_out}" \
-                    "${OPT_TEST_TARGET}" \
-                    "${OPT_JVM_FLAGS}" \
-                    || exit_code=$?
+                if [[ "${OPT_TEST_TARGET}" == "all" ]]; then
+                    for tier in "${ALL_TIERS[@]}"; do
+                        local tier_out="${level_out}/${tier}"
+                        mkdir -p "${tier_out}"
+                        log "[${OPT_STREAM}/${level}] Running ${tier} …"
+                        local tier_exit=0
+                        run_tests_only \
+                            "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
+                            "${tier_out}" \
+                            "${tier}" \
+                            "${OPT_JVM_FLAGS}" \
+                            || tier_exit=$?
+                        if [[ ${tier_exit} -ne 0 ]]; then
+                            OP_STATUS["${level}/${tier}"]="FAILED (exit=${tier_exit})"
+                        else
+                            OP_STATUS["${level}/${tier}"]="$(_read_test_status "${tier_out}")"
+                        fi
+                        log "[${OPT_STREAM}/${level}/${tier}] ${OP_STATUS["${level}/${tier}"]}"
+                    done
+                else
+                    run_tests_only \
+                        "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
+                        "${level_out}" \
+                        "${OPT_TEST_TARGET}" \
+                        "${OPT_JVM_FLAGS}" \
+                        || exit_code=$?
+                    if [[ ${exit_code} -ne 0 ]]; then
+                        OP_STATUS["${level}"]="FAILED (exit=${exit_code})"
+                    else
+                        OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
+                    fi
+                fi
                 ;;
         esac
 
-        # Determine outcome for the summary
-        if [[ ${exit_code} -ne 0 ]]; then
-            OP_STATUS["${level}"]="FAILED (exit=${exit_code})"
-        else
-            local test_exit_line
-            test_exit_line="$(grep '^test_exit:' "${level_out}/run-metadata.txt" \
-                2>/dev/null | awk '{print $2}' || echo "0")"
-            case "${test_exit_line}" in
-                0)           OP_STATUS["${level}"]="PASSED" ;;
-                SKIPPED*)    OP_STATUS["${level}"]="BUILD_ONLY (no tests)" ;;
-                NO_BUILD*)   OP_STATUS["${level}"]="SKIPPED (no build found)" ;;
-                *)           OP_STATUS["${level}"]="TEST_FAILURES (jtreg=${test_exit_line})" ;;
-            esac
+        # For non-all targets the status was already set above.
+        # Log the per-level outcome only for single-target runs.
+        if [[ "${OPT_TEST_TARGET}" != "all" || "${COMMAND}" == "build" ]]; then
+            log "[${OPT_STREAM}/${level}] Done: ${OP_STATUS[${level}]}"
         fi
-
-        log "[${OPT_STREAM}/${level}] Done: ${OP_STATUS[${level}]}"
     done
 }
 
@@ -434,7 +546,11 @@ write_summary() {
         echo "  command      : ${COMMAND}"
         echo "  stream       : ${OPT_STREAM}"
         echo "  levels       : ${EFFECTIVE_LEVELS[*]}"
-        echo "  test-target  : ${OPT_TEST_TARGET}"
+        if [[ "${OPT_TEST_TARGET}" == "all" ]]; then
+            echo "  test-target  : all (${ALL_TIERS[*]})"
+        else
+            echo "  test-target  : ${OPT_TEST_TARGET}"
+        fi
         echo "  jvm-flags    : ${OPT_JVM_FLAGS:-(none)}"
         echo "  date         : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
         echo "  host         : $(hostname)"
@@ -450,11 +566,25 @@ write_summary() {
         echo "========================================================"
         echo ""
         echo "  Results:"
-        for level in "${EFFECTIVE_LEVELS[@]}"; do
-            printf "    %-12s  %s\n" "${level}" "${OP_STATUS[${level}]:-not-run}"
-        done
+        if [[ "${OPT_TEST_TARGET}" == "all" && "${COMMAND}" != "build" ]]; then
+            for level in "${EFFECTIVE_LEVELS[@]}"; do
+                # Show build step if it was tracked (run command)
+                if [[ -n "${OP_STATUS["${level}/build"]+set}" ]]; then
+                    printf "    %-20s  %s\n" "${level}/build" \
+                        "${OP_STATUS["${level}/build"]:-not-run}"
+                fi
+                for tier in "${ALL_TIERS[@]}"; do
+                    printf "    %-20s  %s\n" "${level}/${tier}" \
+                        "${OP_STATUS["${level}/${tier}"]:-not-run}"
+                done
+            done
+        else
+            for level in "${EFFECTIVE_LEVELS[@]}"; do
+                printf "    %-12s  %s\n" "${level}" "${OP_STATUS[${level}]:-not-run}"
+            done
+        fi
         echo ""
-        echo "  Artefacts per level:"
+        echo "  Artefacts per level (or level/tier when --test-target all):"
         echo "    run-metadata.txt   — mode, versions, exit codes"
         echo "    build.log          — full make output (build/run commands)"
         echo "    build-diagnosis.txt — last compiler cmd + first error lines"
@@ -553,17 +683,31 @@ publish() {
 
     # Build result summary for commit message
     local result_lines=""
-    for level in "${EFFECTIVE_LEVELS[@]}"; do
-        result_lines+="  ${OPT_STREAM}/${level}: ${OP_STATUS[${level}]:-not-run}"$'\n'
-    done
-
     local headline_icon="✅"
-    for level in "${EFFECTIVE_LEVELS[@]}"; do
-        if [[ "${OP_STATUS[${level}]:-}" == FAILED* \
-           || "${OP_STATUS[${level}]:-}" == TEST_FAILURES* ]]; then
-            headline_icon="❌"; break
-        fi
-    done
+    if [[ "${OPT_TEST_TARGET}" == "all" && "${COMMAND}" != "build" ]]; then
+        for level in "${EFFECTIVE_LEVELS[@]}"; do
+            if [[ -n "${OP_STATUS["${level}/build"]+set}" ]]; then
+                result_lines+="  ${OPT_STREAM}/${level}/build: ${OP_STATUS["${level}/build"]:-not-run}"$'\n'
+            fi
+            for tier in "${ALL_TIERS[@]}"; do
+                local st="${OP_STATUS["${level}/${tier}"]:-not-run}"
+                result_lines+="  ${OPT_STREAM}/${level}/${tier}: ${st}"$'\n'
+                if [[ "${st}" == FAILED* || "${st}" == TEST_FAILURES* ]]; then
+                    headline_icon="❌"
+                fi
+            done
+        done
+    else
+        for level in "${EFFECTIVE_LEVELS[@]}"; do
+            result_lines+="  ${OPT_STREAM}/${level}: ${OP_STATUS[${level}]:-not-run}"$'\n'
+        done
+        for level in "${EFFECTIVE_LEVELS[@]}"; do
+            if [[ "${OP_STATUS[${level}]:-}" == FAILED* \
+               || "${OP_STATUS[${level}]:-}" == TEST_FAILURES* ]]; then
+                headline_icon="❌"; break
+            fi
+        done
+    fi
 
     git \
         -c "user.name=${GIT_COMMIT_AUTHOR_NAME}" \
