@@ -37,3 +37,7 @@
 # OS artefacts
 .DS_Store
 Thumbs.db
+
+# Temporary git worktree used by publish_results() to commit to ci-results
+# without switching branches mid-run
+.ci-results-wt/

@@ -713,20 +713,37 @@ publish_results() {
     log "Stage 5: Publishing results"
     log "========================================================"
 
+    # Use a temporary worktree so we never do a mid-run branch switch that
+    # would replace the running script files and lose the populated reports/.
+    local wt_dir="${REPORTS_REPO_ROOT}/.ci-results-wt"
+
     cd "${REPORTS_REPO_ROOT}"
     git fetch origin "${GIT_RESULTS_BRANCH}"
-    git checkout "${GIT_RESULTS_BRANCH}"
-    git pull --ff-only origin "${GIT_RESULTS_BRANCH}"
 
-    # Stage all report artefacts + the status pages.
-    # Exclude hs_err/ directories — these contain JVM crash logs that are
-    # large and intended for local investigation only, never pushed to GitHub.
-    git add "${REPORTS_DIR}/"
-    git reset HEAD -- "${REPORTS_DIR}"/**/hs_err/ 2>/dev/null || true
-    git add --force STATUS.md 2>/dev/null || true
+    # Create (or re-attach) the worktree for ci-results
+    if [[ -d "${wt_dir}/.git" || -f "${wt_dir}/.git" ]]; then
+        git -C "${wt_dir}" pull --ff-only origin "${GIT_RESULTS_BRANCH}" 2>/dev/null || true
+    else
+        rm -rf "${wt_dir}"
+        git worktree add "${wt_dir}" "${GIT_RESULTS_BRANCH}"
+    fi
+
+    # Sync report artefacts + status pages into the worktree.
+    # Exclude hs_err/ — JVM crash logs are for local investigation only.
+    rsync -a --delete \
+        --exclude='hs_err/' \
+        "${REPORTS_DIR}/" "${wt_dir}/reports/"
+
+    if [[ -f "${REPORTS_REPO_ROOT}/STATUS.md" ]]; then
+        cp "${REPORTS_REPO_ROOT}/STATUS.md" "${wt_dir}/STATUS.md"
+    fi
+
+    cd "${wt_dir}"
+    git add reports/ STATUS.md 2>/dev/null || git add reports/
 
     if git diff --cached --quiet; then
         info "Nothing new to commit."
+        git worktree remove --force "${wt_dir}" 2>/dev/null || true
         return 0
     fi
 
@@ -767,6 +784,10 @@ Logs: reports/${_YEAR}/${_MONTH}/${_DAY}/pipeline.log
 "
     git push origin "${GIT_RESULTS_BRANCH}"
     success "Results pushed to origin/${GIT_RESULTS_BRANCH}."
+
+    # Clean up worktree
+    cd "${REPORTS_REPO_ROOT}"
+    git worktree remove --force "${wt_dir}" 2>/dev/null || true
 }
 
 # ---------------------------------------------------------------------------

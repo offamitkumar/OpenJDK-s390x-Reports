@@ -520,17 +520,34 @@ publish() {
         warn "gen_status.py failed — STATUS.md may be stale."
     fi
 
+    local wt_dir="${REPORTS_REPO_ROOT}/.ci-results-wt"
+
     cd "${REPORTS_REPO_ROOT}"
     git fetch origin "${GIT_RESULTS_BRANCH}"
-    git checkout "${GIT_RESULTS_BRANCH}"
-    git pull --ff-only origin "${GIT_RESULTS_BRANCH}"
-    # Exclude hs_err/ — JVM crash logs are for local investigation only
-    git add "${REPORTS_DIR}/"
-    git reset HEAD -- "${REPORTS_DIR}"/**/hs_err/ 2>/dev/null || true
-    git add --force STATUS.md 2>/dev/null || true
+
+    if [[ -d "${wt_dir}/.git" || -f "${wt_dir}/.git" ]]; then
+        git -C "${wt_dir}" pull --ff-only origin "${GIT_RESULTS_BRANCH}" 2>/dev/null || true
+    else
+        rm -rf "${wt_dir}"
+        git worktree add "${wt_dir}" "${GIT_RESULTS_BRANCH}"
+    fi
+
+    # Sync report artefacts + status pages into the worktree.
+    # Exclude hs_err/ — JVM crash logs are for local investigation only.
+    rsync -a --delete \
+        --exclude='hs_err/' \
+        "${REPORTS_DIR}/" "${wt_dir}/reports/"
+
+    if [[ -f "${REPORTS_REPO_ROOT}/STATUS.md" ]]; then
+        cp "${REPORTS_REPO_ROOT}/STATUS.md" "${wt_dir}/STATUS.md"
+    fi
+
+    cd "${wt_dir}"
+    git add reports/ STATUS.md 2>/dev/null || git add reports/
 
     if git diff --cached --quiet; then
         info "Nothing new to commit."
+        git worktree remove --force "${wt_dir}" 2>/dev/null || true
         return 0
     fi
 
@@ -565,6 +582,9 @@ Logs: ${OUT_BASE#"${REPORTS_REPO_ROOT}/"}
 "
     git push origin "${GIT_RESULTS_BRANCH}"
     success "Results pushed to origin/${GIT_RESULTS_BRANCH}."
+
+    cd "${REPORTS_REPO_ROOT}"
+    git worktree remove --force "${wt_dir}" 2>/dev/null || true
 }
 
 # ---------------------------------------------------------------------------
