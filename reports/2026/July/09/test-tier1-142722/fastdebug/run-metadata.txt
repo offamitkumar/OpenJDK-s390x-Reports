@@ -1,0 +1,12 @@
+stream:       head
+debug_level:  fastdebug
+mode:         test-only
+test_target:  tier1
+jvm_flags:    (none)
+run_ts:       20260709_142727
+date:         2026-07-09 15:20:13 UTC
+src_dir:      /home/amit/head/jdk
+top_commit:   ab116d00a88 8385945: Deprecate the CompilationMode flag
+boot_jdk:     openjdk version "28-beta" 2027-03-23
+jtreg:        jtreg 8.4-dev+0
+test_exit:    2

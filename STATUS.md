@@ -1,5 +1,5 @@
 # OpenJDK s390x CI — Build Status
-> Last updated: **2026-07-09 14:05 UTC**  
+> Last updated: **2026-07-09 15:20 UTC**  
 > Reports directory: `reports/`
 
 ## 🚨 Currently Failing
