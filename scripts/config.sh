@@ -146,6 +146,23 @@ JTREG_SHA256_URL="${JTREG_ARTIFACT_BASE}/${JTREG_ARCHIVE_NAME}.sha256sum.txt"
 # ---------------------------------------------------------------------------
 # Git / reporting settings
 # ---------------------------------------------------------------------------
-GIT_RESULTS_BRANCH="ci-results"
+
+# Each class of run gets its own branch so history is easy to navigate:
+#
+#   ci-results-daily     — automated daily cron (run_daily.sh)
+#   ci-results-manual    — explicit jdk.sh invocations where the user
+#                          passed at least one non-default option
+#   ci-results-community — reserved for community / PR testing (future)
+#
+# If jdk.sh is invoked with no arguments at all it behaves identically to the
+# cron job and pushes to ci-results-daily, not ci-results-manual.
+GIT_RESULTS_BRANCH_DAILY="ci-results-daily"
+GIT_RESULTS_BRANCH_MANUAL="ci-results-manual"
+GIT_RESULTS_BRANCH_COMMUNITY="ci-results-community"
+
+# Legacy alias — kept so any external tooling that references GIT_RESULTS_BRANCH
+# directly still works.  Internal scripts use the three named constants above.
+GIT_RESULTS_BRANCH="${GIT_RESULTS_BRANCH_DAILY}"
+
 GIT_COMMIT_AUTHOR_NAME="${GIT_COMMIT_AUTHOR_NAME:-OpenJDK s390x CI}"
 GIT_COMMIT_AUTHOR_EMAIL="${GIT_COMMIT_AUTHOR_EMAIL:-ci@s390x}"

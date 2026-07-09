@@ -717,29 +717,31 @@ gen_status_pages() {
 # Stage 5 — Commit and push results
 # ---------------------------------------------------------------------------
 publish_results() {
+    local target_branch="${GIT_RESULTS_BRANCH_DAILY}"
+
     if ${DRY_RUN}; then
-        info "DRY-RUN: would commit and push to origin/${GIT_RESULTS_BRANCH}"
+        info "DRY-RUN: would commit and push to origin/${target_branch}"
         info "  STATUS.md and run-summary.md would also be staged."
         return 0
     fi
 
     log "========================================================"
-    log "Stage 5: Publishing results"
+    log "Stage 5: Publishing results → ${target_branch}"
     log "========================================================"
 
-    # Use a temporary worktree so we never do a mid-run branch switch that
-    # would replace the running script files and lose the populated reports/.
-    local wt_dir="${REPORTS_REPO_ROOT}/.ci-results-wt"
+    # Use a branch-specific worktree so concurrent manual and daily runs
+    # never collide in the same worktree directory.
+    local wt_dir="${REPORTS_REPO_ROOT}/.ci-wt-daily"
 
     cd "${REPORTS_REPO_ROOT}"
-    git fetch origin "${GIT_RESULTS_BRANCH}"
+    git fetch origin "${target_branch}"
 
-    # Create (or re-attach) the worktree for ci-results
+    # Create (or re-attach) the worktree for the target branch.
     if [[ -d "${wt_dir}/.git" || -f "${wt_dir}/.git" ]]; then
-        git -C "${wt_dir}" pull --ff-only origin "${GIT_RESULTS_BRANCH}" 2>/dev/null || true
+        git -C "${wt_dir}" pull --ff-only origin "${target_branch}" 2>/dev/null || true
     else
         rm -rf "${wt_dir}"
-        git worktree add "${wt_dir}" "${GIT_RESULTS_BRANCH}"
+        git worktree add "${wt_dir}" "${target_branch}"
     fi
 
     # Sync report artefacts + status pages into the worktree.
@@ -785,9 +787,10 @@ publish_results() {
     git \
         -c "user.name=${GIT_COMMIT_AUTHOR_NAME}" \
         -c "user.email=${GIT_COMMIT_AUTHOR_EMAIL}" \
-        commit -m "${headline_icon} CI: tier1 ${_YEAR}-${_MONTH}-${_DAY}
+        commit -m "${headline_icon} CI daily: tier1 ${_YEAR}-${_MONTH}-${_DAY}
 
 Automated s390x CI run — see STATUS.md for rolling dashboard.
+Branch: ${target_branch}
 Host: $(hostname)
 JTREG available: ${JTREG_OK}
 Retention: reports older than 90 days purged from repo.
@@ -796,8 +799,8 @@ Results per stream/level:
 ${status_lines}
 Logs: reports/${_YEAR}/${_MONTH}/${_DAY}/pipeline.log
 "
-    git push origin "${GIT_RESULTS_BRANCH}"
-    success "Results pushed to origin/${GIT_RESULTS_BRANCH}."
+    git push origin "${target_branch}"
+    success "Results pushed to origin/${target_branch}."
 
     # Clean up worktree
     cd "${REPORTS_REPO_ROOT}"

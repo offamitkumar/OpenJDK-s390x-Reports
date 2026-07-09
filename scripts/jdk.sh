@@ -121,6 +121,11 @@ OPT_JVM_FLAGS=""
 # Tiers executed when --test-target all is requested
 ALL_TIERS=(tier1 tier2 tier3 tier4)
 
+# Track whether the user supplied any explicit arguments.
+# Zero args → treated as an automated CI invocation → ci-results-daily.
+# Any arg    → treated as a manual run              → ci-results-manual.
+_USER_SUPPLIED_ARGS=false
+
 # ---------------------------------------------------------------------------
 # Usage
 # ---------------------------------------------------------------------------
@@ -136,6 +141,8 @@ if [[ $# -eq 0 ]]; then
     echo "[jdk.sh] No command given — running default (run)"
     echo "         Use 'bash scripts/jdk.sh --help' for all options."
     COMMAND="run"
+else
+    _USER_SUPPLIED_ARGS=true
 fi
 
 while [[ $# -gt 0 ]]; do
@@ -222,8 +229,21 @@ exec > >(tee -a "${RUN_LOG}") 2>&1
 # ---------------------------------------------------------------------------
 # Banner
 # ---------------------------------------------------------------------------
+
+# Decide which branch to push to.
+# No user args  → behaves like the cron job → ci-results-daily
+# Any user args → explicit manual invocation → ci-results-manual
+if ${_USER_SUPPLIED_ARGS}; then
+    PUBLISH_BRANCH="${GIT_RESULTS_BRANCH_MANUAL}"
+    _RUN_KIND="manual"
+else
+    PUBLISH_BRANCH="${GIT_RESULTS_BRANCH_DAILY}"
+    _RUN_KIND="ci"
+fi
+
 log "========================================================"
-log "jdk.sh — OpenJDK s390x manual CI"
+log "jdk.sh — OpenJDK s390x CI"
+log "run kind    : ${_RUN_KIND} (push → ${PUBLISH_BRANCH})"
 log "command     : ${COMMAND}"
 log "stream      : ${OPT_STREAM}"
 log "level       : ${OPT_LEVEL} → ${EFFECTIVE_LEVELS[*]}"
@@ -654,7 +674,7 @@ publish() {
         return 0
     fi
 
-    log "Step 5: Publishing results …"
+    log "Step 5: Publishing results → ${PUBLISH_BRANCH} …"
 
     # Regenerate STATUS.md and run the 90-day retention purge.
     # gen_status.py stages git rm --cached for any day dirs past the cutoff,
@@ -664,16 +684,18 @@ publish() {
         warn "gen_status.py failed — STATUS.md may be stale."
     fi
 
-    local wt_dir="${REPORTS_REPO_ROOT}/.ci-results-wt"
+    # Use a branch-specific worktree name so daily and manual runs can
+    # coexist on the same machine without stepping on each other.
+    local wt_dir="${REPORTS_REPO_ROOT}/.ci-wt-${_RUN_KIND}"
 
     cd "${REPORTS_REPO_ROOT}"
-    git fetch origin "${GIT_RESULTS_BRANCH}"
+    git fetch origin "${PUBLISH_BRANCH}"
 
     if [[ -d "${wt_dir}/.git" || -f "${wt_dir}/.git" ]]; then
-        git -C "${wt_dir}" pull --ff-only origin "${GIT_RESULTS_BRANCH}" 2>/dev/null || true
+        git -C "${wt_dir}" pull --ff-only origin "${PUBLISH_BRANCH}" 2>/dev/null || true
     else
         rm -rf "${wt_dir}"
-        git worktree add "${wt_dir}" "${GIT_RESULTS_BRANCH}"
+        git worktree add "${wt_dir}" "${PUBLISH_BRANCH}"
     fi
 
     # Sync report artefacts + status pages into the worktree.
@@ -726,9 +748,10 @@ publish() {
     git \
         -c "user.name=${GIT_COMMIT_AUTHOR_NAME}" \
         -c "user.email=${GIT_COMMIT_AUTHOR_EMAIL}" \
-        commit -m "${headline_icon} manual ${COMMAND}: ${OPT_STREAM} (${OPT_LEVEL}) ${_YEAR}-${_MONTH}-${_DAY}
+        commit -m "${headline_icon} ${_RUN_KIND} ${COMMAND}: ${OPT_STREAM} (${OPT_LEVEL}) ${_YEAR}-${_MONTH}-${_DAY}
 
 Command: jdk.sh ${COMMAND}
+Branch : ${PUBLISH_BRANCH}
 Stream : ${OPT_STREAM}  Levels: ${EFFECTIVE_LEVELS[*]}
 Target : ${OPT_TEST_TARGET}
 JVM    : ${OPT_JVM_FLAGS:-(none)}
@@ -738,8 +761,8 @@ Results:
 ${result_lines}
 Logs: ${OUT_BASE#"${REPORTS_REPO_ROOT}/"}
 "
-    git push origin "${GIT_RESULTS_BRANCH}"
-    success "Results pushed to origin/${GIT_RESULTS_BRANCH}."
+    git push origin "${PUBLISH_BRANCH}"
+    success "Results pushed to origin/${PUBLISH_BRANCH}."
 
     cd "${REPORTS_REPO_ROOT}"
     git worktree remove --force "${wt_dir}" 2>/dev/null || true
