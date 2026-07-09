@@ -1,0 +1,16 @@
+========================================================
+  Build Diagnosis
+========================================================
+  stream      : jdk11
+  debug_level : fastdebug
+  phase       : images
+  build_exit  : 0
+  date        : 2026-06-25 21:26:05 UTC
+  build_log   : build/linux-s390x-normal-server-fastdebug/build.log
+
+  status      : BUILD SUCCEEDED
+========================================================
+
+--- Last 20 lines of build.log ---
+Error: 'make -jN' is not supported, use 'make JOBS=N'
+/home/amit/head/jdk11u-dev/make/Init.gmk:115: *** Cannot continue.  Stop.

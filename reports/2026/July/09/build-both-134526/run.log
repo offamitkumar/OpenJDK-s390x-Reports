@@ -1,0 +1,253 @@
+13:45:26 [jdk]   ========================================================
+13:45:26 [jdk]   jdk.sh — OpenJDK s390x manual CI
+13:45:26 [jdk]   command     : build
+13:45:26 [jdk]   stream      : head
+13:45:26 [jdk]   level       : both → fastdebug release
+13:45:26 [jdk]   output dir  : /home/amit/OpenJDK-s390x-Reports/reports/2026/July/09/build-both-134526
+13:45:26 [jdk]   run log     : /home/amit/OpenJDK-s390x-Reports/reports/2026/July/09/build-both-134526/run.log
+13:45:26 [jdk]   ========================================================
+13:45:26 [INFO]  Source directory : /home/amit/head/jdk
+13:45:26 [INFO]  Boot JDK         : /tmp/openjdk-s390x-ci/boot_jdk
+13:45:26 [jdk]   Step 1: Downloading dependencies …
+13:45:26 [INFO]  ========================================================
+13:45:26 [INFO]    setup_deps.sh start: 2026-07-09 13:45:26 UTC
+13:45:26 [INFO]    CI_TMP_DIR  : /tmp/openjdk-s390x-ci
+13:45:26 [INFO]    BOOT_JDK_DIR: /tmp/openjdk-s390x-ci/boot_jdk
+13:45:26 [INFO]    JTREG_DIR   : /tmp/openjdk-s390x-ci/jtreg
+13:45:26 [INFO]  ========================================================
+13:45:26 [INFO]  Checking required host tools …
+13:45:26 [INFO]    ✓ curl (/usr/bin/curl)
+13:45:26 [INFO]    ✓ tar (/usr/bin/tar)
+13:45:26 [INFO]    ✓ sha256sum (/usr/bin/sha256sum)
+13:45:26 [INFO]    ✓ python3 (/usr/bin/python3)
+13:45:26 [OK]    All required tools present.
+13:45:26 [INFO]  Cleaning scratch directory /tmp/openjdk-s390x-ci …
+13:45:26 [INFO]    Scratch directory ready: /tmp/openjdk-s390x-ci
+13:45:26 [INFO]  ========================================================
+13:45:26 [INFO]    STEP: Boot JDK download (all required versions)
+13:45:26 [INFO]  ========================================================
+13:45:26 [INFO]  [boot_jdk] Resolving JDK HEAD tip_version from Adoptium API …
+13:45:26 [INFO]    URL: https://api.adoptium.net/v3/info/available_releases
+13:45:26 [INFO]    tip_version = 28
+13:45:26 [INFO]    Versions to download: 28
+13:45:26 [INFO]  ========================================================
+13:45:26 [INFO]    STEP: Boot JDK download — JDK 28
+13:45:26 [INFO]  ========================================================
+13:45:26 [INFO]  [boot_jdk_v28] Step 1/5: locating s390x asset for JDK 28 …
+13:45:26 [INFO]    URL: https://api.github.com/repos/adoptium/temurin28-binaries/releases?per_page=5
+13:45:28 [INFO]    Asset : OpenJDK-jdk_s390x_linux_hotspot_28_5-ea.tar.gz
+13:45:28 [INFO]    URL   : https://github.com/adoptium/temurin28-binaries/releases/download/jdk-28%2B5-ea-beta/OpenJDK-jdk_s390x_linux_hotspot_28_5-ea.tar.gz
+13:45:28 [INFO]  [boot_jdk_v28] Step 2/5: downloading archive …
+13:45:28 [INFO]    Destination: /tmp/openjdk-s390x-ci/boot_jdk_28.tar.gz
+13:45:29 [INFO]    Downloaded: 133M
+13:45:29 [INFO]  [boot_jdk_v28] Step 3/5: verifying SHA-256 checksum …
+13:45:30 [INFO]    SHA-256 verified: adae13877206fb8ea20fcdfbd691fe89937b265f2044882b4f436b7335405137
+13:45:30 [INFO]  [boot_jdk_v28] Step 4/5: extracting to /tmp/openjdk-s390x-ci/boot_jdk_28 …
+13:45:30 [INFO]    Extracted to: /tmp/openjdk-s390x-ci/boot_jdk_28
+13:45:30 [INFO]  [boot_jdk_v28] Step 5/5: smoke-testing java binary …
+openjdk version "28-beta" 2027-03-23
+OpenJDK Runtime Environment Temurin-28+5-202607021655 (build 28-beta+5-ea)
+OpenJDK 64-Bit Server VM Temurin-28+5-202607021655 (build 28-beta+5-ea, mixed mode, sharing)
+13:45:30 [OK]    Boot JDK 28 ready: /tmp/openjdk-s390x-ci/boot_jdk_28
+13:45:30 [INFO]    BOOT_JDK_DIR → /tmp/openjdk-s390x-ci/boot_jdk_28 (symlink updated)
+13:45:31 [OK]    All boot JDKs ready.
+13:45:31 [INFO]  ========================================================
+13:45:31 [INFO]    STEP: jtreg download
+13:45:31 [INFO]  ========================================================
+13:45:31 [INFO]  [jtreg] Step 1/4: downloading jtregtip.tar.gz …
+13:45:31 [INFO]    URL: https://ci.adoptium.net/view/Dependencies/job/dependency_pipeline/lastSuccessfulBuild/artifact/jtreg/jtregtip.tar.gz
+13:45:31 [INFO]    Destination: /tmp/openjdk-s390x-ci/jtregtip.tar.gz
+13:45:31 [INFO]    Downloaded: 9.8M
+13:45:31 [INFO]  [jtreg] Step 2/4: verifying SHA-256 checksum …
+13:45:31 [INFO]    Checksum URL: https://ci.adoptium.net/view/Dependencies/job/dependency_pipeline/lastSuccessfulBuild/artifact/jtreg/jtregtip.tar.gz.sha256sum.txt
+13:45:31 [INFO]    SHA-256 verified: 96d23a59cdd2d25765a057b0c7e6da682076b9af0bb261a0c716c4ccf31a0124
+13:45:31 [INFO]  [jtreg] Step 3/4: extracting to /tmp/openjdk-s390x-ci/jtreg …
+13:45:31 [INFO]    Extracted to: /tmp/openjdk-s390x-ci/jtreg
+13:45:31 [INFO]  [jtreg] Step 4/4: smoke-testing jtreg binary …
+jtreg 8.4-dev+0
+Installed in /tmp/openjdk-s390x-ci/jtreg/lib/jtreg.jar
+Running on platform version 28-beta from /tmp/openjdk-s390x-ci/boot_jdk_28.
+Built with Java(TM) 2 SDK, Version 17.0.19+10 on July 08, 2026.
+JT Harness, version 6.0 ea b24 (July 08, 2026)
+Java Assembler Tools, version 9.1 ea 01 (July 08, 2026)
+TestNG: testng-7.3.0.jar, guice-5.1.0.jar, jcommander-1.82.jar
+JUnit: junit-platform-console-standalone-1.14.2.jar
+13:45:31 [OK]    jtreg ready: /tmp/openjdk-s390x-ci/jtreg
+13:45:31 [INFO]  ========================================================
+13:45:31 [OK]    Dependencies ready: 2026-07-09 13:45:31 UTC
+13:45:31 [INFO]  ========================================================
+13:45:31 [OK]    Boot JDK and jtreg ready.
+13:45:31 [jdk]   Step 2: Updating source (head) …
+13:45:31 [INFO]    Fetching + pulling /home/amit/head/jdk …
+From https://github.com/openjdk/jdk
+ - [deleted]                 (none)     -> origin/pr/28097
+ - [deleted]                 (none)     -> origin/pr/29414
+ - [deleted]                 (none)     -> origin/pr/29700
+ - [deleted]                 (none)     -> origin/pr/30043
+ - [deleted]                 (none)     -> origin/pr/30053
+ - [deleted]                 (none)     -> origin/pr/30174
+ - [deleted]                 (none)     -> origin/pr/30259
+ - [deleted]                 (none)     -> origin/pr/30261
+ - [deleted]                 (none)     -> origin/pr/30265
+ - [deleted]                 (none)     -> origin/pr/30374
+ - [deleted]                 (none)     -> origin/pr/30497
+ - [deleted]                 (none)     -> origin/pr/30612
+ - [deleted]                 (none)     -> origin/pr/30643
+ - [deleted]                 (none)     -> origin/pr/30741
+ - [deleted]                 (none)     -> origin/pr/30747
+ - [deleted]                 (none)     -> origin/pr/30763
+ - [deleted]                 (none)     -> origin/pr/30924
+ - [deleted]                 (none)     -> origin/pr/30997
+ - [deleted]                 (none)     -> origin/pr/31009
+ - [deleted]                 (none)     -> origin/pr/31022
+ - [deleted]                 (none)     -> origin/pr/31044
+ - [deleted]                 (none)     -> origin/pr/31110
+ - [deleted]                 (none)     -> origin/pr/31134
+ - [deleted]                 (none)     -> origin/pr/31157
+ - [deleted]                 (none)     -> origin/pr/31185
+ - [deleted]                 (none)     -> origin/pr/31368
+ - [deleted]                 (none)     -> origin/pr/31388
+ - [deleted]                 (none)     -> origin/pr/31396
+ - [deleted]                 (none)     -> origin/pr/31440
+ - [deleted]                 (none)     -> origin/pr/31467
+ - [deleted]                 (none)     -> origin/pr/31474
+ - [deleted]                 (none)     -> origin/pr/31478
+ - [deleted]                 (none)     -> origin/pr/31520
+ - [deleted]                 (none)     -> origin/pr/31522
+ - [deleted]                 (none)     -> origin/pr/31524
+ - [deleted]                 (none)     -> origin/pr/31535
+ - [deleted]                 (none)     -> origin/pr/31545
+ - [deleted]                 (none)     -> origin/pr/31559
+ - [deleted]                 (none)     -> origin/pr/31562
+ - [deleted]                 (none)     -> origin/pr/31569
+ - [deleted]                 (none)     -> origin/pr/31576
+ - [deleted]                 (none)     -> origin/pr/31581
+ - [deleted]                 (none)     -> origin/pr/31587
+ - [deleted]                 (none)     -> origin/pr/31599
+ - [deleted]                 (none)     -> origin/pr/31605
+ - [deleted]                 (none)     -> origin/pr/31609
+ - [deleted]                 (none)     -> origin/pr/31610
+ - [deleted]                 (none)     -> origin/pr/31626
+ - [deleted]                 (none)     -> origin/pr/31629
+ - [deleted]                 (none)     -> origin/pr/31633
+ - [deleted]                 (none)     -> origin/pr/31635
+ - [deleted]                 (none)     -> origin/pr/31636
+ - [deleted]                 (none)     -> origin/pr/31643
+ - [deleted]                 (none)     -> origin/pr/31645
+ - [deleted]                 (none)     -> origin/pr/31648
+ - [deleted]                 (none)     -> origin/pr/31649
+ - [deleted]                 (none)     -> origin/pr/31651
+ - [deleted]                 (none)     -> origin/pr/31656
+ - [deleted]                 (none)     -> origin/pr/31658
+ - [deleted]                 (none)     -> origin/pr/31660
+ - [deleted]                 (none)     -> origin/pr/31661
+ - [deleted]                 (none)     -> origin/pr/31662
+ - [deleted]                 (none)     -> origin/pr/31666
+ - [deleted]                 (none)     -> origin/pr/31670
+ - [deleted]                 (none)     -> origin/pr/31671
+ - [deleted]                 (none)     -> origin/pr/31672
+ - [deleted]                 (none)     -> origin/pr/31675
+ - [deleted]                 (none)     -> origin/pr/31677
+ - [deleted]                 (none)     -> origin/pr/31679
+ - [deleted]                 (none)     -> origin/pr/31680
+ - [deleted]                 (none)     -> origin/pr/31681
+ - [deleted]                 (none)     -> origin/pr/31709
+ - [deleted]                 (none)     -> origin/pr/31727
+ - [deleted]                 (none)     -> origin/pr/31739
+ - [deleted]                 (none)     -> origin/pr/31758
+ - [deleted]                 (none)     -> origin/pr/31766
+ - [deleted]                 (none)     -> origin/pr/31767
+ - [deleted]                 (none)     -> origin/pr/31768
+ - [deleted]                 (none)     -> origin/pr/31771
+ - [deleted]                 (none)     -> origin/pr/31779
+ - [deleted]                 (none)     -> origin/pr/31780
+ - [deleted]                 (none)     -> origin/pr/31781
+ - [deleted]                 (none)     -> origin/pr/31784
+ - [deleted]                 (none)     -> origin/pr/31785
+ - [deleted]                 (none)     -> origin/pr/31786
+ - [deleted]                 (none)     -> origin/pr/31787
+ - [deleted]                 (none)     -> origin/pr/31788
+   b9f36a121a1..d425cbe2f0d  master     -> origin/master
+   c7211efb532..130383b8fec  jdk27      -> origin/jdk27
+   65cf26ad23c..cc50aa2a8da  pr/27411   -> origin/pr/27411
+   f2352c69d45..f94212a15b2  pr/28541   -> origin/pr/28541
+   fc3f9261748..4153827261d  pr/28797   -> origin/pr/28797
+   9df015c48f0..5e4122776d6  pr/28894   -> origin/pr/28894
+   2399d5fd257..8a243dec3a9  pr/30266   -> origin/pr/30266
+   d74ff763106..a442b201bb5  pr/30341   -> origin/pr/30341
+   5328798c295..1870912f731  pr/30683   -> origin/pr/30683
+   c9f1e69ade8..d9ba666ac4a  pr/30876   -> origin/pr/30876
+   a4306626d98..a42f4dc4372  pr/30928   -> origin/pr/30928
+   e51b762e1e4..620ec3d6ce3  pr/31120   -> origin/pr/31120
+   eba9cbcc0e3..0e8105362e6  pr/31121   -> origin/pr/31121
+   f1f6d35d79d..1b6f7c184e5  pr/31122   -> origin/pr/31122
+   8a7fdc6e0f0..78d2bcdbf51  pr/31123   -> origin/pr/31123
+   5ac49a63c3f..457f5d6a08d  pr/31407   -> origin/pr/31407
+   5f687d4f106..77065d17a34  pr/31441   -> origin/pr/31441
+   187850a24a0..c125f86aadb  pr/31472   -> origin/pr/31472
+   72b7ab3d2c1..9934129e9fd  pr/31475   -> origin/pr/31475
+   388e180a2ab..8c886a576d3  pr/31572   -> origin/pr/31572
+   f7957d793a0..2c376a2eaff  pr/31574   -> origin/pr/31574
+   b01da844a7b..1eebef332ca  pr/31594   -> origin/pr/31594
+   17dce43a250..d3c1eedff0c  pr/31673   -> origin/pr/31673
+   21ff39211b3..3a56296f116  pr/31701   -> origin/pr/31701
+   59871a8fcb9..279a46bd53e  pr/31720   -> origin/pr/31720
+   e88c165dfee..d1d797c9d94  pr/31722   -> origin/pr/31722
+   352ad129c3d..54147ccd60c  pr/31728   -> origin/pr/31728
+   eeab8817d76..ffabcba3a37  pr/31742   -> origin/pr/31742
+   aa7e9184c81..2e6bfb0a615  pr/31759   -> origin/pr/31759
+   96062ffa6e5..1b5e4986da7  pr/31762   -> origin/pr/31762
+ * [new branch]              pr/31770   -> origin/pr/31770
+   3ae04a351a4..037cf795b5b  pr/31778   -> origin/pr/31778
+ * [new branch]              pr/31791   -> origin/pr/31791
+ * [new branch]              pr/31792   -> origin/pr/31792
+ * [new branch]              pr/31793   -> origin/pr/31793
+ * [new branch]              pr/31794   -> origin/pr/31794
+ * [new branch]              pr/31795   -> origin/pr/31795
+ * [new branch]              pr/31798   -> origin/pr/31798
+ * [new branch]              pr/31799   -> origin/pr/31799
+ * [new branch]              pr/31800   -> origin/pr/31800
+ * [new branch]              pr/31801   -> origin/pr/31801
+ * [new branch]              pr/31802   -> origin/pr/31802
+ * [new branch]              pr/31805   -> origin/pr/31805
+ * [new branch]              pr/31806   -> origin/pr/31806
+ * [new branch]              pr/31807   -> origin/pr/31807
+ * [new branch]              pr/31808   -> origin/pr/31808
+ * [new branch]              pr/31810   -> origin/pr/31810
+ * [new branch]              pr/31811   -> origin/pr/31811
+ * [new branch]              pr/31812   -> origin/pr/31812
+ * [new branch]              pr/31813   -> origin/pr/31813
+ * [new branch]              pr/31814   -> origin/pr/31814
+ * [new branch]              pr/31817   -> origin/pr/31817
+ * [new branch]              pr/31819   -> origin/pr/31819
+ * [new branch]              pr/31821   -> origin/pr/31821
+ * [new branch]              pr/31822   -> origin/pr/31822
+ * [new branch]              pr/31823   -> origin/pr/31823
+ * [new branch]              pr/31826   -> origin/pr/31826
+ * [new branch]              pr/31827   -> origin/pr/31827
+ * [new branch]              pr/31830   -> origin/pr/31830
+ * [new branch]              pr/31831   -> origin/pr/31831
+ * [new branch]              pr/31833   -> origin/pr/31833
+ * [new branch]              pr/31834   -> origin/pr/31834
+ * [new branch]              pr/31835   -> origin/pr/31835
+ * [new branch]              pr/31838   -> origin/pr/31838
+ * [new branch]              pr/31839   -> origin/pr/31839
+ * [new branch]              pr/31840   -> origin/pr/31840
+ * [new branch]              pr/31841   -> origin/pr/31841
+ * [new branch]              pr/31842   -> origin/pr/31842
+ * [new branch]              pr/31843   -> origin/pr/31843
+ * [new branch]              pr/31844   -> origin/pr/31844
+ * [new branch]              pr/31845   -> origin/pr/31845
+ * [new branch]              pr/31846   -> origin/pr/31846
+ * [new branch]              pr/31848   -> origin/pr/31848
+Already on 'master'
+M	src/hotspot/cpu/s390/templateTable_s390.cpp
+Your branch is behind 'origin/master' by 29 commits, and can be fast-forwarded.
+  (use "git pull" to update your local branch)
+From https://github.com/openjdk/jdk
+ * branch                    master     -> FETCH_HEAD
+error: Your local changes to the following files would be overwritten by merge:
+	src/hotspot/cpu/s390/templateTable_s390.cpp
+Please commit your changes or stash them before you merge.
+Aborting
+Updating b9f36a121a1..d425cbe2f0d

@@ -1,0 +1,4 @@
+Error: No configurations found for /home/amit/head/jdk17u-dev.
+Please run 'bash configure' to create a configuration.
+
+/home/amit/head/jdk17u-dev/make/Init.gmk:124: *** Cannot continue.  Stop.

@@ -1,0 +1,4 @@
+Error: No configurations found matching CONF=linux-s390x-server-fastdebug.
+Available configurations in /home/amit/head/jdk17u-dev/build:
+* linux-s390x-server-release
+/home/amit/head/jdk17u-dev/make/Init.gmk:124: *** Cannot continue.  Stop.

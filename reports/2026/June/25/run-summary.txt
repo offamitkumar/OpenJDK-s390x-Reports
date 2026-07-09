@@ -1,0 +1,47 @@
+========================================================
+  OpenJDK s390x CI — Run Summary
+========================================================
+  Date       : 2026-06-25 23:48:35 UTC
+  Host       : t8360021.lnxne.boe
+  Boot JDK   : openjdk version "28-beta" 2027-03-23
+  jtreg      : jtreg 8.4-dev+0
+  JTREG_OK   : true
+  pipeline.log: /home/amit/OpenJDK-s390x-Reports/reports/2026/June/25/pipeline.log
+  --stream   : head
+
+  Legend:
+    TEST_PASSED             All tier1 tests passed
+    TEST_FAILED             Tier1 ran; failures or errors recorded
+    TEST_SKIPPED_NO_JTREG   Build OK; tests skipped (jtreg not available)
+    BUILD_FAILED            configure/make failed; tests did not run
+    SKIPPED_SOURCE_FAIL     git pull/clone failed; nothing ran
+    SKIPPED_BOOT_JDK_FAIL   Boot JDK download failed; pipeline aborted
+    SKIPPED_FILTER          Excluded by --stream / --level flag
+    SKIPPED_DRY_RUN         Dry-run mode; no build or test executed
+    SKIPPED_EOL             Version no longer in Adoptium active support
+========================================================
+
+  ── head ──────────────────────────────────────────
+    fastdebug     TEST_FAILED                   tier1 completed with failures/errors (jtreg exit=2); see newfailures.txt
+    release       TEST_FAILED                   tier1 completed with failures/errors (jtreg exit=2); see newfailures.txt
+
+  ── jdk25 ──────────────────────────────────────────
+    fastdebug     SKIPPED_FILTER                Excluded by --stream head
+    release       SKIPPED_FILTER                Excluded by --stream head
+
+  ── jdk21 ──────────────────────────────────────────
+    fastdebug     SKIPPED_FILTER                Excluded by --stream head
+    release       SKIPPED_FILTER                Excluded by --stream head
+
+  ── jdk17 ──────────────────────────────────────────
+    fastdebug     SKIPPED_FILTER                Excluded by --stream head
+    release       SKIPPED_FILTER                Excluded by --stream head
+
+  ── jdk11 ──────────────────────────────────────────
+    fastdebug     SKIPPED_FILTER                Excluded by --stream head
+    release       SKIPPED_FILTER                Excluded by --stream head
+
+  ── jdk26 ──────────────────────────────────────────
+    fastdebug     SKIPPED_FILTER                Excluded by --stream head
+    release       SKIPPED_FILTER                Excluded by --stream head
+

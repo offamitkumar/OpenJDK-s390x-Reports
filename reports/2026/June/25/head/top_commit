@@ -1,0 +1,10 @@
+22:02:34 [RUN]   [head] Preparing source at /home/amit/head/jdk …
+22:02:34 [INFO]  [head]   git URL : https://github.com/openjdk/jdk.git
+22:02:34 [INFO]  [head]   commit before pull: a34314dd79db0dd8ec1e7a5267762760bf5b0711
+22:02:36 [INFO]  [head]   commit after pull : a34314dd79db0dd8ec1e7a5267762760bf5b0711
+22:02:36 [INFO]  [head]   top commit: a34314dd79d 8387260: Shenandoah: ShenandoahOldGeneration::_promoted_reserve should be atomic
+commit a34314dd79db0dd8ec1e7a5267762760bf5b0711
+author Xiaolong Peng <xpeng@openjdk.org>
+date   Thu, 25 Jun 2026 21:52:19 +0000
+
+    8387260: Shenandoah: ShenandoahOldGeneration::_promoted_reserve should be atomic

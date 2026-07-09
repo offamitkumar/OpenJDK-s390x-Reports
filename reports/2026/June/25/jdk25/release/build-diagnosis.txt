@@ -1,0 +1,13 @@
+========================================================
+  Build Diagnosis
+========================================================
+  stream      : jdk25
+  debug_level : release
+  phase       : configure
+  build_exit  : 0
+  date        : 2026-06-25 21:42:22 UTC
+  build_log   : 
+
+  status      : BUILD SUCCEEDED
+========================================================
+

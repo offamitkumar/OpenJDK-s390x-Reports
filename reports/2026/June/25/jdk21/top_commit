@@ -1,0 +1,10 @@
+21:24:49 [RUN]   [jdk21] Preparing source at /home/amit/head/jdk21u-dev …
+21:24:49 [INFO]  [jdk21]   git URL : https://github.com/openjdk/jdk21u-dev.git
+21:24:49 [INFO]  [jdk21]   commit before pull: 0cda7c9682653fa2bb0866fe2ca0a9101b3bac4c
+21:24:52 [INFO]  [jdk21]   commit after pull : 0cda7c9682653fa2bb0866fe2ca0a9101b3bac4c
+21:24:52 [INFO]  [jdk21]   top commit: 0cda7c96826 8247690: RunTest does not support running of JTREG manual tests
+commit 0cda7c9682653fa2bb0866fe2ca0a9101b3bac4c
+author Severin Gehwolf <sgehwolf@openjdk.org>
+date   Wed, 24 Jun 2026 17:54:21 +0000
+
+    8247690: RunTest does not support running of JTREG manual tests

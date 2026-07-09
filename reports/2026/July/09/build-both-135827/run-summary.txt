@@ -1,0 +1,35 @@
+========================================================
+  jdk.sh Run Summary
+========================================================
+  command      : build
+  stream       : head
+  levels       : fastdebug release
+  test-target  : tier1
+  jvm-flags    : (none)
+  date         : 2026-07-09 14:05:31 UTC
+  host         : t8360021.lnxne.boe
+  boot-jdk     : openjdk version "28-beta" 2027-03-23
+  jtreg        : jtreg 8.4-dev+0
+  output dir   : /home/amit/OpenJDK-s390x-Reports/reports/2026/July/09/build-both-135827
+========================================================
+
+  Results:
+    fastdebug     BUILD_ONLY (no tests)
+    release       BUILD_ONLY (no tests)
+
+  Artefacts per level (or level/tier when --test-target all):
+    run-metadata.txt   — mode, versions, exit codes
+    build.log          — full make output (build/run commands)
+    build-diagnosis.txt — last compiler cmd + first error lines
+    test-summary.txt   — jtreg pass/fail totals
+    newfailures.txt    — failing test names
+    other_errors.txt   — erroring test names
+    test-passed.txt    — names of all passed tests
+    test-failed.txt    — names of all failed tests
+    test-skipped.txt   — names of all skipped tests
+    test-failure.log   — failure detail + hs_err notice
+    test-passed.md     — GitHub: passed tests
+    test-failed.md     — GitHub: failed tests + days-failing
+    test-skipped.md    — GitHub: skipped tests
+    hs_err/<timestamp>/ — JVM crash logs (local only, not pushed)
+========================================================

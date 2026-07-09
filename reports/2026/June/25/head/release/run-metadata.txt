@@ -1,0 +1,11 @@
+stream:       head
+debug_level:  release
+run_ts:       20260625_231842
+date:         2026-06-25 23:48:34 UTC
+src_dir:      /home/amit/head/jdk
+top_commit:   a34314dd79d 8387260: Shenandoah: ShenandoahOldGeneration::_promoted_reserve should be atomic
+boot_jdk:     openjdk version "28-beta" 2027-03-23
+jtreg:        jtreg 8.4-dev+0
+extra_flags:  none
+jtreg_ok:     true
+test_exit:    2

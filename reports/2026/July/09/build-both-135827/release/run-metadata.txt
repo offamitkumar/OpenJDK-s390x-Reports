@@ -1,0 +1,9 @@
+stream:       head
+debug_level:  release
+mode:         build-only
+date:         2026-07-09 14:05:31 UTC
+src_dir:      /home/amit/head/jdk
+top_commit:   ab116d00a88 8385945: Deprecate the CompilationMode flag
+boot_jdk:     openjdk version "28-beta" 2027-03-23
+extra_flags:  none
+test_exit:    SKIPPED (build-only mode)

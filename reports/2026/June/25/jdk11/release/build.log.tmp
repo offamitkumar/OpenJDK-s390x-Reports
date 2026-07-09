@@ -1,0 +1,2 @@
+Error: 'make -jN' is not supported, use 'make JOBS=N'
+/home/amit/head/jdk11u-dev/make/Init.gmk:115: *** Cannot continue.  Stop.

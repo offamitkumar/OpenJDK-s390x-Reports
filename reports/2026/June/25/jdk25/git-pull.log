@@ -1,0 +1,18 @@
+========================================================
+  Git Pull Log — jdk25
+========================================================
+  src_dir    : /home/amit/head/jdk25u
+  git_url    : https://github.com/openjdk/jdk25u.git
+  date       : 2026-06-25 21:42:19 UTC
+
+  commit_before : 58853f39377ea6168c4570327347294899d51f95
+
+--- git fetch + pull output ---
+Already on 'master'
+Your branch is up to date with 'origin/master'.
+From https://github.com/openjdk/jdk25u
+ * branch                master     -> FETCH_HEAD
+Already up to date.
+
+  commit_after  : 58853f39377ea6168c4570327347294899d51f95
+  result        : SUCCESS

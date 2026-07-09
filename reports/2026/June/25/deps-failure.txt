@@ -1,0 +1,10 @@
+========================================================
+  Dependency Setup Failure
+========================================================
+  component : boot_jdk
+  reason    : [boot_jdk_v25] Step 1 FAILED: no s390x linux JDK tar.gz found in temurin25-binaries releases.
+  date      : 2026-06-25 21:51:26 UTC
+
+  impact    : FATAL — no build or test will run for any stream
+              A boot JDK is required to compile OpenJDK source.
+========================================================

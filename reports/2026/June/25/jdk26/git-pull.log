@@ -1,0 +1,10 @@
+========================================================
+  Git Pull Log — jdk26
+========================================================
+  src_dir    : /home/amit/head/jdk26u
+  git_url    : https://github.com/openjdk/jdk26u.git
+  date       : 2026-06-25 21:26:06 UTC
+
+  action     : fresh clone
+--- git clone output ---
+Cloning into '/home/amit/head/jdk26u'...

@@ -1,0 +1,10 @@
+21:42:19 [RUN]   [jdk25] Preparing source at /home/amit/head/jdk25u …
+21:42:19 [INFO]  [jdk25]   git URL : https://github.com/openjdk/jdk25u.git
+21:42:19 [INFO]  [jdk25]   commit before pull: 58853f39377ea6168c4570327347294899d51f95
+21:42:20 [INFO]  [jdk25]   commit after pull : 58853f39377ea6168c4570327347294899d51f95
+21:42:20 [INFO]  [jdk25]   top commit: 58853f393 8386551: Windows build broken because of MSys2/Make update
+commit 58853f39377ea6168c4570327347294899d51f95
+author Goetz Lindenmaier <goetz@openjdk.org>
+date   Tue, 23 Jun 2026 10:38:24 +0000
+
+    8386551: Windows build broken because of MSys2/Make update

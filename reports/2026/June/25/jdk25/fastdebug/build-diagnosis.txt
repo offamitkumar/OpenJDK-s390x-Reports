@@ -1,0 +1,18 @@
+========================================================
+  Build Diagnosis
+========================================================
+  stream      : jdk25
+  debug_level : fastdebug
+  phase       : images
+  build_exit  : 0
+  date        : 2026-06-25 21:42:22 UTC
+  build_log   : build/linux-s390x-server-fastdebug/build.log
+
+  status      : BUILD SUCCEEDED
+========================================================
+
+--- Last 20 lines of build.log ---
+Error: No configurations found for /home/amit/head/jdk25u.
+Please run 'bash configure' to create a configuration.
+
+/home/amit/head/jdk25u/make/PreInit.gmk:93: *** Cannot continue.  Stop.

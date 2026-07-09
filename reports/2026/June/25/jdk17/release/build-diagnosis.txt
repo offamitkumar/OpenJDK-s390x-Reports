@@ -1,0 +1,18 @@
+========================================================
+  Build Diagnosis
+========================================================
+  stream      : jdk17
+  debug_level : release
+  phase       : images
+  build_exit  : 0
+  date        : 2026-06-25 21:26:02 UTC
+  build_log   : build/linux-s390x-server-release/build.log
+
+  status      : BUILD SUCCEEDED
+========================================================
+
+--- Last 20 lines of build.log ---
+Error: No configurations found for /home/amit/head/jdk17u-dev.
+Please run 'bash configure' to create a configuration.
+
+/home/amit/head/jdk17u-dev/make/Init.gmk:124: *** Cannot continue.  Stop.

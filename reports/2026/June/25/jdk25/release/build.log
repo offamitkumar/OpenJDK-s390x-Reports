@@ -1,0 +1,4 @@
+Error: No configurations found for /home/amit/head/jdk25u.
+Please run 'bash configure' to create a configuration.
+
+/home/amit/head/jdk25u/make/PreInit.gmk:93: *** Cannot continue.  Stop.
