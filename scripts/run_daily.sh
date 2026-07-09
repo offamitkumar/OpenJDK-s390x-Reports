@@ -278,6 +278,20 @@ prepare_source() {
                 "git fetch failed"
             return 1
         fi
+
+        # Discard any local modifications that would block the merge.
+        # This is a CI source mirror — upstream content always wins.
+        local dirty_files
+        dirty_files="$(git -C "${src_dir}" status --porcelain 2>/dev/null)"
+        if [[ -n "${dirty_files}" ]]; then
+            warn "[${label}] Local modifications detected — discarding before pull:"
+            git -C "${src_dir}" status --short | while IFS= read -r line; do
+                warn "[${label}]   ${line}"
+            done
+            git -C "${src_dir}" checkout -- . >> "${git_log}" 2>&1
+            git -C "${src_dir}" clean -fd    >> "${git_log}" 2>&1
+        fi
+
         if ! git -C "${src_dir}" checkout master >> "${git_log}" 2>&1; then
             _record_source_failure "${label}" "${out_base}" "${git_log}" \
                 "git checkout master failed"

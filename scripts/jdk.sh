@@ -362,6 +362,20 @@ prepare_src() {
     if [[ -d "${SRC_DIR}/.git" ]]; then
         info "  Fetching + pulling ${SRC_DIR} …"
         git -C "${SRC_DIR}" fetch --prune origin
+
+        # Discard any local modifications that would block the merge.
+        # This is a CI source mirror — upstream content always wins.
+        local dirty_files
+        dirty_files="$(git -C "${SRC_DIR}" status --porcelain 2>/dev/null)"
+        if [[ -n "${dirty_files}" ]]; then
+            warn "  Local modifications detected — discarding before pull:"
+            git -C "${SRC_DIR}" status --short | while IFS= read -r line; do
+                warn "    ${line}"
+            done
+            git -C "${SRC_DIR}" checkout -- .
+            git -C "${SRC_DIR}" clean -fd
+        fi
+
         git -C "${SRC_DIR}" checkout master
         git -C "${SRC_DIR}" pull --ff-only origin master
         success "  Source updated: $(git -C "${SRC_DIR}" log -1 --oneline)"
