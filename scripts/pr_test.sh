@@ -465,17 +465,38 @@ publish_pr_results() {
             2>/dev/null || true
     else
         rm -rf "${wt_dir}"
-        # If the branch doesn't exist yet, create it as an orphan from the
-        # current HEAD so it's a clean branch with no shared history.
         if git ls-remote --exit-code --heads origin \
                 "${GIT_RESULTS_BRANCH_COMMUNITY}" &>/dev/null; then
+            # Branch already exists on remote — check it out normally.
             git worktree add "${wt_dir}" "${GIT_RESULTS_BRANCH_COMMUNITY}"
         else
+            # Branch does not exist yet.  `git worktree add --orphan` was added
+            # in Git 2.40 and is not available on older systems.  Instead we
+            # bootstrap the branch via a temporary bare init + force-push, then
+            # attach a normal worktree to it.  Works on any Git >= 1.8.
             info "Branch ${GIT_RESULTS_BRANCH_COMMUNITY} does not exist yet — creating …"
-            git worktree add --orphan "${wt_dir}" "${GIT_RESULTS_BRANCH_COMMUNITY}"
-            # Stage a minimal README so the initial commit isn't empty
+            local _remote_url
+            _remote_url="$(git remote get-url origin)"
+            local _init_tmp="${REPORTS_REPO_ROOT}/.ci-init-community"
+            rm -rf "${_init_tmp}"
+            mkdir -p "${_init_tmp}"
+            git -C "${_init_tmp}" init --quiet
+            git -C "${_init_tmp}" checkout --quiet -b "${GIT_RESULTS_BRANCH_COMMUNITY}"
             echo "# OpenJDK s390x CI — Community PR Results" \
-                > "${wt_dir}/README.md"
+                > "${_init_tmp}/README.md"
+            git -C "${_init_tmp}" add README.md
+            git -C "${_init_tmp}" \
+                -c "user.name=${GIT_COMMIT_AUTHOR_NAME}" \
+                -c "user.email=${GIT_COMMIT_AUTHOR_EMAIL}" \
+                commit --quiet -m "chore: create ${GIT_RESULTS_BRANCH_COMMUNITY} branch"
+            git -C "${_init_tmp}" remote add origin "${_remote_url}"
+            git -C "${_init_tmp}" push --quiet origin \
+                "${GIT_RESULTS_BRANCH_COMMUNITY}"
+            rm -rf "${_init_tmp}"
+
+            # Now that the branch exists on origin, fetch it and attach a worktree.
+            git fetch origin "${GIT_RESULTS_BRANCH_COMMUNITY}"
+            git worktree add "${wt_dir}" "${GIT_RESULTS_BRANCH_COMMUNITY}"
         fi
     fi
 
