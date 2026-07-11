@@ -40,6 +40,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/config.sh"
 # shellcheck source=scripts/build_test.sh
 source "${SCRIPT_DIR}/build_test.sh"
+# shellcheck source=scripts/notify.sh
+source "${SCRIPT_DIR}/notify.sh"
 
 # ---------------------------------------------------------------------------
 # Argument parsing
@@ -714,97 +716,10 @@ gen_status_pages() {
 }
 
 # ---------------------------------------------------------------------------
-# Stage 5 — Commit and push results
+# Stage 5 — Push disabled: results are kept local only
 # ---------------------------------------------------------------------------
 publish_results() {
-    local target_branch="${GIT_RESULTS_BRANCH_DAILY}"
-
-    if ${DRY_RUN}; then
-        info "DRY-RUN: would commit and push to origin/${target_branch}"
-        info "  STATUS.md and run-summary.md would also be staged."
-        return 0
-    fi
-
-    log "========================================================"
-    log "Stage 5: Publishing results → ${target_branch}"
-    log "========================================================"
-
-    # Use a branch-specific worktree so concurrent manual and daily runs
-    # never collide in the same worktree directory.
-    local wt_dir="${REPORTS_REPO_ROOT}/.ci-wt-daily"
-
-    cd "${REPORTS_REPO_ROOT}"
-    git fetch origin "${target_branch}"
-
-    # Create (or re-attach) the worktree for the target branch.
-    if [[ -d "${wt_dir}/.git" || -f "${wt_dir}/.git" ]]; then
-        git -C "${wt_dir}" pull --ff-only origin "${target_branch}" 2>/dev/null || true
-    else
-        rm -rf "${wt_dir}"
-        git worktree add "${wt_dir}" "${target_branch}"
-    fi
-
-    # Sync report artefacts + status pages into the worktree.
-    # Exclude hs_err/ — JVM crash logs are for local investigation only.
-    rsync -a --delete \
-        --exclude='hs_err/' \
-        "${REPORTS_DIR}/" "${wt_dir}/reports/"
-
-    if [[ -f "${REPORTS_REPO_ROOT}/STATUS.md" ]]; then
-        cp "${REPORTS_REPO_ROOT}/STATUS.md" "${wt_dir}/STATUS.md"
-    fi
-
-    cd "${wt_dir}"
-    git add reports/ STATUS.md 2>/dev/null || git add reports/
-
-    if git diff --cached --quiet; then
-        info "Nothing new to commit."
-        git worktree remove --force "${wt_dir}" 2>/dev/null || true
-        return 0
-    fi
-
-    local status_lines=""
-    for lbl in "${ALL_REGISTERED_LABELS[@]}"; do
-        for level in "${BUILD_LEVELS[@]}"; do
-            local key="${lbl}/${level}"
-            if [[ -n "${STREAM_STATUS[${key}]+_}" ]]; then
-                status_lines+="  ${key}: ${STREAM_STATUS[${key}]}"$'\n'
-            fi
-        done
-    done
-
-    # One-line headline for the commit message
-    local headline_icon="✅"
-    for key in "${!STREAM_STATUS[@]}"; do
-        if [[ "${STREAM_STATUS[${key}]}" == "BUILD_FAILED"
-           || "${STREAM_STATUS[${key}]}" == "TEST_FAILED"
-           || "${STREAM_STATUS[${key}]}" == "SKIPPED_BOOT_JDK_FAIL" ]]; then
-            headline_icon="❌"
-            break
-        fi
-    done
-
-    git \
-        -c "user.name=${GIT_COMMIT_AUTHOR_NAME}" \
-        -c "user.email=${GIT_COMMIT_AUTHOR_EMAIL}" \
-        commit -m "${headline_icon} CI daily: tier1 ${_YEAR}-${_MONTH}-${_DAY}
-
-Automated s390x CI run — see STATUS.md for rolling dashboard.
-Branch: ${target_branch}
-Host: $(hostname)
-JTREG available: ${JTREG_OK}
-Retention: reports older than 90 days purged from repo.
-
-Results per stream/level:
-${status_lines}
-Logs: reports/${_YEAR}/${_MONTH}/${_DAY}/pipeline.log
-"
-    git push origin "${target_branch}"
-    success "Results pushed to origin/${target_branch}."
-
-    # Clean up worktree
-    cd "${REPORTS_REPO_ROOT}"
-    git worktree remove --force "${wt_dir}" 2>/dev/null || true
+    info "Git push disabled — results stored locally in ${PIPELINE_LOG_DIR}"
 }
 
 # ---------------------------------------------------------------------------
@@ -828,7 +743,53 @@ main() {
     write_run_summary       # Stage 4a
     purge_old_reports       # Stage 4b — delete reports >90 days (always runs)
     gen_status_pages        # Stage 4c — writes STATUS.md + per-run .md
-    publish_results         # Stage 5
+    publish_results         # Stage 5 — no-op (push disabled)
+
+    # Stage 6 — Email notification
+    local _overall="PASS"
+    for key in "${!STREAM_STATUS[@]}"; do
+        case "${STREAM_STATUS[${key}]}" in
+            BUILD_FAILED|TEST_FAILED|SKIPPED_BOOT_JDK_FAIL)
+                _overall="FAIL"; break ;;
+        esac
+    done
+    local _subject_suffix="all streams (${_YEAR}-${_MONTH}-${_DAY})"
+    [[ -n "${FILTER_STREAM}" ]] && _subject_suffix="${FILTER_STREAM} (${_YEAR}-${_MONTH}-${_DAY})"
+
+    # Build stream_label:src_dir:level:build_status quads for notify.sh
+    local _triples=()
+    for _entry in "${ACTIVE_STREAMS[@]}"; do
+        local _lbl _sub
+        IFS='|' read -r _lbl _sub _ _ _ <<< "${_entry}"
+        for _lvl in "${BUILD_LEVELS[@]}"; do
+            local _key="${_lbl}/${_lvl}"
+            local _st="${STREAM_STATUS[${_key}]:-UNKNOWN}"
+            local _bst
+            if   [[ "${_st}" == "BUILD_FAILED"  ]]; then _bst="BUILD_FAILED"
+            elif [[ "${_st}" == "TEST_FAILED"   ]]; then _bst="TEST_FAILED"
+            else                                         _bst="TEST_PASSED"
+            fi
+            _triples+=("${_lbl}:${JDK_SOURCES_ROOT}/${_sub}:${_lvl}:${_bst}")
+        done
+    done
+    # For daily runs, build a combined commit-info file from all active streams
+    local _ci_combined="${PIPELINE_LOG_DIR}/commit-info-all.txt"
+    : > "${_ci_combined}"
+    for _entry in "${ACTIVE_STREAMS[@]}"; do
+        local _lbl _sub
+        IFS='|' read -r _lbl _sub _ _ _ <<< "${_entry}"
+        local _ci="${PIPELINE_LOG_DIR}/${_lbl}/commit-info.txt"
+        if [[ -f "${_ci}" ]]; then
+            echo "" >> "${_ci_combined}"
+            echo "════ ${_lbl} ════════════════════════════════════════" \
+                >> "${_ci_combined}"
+            cat "${_ci}" >> "${_ci_combined}"
+        fi
+    done
+    ci_notify "daily" "${_subject_suffix}" \
+        "${PIPELINE_LOG_DIR}/run-summary.txt" "${_overall}" \
+        "${_ci_combined}" \
+        "${_triples[@]}"
 
     log "========================================================"
     log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"

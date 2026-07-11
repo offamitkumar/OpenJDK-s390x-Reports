@@ -2,9 +2,9 @@
 # =============================================================================
 # pr_test.sh — Community PR tester for OpenJDK s390x CI
 #
-# Fetches an upstream OpenJDK pull request, builds it in fastdebug mode, runs
-# the full tier1 test suite, and pushes the results to the ci-results-community
-# branch under PRs/<number>/<YYYYMMDD_HHMMSS>/.
+# Fetches an upstream OpenJDK pull request, builds it in fastdebug mode (or
+# release, or both), runs the full tier1 test suite, and stores the results
+# under PRs/<number>/<YYYYMMDD_HHMMSS>/.
 #
 # USAGE
 # ─────
@@ -15,6 +15,9 @@
 #   --pr NUMBER|URL   PR number (e.g. 31868) or full GitHub URL
 #                     (e.g. https://github.com/openjdk/jdk/pull/31868).
 #                     Required.
+#
+#   --level LEVEL     Build / test level: fastdebug | release | both
+#                     Default: fastdebug
 #
 #   --skip-deps       Skip boot JDK + jtreg download (use cached).
 #
@@ -27,7 +30,7 @@
 #   PRs/<number>/<YYYYMMDD_HHMMSS>/
 #     run.log               — full run output (tee'd here)
 #     pr-info.txt           — PR number, URL, HEAD commit fetched
-#     fastdebug/
+#     fastdebug/            — (present when level is fastdebug or both)
 #       build.log
 #       build-diagnosis.txt
 #       test-summary.txt
@@ -39,6 +42,8 @@
 #       test-skipped.txt
 #       test-failure.log
 #       hs_err/<timestamp>/  (local only — not pushed)
+#     release/              — (present when level is release or both)
+#       (same layout as fastdebug/)
 #
 # RETENTION
 # ─────────
@@ -51,8 +56,14 @@
 #
 # EXAMPLES
 # ────────
-#   # Test PR 31868 (full run, push results):
+#   # Test PR 31868 (fastdebug, full run):
 #   bash scripts/pr_test.sh --pr 31868
+#
+#   # Test PR 31868 in release mode:
+#   bash scripts/pr_test.sh --pr 31868 --level release
+#
+#   # Test both fastdebug and release:
+#   bash scripts/pr_test.sh --pr 31868 --level both
 #
 #   # Test by URL, skip dep download, no push:
 #   bash scripts/pr_test.sh \
@@ -72,11 +83,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/config.sh"
 source "${SCRIPT_DIR}/build_test.sh"
+source "${SCRIPT_DIR}/notify.sh"
 
 # ---------------------------------------------------------------------------
 # Defaults
 # ---------------------------------------------------------------------------
 OPT_PR=""
+OPT_LEVEL="fastdebug"
 OPT_SKIP_DEPS=false
 OPT_NO_PUSH=false
 OPT_DRY_RUN=false
@@ -102,6 +115,12 @@ while [[ $# -gt 0 ]]; do
     case "$1" in
         --pr)
             OPT_PR="$2"; shift 2 ;;
+        --level)
+            case "${2:-}" in
+                fastdebug|release|both) OPT_LEVEL="$2"; shift 2 ;;
+                *) echo "[pr_test.sh] ERROR: --level must be fastdebug, release, or both (got: ${2:-})" >&2
+                   exit 1 ;;
+            esac ;;
         --skip-deps)
             OPT_SKIP_DEPS=true; shift ;;
         --no-push)
@@ -161,13 +180,23 @@ RUN_LOG="${OUT_BASE}/run.log"
 exec > >(tee -a "${RUN_LOG}") 2>&1
 
 # ---------------------------------------------------------------------------
+# Resolve effective level(s) to build
+# ---------------------------------------------------------------------------
+EFFECTIVE_LEVELS=()
+case "${OPT_LEVEL}" in
+    both)       EFFECTIVE_LEVELS=("fastdebug" "release") ;;
+    fastdebug)  EFFECTIVE_LEVELS=("fastdebug") ;;
+    release)    EFFECTIVE_LEVELS=("release") ;;
+esac
+
+# ---------------------------------------------------------------------------
 # Banner
 # ---------------------------------------------------------------------------
 log "========================================================"
 log "pr_test.sh — OpenJDK s390x Community PR Tester"
 log "PR          : #${PR_NUMBER}"
 log "PR URL      : https://github.com/openjdk/jdk/pull/${PR_NUMBER}"
-log "level       : fastdebug (fixed)"
+log "level(s)    : ${EFFECTIVE_LEVELS[*]}"
 log "test-target : tier1 (fixed)"
 log "push branch : ${GIT_RESULTS_BRANCH_COMMUNITY}"
 ${OPT_SKIP_DEPS} && log "deps        : skipped (--skip-deps)"
@@ -323,17 +352,22 @@ trap '_cleanup_worktree' EXIT
 fetch_pr_worktree
 
 # ---------------------------------------------------------------------------
-# Step 3 — Build fastdebug + run tier1
+# Step 3 — Build + run tier1 for each effective level
 # ---------------------------------------------------------------------------
-LEVEL="fastdebug"
-LEVEL_OUT="${OUT_BASE}/${LEVEL}"
-mkdir -p "${LEVEL_OUT}"
+
+# PR_LEVEL_RESULTS maps level -> result string (BUILD_FAILED|TEST_PASSED|TEST_FAILED)
+declare -A PR_LEVEL_RESULTS=()
 
 run_pr_build_test() {
-    log "Step 3: Build (fastdebug) + tier1 tests for PR #${PR_NUMBER} …"
+    local level="$1"
+    local level_out="${OUT_BASE}/${level}"
+    mkdir -p "${level_out}"
+
+    log "Step 3 [${level}]: Build + tier1 tests for PR #${PR_NUMBER} …"
 
     if ${OPT_DRY_RUN}; then
-        info "DRY-RUN: would build ${LEVEL} and run tier1 in ${PR_WORKTREE}"
+        info "DRY-RUN: would build ${level} and run tier1 in ${PR_WORKTREE}"
+        PR_LEVEL_RESULTS["${level}"]="DRY_RUN"
         return 0
     fi
 
@@ -341,36 +375,51 @@ run_pr_build_test() {
     build_and_test_jdk \
         "${PR_WORKTREE}" \
         "PR-${PR_NUMBER}" \
-        "${LEVEL}" \
-        "${LEVEL_OUT}" \
+        "${level}" \
+        "${level_out}" \
         "${JTREG_OK}" \
         "${BOOT_JDK_DIR}" \
         || exit_code=$?
 
+    local result
     if [[ ${exit_code} -ne 0 ]]; then
-        warn "Build failed for PR #${PR_NUMBER} (exit=${exit_code}) — recorded."
-        PR_RESULT="BUILD_FAILED (exit=${exit_code})"
+        warn "Build failed for PR #${PR_NUMBER} [${level}] (exit=${exit_code}) — recorded."
+        result="BUILD_FAILED (exit=${exit_code})"
     else
         local test_exit_line
-        test_exit_line="$(grep '^test_exit:' "${LEVEL_OUT}/run-metadata.txt" \
+        test_exit_line="$(grep '^test_exit:' "${level_out}/run-metadata.txt" \
             2>/dev/null | awk '{print $2}' || echo "0")"
         case "${test_exit_line}" in
-            0)          PR_RESULT="TEST_PASSED" ;;
-            SKIPPED*)   PR_RESULT="BUILD_ONLY (jtreg not available)" ;;
-            NO_BUILD*)  PR_RESULT="SKIPPED (no build found)" ;;
-            *)          PR_RESULT="TEST_FAILURES (jtreg=${test_exit_line})" ;;
+            0)          result="TEST_PASSED" ;;
+            SKIPPED*)   result="BUILD_ONLY (jtreg not available)" ;;
+            NO_BUILD*)  result="SKIPPED (no build found)" ;;
+            *)          result="TEST_FAILURES (jtreg=${test_exit_line})" ;;
         esac
     fi
 
-    log "PR #${PR_NUMBER} result: ${PR_RESULT}"
+    PR_LEVEL_RESULTS["${level}"]="${result}"
+    log "PR #${PR_NUMBER} [${level}] result: ${result}"
 }
 
-PR_RESULT="DRY_RUN"
-run_pr_build_test
+for _level in "${EFFECTIVE_LEVELS[@]}"; do
+    run_pr_build_test "${_level}"
+done
 
 # ---------------------------------------------------------------------------
 # Step 4 — Write run summary
 # ---------------------------------------------------------------------------
+
+# Compute overall result across all levels
+_pr_overall="PASS"
+_pr_summary_results=()
+for _level in "${EFFECTIVE_LEVELS[@]}"; do
+    _res="${PR_LEVEL_RESULTS[${_level}]:-UNKNOWN}"
+    _pr_summary_results+=("  ${_level}: ${_res}")
+    if [[ "${_res}" == BUILD_FAILED* || "${_res}" == TEST_FAILURES* ]]; then
+        _pr_overall="FAIL"
+    fi
+done
+
 write_pr_summary() {
     local summary="${OUT_BASE}/run-summary.txt"
     {
@@ -379,9 +428,10 @@ write_pr_summary() {
         echo "========================================================"
         echo "  pr_number    : ${PR_NUMBER}"
         echo "  pr_url       : https://github.com/openjdk/jdk/pull/${PR_NUMBER}"
-        echo "  level        : ${LEVEL}"
+        echo "  level(s)     : ${EFFECTIVE_LEVELS[*]}"
         echo "  test-target  : tier1"
-        echo "  result       : ${PR_RESULT}"
+        echo "  overall      : ${_pr_overall}"
+        for _line in "${_pr_summary_results[@]}"; do echo "${_line}"; done
         echo "  date         : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
         echo "  host         : $(hostname)"
         if [[ -x "${BOOT_JDK_DIR}/bin/java" ]]; then
@@ -398,18 +448,20 @@ write_pr_summary() {
         echo "  Artefacts:"
         echo "    run.log              — full run output"
         echo "    pr-info.txt          — PR number, URL, HEAD commit"
-        echo "    ${LEVEL}/"
-        echo "      build.log          — full make output"
-        echo "      build-diagnosis.txt — last compiler cmd + first error lines"
-        echo "      test-summary.txt   — jtreg pass/fail totals"
-        echo "      newfailures.txt    — failing test names"
-        echo "      other_errors.txt   — erroring test names"
-        echo "      run-metadata.txt   — versions, exit codes, dates"
-        echo "      test-passed.txt    — names of all passed tests"
-        echo "      test-failed.txt    — names of all failed tests"
-        echo "      test-skipped.txt   — names of all skipped tests"
-        echo "      test-failure.log   — failure detail + hs_err notice"
-        echo "      hs_err/<timestamp>/ — JVM crash logs (local only, not pushed)"
+        for _level in "${EFFECTIVE_LEVELS[@]}"; do
+            echo "    ${_level}/"
+            echo "      build.log          — full make output"
+            echo "      build-diagnosis.txt — last compiler cmd + first error lines"
+            echo "      test-summary.txt   — jtreg pass/fail totals"
+            echo "      newfailures.txt    — failing test names"
+            echo "      other_errors.txt   — erroring test names"
+            echo "      run-metadata.txt   — versions, exit codes, dates"
+            echo "      test-passed.txt    — names of all passed tests"
+            echo "      test-failed.txt    — names of all failed tests"
+            echo "      test-skipped.txt   — names of all skipped tests"
+            echo "      test-failure.log   — failure detail + hs_err notice"
+            echo "      hs_err/<timestamp>/ — JVM crash logs (local only, not pushed)"
+        done
         echo "========================================================"
     } > "${summary}"
     echo ""
@@ -443,111 +495,43 @@ purge_old_pr_results() {
 purge_old_pr_results
 
 # ---------------------------------------------------------------------------
-# Step 5 — Commit and push to ci-results-community
+# Step 5 — Push disabled: results are kept local only
 # ---------------------------------------------------------------------------
 publish_pr_results() {
-    if ${OPT_NO_PUSH} || ${OPT_DRY_RUN}; then
-        info "Skipping git push (--no-push or --dry-run)."
-        return 0
-    fi
-
-    log "Step 5: Publishing PR results → ${GIT_RESULTS_BRANCH_COMMUNITY} …"
-
-    local wt_dir="${REPORTS_REPO_ROOT}/.ci-wt-community"
-
-    cd "${REPORTS_REPO_ROOT}"
-    git fetch origin "${GIT_RESULTS_BRANCH_COMMUNITY}" \
-        || git fetch origin "${GIT_RESULTS_BRANCH_COMMUNITY}" 2>/dev/null \
-        || true   # branch may not exist yet — handled by worktree add below
-
-    if [[ -d "${wt_dir}/.git" || -f "${wt_dir}/.git" ]]; then
-        git -C "${wt_dir}" pull --ff-only origin "${GIT_RESULTS_BRANCH_COMMUNITY}" \
-            2>/dev/null || true
-    else
-        rm -rf "${wt_dir}"
-        if git ls-remote --exit-code --heads origin \
-                "${GIT_RESULTS_BRANCH_COMMUNITY}" &>/dev/null; then
-            # Branch already exists on remote — check it out normally.
-            git worktree add "${wt_dir}" "${GIT_RESULTS_BRANCH_COMMUNITY}"
-        else
-            # Branch does not exist yet.  `git worktree add --orphan` was added
-            # in Git 2.40 and is not available on older systems.  Instead we
-            # bootstrap the branch via a temporary bare init + force-push, then
-            # attach a normal worktree to it.  Works on any Git >= 1.8.
-            info "Branch ${GIT_RESULTS_BRANCH_COMMUNITY} does not exist yet — creating …"
-            local _remote_url
-            _remote_url="$(git remote get-url origin)"
-            local _init_tmp="${REPORTS_REPO_ROOT}/.ci-init-community"
-            rm -rf "${_init_tmp}"
-            mkdir -p "${_init_tmp}"
-            git -C "${_init_tmp}" init --quiet
-            git -C "${_init_tmp}" checkout --quiet -b "${GIT_RESULTS_BRANCH_COMMUNITY}"
-            echo "# OpenJDK s390x CI — Community PR Results" \
-                > "${_init_tmp}/README.md"
-            git -C "${_init_tmp}" add README.md
-            git -C "${_init_tmp}" \
-                -c "user.name=${GIT_COMMIT_AUTHOR_NAME}" \
-                -c "user.email=${GIT_COMMIT_AUTHOR_EMAIL}" \
-                commit --quiet -m "chore: create ${GIT_RESULTS_BRANCH_COMMUNITY} branch"
-            git -C "${_init_tmp}" remote add origin "${_remote_url}"
-            git -C "${_init_tmp}" push --quiet origin \
-                "${GIT_RESULTS_BRANCH_COMMUNITY}"
-            rm -rf "${_init_tmp}"
-
-            # Now that the branch exists on origin, fetch it and attach a worktree.
-            git fetch origin "${GIT_RESULTS_BRANCH_COMMUNITY}"
-            git worktree add "${wt_dir}" "${GIT_RESULTS_BRANCH_COMMUNITY}"
-        fi
-    fi
-
-    # Sync the entire PRs/ directory (minus local-only hs_err/) into the worktree.
-    mkdir -p "${wt_dir}/PRs"
-    rsync -a --delete \
-        --exclude='hs_err/' \
-        "${REPORTS_REPO_ROOT}/PRs/" "${wt_dir}/PRs/"
-
-    cd "${wt_dir}"
-    git add PRs/ README.md 2>/dev/null || git add PRs/
-
-    if git diff --cached --quiet; then
-        info "Nothing new to commit."
-        git worktree remove --force "${wt_dir}" 2>/dev/null || true
-        return 0
-    fi
-
-    local headline_icon="✅"
-    if [[ "${PR_RESULT}" == BUILD_FAILED* || "${PR_RESULT}" == TEST_FAILURES* ]]; then
-        headline_icon="❌"
-    fi
-
-    git \
-        -c "user.name=${GIT_COMMIT_AUTHOR_NAME}" \
-        -c "user.email=${GIT_COMMIT_AUTHOR_EMAIL}" \
-        commit -m "${headline_icon} PR #${PR_NUMBER} tier1/fastdebug: ${PR_RESULT}
-
-PR     : https://github.com/openjdk/jdk/pull/${PR_NUMBER}
-Branch : ${GIT_RESULTS_BRANCH_COMMUNITY}
-Level  : ${LEVEL}
-Target : tier1
-Result : ${PR_RESULT}
-Host   : $(hostname)
-Date   : $(date -u '+%Y-%m-%d %H:%M:%S UTC')
-Retention: PR results older than 30 days purged from repo.
-
-Logs: PRs/${PR_NUMBER}/${_RUN_TS}/
-"
-    git push origin "${GIT_RESULTS_BRANCH_COMMUNITY}"
-    success "Results pushed to origin/${GIT_RESULTS_BRANCH_COMMUNITY}."
-
-    cd "${REPORTS_REPO_ROOT}"
-    git worktree remove --force "${wt_dir}" 2>/dev/null || true
+    info "Git push disabled — results stored locally in ${OUT_BASE}"
 }
 
 publish_pr_results
 
+# ---------------------------------------------------------------------------
+# Email notification — one quad per level
+# ---------------------------------------------------------------------------
+_notify_quads=()
+for _level in "${EFFECTIVE_LEVELS[@]}"; do
+    _res="${PR_LEVEL_RESULTS[${_level}]:-UNKNOWN}"
+    _bst=""
+    if   [[ "${_res}" == BUILD_FAILED*   ]]; then _bst="BUILD_FAILED"
+    elif [[ "${_res}" == TEST_FAILURES*  ]]; then _bst="TEST_FAILED"
+    else                                          _bst="TEST_PASSED"
+    fi
+    # <level_out> has flat copies of newfailures.txt + other_errors.txt made by
+    # build_and_test_jdk().  Use __report__ sentinel so notify.sh reads them directly.
+    _notify_quads+=("PR-${PR_NUMBER}:${OUT_BASE}/${_level}:__report__:${_bst}")
+done
+
+_subject_levels="${EFFECTIVE_LEVELS[*]}"   # e.g. "fastdebug" or "fastdebug release"
+[[ "${#EFFECTIVE_LEVELS[@]}" -gt 1 ]] && _subject_levels="both"
+
+ci_notify "pr" "PR #${PR_NUMBER} ${_subject_levels}/tier1" \
+    "${OUT_BASE}/run-summary.txt" "${_pr_overall}" \
+    "${OUT_BASE}/pr-info.txt" \
+    "${_notify_quads[@]}"
+
 log "========================================================"
 log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 log "PR      : #${PR_NUMBER}"
-log "Result  : ${PR_RESULT}"
+for _level in "${EFFECTIVE_LEVELS[@]}"; do
+    log "Result [${_level}]: ${PR_LEVEL_RESULTS[${_level}]:-UNKNOWN}"
+done
 log "Output  : ${OUT_BASE}"
 log "========================================================"

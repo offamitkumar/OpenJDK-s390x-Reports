@@ -105,6 +105,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/config.sh"
 source "${SCRIPT_DIR}/build_test.sh"
+source "${SCRIPT_DIR}/notify.sh"
 
 # ---------------------------------------------------------------------------
 # Defaults
@@ -381,6 +382,11 @@ prepare_src() {
     log "Step 2: Updating source (${OPT_STREAM}) …"
     if [[ -d "${SRC_DIR}/.git" ]]; then
         info "  Fetching + pulling ${SRC_DIR} …"
+
+        # Capture HEAD before the pull so we can build a bisect command
+        local commit_before
+        commit_before="$(git -C "${SRC_DIR}" rev-parse HEAD 2>/dev/null || echo '')"
+
         git -C "${SRC_DIR}" fetch --prune origin
 
         # Discard any local modifications that would block the merge.
@@ -399,6 +405,34 @@ prepare_src() {
         git -C "${SRC_DIR}" checkout master
         git -C "${SRC_DIR}" pull --ff-only origin master
         success "  Source updated: $(git -C "${SRC_DIR}" log -1 --oneline)"
+
+        local commit_after
+        commit_after="$(git -C "${SRC_DIR}" rev-parse HEAD)"
+
+        # Write commit-info.txt into the run output directory
+        {
+            echo "stream         : ${OPT_STREAM}"
+            echo "src_dir        : ${SRC_DIR}"
+            echo "run_date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            echo ""
+            echo "commit_before  : ${commit_before:-(unknown)}"
+            echo "commit_after   : ${commit_after}"
+            echo ""
+            if [[ -n "${commit_before}" && "${commit_before}" != "${commit_after}" ]]; then
+                local n
+                n="$(git -C "${SRC_DIR}" rev-list --count \
+                    "${commit_before}..${commit_after}" 2>/dev/null || echo '?')"
+                echo "new_commits    : ${n} commit(s) pulled in this run"
+                echo "bisect_cmd     : git bisect start ${commit_after} ${commit_before}"
+                echo ""
+                echo "# Commits introduced (newest first):"
+                git -C "${SRC_DIR}" log --oneline --no-merges \
+                    "${commit_before}..${commit_after}" 2>/dev/null | sed 's/^/#   /'
+            else
+                echo "new_commits    : (none — already up to date)"
+                echo "bisect_cmd     : (not needed)"
+            fi
+        } > "${OUT_BASE}/commit-info.txt"
     else
         info "  No repo found — cloning …"
         # Look up URL from registry
@@ -413,6 +447,18 @@ prepare_src() {
         mkdir -p "${SRC_DIR}"
         git clone --depth=1 "${git_url}" "${SRC_DIR}"
         success "  Cloned: ${SRC_DIR}"
+
+        local commit_after
+        commit_after="$(git -C "${SRC_DIR}" rev-parse HEAD)"
+        {
+            echo "stream         : ${OPT_STREAM}"
+            echo "src_dir        : ${SRC_DIR}"
+            echo "run_date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            echo ""
+            echo "commit_before  : (none — fresh clone)"
+            echo "commit_after   : ${commit_after}"
+            echo "bisect_cmd     : (not applicable — fresh clone)"
+        } > "${OUT_BASE}/commit-info.txt"
     fi
 }
 
@@ -666,106 +712,10 @@ purge_old_reports() {
 }
 
 # ---------------------------------------------------------------------------
-# Step 5 — Commit and push (optional)
+# Step 5 — Push disabled: results are kept local only
 # ---------------------------------------------------------------------------
 publish() {
-    if ${OPT_NO_PUSH} || ${OPT_DRY_RUN}; then
-        info "Skipping git push (--no-push or --dry-run)."
-        return 0
-    fi
-
-    log "Step 5: Publishing results → ${PUBLISH_BRANCH} …"
-
-    # Regenerate STATUS.md and run the 90-day retention purge.
-    # gen_status.py stages git rm --cached for any day dirs past the cutoff,
-    # and removes hs_err/ / test-support/ trees from disk.
-    if ! python3 "${SCRIPT_DIR}/gen_status.py" \
-            "${REPORTS_DIR}" "${REPORTS_REPO_ROOT}" 2>&1; then
-        warn "gen_status.py failed — STATUS.md may be stale."
-    fi
-
-    # Use a branch-specific worktree name so daily and manual runs can
-    # coexist on the same machine without stepping on each other.
-    local wt_dir="${REPORTS_REPO_ROOT}/.ci-wt-${_RUN_KIND}"
-
-    cd "${REPORTS_REPO_ROOT}"
-    git fetch origin "${PUBLISH_BRANCH}"
-
-    if [[ -d "${wt_dir}/.git" || -f "${wt_dir}/.git" ]]; then
-        git -C "${wt_dir}" pull --ff-only origin "${PUBLISH_BRANCH}" 2>/dev/null || true
-    else
-        rm -rf "${wt_dir}"
-        git worktree add "${wt_dir}" "${PUBLISH_BRANCH}"
-    fi
-
-    # Sync report artefacts + status pages into the worktree.
-    # Exclude hs_err/ — JVM crash logs are for local investigation only.
-    rsync -a --delete \
-        --exclude='hs_err/' \
-        "${REPORTS_DIR}/" "${wt_dir}/reports/"
-
-    if [[ -f "${REPORTS_REPO_ROOT}/STATUS.md" ]]; then
-        cp "${REPORTS_REPO_ROOT}/STATUS.md" "${wt_dir}/STATUS.md"
-    fi
-
-    cd "${wt_dir}"
-    git add reports/ STATUS.md 2>/dev/null || git add reports/
-
-    if git diff --cached --quiet; then
-        info "Nothing new to commit."
-        git worktree remove --force "${wt_dir}" 2>/dev/null || true
-        return 0
-    fi
-
-    # Build result summary for commit message
-    local result_lines=""
-    local headline_icon="✅"
-    if [[ "${OPT_TEST_TARGET}" == "all" && "${COMMAND}" != "build" ]]; then
-        for level in "${EFFECTIVE_LEVELS[@]}"; do
-            if [[ -n "${OP_STATUS["${level}/build"]+set}" ]]; then
-                result_lines+="  ${OPT_STREAM}/${level}/build: ${OP_STATUS["${level}/build"]:-not-run}"$'\n'
-            fi
-            for tier in "${ALL_TIERS[@]}"; do
-                local st="${OP_STATUS["${level}/${tier}"]:-not-run}"
-                result_lines+="  ${OPT_STREAM}/${level}/${tier}: ${st}"$'\n'
-                if [[ "${st}" == FAILED* || "${st}" == TEST_FAILURES* ]]; then
-                    headline_icon="❌"
-                fi
-            done
-        done
-    else
-        for level in "${EFFECTIVE_LEVELS[@]}"; do
-            result_lines+="  ${OPT_STREAM}/${level}: ${OP_STATUS[${level}]:-not-run}"$'\n'
-        done
-        for level in "${EFFECTIVE_LEVELS[@]}"; do
-            if [[ "${OP_STATUS[${level}]:-}" == FAILED* \
-               || "${OP_STATUS[${level}]:-}" == TEST_FAILURES* ]]; then
-                headline_icon="❌"; break
-            fi
-        done
-    fi
-
-    git \
-        -c "user.name=${GIT_COMMIT_AUTHOR_NAME}" \
-        -c "user.email=${GIT_COMMIT_AUTHOR_EMAIL}" \
-        commit -m "${headline_icon} ${_RUN_KIND} ${COMMAND}: ${OPT_STREAM} (${OPT_LEVEL}) ${_YEAR}-${_MONTH}-${_DAY}
-
-Command: jdk.sh ${COMMAND}
-Branch : ${PUBLISH_BRANCH}
-Stream : ${OPT_STREAM}  Levels: ${EFFECTIVE_LEVELS[*]}
-Target : ${OPT_TEST_TARGET}
-JVM    : ${OPT_JVM_FLAGS:-(none)}
-Retention: reports older than 90 days purged from repo.
-
-Results:
-${result_lines}
-Logs: ${OUT_BASE#"${REPORTS_REPO_ROOT}/"}
-"
-    git push origin "${PUBLISH_BRANCH}"
-    success "Results pushed to origin/${PUBLISH_BRANCH}."
-
-    cd "${REPORTS_REPO_ROOT}"
-    git worktree remove --force "${wt_dir}" 2>/dev/null || true
+    info "Git push disabled — results stored locally in ${OUT_BASE}"
 }
 
 # ---------------------------------------------------------------------------
@@ -791,8 +741,32 @@ if [[ "${COMMAND}" == "run" ]]; then
     purge_old_reports
 fi
 
-# Step 5: publish
+# Step 5: publish (no-op — push disabled)
 publish
+
+# Step 6: email notification
+_jdk_overall="PASS"
+for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
+    _st="${OP_STATUS[${_lvl}]:-}"
+    if [[ "${_st}" == FAILED* || "${_st}" == TEST_FAILURES* || "${_st}" == BUILD_FAILED* ]]; then
+        _jdk_overall="FAIL"; break
+    fi
+done
+# Build stream_label:src_dir:level:build_status quads for notify.sh
+_jdk_triples=()
+for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
+    _st="${OP_STATUS[${_lvl}]:-UNKNOWN}"
+    # Normalise to BUILD_FAILED, TEST_FAILED, or TEST_PASSED
+    if   [[ "${_st}" == FAILED*       ]]; then _bst="BUILD_FAILED"
+    elif [[ "${_st}" == TEST_FAILURES* ]]; then _bst="TEST_FAILED"
+    else                                        _bst="TEST_PASSED"
+    fi
+    _jdk_triples+=("${OPT_STREAM}:${SRC_DIR}:${_lvl}:${_bst}")
+done
+ci_notify "manual" "${OPT_STREAM}/${OPT_LEVEL} ${COMMAND}" \
+    "${OUT_BASE}/run-summary.txt" "${_jdk_overall}" \
+    "${OUT_BASE}/commit-info.txt" \
+    "${_jdk_triples[@]}"
 
 log "========================================================"
 log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"

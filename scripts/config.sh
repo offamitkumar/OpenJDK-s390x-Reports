@@ -166,3 +166,30 @@ GIT_RESULTS_BRANCH="${GIT_RESULTS_BRANCH_DAILY}"
 
 GIT_COMMIT_AUTHOR_NAME="${GIT_COMMIT_AUTHOR_NAME:-OpenJDK s390x CI}"
 GIT_COMMIT_AUTHOR_EMAIL="${GIT_COMMIT_AUTHOR_EMAIL:-ci@s390x}"
+
+# ---------------------------------------------------------------------------
+# Email notification settings
+# ---------------------------------------------------------------------------
+#
+# Set CI_NOTIFY_EMAIL to one or more space-separated addresses to enable
+# email notifications after every run (daily, manual, and community PR).
+# Leave empty (the default) to disable all email.
+#
+# Override at runtime without editing this file:
+#   CI_NOTIFY_EMAIL="you@example.com" bash scripts/run_daily.sh
+#
+# The mailer used is `mail` (mailutils / bsd-mailx).  Make sure it is
+# installed and configured on the s390x host:
+#   sudo dnf install -y mailx          # Fedora / RHEL
+#   sudo apt-get install -y mailutils  # Ubuntu / Debian
+#
+# CI_NOTIFY_ON_SUCCESS — send email even when everything passed (default: true)
+# CI_NOTIFY_ON_FAILURE — send email when there are failures (default: true)
+# Setting either to "false" suppresses that class of notification.
+# ---------------------------------------------------------------------------
+: "${CI_NOTIFY_EMAIL:=amit.kumar220@ibm.com}"
+: "${CI_NOTIFY_ON_SUCCESS:=true}"
+: "${CI_NOTIFY_ON_FAILURE:=true}"
+
+# From address stamped in the email header (cosmetic; set to whatever you like)
+: "${CI_NOTIFY_FROM:=openjdk-s390x-ci@$(hostname -f 2>/dev/null || hostname)}"
