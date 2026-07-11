@@ -105,6 +105,13 @@ _notify_build_section() {
     echo "  ${stream_label} / ${display_level}  [${build_status}]"
     echo "###################################################################"
 
+    if [[ "${build_status}" == BUILD_ONLY* ]]; then
+        echo ""
+        echo "  Build completed successfully. No tests were requested."
+        echo ""
+        return
+    fi
+
     if [[ "${build_status}" == BUILD_FAILED* ]]; then
         local build_log
         if [[ "${level}" == "__report__" ]]; then

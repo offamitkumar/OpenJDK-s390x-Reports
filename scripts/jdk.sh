@@ -663,22 +663,6 @@ write_summary() {
                 printf "    %-12s  %s\n" "${level}" "${OP_STATUS[${level}]:-not-run}"
             done
         fi
-        echo ""
-        echo "  Artefacts per level (or level/tier when --test-target all):"
-        echo "    run-metadata.txt   — mode, versions, exit codes"
-        echo "    build.log          — full make output (build/run commands)"
-        echo "    build-diagnosis.txt — last compiler cmd + first error lines"
-        echo "    test-summary.txt   — jtreg pass/fail totals"
-        echo "    newfailures.txt    — failing test names"
-        echo "    other_errors.txt   — erroring test names"
-        echo "    test-passed.txt    — names of all passed tests"
-        echo "    test-failed.txt    — names of all failed tests"
-        echo "    test-skipped.txt   — names of all skipped tests"
-        echo "    test-failure.log   — failure detail + hs_err notice"
-        echo "    test-passed.md     — GitHub: passed tests"
-        echo "    test-failed.md     — GitHub: failed tests + days-failing"
-        echo "    test-skipped.md    — GitHub: skipped tests"
-        echo "    hs_err/<timestamp>/ — JVM crash logs (local only, not pushed)"
         echo "========================================================"
     } > "${summary}"
     echo ""
@@ -756,9 +740,10 @@ done
 _jdk_triples=()
 for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
     _st="${OP_STATUS[${_lvl}]:-UNKNOWN}"
-    # Normalise to BUILD_FAILED, TEST_FAILED, or TEST_PASSED
+    # Normalise to BUILD_FAILED, BUILD_ONLY, TEST_FAILED, or TEST_PASSED
     if   [[ "${_st}" == FAILED*       ]]; then _bst="BUILD_FAILED"
     elif [[ "${_st}" == TEST_FAILURES* ]]; then _bst="TEST_FAILED"
+    elif [[ "${_st}" == BUILD_ONLY*   ]]; then _bst="BUILD_ONLY"
     else                                        _bst="TEST_PASSED"
     fi
     _jdk_triples+=("${OPT_STREAM}:${SRC_DIR}:${_lvl}:${_bst}")
