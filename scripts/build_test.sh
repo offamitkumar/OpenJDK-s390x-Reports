@@ -55,135 +55,41 @@ _bt_warn()    { echo "[WARN]  $*" >&2; }
 #   $2  out_dir         — report output directory (where other artefacts live)
 #   $3  run_timestamp   — e.g. "20250604_143022" (YYYYMMDD_HHMMSS)
 # ---------------------------------------------------------------------------
-_collect_tier1_artifacts() {
+# ---------------------------------------------------------------------------
+# _collect_test_results  <conf_dir> <out_dir>
+#
+# Reads newfailures.txt and other_errors.txt written by jtreg under
+#   <conf_dir>/test-results/<suite>/newfailures.txt
+#   <conf_dir>/test-results/<suite>/other_errors.txt
+# and concatenates them into flat files in <out_dir>.
+#
+# Does NOT touch test-support/, .jtr files, or hs_err logs.
+# Does NOT purge anything — cleanup is left to the next make clean.
+# ---------------------------------------------------------------------------
+_collect_test_results() {
     local conf_dir="$1"
     local out_dir="$2"
-    local run_timestamp="$3"
 
     local results_dir="${conf_dir}/test-results"
-    local support_dir="${conf_dir}/test-support"
 
-    # ---- 1. Categorise tests from jtreg .jtr / summary files ---------------
-    # jtreg writes individual <testname>.jtr files under test-support/.
-    # The first line of a .jtr is one of:
-    #   #status:passed  #status:failed  #status:error  #status:not_run
-    # We also fall back to parsing test-summary.txt for a quick tally
-    # if no .jtr files exist (e.g. when a previous stage pre-aborted).
-
-    local passed_file="${out_dir}/test-passed.txt"
-    local failed_file="${out_dir}/test-failed.txt"
-    local skipped_file="${out_dir}/test-skipped.txt"
-    # newfailures = #status:failed; other_errors = #status:error
-    local newfailures_file="${out_dir}/newfailures.txt"
-    local other_errors_file="${out_dir}/other_errors.txt"
-
-    : > "${passed_file}"
-    : > "${failed_file}"
-    : > "${skipped_file}"
-    : > "${newfailures_file}"
-    : > "${other_errors_file}"
-
-    local jtr_count=0
-    if [[ -d "${support_dir}" ]]; then
-        while IFS= read -r jtr; do
-            (( jtr_count++ )) || true
-            # Extract test name: strip leading path components and .jtr suffix
-            local tname
-            tname="$(basename "${jtr}" .jtr)"
-            # First non-blank, non-comment line that looks like #status:…
-            local status_line
-            status_line="$(grep -m1 '^#status:' "${jtr}" 2>/dev/null || echo '#status:unknown')"
-            case "${status_line}" in
-                "#status:passed")   echo "${tname}" >> "${passed_file}"    ;;
-                "#status:failed")   echo "${tname}" >> "${failed_file}"
-                                    echo "${tname}" >> "${newfailures_file}" ;;
-                "#status:error")    echo "${tname}" >> "${failed_file}"
-                                    echo "${tname}" >> "${other_errors_file}" ;;
-                "#status:not_run")  echo "${tname}" >> "${skipped_file}"   ;;
-                *)                  echo "${tname}" >> "${skipped_file}"   ;;
-            esac
-        done < <(find "${support_dir}" -name "*.jtr" 2>/dev/null | sort)
-    fi
-
-    # If no .jtr files found, try parsing test-summary.txt for a human note
-    if [[ "${jtr_count}" -eq 0 && -f "${out_dir}/test-summary.txt" ]]; then
-        echo "(no .jtr files found — raw summary below)" >> "${skipped_file}"
-        cat "${out_dir}/test-summary.txt"               >> "${skipped_file}"
-    fi
-
-    local n_passed n_failed n_skipped
-    n_passed="$(wc -l < "${passed_file}"  | tr -d ' ')"
-    n_failed="$(wc -l < "${failed_file}"  | tr -d ' ')"
-    n_skipped="$(wc -l < "${skipped_file}" | tr -d ' ')"
-    _bt_info "  Test results: passed=${n_passed} failed=${n_failed} skipped/other=${n_skipped}"
-
-    # ---- 2. Harvest hs_err files -------------------------------------------
-    local hs_err_dest="${out_dir}/hs_err/${run_timestamp}"
-    mkdir -p "${hs_err_dest}"
-
-    local hs_count=0
-    while IFS= read -r hs_file; do
-        cp "${hs_file}" "${hs_err_dest}/" 2>/dev/null && (( hs_count++ )) || true
-    done < <(find "${conf_dir}" -name "hs_err_pid*.log" 2>/dev/null | sort)
-
-    if [[ "${hs_count}" -eq 0 ]]; then
-        echo "no hs_err file generated" > "${hs_err_dest}/no_hs_err.txt"
-        _bt_info "  hs_err: no hs_err_pid*.log files found."
-    else
-        _bt_info "  hs_err: ${hs_count} file(s) copied to ${hs_err_dest}/"
-    fi
-
-    # ---- 3. Write test-failure.log -----------------------------------------
-    local failure_log="${out_dir}/test-failure.log"
-
+    # newfailures.txt — one failed test name per line, written per suite by jtreg
     {
-        echo "========================================================"
-        echo "  Tier1 Test Failure Log"
-        echo "========================================================"
-        echo "  run_timestamp : ${run_timestamp}"
-        echo "  date          : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-        echo "  passed        : ${n_passed}"
-        echo "  failed        : ${n_failed}"
-        echo "  skipped/other : ${n_skipped}"
-        echo "  hs_err files  : ${hs_count} (in hs_err/${run_timestamp}/)"
-        echo "========================================================"
-        echo ""
+        find "${results_dir}" -name "newfailures.txt" -exec cat {} + 2>/dev/null
+    } > "${out_dir}/newfailures.txt"
+    [[ -s "${out_dir}/newfailures.txt" ]] \
+        || echo "(none)" > "${out_dir}/newfailures.txt"
 
-        if [[ "${n_failed}" -eq 0 ]]; then
-            echo "  No failures recorded."
-        else
-            echo "  Failed tests:"
-            sed 's/^/    /' "${failed_file}"
-            echo ""
+    # other_errors.txt — tests that errored (as opposed to failed)
+    {
+        find "${results_dir}" -name "other_errors.txt" -exec cat {} + 2>/dev/null
+    } > "${out_dir}/other_errors.txt"
+    [[ -s "${out_dir}/other_errors.txt" ]] \
+        || echo "(none)" > "${out_dir}/other_errors.txt"
 
-            # Include tail of each .jtr failure file for context
-            if [[ -d "${support_dir}" ]]; then
-                echo "  ---- Per-test failure details ----"
-                while IFS= read -r tname; do
-                    local jtr_file
-                    jtr_file="$(find "${support_dir}" -name "${tname}.jtr" \
-                                    2>/dev/null | head -1)"
-                    if [[ -f "${jtr_file}" ]]; then
-                        echo ""
-                        echo "  [${tname}]"
-                        tail -40 "${jtr_file}" | sed 's/^/    /'
-                    fi
-                done < "${failed_file}"
-                echo ""
-            fi
-        fi
-
-        echo "  hs_err location: ${hs_err_dest}/"
-        if [[ "${hs_count}" -gt 0 ]]; then
-            echo "  Files:"
-            ls "${hs_err_dest}/" | sed 's/^/    /'
-        else
-            echo "  (no hs_err file generated)"
-        fi
-
-    } > "${failure_log}"
-
-    _bt_info "  Test failure log: ${failure_log}"
+    local n_fail n_err
+    n_fail="$(grep -vc '^(none)$' "${out_dir}/newfailures.txt" 2>/dev/null || echo 0)"
+    n_err="$(grep  -vc '^(none)$' "${out_dir}/other_errors.txt" 2>/dev/null || echo 0)"
+    _bt_info "  newfailures=${n_fail}  other_errors=${n_err}"
 }
 
 # ---------------------------------------------------------------------------
@@ -529,12 +435,9 @@ build_and_test_jdk() {
                 > "${out_dir}/test-summary.txt"
         fi
 
-        # ---- Categorise passed/failed/skipped + harvest hs_err ----------
-        # newfailures.txt and other_errors.txt are written by _collect_tier1_artifacts
-        # from .jtr files — no separate find step needed.
+        # ---- Collect newfailures + other_errors from test-results/ ----------
         if [[ "${jtreg_ok}" == "true" ]]; then
-            _collect_tier1_artifacts \
-                "build/${conf_name}" "${out_dir}" "${_run_ts}"
+            _collect_test_results "build/${conf_name}" "${out_dir}"
         fi
 
         # ---- Write run metadata ------------------------------------------
@@ -769,20 +672,7 @@ run_tests_only() {
                 || test_exit=$?
         fi
 
-        # ---- Snapshot jtreg output before the next tier can overwrite it ---
-        #
-        # OpenJDK's make run-test writes into two shared directories inside the
-        # build tree:
-        #   build/<conf>/test-results/   — test-summary.txt
-        #   build/<conf>/test-support/   — per-test .jtr files
-        #
-        # When running multiple tiers in sequence these directories are
-        # *cumulative* — each new run appends to them.  We must copy the
-        # per-tier slice out to out_dir and then purge the shared dirs so the
-        # next tier starts clean.
-
         local results_dir="build/${conf_name}/test-results"
-        local support_dir="build/${conf_name}/test-support"
 
         if [[ -f "${results_dir}/test-summary.txt" ]]; then
             cp "${results_dir}/test-summary.txt" "${out_dir}/test-summary.txt"
@@ -791,16 +681,8 @@ run_tests_only() {
                 > "${out_dir}/test-summary.txt"
         fi
 
-        # ---- Categorise passed/failed/skipped + harvest hs_err ----------
-        # newfailures.txt and other_errors.txt are written by _collect_tier1_artifacts
-        # from .jtr files — no separate find step needed.
-        _collect_tier1_artifacts \
-            "build/${conf_name}" "${out_dir}" "${_run_ts}"
-
-        # ---- Purge the shared jtreg dirs so the next tier starts clean ----
-        # This is safe because we have already copied everything we need above.
-        rm -rf "${results_dir}" "${support_dir}"
-        _bt_info "  Purged shared jtreg dirs (test-results, test-support) after snapshot."
+        # ---- Collect newfailures + other_errors from test-results/ ----------
+        _collect_test_results "build/${conf_name}" "${out_dir}"
 
         {
             echo "stream:       ${stream_label}"

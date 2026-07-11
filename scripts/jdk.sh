@@ -642,21 +642,20 @@ run_operations() {
                 fi
                 ;;
 
-            # ---- collect: re-collect artefacts from existing .jtr files ----
+            # ---- collect: re-collect results from existing test-results/ ----
             collect)
                 local conf_name="linux-s390x-server-${level}"
-                local support_dir="${SRC_DIR}/build/${conf_name}/test-support"
-                if [[ ! -d "${support_dir}" ]]; then
-                    warn "[${OPT_STREAM}/${level}] test-support not found at ${support_dir}"
-                    warn "  .jtr files may have been purged after the last test run."
-                    OP_STATUS["${level}"]="COLLECT_FAILED (no test-support)"
+                local results_dir="${SRC_DIR}/build/${conf_name}/test-results"
+                if [[ ! -d "${results_dir}" ]]; then
+                    warn "[${OPT_STREAM}/${level}] test-results not found at ${results_dir}"
+                    warn "  Run the tests first before collecting."
+                    OP_STATUS["${level}"]="COLLECT_FAILED (no test-results)"
                 else
-                    local _run_ts; _run_ts="$(date '+%Y%m%d_%H%M%S')"
-                    info "[${OPT_STREAM}/${level}] Re-collecting from ${support_dir} …"
-                    _collect_tier1_artifacts \
-                        "${SRC_DIR}/build/${conf_name}" \
-                        "${level_out}" \
-                        "${_run_ts}"
+                    info "[${OPT_STREAM}/${level}] Re-collecting from ${results_dir} …"
+                    (
+                        cd "${SRC_DIR}"
+                        _collect_test_results "build/${conf_name}" "${level_out}"
+                    )
                     OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
                     info "[${OPT_STREAM}/${level}] Collected: ${OP_STATUS[${level}]}"
                 fi
