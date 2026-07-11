@@ -73,10 +73,15 @@ _collect_tier1_artifacts() {
     local passed_file="${out_dir}/test-passed.txt"
     local failed_file="${out_dir}/test-failed.txt"
     local skipped_file="${out_dir}/test-skipped.txt"
+    # newfailures = #status:failed; other_errors = #status:error
+    local newfailures_file="${out_dir}/newfailures.txt"
+    local other_errors_file="${out_dir}/other_errors.txt"
 
     : > "${passed_file}"
     : > "${failed_file}"
     : > "${skipped_file}"
+    : > "${newfailures_file}"
+    : > "${other_errors_file}"
 
     local jtr_count=0
     if [[ -d "${support_dir}" ]]; then
@@ -89,11 +94,13 @@ _collect_tier1_artifacts() {
             local status_line
             status_line="$(grep -m1 '^#status:' "${jtr}" 2>/dev/null || echo '#status:unknown')"
             case "${status_line}" in
-                "#status:passed")   echo "${tname}" >> "${passed_file}"  ;;
-                "#status:failed")   echo "${tname}" >> "${failed_file}"  ;;
-                "#status:error")    echo "${tname}" >> "${failed_file}"  ;;
-                "#status:not_run")  echo "${tname}" >> "${skipped_file}" ;;
-                *)                  echo "${tname}" >> "${skipped_file}" ;;
+                "#status:passed")   echo "${tname}" >> "${passed_file}"    ;;
+                "#status:failed")   echo "${tname}" >> "${failed_file}"
+                                    echo "${tname}" >> "${newfailures_file}" ;;
+                "#status:error")    echo "${tname}" >> "${failed_file}"
+                                    echo "${tname}" >> "${other_errors_file}" ;;
+                "#status:not_run")  echo "${tname}" >> "${skipped_file}"   ;;
+                *)                  echo "${tname}" >> "${skipped_file}"   ;;
             esac
         done < <(find "${support_dir}" -name "*.jtr" 2>/dev/null | sort)
     fi
@@ -522,17 +529,9 @@ build_and_test_jdk() {
                 > "${out_dir}/test-summary.txt"
         fi
 
-        {
-            find "${results_dir}/" -name "newfailures.txt" -exec cat {} + 2>/dev/null
-        } > "${out_dir}/newfailures.txt" \
-            || echo "(none)" > "${out_dir}/newfailures.txt"
-
-        {
-            find "${results_dir}/" -name "other_errors.txt" -exec cat {} + 2>/dev/null
-        } > "${out_dir}/other_errors.txt" \
-            || echo "(none)" > "${out_dir}/other_errors.txt"
-
         # ---- Categorise passed/failed/skipped + harvest hs_err ----------
+        # newfailures.txt and other_errors.txt are written by _collect_tier1_artifacts
+        # from .jtr files — no separate find step needed.
         if [[ "${jtreg_ok}" == "true" ]]; then
             _collect_tier1_artifacts \
                 "build/${conf_name}" "${out_dir}" "${_run_ts}"
@@ -774,7 +773,7 @@ run_tests_only() {
         #
         # OpenJDK's make run-test writes into two shared directories inside the
         # build tree:
-        #   build/<conf>/test-results/   — test-summary.txt, newfailures.txt …
+        #   build/<conf>/test-results/   — test-summary.txt
         #   build/<conf>/test-support/   — per-test .jtr files
         #
         # When running multiple tiers in sequence these directories are
@@ -792,19 +791,9 @@ run_tests_only() {
                 > "${out_dir}/test-summary.txt"
         fi
 
-        {
-            find "${results_dir}/" -name "newfailures.txt" \
-                -exec cat {} + 2>/dev/null
-        } > "${out_dir}/newfailures.txt" \
-            || echo "(none)" > "${out_dir}/newfailures.txt"
-
-        {
-            find "${results_dir}/" -name "other_errors.txt" \
-                -exec cat {} + 2>/dev/null
-        } > "${out_dir}/other_errors.txt" \
-            || echo "(none)" > "${out_dir}/other_errors.txt"
-
         # ---- Categorise passed/failed/skipped + harvest hs_err ----------
+        # newfailures.txt and other_errors.txt are written by _collect_tier1_artifacts
+        # from .jtr files — no separate find step needed.
         _collect_tier1_artifacts \
             "build/${conf_name}" "${out_dir}" "${_run_ts}"
 

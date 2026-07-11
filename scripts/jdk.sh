@@ -18,6 +18,10 @@
 #
 #   test      Re-use an existing build. Run tests without rebuilding.
 #
+#   collect   Re-collect artefacts from an already-finished test run and
+#             re-send the email.  Does not run any build or test.
+#             Requires --from <OUT_BASE_DIR>.
+#
 # OPTIONS (all commands)
 # ──────────────────────
 #   --stream LABEL        Target one stream (default: head)
@@ -54,6 +58,14 @@
 #                           --jvm-flags "-Xcomp"
 #                           --jvm-flags "-Xmx512m -ea"
 #                           --jvm-flags "-XX:+UseG1GC"
+#
+# OPTIONS (collect only)
+# ──────────────────────
+#   --from DIR            Path to an existing OUT_BASE directory produced by a
+#                         previous test/run invocation.  The .jtr files still
+#                         present in the source tree's test-support/ are
+#                         re-collected, artefacts rewritten, and the email
+#                         re-sent.  Required for the collect command.
 #
 # EXAMPLES
 # ────────
@@ -95,6 +107,10 @@
 #   # Fastdebug build + tier1 test, no push (quick ad-hoc check):
 #   bash scripts/jdk.sh run --level fastdebug --no-push
 #
+#   # Re-collect artefacts + resend email from a previous fastdebug test run:
+#   bash scripts/jdk.sh collect --stream head --level fastdebug \
+#       --from reports/2026/July/11/test-tier1-135843
+#
 # EXIT CODES
 # ──────────
 #   0  All requested work completed (test failures are recorded, not fatal)
@@ -118,6 +134,7 @@ OPT_NO_PUSH=false
 OPT_DRY_RUN=false
 OPT_TEST_TARGET="tier1"
 OPT_JVM_FLAGS=""
+OPT_FROM=""       # --from DIR  (collect command only)
 
 # Tiers executed when --test-target all is requested
 ALL_TIERS=(tier1 tier2 tier3 tier4)
@@ -148,8 +165,10 @@ fi
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        run|build|test)
+        run|build|test|collect)
             COMMAND="$1"; shift ;;
+        --from)
+            OPT_FROM="$2"; shift 2 ;;
         --stream)
             OPT_STREAM="$2"; shift 2 ;;
         --level)
@@ -181,6 +200,18 @@ done
 
 # Default command if only options were passed
 : "${COMMAND:=run}"
+
+# ---------------------------------------------------------------------------
+# Validate collect --from before anything else
+# ---------------------------------------------------------------------------
+if [[ "${COMMAND}" == "collect" ]]; then
+    if [[ -z "${OPT_FROM}" ]]; then
+        echo "[jdk.sh] ERROR: 'collect' requires --from <OUT_BASE_DIR>" >&2
+        exit 1
+    fi
+    OPT_FROM="$(cd "${OPT_FROM}" 2>/dev/null && pwd)" \
+        || { echo "[jdk.sh] ERROR: --from directory not found: ${OPT_FROM}" >&2; exit 1; }
+fi
 
 # Expand 'both' to the canonical BUILD_LEVELS array from config.sh
 if [[ "${OPT_LEVEL}" == "both" ]]; then
@@ -215,13 +246,19 @@ _TARGET_SLUG="${OPT_TEST_TARGET//\//_}"   # replace / with _
 _TARGET_SLUG="${_TARGET_SLUG// /-}"       # spaces → dash (all → "all")
 
 case "${COMMAND}" in
-    run)   _RUN_LABEL="run-${_TIME}" ;;
-    build) _RUN_LABEL="build-${OPT_LEVEL}-${_TIME}" ;;
-    test)  _RUN_LABEL="test-${_TARGET_SLUG}-${_TIME}" ;;
+    run)     _RUN_LABEL="run-${_TIME}" ;;
+    build)   _RUN_LABEL="build-${OPT_LEVEL}-${_TIME}" ;;
+    test)    _RUN_LABEL="test-${_TARGET_SLUG}-${_TIME}" ;;
+    collect) _RUN_LABEL="collect-${OPT_LEVEL}-${_TIME}" ;;
 esac
 
-OUT_BASE="${REPORTS_DIR}/${_YEAR}/${_MONTH}/${_DAY}/${_RUN_LABEL}"
-mkdir -p "${OUT_BASE}"
+# collect reuses the original run's OUT_BASE; all other commands create a new one
+if [[ "${COMMAND}" == "collect" ]]; then
+    OUT_BASE="${OPT_FROM}"
+else
+    OUT_BASE="${REPORTS_DIR}/${_YEAR}/${_MONTH}/${_DAY}/${_RUN_LABEL}"
+    mkdir -p "${OUT_BASE}"
+fi
 
 # Tee all output to a run log
 RUN_LOG="${OUT_BASE}/run.log"
@@ -604,6 +641,26 @@ run_operations() {
                     fi
                 fi
                 ;;
+
+            # ---- collect: re-collect artefacts from existing .jtr files ----
+            collect)
+                local conf_name="linux-s390x-server-${level}"
+                local support_dir="${SRC_DIR}/build/${conf_name}/test-support"
+                if [[ ! -d "${support_dir}" ]]; then
+                    warn "[${OPT_STREAM}/${level}] test-support not found at ${support_dir}"
+                    warn "  .jtr files may have been purged after the last test run."
+                    OP_STATUS["${level}"]="COLLECT_FAILED (no test-support)"
+                else
+                    local _run_ts; _run_ts="$(date '+%Y%m%d_%H%M%S')"
+                    info "[${OPT_STREAM}/${level}] Re-collecting from ${support_dir} …"
+                    _collect_tier1_artifacts \
+                        "${SRC_DIR}/build/${conf_name}" \
+                        "${level_out}" \
+                        "${_run_ts}"
+                    OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
+                    info "[${OPT_STREAM}/${level}] Collected: ${OP_STATUS[${level}]}"
+                fi
+                ;;
         esac
 
         # For non-all targets the status was already set above.
@@ -709,8 +766,8 @@ trap 'cd "${REPORTS_REPO_ROOT}"' EXIT
 
 # Step 1: deps (done above as ensure_deps, before banner could resolve dirs)
 
-# Step 2: source — only needed for run/build (test reuses existing build)
-if [[ "${COMMAND}" != "test" ]]; then
+# Step 2: source — only needed for run/build (test/collect reuse existing build)
+if [[ "${COMMAND}" != "test" && "${COMMAND}" != "collect" ]]; then
     prepare_src
 fi
 
@@ -732,7 +789,8 @@ publish
 _jdk_overall="PASS"
 for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
     _st="${OP_STATUS[${_lvl}]:-}"
-    if [[ "${_st}" == FAILED* || "${_st}" == TEST_FAILURES* || "${_st}" == BUILD_FAILED* ]]; then
+    if [[ "${_st}" == FAILED*        || "${_st}" == TEST_FAILURES* \
+       || "${_st}" == BUILD_FAILED*  || "${_st}" == COLLECT_FAILED* ]]; then
         _jdk_overall="FAIL"; break
     fi
 done
@@ -741,16 +799,19 @@ _jdk_triples=()
 for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
     _st="${OP_STATUS[${_lvl}]:-UNKNOWN}"
     # Normalise to BUILD_FAILED, BUILD_ONLY, TEST_FAILED, or TEST_PASSED
-    if   [[ "${_st}" == FAILED*       ]]; then _bst="BUILD_FAILED"
-    elif [[ "${_st}" == TEST_FAILURES* ]]; then _bst="TEST_FAILED"
-    elif [[ "${_st}" == BUILD_ONLY*   ]]; then _bst="BUILD_ONLY"
-    else                                        _bst="TEST_PASSED"
+    if   [[ "${_st}" == FAILED*         ]]; then _bst="BUILD_FAILED"
+    elif [[ "${_st}" == TEST_FAILURES*  ]]; then _bst="TEST_FAILED"
+    elif [[ "${_st}" == BUILD_ONLY*     ]]; then _bst="BUILD_ONLY"
+    elif [[ "${_st}" == COLLECT_FAILED* ]]; then _bst="BUILD_FAILED"
+    else                                          _bst="TEST_PASSED"
     fi
     _jdk_triples+=("${OPT_STREAM}:${SRC_DIR}:${_lvl}:${_bst}")
 done
+# For collect, commit-info.txt already lives in OUT_BASE from the original run
+_commit_info_file="${OUT_BASE}/commit-info.txt"
 ci_notify "manual" "${OPT_STREAM}/${OPT_LEVEL} ${COMMAND}" \
     "${OUT_BASE}/run-summary.txt" "${_jdk_overall}" \
-    "${OUT_BASE}/commit-info.txt" \
+    "${_commit_info_file}" \
     "${_jdk_triples[@]}"
 
 log "========================================================"
