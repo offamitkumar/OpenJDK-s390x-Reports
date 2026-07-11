@@ -1,0 +1,11 @@
+stream:       PR-31868
+debug_level:  fastdebug
+run_ts:       20260711_083252
+date:         2026-07-11 09:28:11 UTC
+src_dir:      /home/amit/head/jdk-pr-31868
+top_commit:   c146e525767 formatting
+boot_jdk:     openjdk version "28-beta" 2027-03-23
+jtreg:        jtreg 8.4-dev+0
+extra_flags:  none
+jtreg_ok:     true
+test_exit:    2

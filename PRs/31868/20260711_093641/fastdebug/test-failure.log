@@ -1,0 +1,21 @@
+========================================================
+  Tier1 Test Failure Log
+========================================================
+  run_timestamp : 20260711_093652
+  date          : 2026-07-11 10:31:46 UTC
+  passed        : 0
+  failed        : 0
+  skipped/other : 9964
+  hs_err files  : 7 (in hs_err/20260711_093652/)
+========================================================
+
+  No failures recorded.
+  hs_err location: /home/amit/OpenJDK-s390x-Reports/PRs/31868/20260711_093641/fastdebug/hs_err/20260711_093652/
+  Files:
+    hs_err_pid2020723.log
+    hs_err_pid2047962.log
+    hs_err_pid2057288.log
+    hs_err_pid2058166.log
+    hs_err_pid2060407.log
+    hs_err_pid2062033.log
+    hs_err_pid3045813.log

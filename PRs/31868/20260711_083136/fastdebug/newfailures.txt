@@ -1,0 +1,11 @@
+# newfailures.txt
+# newfailures.txt
+java/foreign/sharedclosejfr/TestSharedCloseJFR.java 
+# newfailures.txt
+# newfailures.txt
+compiler/escapeAnalysis/TestBCEscapeAnalyzerOverflow.java 
+compiler/inlining/LateInlineQueueDrainTest.java#id0 
+compiler/loopopts/superword/TestDoNotFilterNaNSummands.java 
+compiler/loopopts/superword/TestMemorySegmentFilterSummands.java 
+runtime/cds/DeterministicClasslist.java 
+# newfailures.txt

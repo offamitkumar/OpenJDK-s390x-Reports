@@ -1,0 +1,34 @@
+========================================================
+  Build Diagnosis
+========================================================
+  stream      : PR-31868
+  debug_level : fastdebug
+  phase       : test
+  build_exit  : 0
+  date        : 2026-07-11 09:28:11 UTC
+  build_log   : build/linux-s390x-server-fastdebug/build.log
+
+  status      : BUILD SUCCEEDED
+========================================================
+
+--- Last 20 lines of build.log ---
+Passed: jdk/test/lib/security/CPVAlgTestWithOCSP.java
+Test results: passed: 38
+Framework-based tests: 104 = 0 TestNG + 104 JUnit
+Report written to /home/amit/head/jdk-pr-31868/build/linux-s390x-server-fastdebug/test-results/jtreg_test_lib_test_tier1/html/report.html
+Results written to /home/amit/head/jdk-pr-31868/build/linux-s390x-server-fastdebug/test-support/jtreg_test_lib_test_tier1
+Finished running test 'jtreg:test/lib-test:tier1'
+Test report is stored in build/linux-s390x-server-fastdebug/test-results/jtreg_test_lib_test_tier1
+
+==============================
+Test summary
+==============================
+   TEST                                              TOTAL  PASS  FAIL ERROR  SKIP   
+>> jtreg:test/hotspot/jtreg:tier1                     3245  2718     5     0   522 <<
+>> jtreg:test/jdk:tier1                               2594  2473     1     0   120 <<
+   jtreg:test/langtools:tier1                         4732  4721     0     0    11   
+   jtreg:test/jaxp:tier1                                 0     0     0     0     0   
+   jtreg:test/lib-test:tier1                            38    38     0     0     0   
+==============================
+TEST FAILURE
+

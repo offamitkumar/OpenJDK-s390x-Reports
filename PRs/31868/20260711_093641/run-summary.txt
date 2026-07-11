@@ -1,0 +1,31 @@
+========================================================
+  pr_test.sh Run Summary
+========================================================
+  pr_number    : 31868
+  pr_url       : https://github.com/openjdk/jdk/pull/31868
+  level        : fastdebug
+  test-target  : tier1
+  result       : TEST_FAILURES (jtreg=2)
+  date         : 2026-07-11 10:31:47 UTC
+  host         : t8360021.lnxne.boe
+  boot-jdk     : openjdk version "28-beta" 2027-03-23
+  jtreg        : jtreg 8.4-dev+0
+  output dir   : /home/amit/OpenJDK-s390x-Reports/PRs/31868/20260711_093641
+========================================================
+
+  Artefacts:
+    run.log              — full run output
+    pr-info.txt          — PR number, URL, HEAD commit
+    fastdebug/
+      build.log          — full make output
+      build-diagnosis.txt — last compiler cmd + first error lines
+      test-summary.txt   — jtreg pass/fail totals
+      newfailures.txt    — failing test names
+      other_errors.txt   — erroring test names
+      run-metadata.txt   — versions, exit codes, dates
+      test-passed.txt    — names of all passed tests
+      test-failed.txt    — names of all failed tests
+      test-skipped.txt   — names of all skipped tests
+      test-failure.log   — failure detail + hs_err notice
+      hs_err/<timestamp>/ — JVM crash logs (local only, not pushed)
+========================================================

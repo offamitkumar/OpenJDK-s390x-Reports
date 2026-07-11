@@ -1,0 +1,14 @@
+pr_number  : 31868
+pr_url     : https://github.com/openjdk/jdk/pull/31868
+run_ts     : 20260711_083136
+date       : 2026-07-11 08:32:46 UTC
+host       : t8360021.lnxne.boe
+pr_commit  : c146e525767a02106496dc84e5055428444da8d8
+
+commit c146e525767a02106496dc84e5055428444da8d8
+author Vladimir Ivanov <vladimir.x.ivanov@oracle.com>
+date   Fri, 10 Jul 2026 16:12:30 -0700
+
+    formatting
+
+    

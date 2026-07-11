@@ -1,0 +1,5 @@
+commit 434c68173d4da0c1e7e0725b51cdb4ba3ec3471f
+Author: Roman Kennke <rkennke@amazon.de>
+Date:   Thu Oct 24 23:00:07 2024 +0200
+
+    Enable riscv in CompressedClassPointersEncodingScheme test
