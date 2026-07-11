@@ -235,7 +235,7 @@ ci_notify() {
     # ---- Subject ---------------------------------------------------------
     local icon
     case "${overall_status}" in
-        PASS) icon="✅" ;; FAIL) icon="❌" ;; *) icon="ℹ️" ;;
+        PASS) icon="[PASS]" ;; FAIL) icon="[FAIL]" ;; *) icon="[INFO]" ;;
     esac
     local kind_label
     case "${run_kind}" in
@@ -244,7 +244,7 @@ ci_notify() {
         pr)     kind_label="PR test"     ;;
         *)      kind_label="${run_kind}" ;;
     esac
-    local subject="${icon} [s390x CI] ${kind_label}: ${subject_suffix} — ${overall_status}"
+    local subject="${icon} [s390x CI] ${kind_label}: ${subject_suffix}"
 
     # ---- Body ------------------------------------------------------------
     local body=""
