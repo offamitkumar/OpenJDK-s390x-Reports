@@ -18,8 +18,10 @@ STATUS.md          ← Rolling dashboard — open this on GitHub to see build he
 scripts/
   config.sh           # Central configuration — edit paths here
   setup_deps.sh       # Downloads / refreshes boot JDK and jtreg
-  build_test.sh       # Build + test function (sourced by run_daily.sh)
-  run_daily.sh        # Orchestrator — the only script you invoke
+  build_test.sh       # Build + test function (sourced by other scripts)
+  run_daily.sh        # Automated daily CI orchestrator
+  jdk.sh              # Human-facing CLI for manual build/test runs
+  pr_test.sh          # Community PR tester (fastdebug tier1 for a given PR)
   resolve_streams.py  # Filters stream registry against Adoptium API
   gen_status.py       # Generates STATUS.md + per-run run-summary.md
 
@@ -27,7 +29,7 @@ reports/
   YYYY/Month/DD/
     pipeline.log            # Full timestamped run output
     run-summary.txt         # Machine-readable per-stream results
-    run-summary.md          # GitHub-rendered per-run report ← browse on GitHub
+    run-summary.md          # GitHub-rendered per-run report <- browse on GitHub
     deps-failure.txt        # Present only if a dep download failed
     head/
       top_commit            # Git log -1 of the JDK HEAD commit tested
@@ -43,6 +45,24 @@ reports/
         run-metadata.txt
       release/
         (same as fastdebug/)
+
+PRs/
+  <number>/
+    <YYYYMMDD_HHMMSS>/      # One directory per test run (removed after 30 days)
+      run.log               # Full run output
+      pr-info.txt           # PR number, URL, HEAD commit fetched
+      fastdebug/
+        build.log
+        build-diagnosis.txt
+        test-summary.txt
+        newfailures.txt
+        other_errors.txt
+        run-metadata.txt
+        test-passed.txt
+        test-failed.txt
+        test-skipped.txt
+        test-failure.log
+        hs_err/<timestamp>/ # JVM crash logs (local only -- not pushed)
 ```
 
 ---
@@ -125,6 +145,59 @@ one — both results are always collected.
 > **Tip:** The commit subject line starts with ✅ or ❌ so you can tell at a
 > glance from the GitHub commit list whether the day's run passed or failed —
 > without logging into the machine.
+
+---
+
+## Testing a community PR
+
+Use [`scripts/pr_test.sh`](scripts/pr_test.sh) to build and test any upstream
+OpenJDK pull request on s390x in fastdebug mode against the tier1 test suite.
+Results are pushed to the **`ci-results-community`** branch under `PRs/<number>/`.
+PR result directories older than **30 days** are automatically purged.
+
+### Syntax
+
+```bash
+bash scripts/pr_test.sh --pr <NUMBER_OR_URL> [options]
+```
+
+| Option | Description |
+|---|---|
+| `--pr NUMBER\|URL` | PR number or full GitHub URL. **Required.** |
+| `--skip-deps` | Skip boot JDK + jtreg download (use cached). |
+| `--no-push` | Write reports locally but do not `git push`. |
+| `--dry-run` | Print what would happen; do nothing. |
+
+### Examples
+
+```bash
+# Test PR 31868 — fetch, build fastdebug, run tier1, push results:
+bash scripts/pr_test.sh --pr 31868
+
+# Same by URL:
+bash scripts/pr_test.sh --pr https://github.com/openjdk/jdk/pull/31868
+
+# Quick local check — no push, use cached deps:
+bash scripts/pr_test.sh --pr 31868 --skip-deps --no-push
+
+# Dry run — see what would happen without touching anything:
+bash scripts/pr_test.sh --pr 31868 --dry-run
+```
+
+### What it does
+
+1. **Downloads** the latest Adoptium nightly boot JDK + jtreg (unless `--skip-deps`).
+2. **Fetches** `refs/pull/<number>/head` from `github.com/openjdk/jdk` into a
+   temporary git worktree so the main `head` source checkout is not disturbed.
+3. **Builds** the PR in `fastdebug` mode (`configure` + `make images`).
+4. **Runs** the full `tier1` test suite with jtreg.
+5. **Writes** all artefacts under `PRs/<number>/<YYYYMMDD_HHMMSS>/`.
+6. **Purges** any PR run directories older than 30 days from disk and the git index.
+7. **Pushes** results to the `ci-results-community` branch (unless `--no-push`).
+8. **Cleans up** the temporary PR worktree unconditionally.
+
+> **Tip:** The commit subject line starts with ✅ or ❌ so you can see the
+> result at a glance in the GitHub commit list for `ci-results-community`.
 
 ---
 

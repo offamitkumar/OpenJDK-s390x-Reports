@@ -640,14 +640,131 @@ def purge_old_data(reports_dir: Path, repo_root: Path,
 
 
 # ---------------------------------------------------------------------------
+# PR result retention purge — remove PRs/<number>/<YYYYMMDD_HHMMSS>/ dirs
+# older than PR_RETENTION_DAYS from both disk and the git index.
+#
+# The PRs/ tree uses a different layout from reports/:
+#
+#   PRs/<number>/<YYYYMMDD_HHMMSS>/   ← one directory per test run
+#
+# Each <YYYYMMDD_HHMMSS> timestamp directory is treated as the run date.
+# Directories whose timestamp is > retention_days old are removed entirely.
+# hs_err/ subdirectories inside surviving run directories are also removed
+# from disk (they are local-only by policy, like in the reports/ tree).
+#
+# Arguments:
+#   pr_root        — Path to the PRs/ directory
+#   repo_root      — Path to the repository root (for git commands)
+#   retention_days — integer, default 30
+# ---------------------------------------------------------------------------
+PR_RETENTION_DAYS = 30
+
+
+def purge_old_pr_data(pr_root: Path, repo_root: Path,
+                       retention_days: int = PR_RETENTION_DAYS) -> None:
+    """
+    Delete PR run directories older than retention_days from disk and the
+    git index.  Also removes hs_err/ subdirectories inside surviving runs.
+    """
+    if not pr_root.is_dir():
+        print(f"[gen_status] PR purge: {pr_root} not found — skipping.",
+              file=sys.stderr)
+        return
+
+    cutoff = _date.today() - timedelta(days=retention_days)
+    removed_runs: list[Path] = []
+    local_only_dirs: list[Path] = []
+
+    for pr_num_dir in sorted(pr_root.iterdir()):
+        if not pr_num_dir.is_dir():
+            continue
+
+        for run_dir in sorted(pr_num_dir.iterdir()):
+            if not run_dir.is_dir():
+                continue
+
+            # Parse timestamp from directory name: YYYYMMDD_HHMMSS
+            m = re.match(r'^(\d{4})(\d{2})(\d{2})_\d{6}$', run_dir.name)
+            if not m:
+                continue
+            try:
+                run_date = _date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+            except ValueError:
+                continue
+
+            if run_date < cutoff:
+                removed_runs.append(run_dir)
+            else:
+                # Within retention window: only purge local-only hs_err dirs
+                for hs_dir in run_dir.rglob("hs_err"):
+                    if hs_dir.is_dir():
+                        local_only_dirs.append(hs_dir)
+
+        # Remove the PR number directory itself if all runs were purged
+        # (handled after the loop below)
+
+    # ---- Purge stale run directories (disk + git index) ------------------
+    for run_dir in removed_runs:
+        rel = run_dir.relative_to(pr_root)
+        print(f"[gen_status] PR PURGE (>{retention_days}d): PRs/{rel}",
+              file=sys.stderr)
+        _git_rm_cached(run_dir, repo_root)
+        shutil.rmtree(run_dir, ignore_errors=True)
+
+    # Remove empty PR number directories left behind after purge
+    for pr_num_dir in sorted(pr_root.iterdir()):
+        if pr_num_dir.is_dir() and not any(pr_num_dir.iterdir()):
+            pr_num_dir.rmdir()
+
+    # ---- Purge local-only hs_err subdirs (disk only) ---------------------
+    for local_dir in local_only_dirs:
+        rel = local_dir.relative_to(pr_root)
+        print(f"[gen_status] PR PURGE local-only: PRs/{rel}", file=sys.stderr)
+        shutil.rmtree(local_dir, ignore_errors=True)
+
+    total = len(removed_runs) + len(local_only_dirs)
+    if total == 0:
+        print(f"[gen_status] PR retention purge: nothing to remove "
+              f"(cutoff={cutoff}, window={retention_days}d).", file=sys.stderr)
+    else:
+        print(f"[gen_status] PR retention purge complete: "
+              f"{len(removed_runs)} run dir(s) removed from git+disk, "
+              f"{len(local_only_dirs)} local-only hs_err dir(s) removed.",
+              file=sys.stderr)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 def main():
-    # Optional --purge-only flag: run the retention purge and exit immediately
-    # without regenerating any Markdown.  Used by run_daily.sh and jdk.sh to
-    # fire the purge as an independent early stage before gen_status_pages.
-    purge_only = "--purge-only" in sys.argv
-    args = [a for a in sys.argv[1:] if a != "--purge-only"]
+    # Flag handling:
+    #   --purge-only          run the regular report retention purge and exit.
+    #   --purge-pr            run the PR retention purge (used by pr_test.sh).
+    #   --pr-retention-days N override PR retention window (default: 30).
+    purge_only        = "--purge-only" in sys.argv
+    purge_pr          = "--purge-pr"   in sys.argv
+    pr_retention_days = PR_RETENTION_DAYS
+
+    # Strip known flags (and the value after --pr-retention-days) from argv
+    # so only positional arguments (reports_dir, repo_root) remain in `args`.
+    raw = sys.argv[1:]
+    args = []
+    skip_next = False
+    for tok in raw:
+        if skip_next:
+            # This token is the value for --pr-retention-days; parse it
+            try:
+                pr_retention_days = int(tok)
+            except ValueError:
+                pass
+            skip_next = False
+            continue
+        if tok == "--pr-retention-days":
+            skip_next = True
+            continue
+        if tok in ("--purge-only", "--purge-pr"):
+            continue
+        args.append(tok)
 
     if len(args) < 2:
         print(f"Usage: {sys.argv[0]} <reports_dir> <repo_root> [--purge-only]",
@@ -657,12 +774,18 @@ def main():
     reports_dir = Path(args[0]).resolve()
     repo_root   = Path(args[1]).resolve()
 
+    # ---- PR retention purge (--purge-pr mode used by pr_test.sh) ---------
+    # In this mode reports_dir is actually the PRs/ directory.
+    if purge_pr:
+        purge_old_pr_data(reports_dir, repo_root, pr_retention_days)
+        sys.exit(0)
+
     if not reports_dir.is_dir():
         print(f"[gen_status] ERROR: reports_dir not found: {reports_dir}",
               file=sys.stderr)
         sys.exit(1)
 
-    # ---- Retention purge (always runs; exits here when --purge-only) ------
+    # ---- Regular report retention purge (always runs; exits when --purge-only)
     purge_old_data(reports_dir, repo_root)
     if purge_only:
         sys.exit(0)
