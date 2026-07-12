@@ -450,6 +450,14 @@ build_and_test_jdk() {
         }
         trap _on_exit EXIT
 
+        # ---- Clean previous build dir (always start fresh) ---------------
+        if [[ -d "build/${conf_name}" ]]; then
+            _bt_info "  Cleaning build/${conf_name} before fresh build …"
+            MAKEFLAGS= MAKEOVERRIDES= \
+                make CONF="${conf_name}" dist-clean 2>/dev/null \
+                || rm -rf "build/${conf_name}"
+        fi
+
         # ---- Configure ---------------------------------------------------
         current_phase="configure"
         _bt_info "  Running configure (debug-level=${debug_level}) …"

@@ -1,47 +1,39 @@
 #!/usr/bin/env bash
 # =============================================================================
-# test_no_auto_cleanup.sh
+# test_build_clean.sh  (was test_no_auto_cleanup.sh)
 #
-# Tests that build_and_test_jdk() and build_only_jdk() in build_test.sh NO
-# LONGER call dist-clean / rm -rf before starting a new build.
+# Tests that build_and_test_jdk() and build_only_jdk() in build_test.sh
+# ALWAYS run dist-clean before starting a fresh build.
 #
 # THE BEHAVIOUR BEING TESTED
 # ──────────────────────────
-# Before the change, both public build functions started with:
+# Every build starts with:
 #
 #   if [[ -d "build/${conf_name}" ]]; then
-#       make CONF="${conf_name}" dist-clean || rm -rf "build/${conf_name}"
+#       make CONF="${conf_name}" dist-clean 2>/dev/null \
+#           || rm -rf "build/${conf_name}"
 #   fi
 #
-# This silently destroyed the previous run's test-results/, build.log, and all
-# artifacts every time a new build was requested — even when the caller only
-# wanted to rebuild after a test-only change.
-#
-# After the change that block is gone.  The only way to clean is the explicit
-# `jdk.sh clean` command.
+# This ensures every daily (and manual) build is a clean, reproducible build
+# from a known-good state rather than an incremental build on top of stale
+# objects.
 #
 # WHY THESE TESTS ARE CORRECT
 # ────────────────────────────
-# We stub the real build (configure, make) with scripts that always succeed and
-# write a known sentinel file inside build/${conf_name}/.  We then call the
-# function under test and verify:
-#   PASS  the sentinel file still exists  → no cleanup happened
-#   FAIL  the sentinel file is gone       → cleanup ran (regression)
+# We stub the real build (configure, make) with scripts that always succeed.
+# The stub dist-clean removes the conf dir (as the real one does).  We then:
 #
-# We intentionally choose a file deep inside the conf dir (not just the dir
-# itself) because  rm -rf build/${conf_name}  removes the dir entirely, while
-# a naive stub that only touches the dir's mtime would miss it.
+#   T1/T2  Place a sentinel file in the conf dir before the call and assert
+#          it is GONE after — proving dist-clean ran.
 #
-# IMPORTANT CONTRADICTION ADDRESSED
-# ──────────────────────────────────
-# One might argue: "If you don't clean, configure might fail because stale
-# objects conflict with the new source."  That is true in general OpenJDK
-# builds.  However the CI scripts call  bash configure  fresh every time, and
-# OpenJDK's configure always regenerates its spec.gmk.  The real solution to
-# stale-object conflicts is the explicit  jdk.sh clean  command.  Silently
-# wiping artifacts on every build is the wrong tradeoff because it destroys
-# evidence (test-results/, build.log) that the engineer needs to diagnose the
-# previous failure.
+#   T3/T4  Assert run-metadata.txt is written into the (freshly recreated)
+#          conf dir — proving the build completed after the clean.
+#
+#   T5     Plant a sentinel AFTER the first run, run again, assert it is
+#          gone — proving the second run also cleaned.
+#
+#   T6     When no prior build dir exists, the clean step is skipped entirely
+#          and the build still succeeds (no error on missing dir).
 # =============================================================================
 source "$(dirname "${BASH_SOURCE[0]}")/harness.sh"
 
@@ -63,26 +55,18 @@ source "${SCRIPT_DIR}/build_test.sh"
 # ---------------------------------------------------------------------------
 # Build a fake JDK source tree.
 #
-# The real  bash configure  and  make images  are replaced by stub scripts on
-# PATH that succeed immediately and simulate the configure output layout.
+# The real  bash configure  and  make images  are replaced by stub scripts
+# that succeed immediately and simulate the configure output layout.
+# dist-clean removes the conf dir (same as the real target).
 # ---------------------------------------------------------------------------
 _make_fake_src() {
     local src="${T}/src_$1"
     mkdir -p "${src}/make/conf"
-    # version-numbers.conf so _detect_jdk_version works
     echo "DEFAULT_VERSION_FEATURE = 26" > "${src}/make/conf/version-numbers.conf"
 
-    # Fake configure — creates the expected build/<conf>/ directory and touches
-    # a sentinel file inside it to prove cleanup did NOT remove it.
-    local conf_dir="${src}/build/linux-s390x-server-${2:-fastdebug}"
-    mkdir -p "${conf_dir}"
-    echo "sentinel" > "${conf_dir}/PREVIOUS_BUILD_SENTINEL"
-
-    # Stub configure: succeeds, creates configure.log
-    mkdir -p "${src}"
+    # Stub configure: recreates build/<conf>/ after dist-clean wiped it
     cat > "${src}/configure" <<'EOF'
 #!/usr/bin/env bash
-# Stub configure
 level="fastdebug"
 for arg in "$@"; do
     case "$arg" in
@@ -96,12 +80,9 @@ exit 0
 EOF
     chmod +x "${src}/configure"
 
-    # Stub make — succeeds for 'images', creates a build.log and test-results
+    # Stub make — dist-clean removes the conf dir (correct behaviour);
+    # images creates build.log; run-test creates test-results.
     cat > "${src}/GNUmakefile" <<'EOF'
-#!/usr/bin/env make -f
-# Detect target from MAKECMDGOALS
-# For 'images': create build.log
-# For 'run-test': create test-results/newfailures.txt
 CONF ?= linux-s390x-server-fastdebug
 
 images:
@@ -114,83 +95,77 @@ run-test:
 	echo "(none)" > build/$(CONF)/test-results/tier1/other_errors.txt
 
 dist-clean:
-	echo "DIST-CLEAN CALLED — THIS IS A REGRESSION" >&2
 	rm -rf build/$(CONF)
-	exit 1
 EOF
 
     echo "${src}"
 }
 
 # ---------------------------------------------------------------------------
-# T1  build_and_test_jdk — previous build artifacts survive
+# T1  build_and_test_jdk — prior conf dir is removed before the build
 #
-# WHY CORRECT: We place PREVIOUS_BUILD_SENTINEL inside the conf dir before
-# calling the function.  If the function wipes the dir (regression), the
-# sentinel is gone and the test fails.  If the function leaves it alone
-# (correct behaviour), the test passes.
-#
-# CONTRADICTION ADDRESSED: "Maybe configure recreates the dir and the sentinel
-# survives by accident?"  No — we use  rm -rf  in the fake  dist-clean  rule
-# which exits 1 to make the regression extremely visible.  If dist-clean were
-# called, the whole subshell would exit non-zero and build_and_test_jdk would
-# return non-zero — which the assert_exit_zero would catch.
+# WHY CORRECT: We place PREVIOUS_BUILD_SENTINEL in the conf dir before the
+# call.  The function must run dist-clean (which removes the whole dir) and
+# then configure (which recreates it without the sentinel).  If the sentinel
+# survives, cleanup did not run — regression.
 # ---------------------------------------------------------------------------
-describe "build_and_test_jdk — no automatic cleanup"
+describe "build_and_test_jdk — always cleans before build"
 
-it "T1: PREVIOUS_BUILD_SENTINEL survives build_and_test_jdk call"
+it "T1: PREVIOUS_BUILD_SENTINEL is removed by dist-clean before build"
 SRC="$(_make_fake_src "bat" "fastdebug")"
-SENTINEL="${SRC}/build/linux-s390x-server-fastdebug/PREVIOUS_BUILD_SENTINEL"
-assert_file_exists "${SENTINEL}" "pre-condition: sentinel must exist before call"
+CONF_DIR="${SRC}/build/linux-s390x-server-fastdebug"
+mkdir -p "${CONF_DIR}"
+echo "sentinel" > "${CONF_DIR}/PREVIOUS_BUILD_SENTINEL"
+assert_file_exists "${CONF_DIR}/PREVIOUS_BUILD_SENTINEL" "pre-condition: sentinel must exist"
 
 build_and_test_jdk \
     "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}"
 
-assert_file_exists "${SENTINEL}" "sentinel must survive — no auto-cleanup"
+assert_file_missing "${CONF_DIR}/PREVIOUS_BUILD_SENTINEL" \
+    "sentinel must be gone — dist-clean ran before build"
 
 # ---------------------------------------------------------------------------
-# T2  build_only_jdk — previous build artifacts survive
-#
-# WHY CORRECT: Same logic as T1 but for the build-only path used by
-# `jdk.sh build` and the --test-target all run path.
+# T2  build_only_jdk — same guarantee via the shared build_and_test_jdk path
 # ---------------------------------------------------------------------------
-describe "build_only_jdk — no automatic cleanup"
+describe "build_only_jdk — always cleans before build"
 
-it "T2: PREVIOUS_BUILD_SENTINEL survives build_only_jdk call"
+it "T2: PREVIOUS_BUILD_SENTINEL is removed by dist-clean before build_only_jdk"
 SRC="$(_make_fake_src "bo" "fastdebug")"
-SENTINEL="${SRC}/build/linux-s390x-server-fastdebug/PREVIOUS_BUILD_SENTINEL"
-assert_file_exists "${SENTINEL}" "pre-condition: sentinel must exist before call"
+CONF_DIR="${SRC}/build/linux-s390x-server-fastdebug"
+mkdir -p "${CONF_DIR}"
+echo "sentinel" > "${CONF_DIR}/PREVIOUS_BUILD_SENTINEL"
+assert_file_exists "${CONF_DIR}/PREVIOUS_BUILD_SENTINEL" "pre-condition: sentinel must exist"
 
 build_only_jdk \
     "${SRC}" "test-stream" "fastdebug" "${BOOT_JDK_DIR}"
 
-assert_file_exists "${SENTINEL}" "sentinel must survive — no auto-cleanup"
+assert_file_missing "${CONF_DIR}/PREVIOUS_BUILD_SENTINEL" \
+    "sentinel must be gone — dist-clean ran before build_only_jdk"
 
 # ---------------------------------------------------------------------------
-# T3  build_and_test_jdk writes run-metadata.txt into the build conf dir
+# T3  build_and_test_jdk writes run-metadata.txt after the clean+build
 #
-# WHY CORRECT: If we only test for the absence of cleanup but the build itself
-# never ran, we get a false positive — sentinel survived because nothing
-# happened, not because cleanup was skipped.  run-metadata.txt is written only
-# when the build reaches the metadata-writing step, proving the build ran.
-# run-metadata.txt now lives in <src_dir>/build/<conf>/ (not a separate OUT).
+# WHY CORRECT: Proves the build actually completed — dist-clean removed the
+# dir, configure recreated it, make images ran, metadata was written.
 # ---------------------------------------------------------------------------
-it "T3: run-metadata.txt written into conf dir — confirms build actually ran"
+it "T3: run-metadata.txt written after clean+build — confirms full cycle ran"
 SRC="$(_make_fake_src "bat2" "fastdebug")"
 CONF_DIR="${SRC}/build/linux-s390x-server-fastdebug"
+mkdir -p "${CONF_DIR}"   # simulate a prior build existing
 
 build_and_test_jdk \
     "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}"
 
-assert_file_exists "${CONF_DIR}/run-metadata.txt" "run-metadata.txt must be written"
+assert_file_exists "${CONF_DIR}/run-metadata.txt" "run-metadata.txt must exist after build"
 assert_contains    "${CONF_DIR}/run-metadata.txt" "stream:       test-stream"
 
 # ---------------------------------------------------------------------------
 # T4  build_only_jdk writes run-metadata.txt (jtreg_ok=false → test_exit=SKIPPED)
 # ---------------------------------------------------------------------------
-it "T4: build_only_jdk writes run-metadata.txt into conf dir"
+it "T4: build_only_jdk writes run-metadata.txt after clean+build"
 SRC="$(_make_fake_src "bo2" "fastdebug")"
 CONF_DIR="${SRC}/build/linux-s390x-server-fastdebug"
+mkdir -p "${CONF_DIR}"
 
 build_only_jdk \
     "${SRC}" "test-stream" "fastdebug" "${BOOT_JDK_DIR}"
@@ -199,60 +174,45 @@ assert_file_exists "${CONF_DIR}/run-metadata.txt"
 assert_contains    "${CONF_DIR}/run-metadata.txt" "test_exit:    SKIPPED"
 
 # ---------------------------------------------------------------------------
-# T5  Consecutive builds — second run does NOT wipe first run's artifacts
+# T5  Consecutive builds — second run also cleans the first run's artifacts
 #
-# WHY CORRECT: The most common real-world usage is: build fails → fix source →
-# rebuild.  The engineer wants the first run's build.log and test-results to
-# survive so they can compare.  We run build_and_test_jdk twice and assert
-# that a file written by the first run survives the second.
-#
-# CONTRADICTION ADDRESSED: "Doesn't the second configure overwrite build.log?"
-# Yes — but only configure.log and build.log.  test-results/ and
-# PREVIOUS_BUILD_SENTINEL (or any file configure/make doesn't touch) survive.
+# WHY CORRECT: The sentinel is planted AFTER the first run completes (i.e.
+# inside the freshly-built conf dir).  The second run must clean it away.
 # ---------------------------------------------------------------------------
-it "T5: first-run test-results/ survives second build_and_test_jdk call"
+it "T5: second build_and_test_jdk call also cleans the first run's artifacts"
 SRC="$(_make_fake_src "consec" "fastdebug")"
+CONF_DIR="${SRC}/build/linux-s390x-server-fastdebug"
 
-# First run (creates test-results/)
+# First run (builds from scratch — no prior dir)
 build_and_test_jdk \
     "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}"
 
-# Plant a sentinel inside test-results to simulate previous run's evidence
-mkdir -p "${SRC}/build/linux-s390x-server-fastdebug/test-results"
-echo "previous run failure" \
-    > "${SRC}/build/linux-s390x-server-fastdebug/test-results/EVIDENCE"
+# Plant evidence of the first run inside the conf dir
+echo "first run artifact" > "${CONF_DIR}/FIRST_RUN_ARTIFACT"
+assert_file_exists "${CONF_DIR}/FIRST_RUN_ARTIFACT" "pre-condition: artifact planted"
 
-# Second run
+# Second run — must clean before building
 build_and_test_jdk \
     "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}"
 
-assert_file_exists \
-    "${SRC}/build/linux-s390x-server-fastdebug/test-results/EVIDENCE" \
-    "previous run's test-results evidence must survive"
+assert_file_missing "${CONF_DIR}/FIRST_RUN_ARTIFACT" \
+    "first-run artifact must be gone — second build cleaned"
 
 # ---------------------------------------------------------------------------
-# T6  dist-clean stub exits non-zero — proves it is never called
+# T6  No prior build dir — clean step is a no-op, build still succeeds
 #
-# WHY CORRECT: Our GNUmakefile's dist-clean target deliberately prints an
-# error message and exits 1.  If auto-cleanup were still happening, the
-# subshell inside build_and_test_jdk would exit non-zero and the function
-# would return non-zero — caught by assert_exit_zero.
-#
-# This test is the definitive "if cleanup runs, the test explodes" check.
+# WHY CORRECT: The clean block is guarded by  [[ -d "build/${conf_name}" ]].
+# If no prior dir exists (first-ever build), the guard is false, dist-clean
+# is never called, and the build proceeds normally.
 # ---------------------------------------------------------------------------
-it "T6: functions exit 0 even though dist-clean would fail — proves dist-clean is never called"
-SRC="$(_make_fake_src "nodc" "fastdebug")"
+it "T6: no prior build dir → clean skipped, build succeeds"
+SRC="$(_make_fake_src "fresh" "fastdebug")"
+# Do NOT pre-create the conf dir — simulate a first-ever build
 
-# build_and_test_jdk must return 0 (build success)
 rc=0
 build_and_test_jdk \
     "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}" \
     || rc=$?
-assert_eq "${rc}" "0" "build_and_test_jdk must exit 0 — dist-clean was NOT called"
-
-SRC2="$(_make_fake_src "nodc2" "fastdebug")"
-rc2=0
-build_only_jdk \
-    "${SRC2}" "test-stream" "fastdebug" "${BOOT_JDK_DIR}" \
-    || rc2=$?
-assert_eq "${rc2}" "0" "build_only_jdk must exit 0 — dist-clean was NOT called"
+assert_eq "${rc}" "0" "build must succeed even when no prior conf dir exists"
+assert_file_exists "${SRC}/build/linux-s390x-server-fastdebug/run-metadata.txt" \
+    "run-metadata.txt must be written on first-ever build"
