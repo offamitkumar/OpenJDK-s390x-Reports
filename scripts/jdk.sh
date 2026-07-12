@@ -26,6 +26,12 @@
 #             re-send the email.  Does not run any build or test.
 #             Requires --from <OUT_BASE_DIR>.
 #
+#   resend    Re-send the notification email for a completed run without
+#             rebuilding or re-testing anything.  Reads run-summary.txt,
+#             commit-info-all.txt, and per-stream result artefacts directly
+#             from the run directory.  Works for daily, manual, and pr runs.
+#             Requires --from <RUN_DIR>.
+#
 # OPTIONS (all commands)
 # ──────────────────────
 #   --stream LABEL        Target one stream (default: head)
@@ -63,13 +69,18 @@
 #                           --jvm-flags "-Xmx512m -ea"
 #                           --jvm-flags "-XX:+UseG1GC"
 #
-# OPTIONS (collect only)
-# ──────────────────────
-#   --from DIR            Path to an existing OUT_BASE directory produced by a
-#                         previous test/run invocation.  The .jtr files still
-#                         present in the source tree's test-support/ are
-#                         re-collected, artefacts rewritten, and the email
-#                         re-sent.  Required for the collect command.
+# OPTIONS (collect / resend only)
+# ────────────────────────────────
+#   --from DIR            Path to an existing run directory.
+#                         For collect: OUT_BASE from a previous test/run.
+#                         For resend:  the run directory containing
+#                                      run-summary.txt (e.g. reports/2025/July/11
+#                                      for a daily run, or the timestamped
+#                                      sub-directory for a jdk.sh run).
+#
+#   --run-kind KIND       Override the run kind label in the email subject.
+#                         Values: daily | manual | pr  (default: daily)
+#                         Only used with the resend command.
 #
 # EXAMPLES
 # ────────
@@ -121,6 +132,13 @@
 #   bash scripts/jdk.sh collect --stream head --level fastdebug \
 #       --from reports/2026/July/11/test-tier1-135843
 #
+#   # Re-send email for a completed daily run (all streams):
+#   bash scripts/jdk.sh resend --from reports/2026/July/11
+#
+#   # Re-send email for a completed jdk.sh manual run:
+#   bash scripts/jdk.sh resend --run-kind manual \
+#       --from reports/2026/July/11/run-135843
+#
 # EXIT CODES
 # ──────────
 #   0  All requested work completed (test failures are recorded, not fatal)
@@ -144,7 +162,8 @@ OPT_NO_PUSH=false
 OPT_DRY_RUN=false
 OPT_TEST_TARGET="tier1"
 OPT_JVM_FLAGS=""
-OPT_FROM=""       # --from DIR  (collect command only)
+OPT_FROM=""        # --from DIR  (collect / resend commands)
+OPT_RUN_KIND="daily"  # --run-kind  (resend command)
 
 # Tiers executed when --test-target all is requested
 ALL_TIERS=(tier1 tier2 tier3 tier4)
@@ -175,10 +194,17 @@ fi
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        run|build|test|clean|collect)
+        run|build|test|clean|collect|resend)
             COMMAND="$1"; shift ;;
         --from)
             OPT_FROM="$2"; shift 2 ;;
+        --run-kind)
+            OPT_RUN_KIND="$2"
+            case "${OPT_RUN_KIND}" in
+                daily|manual|pr) ;;
+                *) echo "[jdk.sh] ERROR: --run-kind must be daily, manual, or pr" >&2; exit 1 ;;
+            esac
+            shift 2 ;;
         --stream)
             OPT_STREAM="$2"; shift 2 ;;
         --level)
@@ -214,9 +240,9 @@ done
 # ---------------------------------------------------------------------------
 # Validate collect --from before anything else
 # ---------------------------------------------------------------------------
-if [[ "${COMMAND}" == "collect" ]]; then
+if [[ "${COMMAND}" == "collect" || "${COMMAND}" == "resend" ]]; then
     if [[ -z "${OPT_FROM}" ]]; then
-        echo "[jdk.sh] ERROR: 'collect' requires --from <OUT_BASE_DIR>" >&2
+        echo "[jdk.sh] ERROR: '${COMMAND}' requires --from <DIR>" >&2
         exit 1
     fi
     OPT_FROM="$(cd "${OPT_FROM}" 2>/dev/null && pwd)" \
@@ -239,6 +265,161 @@ info()    { echo "$(_ts) [INFO]  $*"; }
 success() { echo "$(_ts) [OK]    $*"; }
 warn()    { echo "$(_ts) [WARN]  $*" >&2; }
 die()     { echo "$(_ts) [FATAL] $*" >&2; exit 1; }
+
+# ---------------------------------------------------------------------------
+# resend — re-send the notification email for an already-completed run.
+#
+# Reads the run directory for run-summary.txt / commit-info files and
+# run-metadata.txt (to derive build_status per stream×level).
+# Test results (newfailures.txt, other_errors.txt) and build.log are read
+# directly from the JDK source tree — exactly as the live run does.
+#
+# Run directory layouts supported:
+#
+#   daily (run_daily.sh):
+#     <run_dir>/
+#       run-summary.txt
+#       commit-info-all.txt
+#       <stream>/
+#         <level>/
+#           run-metadata.txt   (test_exit: …)
+#
+#   jdk.sh manual run:
+#     <run_dir>/
+#       run-summary.txt
+#       commit-info.txt
+#       <level>/
+#         run-metadata.txt
+#
+# Triples are built as  stream:JDK_SOURCES_ROOT/<src_subdir>:level:BUILD_STATUS
+# so _notify_build_section reads newfailures.txt / build.log live from
+# <src_dir>/build/linux-s390x-server-<level>/test-results/ — the same path
+# the original run used.
+#
+# build_status per stream×level is derived from run-metadata.txt:
+#   test_exit: 0        → TEST_PASSED
+#   test_exit: SKIPPED* → BUILD_ONLY  (build-only or no-jtreg run)
+#   test_exit: <N>      → TEST_FAILED
+#   run-metadata.txt missing → BUILD_FAILED (nothing ran)
+# ---------------------------------------------------------------------------
+_resend_email() {
+    local run_dir="${OPT_FROM}"
+    local run_kind="${OPT_RUN_KIND}"
+
+    log "========================================================"
+    log "resend: re-sending email from ${run_dir}"
+    log "========================================================"
+
+    local summary_file="${run_dir}/run-summary.txt"
+    if [[ ! -f "${summary_file}" ]]; then
+        die "run-summary.txt not found in ${run_dir} — is this a valid run directory?"
+    fi
+
+    # ---- Determine overall PASS/FAIL from run-summary.txt ---------------
+    # Look for any TEST_FAILED or BUILD_FAILED line written by write_run_summary.
+    local overall="PASS"
+    if grep -qE '^\s+(TEST_FAILED|BUILD_FAILED)\s' "${summary_file}" 2>/dev/null; then
+        overall="FAIL"
+    fi
+
+    # ---- Subject suffix --------------------------------------------------
+    # Use the date from run-summary.txt if present, otherwise today.
+    local date_str
+    date_str="$(grep -m1 'Date' "${summary_file}" 2>/dev/null \
+        | sed 's/.*Date[^:]*: *//' | awk '{print $1}' || date -u '+%Y-%m-%d')"
+    local subject_suffix="all streams (${date_str})"
+
+    # ---- Commit info file ------------------------------------------------
+    # Prefer commit-info-all.txt (daily runs); fall back to commit-info.txt
+    local commit_info_file=""
+    if [[ -f "${run_dir}/commit-info-all.txt" ]]; then
+        commit_info_file="${run_dir}/commit-info-all.txt"
+    elif [[ -f "${run_dir}/commit-info.txt" ]]; then
+        commit_info_file="${run_dir}/commit-info.txt"
+    fi
+
+    # ---- Build registry map: label → JDK_SOURCES_ROOT/<src_subdir> ------
+    local -A _registry_src=()
+    for _entry in "${JDK_STREAMS[@]}"; do
+        local _lbl _sub
+        IFS='|' read -r _lbl _sub _ _ _ <<< "${_entry}"
+        _registry_src["${_lbl}"]="${JDK_SOURCES_ROOT}/${_sub}"
+    done
+
+    # ---- Build triples: stream:src_dir:level:build_status ---------------
+    # src_dir is the JDK source tree — _notify_build_section reads
+    # newfailures.txt / build.log live from there, same as the original run.
+    local triples=()
+
+    # Helper: derive build_status from a level output directory in the run dir
+    _build_status_from_dir() {
+        local dir="$1"
+        local meta="${dir}/run-metadata.txt"
+        if [[ ! -f "${meta}" ]]; then
+            echo "BUILD_FAILED"
+            return
+        fi
+        local te
+        te="$(grep '^test_exit:' "${meta}" | awk '{print $2}' | head -1)"
+        case "${te}" in
+            0)          echo "TEST_PASSED" ;;
+            SKIPPED*)   echo "BUILD_ONLY"  ;;
+            "")         echo "BUILD_FAILED" ;;
+            *)          echo "TEST_FAILED"  ;;
+        esac
+    }
+
+    # Daily layout: <run_dir>/<stream>/<level>/
+    for stream_dir in "${run_dir}"/*/; do
+        [[ -d "${stream_dir}" ]] || continue
+        local stream_label
+        stream_label="$(basename "${stream_dir}")"
+        local src_dir="${_registry_src[${stream_label}]:-}"
+
+        for level in "${BUILD_LEVELS[@]}"; do
+            local level_dir="${stream_dir}${level}"
+            if [[ -d "${level_dir}" ]]; then
+                local bst
+                bst="$(_build_status_from_dir "${level_dir}")"
+                triples+=("${stream_label}:${src_dir}:${level}:${bst}")
+            fi
+        done
+    done
+
+    # jdk.sh single-stream layout: levels sit directly under OUT_BASE.
+    # Detected when no triples were found from the loop above.
+    if [[ ${#triples[@]} -eq 0 ]]; then
+        local src_dir="${_registry_src[${OPT_STREAM}]:-}"
+        for level in "${BUILD_LEVELS[@]}"; do
+            local level_dir="${run_dir}/${level}"
+            if [[ -d "${level_dir}" ]]; then
+                local bst
+                bst="$(_build_status_from_dir "${level_dir}")"
+                triples+=("${OPT_STREAM}:${src_dir}:${level}:${bst}")
+            fi
+        done
+    fi
+
+    if [[ ${#triples[@]} -eq 0 ]]; then
+        warn "No stream×level result directories found in ${run_dir}."
+        warn "Sending email with summary only (no per-stream sections)."
+    fi
+
+    info "  run_kind   : ${run_kind}"
+    info "  overall    : ${overall}"
+    info "  summary    : ${summary_file}"
+    info "  commit_info: ${commit_info_file:-(none)}"
+    info "  streams    : ${#triples[@]} combination(s) found"
+
+    ci_notify "${run_kind}" "${subject_suffix}" \
+        "${summary_file}" "${overall}" \
+        "${commit_info_file}" \
+        "${triples[@]}"
+
+    log "========================================================"
+    log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+    log "========================================================"
+}
 
 # ---------------------------------------------------------------------------
 # Report directory — one per invocation, timestamped to the minute so
@@ -799,6 +980,12 @@ publish() {
 # Main flow
 # ---------------------------------------------------------------------------
 trap 'cd "${REPORTS_REPO_ROOT}"' EXIT
+
+# resend: no build, no summary, no deps — just re-fire the email and exit.
+if [[ "${COMMAND}" == "resend" ]]; then
+    _resend_email
+    exit 0
+fi
 
 # Step 1: deps (done above as ensure_deps, before banner could resolve dirs)
 

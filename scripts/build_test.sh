@@ -37,58 +37,22 @@ _bt_success() { echo "[OK]    $*"; }
 _bt_warn()    { echo "[WARN]  $*" >&2; }
 
 # ---------------------------------------------------------------------------
-# Internal: collect tier1 test artifacts after a test run
+# _collect_test_results  <conf_dir>
 #
-# Parses jtreg result files into three categorised lists:
-#   out_dir/test-passed.txt      — one test name per line
-#   out_dir/test-failed.txt      — one test name per line
-#   out_dir/test-skipped.txt     — one test name per line
-#   out_dir/test-failure.log     — full failure output + hs_err notice
-#
-# hs_err files are harvested from the build tree and copied into:
-#   out_dir/hs_err/<RUN_TIMESTAMP>/
-# where RUN_TIMESTAMP is the same second-precise stamp used by jdk.sh so that
-# repeated same-day runs never overwrite each other.
-#
-# Arguments:
-#   $1  conf_dir        — build/<conf_name> (absolute or relative to CWD)
-#   $2  out_dir         — report output directory (where other artefacts live)
-#   $3  run_timestamp   — e.g. "20250604_143022" (YYYYMMDD_HHMMSS)
-# ---------------------------------------------------------------------------
-# ---------------------------------------------------------------------------
-# _collect_test_results  <conf_dir> <out_dir>
-#
-# Reads newfailures.txt and other_errors.txt written by jtreg under
+# Logs the newfailures/other_errors counts from jtreg's output tree.
+# Results stay in the source tree — nothing is copied to the report dir.
 #   <conf_dir>/test-results/<suite>/newfailures.txt
 #   <conf_dir>/test-results/<suite>/other_errors.txt
-# and concatenates them into flat files in <out_dir>.
-#
-# Does NOT touch test-support/, .jtr files, or hs_err logs.
-# Does NOT purge anything — cleanup is left to the next make clean.
 # ---------------------------------------------------------------------------
 _collect_test_results() {
     local conf_dir="$1"
-    local out_dir="$2"
-
     local results_dir="${conf_dir}/test-results"
 
-    # newfailures.txt — one failed test name per line, written per suite by jtreg
-    {
-        find "${results_dir}" -name "newfailures.txt" -exec cat {} + 2>/dev/null
-    } > "${out_dir}/newfailures.txt"
-    [[ -s "${out_dir}/newfailures.txt" ]] \
-        || echo "(none)" > "${out_dir}/newfailures.txt"
-
-    # other_errors.txt — tests that errored (as opposed to failed)
-    {
-        find "${results_dir}" -name "other_errors.txt" -exec cat {} + 2>/dev/null
-    } > "${out_dir}/other_errors.txt"
-    [[ -s "${out_dir}/other_errors.txt" ]] \
-        || echo "(none)" > "${out_dir}/other_errors.txt"
-
     local n_fail n_err
-    n_fail="$(grep -vc '^(none)$' "${out_dir}/newfailures.txt" 2>/dev/null || echo 0)"
-    n_err="$(grep  -vc '^(none)$' "${out_dir}/other_errors.txt" 2>/dev/null || echo 0)"
+    n_fail="$(find "${results_dir}" -name "newfailures.txt" \
+        -exec cat {} + 2>/dev/null | grep -vc '^$' || echo 0)"
+    n_err="$(find "${results_dir}" -name "other_errors.txt" \
+        -exec cat {} + 2>/dev/null | grep -vc '^$' || echo 0)"
     _bt_info "  newfailures=${n_fail}  other_errors=${n_err}"
 }
 
@@ -382,27 +346,16 @@ build_and_test_jdk() {
         current_phase="images"
         _bt_info "  Building images (CONF=${conf_name}) …"
 
-        local make_tmp="${out_dir}/build.log.tmp"
         local make_exit=0
         # Unset MAKEFLAGS/MAKEOVERRIDES — a parent make or shell alias may inject
         # -jN into the environment, which OpenJDK's wrapper explicitly rejects.
-        # Tee to the tmp file while keeping output visible on the terminal.
-        # Process substitution avoids the pipe-swallows-exit-code problem.
         MAKEFLAGS= MAKEOVERRIDES= \
         make CONF="${conf_name}" LOG=debug images \
-                2>&1 | tee "${make_tmp}" || make_exit=$?
-        # tee always exits 0; re-derive exit from the make side via PIPESTATUS
-        make_exit="${PIPESTATUS[0]}"
+                2>&1 || make_exit=$?
         if [[ "${make_exit}" -ne 0 ]]; then
-            cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
-            cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
             _bt_warn "  make images failed (exit=${make_exit}) — skipping tests."
             exit "${make_exit}"
         fi
-
-        cp "${make_tmp}" "${out_dir}/build.log"
-        cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
-        rm -f "${make_tmp}"
 
         # ---- Run tier1 tests (if jtreg available) -----------------------
         current_phase="test"
@@ -418,19 +371,9 @@ build_and_test_jdk() {
                 run-test || test_exit=$?
         fi
 
-        # ---- Collect test artefacts -------------------------------------
-        local results_dir="build/${conf_name}/test-results"
-
-        if [[ -f "${results_dir}/test-summary.txt" ]]; then
-            cp "${results_dir}/test-summary.txt" "${out_dir}/test-summary.txt"
-        else
-            echo "test-summary.txt not found (test_exit=${test_exit})" \
-                > "${out_dir}/test-summary.txt"
-        fi
-
-        # ---- Collect newfailures + other_errors from test-results/ ----------
+        # ---- Log newfailures + other_errors counts ----------------------
         if [[ "${jtreg_ok}" == "true" ]]; then
-            _collect_test_results "build/${conf_name}" "${out_dir}"
+            _collect_test_results "build/${conf_name}"
         fi
 
         # ---- Write run metadata ------------------------------------------
@@ -531,22 +474,14 @@ build_only_jdk() {
         current_phase="images"
         _bt_info "  Building images (CONF=${conf_name}) …"
 
-        local make_tmp="${out_dir}/build.log.tmp"
         local make_exit=0
         MAKEFLAGS= MAKEOVERRIDES= \
         make CONF="${conf_name}" LOG=debug images \
-                2>&1 | tee "${make_tmp}" || make_exit=$?
-        make_exit="${PIPESTATUS[0]}"
+                2>&1 || make_exit=$?
         if [[ "${make_exit}" -ne 0 ]]; then
-            cp "${make_tmp}" "${out_dir}/build.log" 2>/dev/null || true
-            cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
             _bt_warn "  make images failed (exit=${make_exit})."
             exit "${make_exit}"
         fi
-
-        cp "${make_tmp}" "${out_dir}/build.log"
-        cp "${make_tmp}" "${build_log_path}" 2>/dev/null || true
-        rm -f "${make_tmp}"
 
         {
             echo "stream:       ${stream_label}"
@@ -661,15 +596,8 @@ run_tests_only() {
 
         local results_dir="build/${conf_name}/test-results"
 
-        if [[ -f "${results_dir}/test-summary.txt" ]]; then
-            cp "${results_dir}/test-summary.txt" "${out_dir}/test-summary.txt"
-        else
-            echo "test-summary.txt not found (test_exit=${test_exit})" \
-                > "${out_dir}/test-summary.txt"
-        fi
-
-        # ---- Collect newfailures + other_errors from test-results/ ----------
-        _collect_test_results "build/${conf_name}" "${out_dir}"
+        # ---- Log newfailures + other_errors counts ----------------------
+        _collect_test_results "build/${conf_name}"
 
         {
             echo "stream:       ${stream_label}"
