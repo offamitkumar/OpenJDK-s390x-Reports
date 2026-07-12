@@ -358,13 +358,6 @@ build_and_test_jdk() {
         }
         trap _on_exit EXIT
 
-        # ---- Clean prior build -------------------------------------------
-        if [[ -d "build/${conf_name}" ]]; then
-            _bt_info "  Cleaning prior build/${conf_name} …"
-            make CONF="${conf_name}" dist-clean 2>/dev/null \
-                || rm -rf "build/${conf_name}"
-        fi
-
         # ---- Configure ---------------------------------------------------
         current_phase="configure"
         _bt_info "  Running configure (debug-level=${debug_level}) …"
@@ -521,12 +514,6 @@ build_only_jdk() {
                 "${exit_code}" "${stream_label}" "${debug_level}"
         }
         trap _on_exit EXIT
-
-        if [[ -d "build/${conf_name}" ]]; then
-            _bt_info "  Cleaning prior build/${conf_name} …"
-            make CONF="${conf_name}" dist-clean 2>/dev/null \
-                || rm -rf "build/${conf_name}"
-        fi
 
         current_phase="configure"
         _bt_info "  Running configure (debug-level=${debug_level}) …"

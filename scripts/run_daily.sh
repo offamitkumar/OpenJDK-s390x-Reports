@@ -613,11 +613,11 @@ write_run_summary() {
         local n_passed=0 n_failed=0 n_build_fail=0 n_skipped=0 n_no_jtreg=0
         for key in "${!STREAM_STATUS[@]}"; do
             case "${STREAM_STATUS[${key}]}" in
-                TEST_PASSED)             (( n_passed++    )) ;;
-                TEST_FAILED)             (( n_failed++    )) ;;
-                TEST_SKIPPED_NO_JTREG)   (( n_no_jtreg++ )) ;;
-                BUILD_FAILED)            (( n_build_fail++)) ;;
-                SKIPPED_*)               (( n_skipped++   )) ;;
+                TEST_PASSED)             n_passed=$(( n_passed + 1 ))       ;;
+                TEST_FAILED)             n_failed=$(( n_failed + 1 ))       ;;
+                TEST_SKIPPED_NO_JTREG)   n_no_jtreg=$(( n_no_jtreg + 1 ))  ;;
+                BUILD_FAILED)            n_build_fail=$(( n_build_fail + 1 ));;
+                SKIPPED_*)               n_skipped=$(( n_skipped + 1 ))     ;;
             esac
         done
         local n_total=$(( n_passed + n_failed + n_build_fail + n_skipped + n_no_jtreg ))

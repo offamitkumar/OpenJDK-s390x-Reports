@@ -18,6 +18,10 @@
 #
 #   test      Re-use an existing build. Run tests without rebuilding.
 #
+#   clean     Remove the build output directory (make dist-clean) for the
+#             chosen stream + level(s).  Does not build or test anything.
+#             Safe to run before a fresh build when you want a clean slate.
+#
 #   collect   Re-collect artefacts from an already-finished test run and
 #             re-send the email.  Does not run any build or test.
 #             Requires --from <OUT_BASE_DIR>.
@@ -74,6 +78,12 @@
 #
 #   # Build only, fastdebug:
 #   bash scripts/jdk.sh build --level fastdebug
+#
+#   # Wipe the prior build before building fresh:
+#   bash scripts/jdk.sh clean && bash scripts/jdk.sh build --level fastdebug
+#
+#   # Clean both levels for jdk21 before a full run:
+#   bash scripts/jdk.sh clean --stream jdk21
 #
 #   # Re-run tier1 tests without rebuilding:
 #   bash scripts/jdk.sh test
@@ -165,7 +175,7 @@ fi
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        run|build|test|collect)
+        run|build|test|clean|collect)
             COMMAND="$1"; shift ;;
         --from)
             OPT_FROM="$2"; shift 2 ;;
@@ -249,6 +259,7 @@ case "${COMMAND}" in
     run)     _RUN_LABEL="run-${_TIME}" ;;
     build)   _RUN_LABEL="build-${OPT_LEVEL}-${_TIME}" ;;
     test)    _RUN_LABEL="test-${_TARGET_SLUG}-${_TIME}" ;;
+    clean)   _RUN_LABEL="clean-${OPT_LEVEL}-${_TIME}" ;;
     collect) _RUN_LABEL="collect-${OPT_LEVEL}-${_TIME}" ;;
 esac
 
@@ -398,7 +409,9 @@ ensure_deps() {
 }
 
 JTREG_OK=false
-if [[ "${COMMAND}" == "test" ]]; then
+if [[ "${COMMAND}" == "clean" ]]; then
+    : # No deps needed to remove a build directory
+elif [[ "${COMMAND}" == "test" ]]; then
     # For test-only: we still need JTREG; boot JDK may already be present
     ensure_deps
     [[ "${JTREG_OK}" != "true" ]] \
@@ -642,6 +655,30 @@ run_operations() {
                 fi
                 ;;
 
+            # ---- clean: remove the build output directory for this level ----
+            clean)
+                local conf_name="linux-s390x-server-${level}"
+                local build_dir="${SRC_DIR}/build/${conf_name}"
+                if [[ ! -d "${build_dir}" ]]; then
+                    info "[${OPT_STREAM}/${level}] Nothing to clean (${build_dir} does not exist)."
+                    OP_STATUS["${level}"]="CLEAN_SKIPPED (no build dir)"
+                else
+                    info "[${OPT_STREAM}/${level}] Cleaning ${build_dir} …"
+                    local clean_exit=0
+                    (
+                        cd "${SRC_DIR}"
+                        MAKEFLAGS= MAKEOVERRIDES= \
+                            make CONF="${conf_name}" dist-clean 2>/dev/null
+                    ) || clean_exit=$?
+                    if [[ ${clean_exit} -ne 0 ]]; then
+                        warn "[${OPT_STREAM}/${level}] make dist-clean failed (exit=${clean_exit}) — removing directory."
+                        rm -rf "${build_dir}"
+                    fi
+                    success "[${OPT_STREAM}/${level}] Build directory removed."
+                    OP_STATUS["${level}"]="CLEANED"
+                fi
+                ;;
+
             # ---- collect: re-collect results from existing test-results/ ----
             collect)
                 local conf_name="linux-s390x-server-${level}"
@@ -765,13 +802,22 @@ trap 'cd "${REPORTS_REPO_ROOT}"' EXIT
 
 # Step 1: deps (done above as ensure_deps, before banner could resolve dirs)
 
-# Step 2: source — only needed for run/build (test/collect reuse existing build)
-if [[ "${COMMAND}" != "test" && "${COMMAND}" != "collect" ]]; then
+# Step 2: source — only needed for run/build (test/collect/clean reuse existing tree)
+if [[ "${COMMAND}" != "test" && "${COMMAND}" != "collect" && "${COMMAND}" != "clean" ]]; then
     prepare_src
 fi
 
 # Step 3: execute
 run_operations
+
+# clean is done — no summary, no retention purge, no email
+if [[ "${COMMAND}" == "clean" ]]; then
+    log "========================================================"
+    log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+    log "Output: ${OUT_BASE}"
+    log "========================================================"
+    exit 0
+fi
 
 # Step 4a: summary
 write_summary
