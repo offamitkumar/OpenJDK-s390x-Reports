@@ -74,9 +74,30 @@ warn()    { :; }
 write_run_summary() {
     local summary_file="${PIPELINE_LOG_DIR}/run-summary.txt"
     local boot_jdk_ver="n/a" jtreg_ver="n/a"
+    if [[ -x "${BOOT_JDK_DIR}/bin/java" ]]; then
+        boot_jdk_ver="$("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
+    fi
+    if [[ -x "${JTREG_DIR}/bin/jtreg" ]]; then
+        jtreg_ver="$(JAVA_HOME="${BOOT_JDK_DIR}" "${JTREG_DIR}/bin/jtreg" \
+            -version 2>/dev/null | head -1 || echo 'n/a')"
+    fi
     {
-        echo "  Date   : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-        echo "  Host   : $(hostname)"
+        echo "========================================================"
+        echo "  OpenJDK s390x CI — Run Summary"
+        echo "========================================================"
+        echo "  Date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "  Host       : $(hostname)"
+        echo "  Boot JDK   : ${boot_jdk_ver}"
+        echo "  jtreg      : ${jtreg_ver}"
+        echo "  JTREG_OK   : ${JTREG_OK}"
+        echo "  pipeline.log: ${PIPELINE_LOG}"
+        [[ -n "${FILTER_STREAM}" ]] && echo "  --stream   : ${FILTER_STREAM}"
+        [[ -n "${FILTER_LEVEL}"  ]] && echo "  --level    : ${FILTER_LEVEL}"
+        ${DRY_RUN}   && echo "  Mode       : DRY-RUN"
+        ${SKIP_DEPS} && echo "  Deps       : skipped (--skip-deps)"
+        echo ""
+
+        # Print per-stream results in registry order
         declare -A seen_labels=()
         local ordered_labels=()
         for lbl in "${ALL_REGISTERED_LABELS[@]}"; do
@@ -85,14 +106,24 @@ write_run_summary() {
                 seen_labels["${lbl}"]=1
             fi
         done
+
         for lbl in "${ordered_labels[@]}"; do
+            echo "  ── ${lbl} ──────────────────────────────────────────"
+            local any_found=false
             for level in "${BUILD_LEVELS[@]}"; do
                 local key="${lbl}/${level}"
                 if [[ -n "${STREAM_STATUS[${key}]+_}" ]]; then
-                    printf "  %-12s  %-28s\n" "${level}" "${STREAM_STATUS[${key}]}"
+                    any_found=true
+                    printf "    %-12s  %-28s  %s\n" \
+                        "${level}" \
+                        "${STREAM_STATUS[${key}]}" \
+                        "${STREAM_STATUS_DETAIL[${key}]:-}"
                 fi
             done
+            ${any_found} || echo "    (no status recorded)"
+            echo ""
         done
+
         # THE FIXED COUNTER BLOCK — this is what we are testing
         local n_passed=0 n_failed=0 n_build_fail=0 n_skipped=0 n_no_jtreg=0
         for key in "${!STREAM_STATUS[@]}"; do
@@ -105,7 +136,17 @@ write_run_summary() {
             esac
         done
         local n_total=$(( n_passed + n_failed + n_build_fail + n_skipped + n_no_jtreg ))
-        echo "COUNTERS: passed=${n_passed} failed=${n_failed} build_fail=${n_build_fail} skipped=${n_skipped} no_jtreg=${n_no_jtreg} total=${n_total}"
+
+        echo "========================================================"
+        echo "  Totals  (stream × level combinations)"
+        printf "    %-30s %d\n" "Combinations tracked:"       "${n_total}"
+        printf "    %-30s %d\n" "TEST_PASSED:"                "${n_passed}"
+        printf "    %-30s %d\n" "TEST_FAILED:"                "${n_failed}"
+        printf "    %-30s %d\n" "TEST_SKIPPED (no jtreg):"    "${n_no_jtreg}"
+        printf "    %-30s %d\n" "BUILD_FAILED:"               "${n_build_fail}"
+        printf "    %-30s %d\n" "Skipped (any reason):"       "${n_skipped}"
+        echo "========================================================"
+
     } > "${summary_file}"
 }
 
@@ -130,9 +171,9 @@ record_status "head"  "fastdebug" "TEST_PASSED" ""
 record_status "head"  "release"   "TEST_PASSED" ""
 write_run_summary
 assert_file_exists "${T}/run-summary.txt" "summary file must exist"
-assert_contains    "${T}/run-summary.txt" "passed=2"   "two passes"
-assert_contains    "${T}/run-summary.txt" "total=2"    "total must be 2"
-assert_contains    "${T}/run-summary.txt" "failed=0"   "no failures"
+assert_contains    "${T}/run-summary.txt" "TEST_PASSED:                   2"  "two passes"
+assert_contains    "${T}/run-summary.txt" "Combinations tracked:          2"  "total must be 2"
+assert_contains    "${T}/run-summary.txt" "TEST_FAILED:                   0"  "no failures"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T2  All-zero case — no statuses recorded
@@ -146,8 +187,8 @@ it "T2: empty STREAM_STATUS produces all-zero counters"
 _reset
 write_run_summary
 assert_file_exists "${T}/run-summary.txt" "summary must exist even with no statuses"
-assert_contains    "${T}/run-summary.txt" "passed=0"
-assert_contains    "${T}/run-summary.txt" "total=0"
+assert_contains    "${T}/run-summary.txt" "TEST_PASSED:                   0"
+assert_contains    "${T}/run-summary.txt" "Combinations tracked:          0"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T3  Mixed statuses — every counter hits at least once
@@ -165,12 +206,12 @@ record_status "jdk26" "fastdebug" "BUILD_FAILED"          ""
 record_status "jdk21" "fastdebug" "TEST_SKIPPED_NO_JTREG" ""
 record_status "jdk17" "fastdebug" "SKIPPED_EOL"           ""
 write_run_summary
-assert_contains "${T}/run-summary.txt" "passed=1"
-assert_contains "${T}/run-summary.txt" "failed=1"
-assert_contains "${T}/run-summary.txt" "build_fail=1"
-assert_contains "${T}/run-summary.txt" "no_jtreg=1"
-assert_contains "${T}/run-summary.txt" "skipped=1"
-assert_contains "${T}/run-summary.txt" "total=5"
+assert_contains "${T}/run-summary.txt" "TEST_PASSED:                   1"
+assert_contains "${T}/run-summary.txt" "TEST_FAILED:                   1"
+assert_contains "${T}/run-summary.txt" "BUILD_FAILED:                  1"
+assert_contains "${T}/run-summary.txt" "TEST_SKIPPED (no jtreg):       1"
+assert_contains "${T}/run-summary.txt" "Skipped (any reason):          1"
+assert_contains "${T}/run-summary.txt" "Combinations tracked:          5"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T4  Multiple TEST_FAILED — counter increments past 1
@@ -188,9 +229,9 @@ record_status "head"  "release"   "TEST_FAILED" ""
 record_status "jdk26" "fastdebug" "TEST_FAILED" ""
 record_status "jdk26" "release"   "TEST_FAILED" ""
 write_run_summary
-assert_contains "${T}/run-summary.txt" "failed=4"
-assert_contains "${T}/run-summary.txt" "passed=0"
-assert_contains "${T}/run-summary.txt" "total=4"
+assert_contains "${T}/run-summary.txt" "TEST_FAILED:                   4"
+assert_contains "${T}/run-summary.txt" "TEST_PASSED:                   0"
+assert_contains "${T}/run-summary.txt" "Combinations tracked:          4"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T5  SKIPPED_* glob matches multiple sub-statuses
@@ -208,8 +249,8 @@ record_status "jdk26" "fastdebug" "SKIPPED_DRY_RUN"      ""
 record_status "jdk26" "release"   "SKIPPED_SOURCE_FAIL"  ""
 record_status "jdk21" "fastdebug" "SKIPPED_BOOT_JDK_FAIL" ""
 write_run_summary
-assert_contains "${T}/run-summary.txt" "skipped=5"
-assert_contains "${T}/run-summary.txt" "total=5"
+assert_contains "${T}/run-summary.txt" "Skipped (any reason):          5"
+assert_contains "${T}/run-summary.txt" "Combinations tracked:          5"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T6  UNKNOWN status is ignored by the counter
@@ -223,9 +264,9 @@ it "T6: unrecognised status does not affect any counter"
 _reset
 record_status "head" "fastdebug" "TOTALLY_MADE_UP_STATUS" ""
 write_run_summary
-assert_contains "${T}/run-summary.txt" "total=0" "unknown status must not count"
-assert_contains "${T}/run-summary.txt" "passed=0"
-assert_contains "${T}/run-summary.txt" "skipped=0"
+assert_contains "${T}/run-summary.txt" "Combinations tracked:          0"  "unknown status must not count"
+assert_contains "${T}/run-summary.txt" "TEST_PASSED:                   0"
+assert_contains "${T}/run-summary.txt" "Skipped (any reason):          0"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T7  Summary file is overwritten on repeated calls
@@ -243,9 +284,9 @@ write_run_summary
 _reset
 record_status "head" "fastdebug" "TEST_FAILED" ""
 write_run_summary
-assert_contains     "${T}/run-summary.txt" "failed=1"  "second call result"
-assert_contains     "${T}/run-summary.txt" "passed=0"  "first call must be gone"
-assert_not_contains "${T}/run-summary.txt" "passed=1"  "stale count must not appear"
+assert_contains     "${T}/run-summary.txt" "TEST_FAILED:                   1"  "second call result"
+assert_contains     "${T}/run-summary.txt" "TEST_PASSED:                   0"  "first call must be gone"
+assert_not_contains "${T}/run-summary.txt" "TEST_PASSED:                   1"  "stale count must not appear"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T8  BUILD_FAILED is NOT double-counted in n_skipped
@@ -259,9 +300,9 @@ it "T8: BUILD_FAILED counts only in build_fail — not skipped"
 _reset
 record_status "head" "fastdebug" "BUILD_FAILED" ""
 write_run_summary
-assert_contains     "${T}/run-summary.txt" "build_fail=1"
-assert_contains     "${T}/run-summary.txt" "skipped=0"
-assert_not_contains "${T}/run-summary.txt" "skipped=1" "BUILD_FAILED must not inflate skipped"
+assert_contains     "${T}/run-summary.txt" "BUILD_FAILED:                  1"
+assert_contains     "${T}/run-summary.txt" "Skipped (any reason):          0"
+assert_not_contains "${T}/run-summary.txt" "Skipped (any reason):          1" "BUILD_FAILED must not inflate skipped"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T9  INTENTIONAL CONTRADICTION — total does NOT include n_no_jtreg
@@ -284,11 +325,11 @@ _reset
 record_status "head"  "fastdebug" "TEST_SKIPPED_NO_JTREG" ""
 record_status "jdk21" "fastdebug" "SKIPPED_EOL"           ""
 write_run_summary
-assert_contains     "${T}/run-summary.txt" "no_jtreg=1"  "jtreg-skip bucket"
-assert_contains     "${T}/run-summary.txt" "skipped=1"   "eol-skip bucket"
-assert_not_contains "${T}/run-summary.txt" "no_jtreg=2"  "must not bleed into each other"
-assert_not_contains "${T}/run-summary.txt" "skipped=2"   "must not bleed into each other"
-assert_contains     "${T}/run-summary.txt" "total=2"     "both counted in total"
+assert_contains     "${T}/run-summary.txt" "TEST_SKIPPED (no jtreg):       1"  "jtreg-skip bucket"
+assert_contains     "${T}/run-summary.txt" "Skipped (any reason):          1"  "eol-skip bucket"
+assert_not_contains "${T}/run-summary.txt" "TEST_SKIPPED (no jtreg):       2"  "must not bleed into each other"
+assert_not_contains "${T}/run-summary.txt" "Skipped (any reason):          2"  "must not bleed into each other"
+assert_contains     "${T}/run-summary.txt" "Combinations tracked:          2"  "both counted in total"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # T10  Large run — realistic stream × level product
@@ -318,11 +359,11 @@ record_status "jdk17" "release"   "SKIPPED_EOL"  ""
 record_status "jdk11" "fastdebug" "TEST_SKIPPED_NO_JTREG" ""
 record_status "jdk11" "release"   "TEST_SKIPPED_NO_JTREG" ""
 write_run_summary
-assert_contains "${T}/run-summary.txt" "passed=5"
-assert_contains "${T}/run-summary.txt" "failed=1"
-assert_contains "${T}/run-summary.txt" "build_fail=1"
-assert_contains "${T}/run-summary.txt" "skipped=2"
-assert_contains "${T}/run-summary.txt" "no_jtreg=2"
-assert_contains "${T}/run-summary.txt" "total=11"
+assert_contains "${T}/run-summary.txt" "TEST_PASSED:                   5"
+assert_contains "${T}/run-summary.txt" "TEST_FAILED:                   1"
+assert_contains "${T}/run-summary.txt" "BUILD_FAILED:                  1"
+assert_contains "${T}/run-summary.txt" "Skipped (any reason):          2"
+assert_contains "${T}/run-summary.txt" "TEST_SKIPPED (no jtreg):       2"
+assert_contains "${T}/run-summary.txt" "Combinations tracked:          11"
 # Sanity: 5+1+1+2+2 = 11, NOT 12, because n_total sums all five buckets.
 # 12 would be wrong only if something were double-counted.
