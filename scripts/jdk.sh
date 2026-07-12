@@ -250,11 +250,6 @@ if [[ "${COMMAND}" == "collect" ]]; then
         || { echo "[jdk.sh] ERROR: --from directory not found: ${OPT_FROM}" >&2; exit 1; }
 fi
 
-if [[ "${COMMAND}" == "resend" && -n "${OPT_FROM}" ]]; then
-    OPT_FROM="$(cd "${OPT_FROM}" 2>/dev/null && pwd)" \
-        || { echo "[jdk.sh] ERROR: --from directory not found: ${OPT_FROM}" >&2; exit 1; }
-fi
-
 # Expand 'both' to the canonical BUILD_LEVELS array from config.sh
 if [[ "${OPT_LEVEL}" == "both" ]]; then
     EFFECTIVE_LEVELS=("${BUILD_LEVELS[@]}")   # fastdebug release
@@ -273,80 +268,29 @@ warn()    { echo "$(_ts) [WARN]  $*" >&2; }
 die()     { echo "$(_ts) [FATAL] $*" >&2; exit 1; }
 
 # ---------------------------------------------------------------------------
-# resend — re-send the notification email for an already-completed run.
+# resend — re-send the notification email from the current JDK source tree.
 #
-# Reads the run directory for run-summary.txt / commit-info files and
-# run-metadata.txt (to derive build_status per stream×level).
-# Test results (newfailures.txt, other_errors.txt) and build.log are read
-# directly from the JDK source tree — exactly as the live run does.
+# Reads test results directly from the JDK source tree (~/head/<src_subdir>):
+#   <src_dir>/build/linux-s390x-server-<level>/test-results/
 #
-# Run directory layouts supported:
+# For each registered stream × level:
+#   - If the test-results directory exists → derive PASS/FAIL from it
+#   - If only a build dir exists but no test-results → BUILD_ONLY
+#   - If nothing exists → include a "(no results found)" note in the email
 #
-#   daily (run_daily.sh):
-#     <run_dir>/
-#       run-summary.txt
-#       commit-info-all.txt
-#       <stream>/
-#         <level>/
-#           run-metadata.txt   (test_exit: …)
-#
-#   jdk.sh manual run:
-#     <run_dir>/
-#       run-summary.txt
-#       commit-info.txt
-#       <level>/
-#         run-metadata.txt
-#
-# Triples are built as  stream:JDK_SOURCES_ROOT/<src_subdir>:level:BUILD_STATUS
-# so _notify_build_section reads newfailures.txt / build.log live from
-# <src_dir>/build/linux-s390x-server-<level>/test-results/ — the same path
-# the original run used.
-#
-# build_status per stream×level is derived from run-metadata.txt:
-#   test_exit: 0        → TEST_PASSED
-#   test_exit: SKIPPED* → BUILD_ONLY  (build-only or no-jtreg run)
-#   test_exit: <N>      → TEST_FAILED
-#   run-metadata.txt missing → BUILD_FAILED (nothing ran)
+# Optional flags:
+#   --stream LABEL   scope to one stream only (default: all registered streams)
+#   --run-kind KIND  daily | manual | pr  (default: daily)
 # ---------------------------------------------------------------------------
 _resend_email() {
-    local run_dir="${OPT_FROM}"
     local run_kind="${OPT_RUN_KIND}"
-
-    # ---- Auto-discover latest daily run dir if --from was not given -----
-    if [[ -z "${run_dir}" ]]; then
-        # Find all run-summary.txt files at depth 3 (YYYY/Month/DD),
-        # sort by modification time (newest first), take the parent dir.
-        run_dir="$(find "${REPORTS_DIR}" -mindepth 3 -maxdepth 3 \
-            -name "run-summary.txt" 2>/dev/null \
-            | xargs -I{} stat --format="%Y %n" {} 2>/dev/null \
-            | sort -rn | head -1 | awk '{print $2}' | xargs -I{} dirname {})"
-        if [[ -z "${run_dir}" ]]; then
-            die "No completed run found under ${REPORTS_DIR}. Run the daily pipeline first."
-        fi
-        info "Auto-discovered latest run: ${run_dir}"
-    fi
+    local date_str; date_str="$(date -u '+%Y-%m-%d')"
 
     log "========================================================"
-    log "resend: re-sending email from ${run_dir}"
+    log "resend: collecting results from ${JDK_SOURCES_ROOT}"
     log "========================================================"
-
-    local summary_file="${run_dir}/run-summary.txt"
-    if [[ ! -f "${summary_file}" ]]; then
-        die "run-summary.txt not found in ${run_dir} — is this a valid run directory?"
-    fi
-
-    # ---- Determine overall PASS/FAIL from run-summary.txt ---------------
-    # Look for any TEST_FAILED or BUILD_FAILED line written by write_run_summary.
-    local overall="PASS"
-    if grep -qE '^\s+(TEST_FAILED|BUILD_FAILED)\s' "${summary_file}" 2>/dev/null; then
-        overall="FAIL"
-    fi
 
     # ---- Subject suffix --------------------------------------------------
-    # Use the date from run-summary.txt if present, otherwise today.
-    local date_str
-    date_str="$(grep -m1 'Date' "${summary_file}" 2>/dev/null \
-        | sed 's/.*Date[^:]*: *//' | awk '{print $1}' || date -u '+%Y-%m-%d')"
     local subject_suffix
     if ${OPT_STREAM_SET}; then
         subject_suffix="${OPT_STREAM} (${date_str})"
@@ -354,98 +298,116 @@ _resend_email() {
         subject_suffix="all streams (${date_str})"
     fi
 
-    # ---- Commit info file ------------------------------------------------
-    # Prefer commit-info-all.txt (daily runs); fall back to commit-info.txt
-    local commit_info_file=""
-    if [[ -f "${run_dir}/commit-info-all.txt" ]]; then
-        commit_info_file="${run_dir}/commit-info-all.txt"
-    elif [[ -f "${run_dir}/commit-info.txt" ]]; then
-        commit_info_file="${run_dir}/commit-info.txt"
-    fi
+    # ---- Build triples: stream:src_dir:level:build_status ---------------
+    # _notify_build_section reads newfailures.txt / build.log live from
+    # <src_dir>/build/linux-s390x-server-<level>/test-results/
+    local triples=()
+    local overall="PASS"
 
-    # ---- Build registry map: label → JDK_SOURCES_ROOT/<src_subdir> ------
-    local -A _registry_src=()
+    # Helper: derive build_status from the live test-results tree
+    _build_status_from_src() {
+        local src_dir="$1"
+        local level="$2"
+        local results_dir="${src_dir}/build/linux-s390x-server-${level}/test-results"
+        local build_log="${src_dir}/build/linux-s390x-server-${level}/build.log"
+
+        if [[ ! -d "${src_dir}/build/linux-s390x-server-${level}" ]]; then
+            echo "NO_RESULTS"
+            return
+        fi
+        if [[ ! -d "${results_dir}" ]]; then
+            # Build dir exists but no test-results — build completed, no tests
+            echo "BUILD_ONLY"
+            return
+        fi
+        # Check for any failures
+        local any_fail
+        any_fail="$(find "${results_dir}" -name "newfailures.txt" \
+            -exec grep -lv '^$' {} + 2>/dev/null | head -1)"
+        if [[ -n "${any_fail}" ]]; then
+            echo "TEST_FAILED"
+        else
+            echo "TEST_PASSED"
+        fi
+    }
+
     for _entry in "${JDK_STREAMS[@]}"; do
         local _lbl _sub
         IFS='|' read -r _lbl _sub _ _ _ <<< "${_entry}"
-        _registry_src["${_lbl}"]="${JDK_SOURCES_ROOT}/${_sub}"
-    done
 
-    # ---- Build triples: stream:src_dir:level:build_status ---------------
-    # src_dir is the JDK source tree — _notify_build_section reads
-    # newfailures.txt / build.log live from there, same as the original run.
-    local triples=()
-
-    # Helper: derive build_status from a level output directory in the run dir
-    _build_status_from_dir() {
-        local dir="$1"
-        local meta="${dir}/run-metadata.txt"
-        if [[ ! -f "${meta}" ]]; then
-            echo "BUILD_FAILED"
-            return
-        fi
-        local te
-        te="$(grep '^test_exit:' "${meta}" | awk '{print $2}' | head -1)"
-        case "${te}" in
-            0)          echo "TEST_PASSED" ;;
-            SKIPPED*)   echo "BUILD_ONLY"  ;;
-            "")         echo "BUILD_FAILED" ;;
-            *)          echo "TEST_FAILED"  ;;
-        esac
-    }
-
-    # Daily layout: <run_dir>/<stream>/<level>/
-    # If --stream was explicitly passed, only include that stream.
-    for stream_dir in "${run_dir}"/*/; do
-        [[ -d "${stream_dir}" ]] || continue
-        local stream_label
-        stream_label="$(basename "${stream_dir}")"
-
-        if ${OPT_STREAM_SET} && [[ "${stream_label}" != "${OPT_STREAM}" ]]; then
+        # Apply --stream filter if set
+        if ${OPT_STREAM_SET} && [[ "${_lbl}" != "${OPT_STREAM}" ]]; then
             continue
         fi
 
-        local src_dir="${_registry_src[${stream_label}]:-}"
+        local src_dir="${JDK_SOURCES_ROOT}/${_sub}"
 
         for level in "${BUILD_LEVELS[@]}"; do
-            local level_dir="${stream_dir}${level}"
-            if [[ -d "${level_dir}" ]]; then
-                local bst
-                bst="$(_build_status_from_dir "${level_dir}")"
-                triples+=("${stream_label}:${src_dir}:${level}:${bst}")
+            local bst
+            bst="$(_build_status_from_src "${src_dir}" "${level}")"
+            if [[ "${bst}" == "NO_RESULTS" ]]; then
+                info "  ${_lbl}/${level}: no build found — skipping"
+                continue
+            fi
+            triples+=("${_lbl}:${src_dir}:${level}:${bst}")
+            if [[ "${bst}" == "TEST_FAILED" || "${bst}" == "BUILD_FAILED" ]]; then
+                overall="FAIL"
             fi
         done
     done
 
-    # jdk.sh single-stream layout: levels sit directly under OUT_BASE.
-    # Detected when no triples were found from the loop above.
-    if [[ ${#triples[@]} -eq 0 ]]; then
-        local src_dir="${_registry_src[${OPT_STREAM}]:-}"
-        for level in "${BUILD_LEVELS[@]}"; do
-            local level_dir="${run_dir}/${level}"
-            if [[ -d "${level_dir}" ]]; then
-                local bst
-                bst="$(_build_status_from_dir "${level_dir}")"
-                triples+=("${OPT_STREAM}:${src_dir}:${level}:${bst}")
-            fi
-        done
-    fi
+    # ---- Build a minimal summary for the email body ----------------------
+    local tmp_summary; tmp_summary="$(mktemp)"
+    {
+        echo "========================================================"
+        echo "  OpenJDK s390x CI — Resent Results"
+        echo "========================================================"
+        echo "  Date    : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "  Host    : $(hostname)"
+        echo "  Source  : ${JDK_SOURCES_ROOT}"
+        echo "========================================================"
+        echo ""
+        if [[ ${#triples[@]} -eq 0 ]]; then
+            echo "  No build results found in ${JDK_SOURCES_ROOT}."
+            echo "  Run the daily pipeline first."
+        else
+            for triple in "${triples[@]}"; do
+                local lbl lvl bst
+                lbl="${triple%%:*}"
+                bst="${triple##*:}"
+                lvl="${triple%:*}"; lvl="${lvl##*:}"
+                printf "  %-10s  %-12s  %s\n" "${lbl}" "${lvl}" "${bst}"
+            done
+        fi
+        echo ""
+    } > "${tmp_summary}"
 
-    if [[ ${#triples[@]} -eq 0 ]]; then
-        warn "No stream×level result directories found in ${run_dir}."
-        warn "Sending email with summary only (no per-stream sections)."
-    fi
+    # ---- Collect commit info from each stream's source tree --------------
+    local tmp_commits; tmp_commits="$(mktemp)"
+    for _entry in "${JDK_STREAMS[@]}"; do
+        local _lbl _sub
+        IFS='|' read -r _lbl _sub _ _ _ <<< "${_entry}"
+        ${OPT_STREAM_SET} && [[ "${_lbl}" != "${OPT_STREAM}" ]] && continue
+        local src_dir="${JDK_SOURCES_ROOT}/${_sub}"
+        if [[ -d "${src_dir}/.git" ]]; then
+            echo "" >> "${tmp_commits}"
+            echo "════ ${_lbl} ════════════════════════════════════════" >> "${tmp_commits}"
+            git -C "${src_dir}" log -1 \
+                --format='commit %H%nauthor %an <%ae>%ndate   %ad%n%n    %s' \
+                --date=rfc >> "${tmp_commits}" 2>/dev/null || true
+        fi
+    done
 
     info "  run_kind   : ${run_kind}"
     info "  overall    : ${overall}"
-    info "  summary    : ${summary_file}"
-    info "  commit_info: ${commit_info_file:-(none)}"
-    info "  streams    : ${#triples[@]} combination(s) found"
+    info "  streams    : ${#triples[@]} combination(s)"
 
     ci_notify "${run_kind}" "${subject_suffix}" \
-        "${summary_file}" "${overall}" \
-        "${commit_info_file}" \
+        "${tmp_summary}" "${overall}" \
+        "${tmp_commits}" \
         "${triples[@]}"
+
+    rm -f "${tmp_summary}" "${tmp_commits}"
 
     log "========================================================"
     log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
