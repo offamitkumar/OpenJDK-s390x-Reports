@@ -272,12 +272,6 @@ success() { echo "$(_ts) [OK]    $*"; }
 warn()    { echo "$(_ts) [WARN]  $*" >&2; }
 die()     { echo "$(_ts) [FATAL] $*" >&2; exit 1; }
 
-# resend exits here — before report-dir setup, banner, RUN_LOG, or deps.
-if [[ "${COMMAND}" == "resend" ]]; then
-    _resend_email
-    exit 0
-fi
-
 # ---------------------------------------------------------------------------
 # resend — re-send the notification email for an already-completed run.
 #
@@ -457,6 +451,12 @@ _resend_email() {
     log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
     log "========================================================"
 }
+
+# resend exits here — before report-dir setup, banner, RUN_LOG, or deps.
+if [[ "${COMMAND}" == "resend" ]]; then
+    _resend_email
+    exit 0
+fi
 
 # ---------------------------------------------------------------------------
 # Report directory — one per invocation, timestamped to the minute so
