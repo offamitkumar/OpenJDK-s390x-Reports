@@ -156,16 +156,6 @@ if [[ -z "${PR_NUMBER}" ]] || ! [[ "${PR_NUMBER}" =~ ^[0-9]+$ ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Logging helpers
-# ---------------------------------------------------------------------------
-_ts()     { date -u '+%H:%M:%S'; }
-log()     { echo "$(_ts) [pr]    $*"; }
-info()    { echo "$(_ts) [INFO]  $*"; }
-success() { echo "$(_ts) [OK]    $*"; }
-warn()    { echo "$(_ts) [WARN]  $*" >&2; }
-die()     { echo "$(_ts) [FATAL] $*" >&2; exit 1; }
-
-# ---------------------------------------------------------------------------
 # Output directory layout
 #   PRs/<number>/<YYYYMMDD_HHMMSS>/
 # Inside the REPORTS_REPO_ROOT so it can be committed like regular reports.
@@ -216,51 +206,17 @@ trap 'cd "${REPORTS_REPO_ROOT}"' EXIT
 # ---------------------------------------------------------------------------
 JTREG_OK=false
 
-ensure_deps() {
-    if ${OPT_SKIP_DEPS}; then
-        if [[ ! -x "${BOOT_JDK_DIR}/bin/java" ]]; then
-            die "Boot JDK not found at ${BOOT_JDK_DIR}. Remove --skip-deps to download it."
-        fi
-        info "Using cached boot JDK: $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
-        if [[ ! -x "${JTREG_DIR}/bin/jtreg" ]]; then
-            die "jtreg not found at ${JTREG_DIR}. Remove --skip-deps to download it."
-        fi
-        info "Using cached jtreg: ${JTREG_DIR}/bin/jtreg"
-        JTREG_OK=true
-        return
-    fi
-
-    if ${OPT_DRY_RUN}; then
-        info "DRY-RUN: would download boot JDK and jtreg (stream=head)"
-        JTREG_OK=true
-        return
-    fi
-
+if ${OPT_DRY_RUN}; then
+    info "DRY-RUN: would download boot JDK and jtreg (stream=head)"
+    JTREG_OK=true
+else
     log "Step 1: Downloading dependencies (stream=head) …"
-    local deps_exit=0
-    SETUP_DEPS_STREAM="head" bash "${SCRIPT_DIR}/setup_deps.sh" \
-        --stream head || deps_exit=$?
-
-    case "${deps_exit}" in
-        0)
-            JTREG_OK=true
-            success "Boot JDK and jtreg ready."
-            ;;
-        1)
-            [[ -f "${CI_TMP_DIR}/deps-failure.txt" ]] \
-                && cat "${CI_TMP_DIR}/deps-failure.txt"
-            die "Boot JDK download failed — cannot continue."
-            ;;
-        2)
-            die "jtreg download failed — tier1 tests require jtreg."
-            ;;
-        *)
-            die "setup_deps.sh exited with unexpected code ${deps_exit}."
-            ;;
-    esac
-}
-
-ensure_deps
+    ensure_deps "head" "${OPT_SKIP_DEPS}"
+    # pr_test always requires jtreg; abort if it failed
+    if [[ "${JTREG_OK}" != "true" ]]; then
+        die "jtreg is required for PR testing but is not available."
+    fi
+fi
 
 # ---------------------------------------------------------------------------
 # Step 2 — Fetch the PR branch into a temporary git worktree
@@ -474,15 +430,6 @@ purge_old_pr_results() {
 }
 
 purge_old_pr_results
-
-# ---------------------------------------------------------------------------
-# Step 5 — Push disabled: results are kept local only
-# ---------------------------------------------------------------------------
-publish_pr_results() {
-    info "Git push disabled — results stored locally in ${OUT_BASE}"
-}
-
-publish_pr_results
 
 # ---------------------------------------------------------------------------
 # Email notification — one quad per level

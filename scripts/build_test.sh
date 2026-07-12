@@ -2,26 +2,26 @@
 # =============================================================================
 # build_test.sh — Build and test one (stream × debug-level) combination
 #
-# Sourced by run_daily.sh and jdk.sh — not invoked directly.
+# Sourced by run_daily.sh, jdk.sh, and pr_test.sh — not invoked directly.
 #
 # Public functions:
 #
-#   build_and_test_jdk  <src_dir> <label> <debug_level> <out_dir> \
-#                       <jtreg_ok> [extra_configure_flags...]
-#       Full pipeline: configure → make images → tier1 tests.
-#       jtreg_ok="false" skips the test step (build only in that sense, but
-#       still runs configure + images).
+#   update_source   <label> <src_subdir> <git_url> <out_base>
+#       git fetch + pull (or clone) the source tree.  Writes commit-info.txt
+#       and top_commit into out_base.  Returns 1 on failure.
 #
-#   build_only_jdk  <src_dir> <label> <debug_level> <out_dir> \
+#   build_and_test_jdk  <src_dir> <label> <debug_level> <out_dir> \
+#                       <jtreg_ok> <boot_jdk_dir> [extra_configure_flags...]
+#       Full pipeline: configure → make images → tier1 tests.
+#       Pass jtreg_ok=false to skip tests (build-only mode).
+#
+#   build_only_jdk  <src_dir> <label> <debug_level> <out_dir> <boot_jdk_dir> \
 #                   [extra_configure_flags...]
-#       configure + make images, no tests at all.
+#       Thin wrapper: calls build_and_test_jdk with jtreg_ok=false.
 #
 #   run_tests_only  <src_dir> <label> <debug_level> <out_dir> \
 #                   <test_target> <jvm_flags>
 #       Re-use an existing build (no configure, no make images).
-#       Runs the given jtreg test target with optional JVM flags.
-#       test_target examples: "tier1", "test/jdk", "test/hotspot/jtreg/gc"
-#       jvm_flags  examples: "-Xint", "-Xcomp -ea", "" (empty = none)
 #
 # Environment expected (set via config.sh):
 #   BOOT_JDK_DIR, JTREG_DIR, GTEST_DIR
@@ -32,9 +32,10 @@
 # Each public function runs its critical body inside a subshell with its own
 # set -e so a build failure terminates only that combination.
 
-_bt_info()    { echo "[INFO]  $*"; }
-_bt_success() { echo "[OK]    $*"; }
-_bt_warn()    { echo "[WARN]  $*" >&2; }
+# Internal aliases that forward to the shared helpers in config.sh
+_bt_info()    { info    "$*" 2>/dev/null || echo "[INFO]  $*"; }
+_bt_success() { success "$*" 2>/dev/null || echo "[OK]    $*"; }
+_bt_warn()    { warn    "$*" 2>/dev/null || echo "[WARN]  $*" >&2; }
 
 # ---------------------------------------------------------------------------
 # _collect_test_results  <conf_dir>
@@ -106,24 +107,6 @@ _configure_jdk() {
     done
 
     bash configure "${args[@]}"
-}
-
-# ---------------------------------------------------------------------------
-# Internal: resolve the boot JDK directory for a stream's min version.
-# Calls boot_jdk_dir_for_version() from config.sh (already sourced by caller).
-# Falls back to BOOT_JDK_DIR if the versioned dir does not exist.
-# ---------------------------------------------------------------------------
-_resolve_boot_jdk_dir() {
-    local min_ver="${1:-0}"
-    local candidate
-    candidate="$(boot_jdk_dir_for_version "${min_ver}")"
-    if [[ -x "${candidate}/bin/java" ]]; then
-        echo "${candidate}"
-    else
-        # versioned dir not ready — fall back to the global tip JDK
-        _bt_warn "  boot_jdk_${min_ver} not found at ${candidate}; falling back to ${BOOT_JDK_DIR}"
-        echo "${BOOT_JDK_DIR}"
-    fi
 }
 
 # ---------------------------------------------------------------------------
@@ -252,6 +235,158 @@ _write_build_diagnosis() {
     else
         _bt_info "  Build diagnosis written to ${diag_file}"
     fi
+}
+
+# ---------------------------------------------------------------------------
+# Public: update_source
+#
+# git fetch + pull (or shallow clone) one JDK source tree.
+# Writes:
+#   <out_base>/git-pull.log      — full git output
+#   <out_base>/commit-info.txt   — before/after commits + bisect command
+#   <out_base>/top_commit        — one-line HEAD commit (printed to stdout)
+#   <out_base>/source-failure.txt — present only on failure
+#
+# Arguments:
+#   $1  label       — stream label (e.g. "head", "jdk21")
+#   $2  src_subdir  — subdirectory under JDK_SOURCES_ROOT
+#   $3  git_url     — upstream remote URL
+#   $4  out_base    — directory for output artefacts
+#
+# Returns 1 on git failure (writes source-failure.txt).
+# On success, prints the top_commit text to stdout.
+# ---------------------------------------------------------------------------
+update_source() {
+    local label="$1"
+    local src_subdir="$2"
+    local git_url="$3"
+    local out_base="$4"
+
+    local src_dir="${JDK_SOURCES_ROOT}/${src_subdir}"
+
+    _bt_info "[${label}] Preparing source at ${src_dir} …"
+    _bt_info "[${label}]   git URL : ${git_url}"
+
+    local commit_before="" is_fresh_clone=false
+    local git_log="${out_base}/git-pull.log"
+    mkdir -p "${out_base}"
+    {
+        echo "========================================================"
+        echo "  Git Pull Log — ${label}"
+        echo "========================================================"
+        echo "  src_dir    : ${src_dir}"
+        echo "  git_url    : ${git_url}"
+        echo "  date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo ""
+    } > "${git_log}"
+
+    if [[ -d "${src_dir}/.git" ]]; then
+        commit_before="$(git -C "${src_dir}" rev-parse HEAD)"
+        _bt_info "[${label}]   commit before pull: ${commit_before}"
+        echo "  commit_before : ${commit_before}" >> "${git_log}"
+        echo "" >> "${git_log}"
+        echo "--- git fetch + pull output ---" >> "${git_log}"
+
+        if ! git -C "${src_dir}" fetch --prune origin >> "${git_log}" 2>&1; then
+            _record_source_failure "${label}" "${out_base}" "${git_log}" "git fetch failed"
+            return 1
+        fi
+
+        local dirty_files
+        dirty_files="$(git -C "${src_dir}" status --porcelain 2>/dev/null)"
+        if [[ -n "${dirty_files}" ]]; then
+            _bt_warn "[${label}] Local modifications detected — discarding before pull."
+            git -C "${src_dir}" checkout -- . >> "${git_log}" 2>&1
+            git -C "${src_dir}" clean -fd    >> "${git_log}" 2>&1
+        fi
+
+        if ! git -C "${src_dir}" checkout master >> "${git_log}" 2>&1; then
+            _record_source_failure "${label}" "${out_base}" "${git_log}" "git checkout master failed"
+            return 1
+        fi
+        if ! git -C "${src_dir}" pull --ff-only origin master >> "${git_log}" 2>&1; then
+            _record_source_failure "${label}" "${out_base}" "${git_log}" "git pull --ff-only failed"
+            return 1
+        fi
+    else
+        _bt_info "[${label}]   No repo found — cloning …"
+        echo "  action     : fresh clone" >> "${git_log}"
+        echo "--- git clone output ---" >> "${git_log}"
+        mkdir -p "${JDK_SOURCES_ROOT}"
+        if ! git clone --depth=1 "${git_url}" "${src_dir}" >> "${git_log}" 2>&1; then
+            _record_source_failure "${label}" "${out_base}" "${git_log}" "git clone failed"
+            return 1
+        fi
+        is_fresh_clone=true
+    fi
+
+    local commit_after
+    commit_after="$(git -C "${src_dir}" rev-parse HEAD)"
+    _bt_info "[${label}]   commit after pull : ${commit_after}"
+    { echo ""; echo "  commit_after  : ${commit_after}"; echo "  result        : SUCCESS"; } \
+        >> "${git_log}"
+
+    # ---- commit-info.txt ------------------------------------------------
+    local ci_file="${out_base}/commit-info.txt"
+    {
+        echo "stream         : ${label}"
+        echo "src_dir        : ${src_dir}"
+        echo "run_date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo ""
+        if ${is_fresh_clone}; then
+            echo "commit_before  : (none — fresh clone)"
+            echo "commit_after   : ${commit_after}"
+        else
+            echo "commit_before  : ${commit_before}"
+            echo "commit_after   : ${commit_after}"
+            echo ""
+            if [[ "${commit_before}" == "${commit_after}" ]]; then
+                echo "new_commits    : (none — already up to date)"
+                echo "bisect_cmd     : (not needed)"
+            else
+                local n
+                n="$(git -C "${src_dir}" rev-list --count \
+                    "${commit_before}..${commit_after}")"
+                echo "new_commits    : ${n} commit(s) pulled in this run"
+                echo "bisect_cmd     : git bisect start ${commit_after} ${commit_before}"
+                echo ""
+                echo "# Commits introduced (newest first):"
+                git -C "${src_dir}" log --oneline --no-merges \
+                    "${commit_before}..${commit_after}" | sed 's/^/#   /'
+                echo ""
+                echo "# Full details:"
+                git -C "${src_dir}" log \
+                    --format='commit %H%nauthor %an <%ae>%ndate   %ad%n%n    %s%n%n    %b' \
+                    --date=rfc "${commit_before}..${commit_after}"
+            fi
+        fi
+    } > "${ci_file}"
+
+    _bt_info "[${label}]   top commit: $(git -C "${src_dir}" log -1 --oneline)"
+
+    # Print top_commit to stdout so callers can capture it
+    git -C "${src_dir}" log -1 \
+        --format='commit %H%nauthor %an <%ae>%ndate   %ad%n%n    %s' \
+        --date=rfc
+}
+
+# Helper: write source-failure.txt
+_record_source_failure() {
+    local label="$1" out_base="$2" git_log="$3" reason="$4"
+    _bt_warn "[${label}] Source preparation failed: ${reason}"
+    {
+        echo "========================================================"
+        echo "  Source Preparation Failure"
+        echo "========================================================"
+        echo "  stream  : ${label}"
+        echo "  reason  : ${reason}"
+        echo "  date    : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        echo "  impact  : all debug levels skipped for this stream"
+        echo "  git_log : ${git_log}"
+        echo ""
+        echo "  See git-pull.log in this directory for the full git output."
+        echo "========================================================"
+    } > "${out_base}/source-failure.txt"
 }
 
 # ---------------------------------------------------------------------------
@@ -404,17 +539,8 @@ build_and_test_jdk() {
 # ---------------------------------------------------------------------------
 # Public: build_only_jdk
 #
-# Configure + make images for one stream × debug-level.  No tests.
-#
-# Arguments:
-#   $1  src_dir
-#   $2  stream_label
-#   $3  debug_level
-#   $4  out_dir
-#   $5  boot_jdk_dir         — path to the boot JDK to use for this stream
-#   $6+ extra_configure_flags (optional)
-#
-# Exit code: 0 success, non-zero build failure.
+# Thin wrapper — configure + make images, no tests.
+# Delegates to build_and_test_jdk with jtreg_ok=false.
 # ---------------------------------------------------------------------------
 build_only_jdk() {
     local src_dir="$1"
@@ -423,80 +549,9 @@ build_only_jdk() {
     local out_dir="$4"
     local boot_jdk_dir="${5:-${BOOT_JDK_DIR}}"
     shift 5
-    local extra_configure_flags=("$@")
-
-    _bt_info "=== build_only_jdk ==="
-    _bt_info "    stream   : ${stream_label}"
-    _bt_info "    level    : ${debug_level}"
-    _bt_info "    src      : ${src_dir}"
-    _bt_info "    output   : ${out_dir}"
-    _bt_info "    boot_jdk : ${boot_jdk_dir}"
-    [[ ${#extra_configure_flags[@]} -gt 0 ]] && \
-        _bt_info "    extra  : ${extra_configure_flags[*]}"
-
-    mkdir -p "${out_dir}"
-
-    (
-        set -euo pipefail
-        cd "${src_dir}"
-
-        local conf_name="linux-s390x-server-${debug_level}"
-        local build_log_path=""
-        local current_phase="configure"
-
-        _on_exit() {
-            local exit_code=$?
-            local actual_log="${build_log_path}"
-            if [[ -z "${actual_log}" ]]; then
-                local found_dir
-                found_dir="$(_find_conf_dir "${debug_level}")"
-                [[ -n "${found_dir}" ]] && actual_log="${found_dir}/build.log"
-            fi
-            _write_build_diagnosis \
-                "${out_dir}" "${actual_log:-}" "${current_phase}" \
-                "${exit_code}" "${stream_label}" "${debug_level}"
-        }
-        trap _on_exit EXIT
-
-        current_phase="configure"
-        _bt_info "  Running configure (debug-level=${debug_level}) …"
-        _configure_jdk "${debug_level}" "${boot_jdk_dir}" \
-            "${extra_configure_flags[@]+"${extra_configure_flags[@]}"}"
-
-        if [[ ! -d "build/${conf_name}" ]]; then
-            local found; found="$(_find_conf_dir "${debug_level}")"
-            [[ -z "${found}" ]] && { echo "ERROR: no conf dir after configure" >&2; exit 1; }
-            conf_name="$(basename "${found}")"
-        fi
-
-        build_log_path="build/${conf_name}/build.log"
-
-        current_phase="images"
-        _bt_info "  Building images (CONF=${conf_name}) …"
-
-        local make_exit=0
-        MAKEFLAGS= MAKEOVERRIDES= \
-        make CONF="${conf_name}" LOG=debug images \
-                2>&1 || make_exit=$?
-        if [[ "${make_exit}" -ne 0 ]]; then
-            _bt_warn "  make images failed (exit=${make_exit})."
-            exit "${make_exit}"
-        fi
-
-        {
-            echo "stream:       ${stream_label}"
-            echo "debug_level:  ${debug_level}"
-            echo "mode:         build-only"
-            echo "date:         $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-            echo "src_dir:      ${src_dir}"
-            echo "top_commit:   $(git -C "${src_dir}" log -1 --oneline 2>/dev/null || echo 'unknown')"
-            echo "boot_jdk:     $("${boot_jdk_dir}/bin/java" -version 2>&1 | head -1)"
-            echo "extra_flags:  ${extra_configure_flags[*]:-none}"
-            echo "test_exit:    SKIPPED (build-only mode)"
-        } > "${out_dir}/run-metadata.txt"
-
-        _bt_success "  Build complete for ${stream_label}/${debug_level}."
-    )
+    build_and_test_jdk \
+        "${src_dir}" "${stream_label}" "${debug_level}" \
+        "${out_dir}" "false" "${boot_jdk_dir}" "$@"
 }
 
 # ---------------------------------------------------------------------------

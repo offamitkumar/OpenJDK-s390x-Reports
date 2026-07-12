@@ -2,32 +2,15 @@
 # =============================================================================
 # run_daily.sh — Daily CI orchestrator: tier1 tests for all active streams
 #
-# Pipeline stages and dependency rules:
-#
-#   Stage 1: setup_deps.sh
-#     • boot JDK fails (exit 1) → ABORT — nothing can build without a boot JDK
-#     • jtreg fails    (exit 2) → DEGRADED — builds proceed, tests skipped
-#     • both succeed   (exit 0) → Full pipeline
-#
-#   Stage 2: resolve_streams.py
-#     • Queries Adoptium API for active JDK versions.
-#     • Versions no longer in support → SKIPPED_EOL.
-#     • --stream / --level flags further filter what runs.
-#
-#   Stage 3 (per stream × debug-level):
-#     a. git fetch + pull / clone
-#        Failure → SKIPPED_SOURCE_FAIL for that stream; others continue.
-#     b. configure
-#        Failure → BUILD_FAILED; tests do not run.
-#     c. make images
-#        Failure → BUILD_FAILED; tests do not run.
-#     d. make run-test-tier1   (only when JTREG_OK=true)
-#        Non-zero jtreg exit → TEST_FAILED (recorded; pipeline continues).
-#
-#   Stage 4: write run-summary.txt
-#   Stage 5: git commit + push
-#
-# Every stage writes a timestamped pipeline.log in the day's report dir.
+# Pipeline stages:
+#   1. Download boot JDK + jtreg (setup_deps.sh)
+#      boot JDK fail → ABORT; jtreg fail → DEGRADED (builds only)
+#   2. resolve_streams.py — filter registry to active Adoptium versions
+#   3. Per stream × level: git pull → configure → build → tier1 tests
+#   4a. write run-summary.txt
+#   4b. retention purge (>90 days)
+#   4c. gen_status.py → STATUS.md + per-run run-summary.md
+#   5. Email notification
 #
 # Usage:
 #   bash scripts/run_daily.sh [--stream LABEL] [--level LEVEL]
@@ -74,23 +57,13 @@ PIPELINE_LOG="${PIPELINE_LOG_DIR}/pipeline.log"
 exec > >(tee -a "${PIPELINE_LOG}") 2>&1
 
 # ---------------------------------------------------------------------------
-# Logging helpers
-# ---------------------------------------------------------------------------
-log()     { echo "$(date -u '+%H:%M:%S') [RUN]   $*"; }
-info()    { echo "$(date -u '+%H:%M:%S') [INFO]  $*"; }
-success() { echo "$(date -u '+%H:%M:%S') [OK]    $*"; }
-warn()    { echo "$(date -u '+%H:%M:%S') [WARN]  $*"; }
-die()     { echo "$(date -u '+%H:%M:%S') [FATAL] $*"; exit 1; }
-
-# ---------------------------------------------------------------------------
 # Trap: always return to repo root on exit
 # ---------------------------------------------------------------------------
 trap 'cd "${REPORTS_REPO_ROOT}"' EXIT
 
 # ---------------------------------------------------------------------------
-# Dependency flags — updated in refresh_deps()
+# Dependency flags
 # ---------------------------------------------------------------------------
-BOOT_JDK_OK=false
 JTREG_OK=false
 
 # ---------------------------------------------------------------------------
@@ -114,70 +87,23 @@ record_status() {
 # Stage 1 — Download / verify dependencies
 # ---------------------------------------------------------------------------
 refresh_deps() {
-    if ${SKIP_DEPS}; then
-        info "Skipping dependency refresh (--skip-deps)"
-        if [[ -x "${BOOT_JDK_DIR}/bin/java" ]]; then
-            BOOT_JDK_OK=true
-            info "  Boot JDK present: $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
-        else
-            die "Boot JDK not found at ${BOOT_JDK_DIR} — cannot skip deps."
-        fi
-        if [[ -x "${JTREG_DIR}/bin/jtreg" ]]; then
-            JTREG_OK=true
-            info "  jtreg present: ${JTREG_DIR}/bin/jtreg"
-        else
-            warn "jtreg not found at ${JTREG_DIR} — tests will be SKIPPED."
-            JTREG_OK=false
-        fi
-        return
-    fi
-
     log "========================================================"
     log "Stage 1: Downloading dependencies"
     log "========================================================"
 
-    local deps_exit=0
-    local deps_args=()
-    [[ -n "${FILTER_STREAM}" ]] && deps_args+=("--stream" "${FILTER_STREAM}")
-    bash "${SCRIPT_DIR}/setup_deps.sh" "${deps_args[@]}" || deps_exit=$?
+    local stream_arg="${FILTER_STREAM:-head}"
+    ensure_deps "${stream_arg}" "${SKIP_DEPS}"
 
-    case "${deps_exit}" in
-        0)
-            BOOT_JDK_OK=true
-            JTREG_OK=true
-            success "Stage 1 complete: boot JDK and jtreg ready."
-            ;;
-        1)
-            # boot JDK failure — copy failure record, mark all streams blocked, abort
-            if [[ -f "${CI_TMP_DIR}/deps-failure.txt" ]]; then
-                cp "${CI_TMP_DIR}/deps-failure.txt" \
-                   "${PIPELINE_LOG_DIR}/deps-failure.txt"
-                cat "${PIPELINE_LOG_DIR}/deps-failure.txt"
-            fi
-            for lbl in "${ALL_REGISTERED_LABELS[@]}"; do
-                for level in "${BUILD_LEVELS[@]}"; do
-                    record_status "${lbl}" "${level}" "SKIPPED_BOOT_JDK_FAIL" \
-                        "Boot JDK download failed; see deps-failure.txt"
-                done
-            done
-            write_run_summary
-            die "Boot JDK download failed (exit ${deps_exit}). Pipeline aborted."
-            ;;
-        2)
-            # jtreg failure — builds proceed, tests skipped
-            BOOT_JDK_OK=true
-            JTREG_OK=false
-            if [[ -f "${CI_TMP_DIR}/deps-failure.txt" ]]; then
-                cp "${CI_TMP_DIR}/deps-failure.txt" \
-                   "${PIPELINE_LOG_DIR}/deps-failure.txt"
-                cat "${PIPELINE_LOG_DIR}/deps-failure.txt"
-            fi
-            warn "jtreg download failed — builds will proceed but tests will be SKIPPED."
-            ;;
-        *)
-            die "setup_deps.sh exited with unexpected code ${deps_exit}."
-            ;;
-    esac
+    # On boot JDK failure ensure_deps already exits; reaching here = success or jtreg-only fail.
+    # Copy deps-failure.txt into the run log dir if jtreg failed.
+    if [[ "${JTREG_OK}" != "true" ]]; then
+        if [[ -f "${CI_TMP_DIR}/deps-failure.txt" ]]; then
+            cp "${CI_TMP_DIR}/deps-failure.txt" "${PIPELINE_LOG_DIR}/deps-failure.txt"
+            cat "${PIPELINE_LOG_DIR}/deps-failure.txt"
+        fi
+    else
+        success "Stage 1 complete: boot JDK and jtreg ready."
+    fi
 }
 
 # ---------------------------------------------------------------------------
@@ -236,155 +162,6 @@ resolve_active_streams() {
     for s in "${ACTIVE_STREAMS[@]}"; do
         info "  → $(echo "${s}" | cut -d'|' -f1)"
     done
-}
-
-# ---------------------------------------------------------------------------
-# Stage 3a — git fetch + pull / clone a single stream
-#
-# On failure: writes source-failure.txt; returns 1
-# On success: prints the top_commit text to stdout; returns 0
-# ---------------------------------------------------------------------------
-prepare_source() {
-    local label="$1"
-    local src_subdir="$2"
-    local git_url="$3"
-    local out_base="$4"
-
-    local src_dir="${JDK_SOURCES_ROOT}/${src_subdir}"
-
-    log "[${label}] Preparing source at ${src_dir} …"
-    info "[${label}]   git URL : ${git_url}"
-
-    local commit_before="" is_fresh_clone=false
-    local git_log="${out_base}/git-pull.log"
-    mkdir -p "${out_base}"
-    {
-        echo "========================================================"
-        echo "  Git Pull Log — ${label}"
-        echo "========================================================"
-        echo "  src_dir    : ${src_dir}"
-        echo "  git_url    : ${git_url}"
-        echo "  date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-        echo ""
-    } > "${git_log}"
-
-    if [[ -d "${src_dir}/.git" ]]; then
-        commit_before="$(git -C "${src_dir}" rev-parse HEAD)"
-        info "[${label}]   commit before pull: ${commit_before}"
-        echo "  commit_before : ${commit_before}" >> "${git_log}"
-        echo "" >> "${git_log}"
-        echo "--- git fetch + pull output ---" >> "${git_log}"
-
-        if ! git -C "${src_dir}" fetch --prune origin >> "${git_log}" 2>&1; then
-            _record_source_failure "${label}" "${out_base}" "${git_log}" \
-                "git fetch failed"
-            return 1
-        fi
-
-        # Discard any local modifications that would block the merge.
-        # This is a CI source mirror — upstream content always wins.
-        local dirty_files
-        dirty_files="$(git -C "${src_dir}" status --porcelain 2>/dev/null)"
-        if [[ -n "${dirty_files}" ]]; then
-            warn "[${label}] Local modifications detected — discarding before pull:"
-            git -C "${src_dir}" status --short | while IFS= read -r line; do
-                warn "[${label}]   ${line}"
-            done
-            git -C "${src_dir}" checkout -- . >> "${git_log}" 2>&1
-            git -C "${src_dir}" clean -fd    >> "${git_log}" 2>&1
-        fi
-
-        if ! git -C "${src_dir}" checkout master >> "${git_log}" 2>&1; then
-            _record_source_failure "${label}" "${out_base}" "${git_log}" \
-                "git checkout master failed"
-            return 1
-        fi
-        if ! git -C "${src_dir}" pull --ff-only origin master >> "${git_log}" 2>&1; then
-            _record_source_failure "${label}" "${out_base}" "${git_log}" \
-                "git pull --ff-only origin master failed"
-            return 1
-        fi
-    else
-        info "[${label}]   No repo found — cloning …"
-        echo "  action     : fresh clone" >> "${git_log}"
-        echo "--- git clone output ---" >> "${git_log}"
-        mkdir -p "${JDK_SOURCES_ROOT}"
-        if ! git clone --depth=1 "${git_url}" "${src_dir}" >> "${git_log}" 2>&1; then
-            _record_source_failure "${label}" "${out_base}" "${git_log}" \
-                "git clone failed"
-            return 1
-        fi
-        is_fresh_clone=true
-    fi
-
-    local commit_after
-    commit_after="$(git -C "${src_dir}" rev-parse HEAD)"
-    info "[${label}]   commit after pull : ${commit_after}"
-    echo "" >> "${git_log}"
-    echo "  commit_after  : ${commit_after}" >> "${git_log}"
-    echo "  result        : SUCCESS" >> "${git_log}"
-
-    # ---- commit-info.txt ------------------------------------------------
-    local ci_file="${out_base}/commit-info.txt"
-    {
-        echo "stream         : ${label}"
-        echo "src_dir        : ${src_dir}"
-        echo "run_date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-        echo ""
-        if ${is_fresh_clone}; then
-            echo "commit_before  : (none — fresh clone)"
-            echo "commit_after   : ${commit_after}"
-        else
-            echo "commit_before  : ${commit_before}"
-            echo "commit_after   : ${commit_after}"
-            echo ""
-            if [[ "${commit_before}" == "${commit_after}" ]]; then
-                echo "new_commits    : (none — already up to date)"
-                echo "bisect_cmd     : (not needed)"
-            else
-                local n
-                n="$(git -C "${src_dir}" rev-list --count \
-                    "${commit_before}..${commit_after}")"
-                echo "new_commits    : ${n} commit(s) pulled in this run"
-                echo "bisect_cmd     : git bisect start ${commit_after} ${commit_before}"
-                echo ""
-                echo "# Commits introduced (newest first):"
-                git -C "${src_dir}" log --oneline --no-merges \
-                    "${commit_before}..${commit_after}" | sed 's/^/#   /'
-                echo ""
-                echo "# Full details:"
-                git -C "${src_dir}" log \
-                    --format='commit %H%nauthor %an <%ae>%ndate   %ad%n%n    %s%n%n    %b' \
-                    --date=rfc "${commit_before}..${commit_after}"
-            fi
-        fi
-    } > "${ci_file}"
-
-    info "[${label}]   top commit: $(git -C "${src_dir}" log -1 --oneline)"
-
-    # Print the top_commit text — captured by caller via command substitution
-    git -C "${src_dir}" log -1 \
-        --format='commit %H%nauthor %an <%ae>%ndate   %ad%n%n    %s' \
-        --date=rfc
-}
-
-# Helper: write source-failure.txt
-_record_source_failure() {
-    local label="$1" out_base="$2" git_log="$3" reason="$4"
-    warn "[${label}] Source preparation failed: ${reason}"
-    {
-        echo "========================================================"
-        echo "  Source Preparation Failure"
-        echo "========================================================"
-        echo "  stream  : ${label}"
-        echo "  reason  : ${reason}"
-        echo "  date    : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-        echo "  impact  : all debug levels skipped for this stream"
-        echo "  git_log : ${git_log}"
-        echo ""
-        echo "  See git-pull.log in this directory for the full git output."
-        echo "========================================================"
-    } > "${out_base}/source-failure.txt"
 }
 
 # ---------------------------------------------------------------------------
@@ -456,36 +233,6 @@ run_level() {
 }
 
 # ---------------------------------------------------------------------------
-# Helper: resolve the boot JDK directory for a given stream.
-#
-# For "head" (or any stream whose min_ver is empty / 0) we need the tip JDK.
-# For versioned streams we want boot_jdk_<min_ver>; fall back to BOOT_JDK_DIR
-# if setup_deps.sh did not download that version (e.g. --skip-deps + old tree).
-# ---------------------------------------------------------------------------
-_resolve_boot_jdk_dir_for_stream() {
-    local label="$1"
-    local min_ver="${2:-0}"
-
-    # "head" always uses the tip JDK (BOOT_JDK_DIR, which setup_deps.sh
-    # keeps pointing at the newest downloaded JDK).
-    if [[ "${label}" == "head" ]]; then
-        echo "${BOOT_JDK_DIR}"
-        return
-    fi
-
-    # boot_jdk_dir_for_version is defined in config.sh (already sourced)
-    local candidate
-    candidate="$(boot_jdk_dir_for_version "${min_ver}")"
-
-    if [[ -x "${candidate}/bin/java" ]]; then
-        echo "${candidate}"
-    else
-        warn "[${label}] Versioned boot JDK not found at ${candidate}; falling back to ${BOOT_JDK_DIR}"
-        echo "${BOOT_JDK_DIR}"
-    fi
-}
-
-# ---------------------------------------------------------------------------
 # Stage 3 — Process all active streams
 # ---------------------------------------------------------------------------
 process_streams() {
@@ -505,14 +252,13 @@ process_streams() {
         log "[${label}] Starting stream"
         log "----------------------------------------------------"
 
-        # Resolve the boot JDK directory for this stream's minimum version.
         local boot_jdk_dir
-        boot_jdk_dir="$(_resolve_boot_jdk_dir_for_stream "${label}" "${min_ver}")"
+        boot_jdk_dir="$(resolve_boot_jdk "${label}" "${min_ver}")"
         info "[${label}]   boot JDK : ${boot_jdk_dir}"
 
-        # git pull / clone
+        # git pull / clone (shared function from build_test.sh)
         local top_commit
-        if ! top_commit="$(prepare_source "${label}" "${src_subdir}" "${git_url}" "${out_base}")"; then
+        if ! top_commit="$(update_source "${label}" "${src_subdir}" "${git_url}" "${out_base}")"; then
             warn "[${label}] Skipping all levels (source preparation failed)."
             for level in "${BUILD_LEVELS[@]}"; do
                 record_status "${label}" "${level}" "SKIPPED_SOURCE_FAIL" \
@@ -716,13 +462,6 @@ gen_status_pages() {
 }
 
 # ---------------------------------------------------------------------------
-# Stage 5 — Push disabled: results are kept local only
-# ---------------------------------------------------------------------------
-publish_results() {
-    info "Git push disabled — results stored locally in ${PIPELINE_LOG_DIR}"
-}
-
-# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 main() {
@@ -741,11 +480,10 @@ main() {
     resolve_active_streams  # Stage 2
     process_streams         # Stage 3
     write_run_summary       # Stage 4a
-    purge_old_reports       # Stage 4b — delete reports >90 days (always runs)
+    purge_old_reports       # Stage 4b — delete reports >90 days
     gen_status_pages        # Stage 4c — writes STATUS.md + per-run .md
-    publish_results         # Stage 5 — no-op (push disabled)
 
-    # Stage 6 — Email notification
+    # Stage 5 — Email notification
     local _overall="PASS"
     for key in "${!STREAM_STATUS[@]}"; do
         case "${STREAM_STATUS[${key}]}" in

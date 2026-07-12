@@ -169,11 +169,6 @@ OPT_STREAM_SET=false  # true when --stream was explicitly passed
 # Tiers executed when --test-target all is requested
 ALL_TIERS=(tier1 tier2 tier3 tier4)
 
-# Track whether the user supplied any explicit arguments.
-# Zero args → treated as an automated CI invocation → ci-results-daily.
-# Any arg    → treated as a manual run              → ci-results-manual.
-_USER_SUPPLIED_ARGS=false
-
 # ---------------------------------------------------------------------------
 # Usage
 # ---------------------------------------------------------------------------
@@ -189,8 +184,6 @@ if [[ $# -eq 0 ]]; then
     echo "[jdk.sh] No command given — running default (run)"
     echo "         Use 'bash scripts/jdk.sh --help' for all options."
     COMMAND="run"
-else
-    _USER_SUPPLIED_ARGS=true
 fi
 
 while [[ $# -gt 0 ]]; do
@@ -421,19 +414,17 @@ if [[ "${COMMAND}" == "resend" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Report directory — one per invocation, timestamped to the minute so
-# repeated runs on the same day don't overwrite each other.
-# Layout: reports/YYYY/Month/DD/manual-HHMMSS/
+# Report directory — one per invocation, timestamped so repeated runs on the
+# same day don't overwrite each other.
+# Layout: reports/YYYY/Month/DD/<label>-HHMMSS/
 # ---------------------------------------------------------------------------
 _YEAR="$(date +%Y)"
 _MONTH="$(date +%B)"
 _DAY="$(date +%d)"
 _TIME="$(date +%H%M%S)"
 
-# For --test-target, include the target in the dir name to make logs easy to
-# find when running the same build with different targets.
-_TARGET_SLUG="${OPT_TEST_TARGET//\//_}"   # replace / with _
-_TARGET_SLUG="${_TARGET_SLUG// /-}"       # spaces → dash (all → "all")
+_TARGET_SLUG="${OPT_TEST_TARGET//\//_}"
+_TARGET_SLUG="${_TARGET_SLUG// /-}"
 
 case "${COMMAND}" in
     run)     _RUN_LABEL="run-${_TIME}" ;;
@@ -443,7 +434,6 @@ case "${COMMAND}" in
     collect) _RUN_LABEL="collect-${OPT_LEVEL}-${_TIME}" ;;
 esac
 
-# collect reuses the original run's OUT_BASE; all other commands create a new one
 if [[ "${COMMAND}" == "collect" ]]; then
     OUT_BASE="${OPT_FROM}"
 else
@@ -451,28 +441,14 @@ else
     mkdir -p "${OUT_BASE}"
 fi
 
-# Tee all output to a run log
 RUN_LOG="${OUT_BASE}/run.log"
 exec > >(tee -a "${RUN_LOG}") 2>&1
 
 # ---------------------------------------------------------------------------
 # Banner
 # ---------------------------------------------------------------------------
-
-# Decide which branch to push to.
-# No user args  → behaves like the cron job → ci-results-daily
-# Any user args → explicit manual invocation → ci-results-manual
-if ${_USER_SUPPLIED_ARGS}; then
-    PUBLISH_BRANCH="${GIT_RESULTS_BRANCH_MANUAL}"
-    _RUN_KIND="manual"
-else
-    PUBLISH_BRANCH="${GIT_RESULTS_BRANCH_DAILY}"
-    _RUN_KIND="ci"
-fi
-
 log "========================================================"
 log "jdk.sh — OpenJDK s390x CI"
-log "run kind    : ${_RUN_KIND} (push → ${PUBLISH_BRANCH})"
 log "command     : ${COMMAND}"
 log "stream      : ${OPT_STREAM}"
 log "level       : ${OPT_LEVEL} → ${EFFECTIVE_LEVELS[*]}"
@@ -492,7 +468,7 @@ log "run log     : ${RUN_LOG}"
 log "========================================================"
 
 # ---------------------------------------------------------------------------
-# Resolve the source directory for the requested stream
+# Resolve source dir and boot JDK for the requested stream
 # ---------------------------------------------------------------------------
 resolve_stream_src() {
     local target_label="$1"
@@ -506,35 +482,6 @@ resolve_stream_src() {
     return 1
 }
 
-# Return the correct boot JDK directory for the given stream label,
-# using the MIN_JDK_VERSION field from the registry.
-resolve_stream_boot_jdk() {
-    local target_label="$1"
-
-    # "head" always uses the tip JDK (BOOT_JDK_DIR)
-    if [[ "${target_label}" == "head" ]]; then
-        echo "${BOOT_JDK_DIR}"
-        return 0
-    fi
-
-    for entry in "${JDK_STREAMS[@]}"; do
-        IFS='|' read -r lbl _sub _url min_ver _flags <<< "${entry}"
-        if [[ "${lbl}" == "${target_label}" ]]; then
-            local candidate
-            candidate="$(boot_jdk_dir_for_version "${min_ver}")"
-            if [[ -x "${candidate}/bin/java" ]]; then
-                echo "${candidate}"
-            else
-                warn "[${target_label}] Versioned boot JDK not found at ${candidate}; falling back to ${BOOT_JDK_DIR}"
-                echo "${BOOT_JDK_DIR}"
-            fi
-            return 0
-        fi
-    done
-    # Stream not found — use the global default
-    echo "${BOOT_JDK_DIR}"
-}
-
 SRC_DIR=""
 if ! SRC_DIR="$(resolve_stream_src "${OPT_STREAM}")"; then
     die "Stream '${OPT_STREAM}' is not in the registry (scripts/config.sh JDK_STREAMS)."
@@ -542,66 +489,33 @@ fi
 info "Source directory : ${SRC_DIR}"
 
 STREAM_BOOT_JDK=""
-STREAM_BOOT_JDK="$(resolve_stream_boot_jdk "${OPT_STREAM}")"
+# Resolve min_ver for this stream and call the shared resolver from config.sh
+for _entry in "${JDK_STREAMS[@]}"; do
+    IFS='|' read -r _lbl _sub _url _min_ver _flags <<< "${_entry}"
+    if [[ "${_lbl}" == "${OPT_STREAM}" ]]; then
+        STREAM_BOOT_JDK="$(resolve_boot_jdk "${OPT_STREAM}" "${_min_ver}")"
+        break
+    fi
+done
+: "${STREAM_BOOT_JDK:=${BOOT_JDK_DIR}}"
 info "Boot JDK         : ${STREAM_BOOT_JDK}"
 
 # ---------------------------------------------------------------------------
 # Step 1 — Download / verify dependencies
 # ---------------------------------------------------------------------------
-ensure_deps() {
-    if ${OPT_SKIP_DEPS}; then
-        if [[ ! -x "${BOOT_JDK_DIR}/bin/java" ]]; then
-            die "Boot JDK not found at ${BOOT_JDK_DIR}. Remove --skip-deps to download it."
-        fi
-        info "Using cached boot JDK: $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
-        if [[ ! -x "${JTREG_DIR}/bin/jtreg" ]]; then
-            warn "jtreg not found at ${JTREG_DIR} — tests will be skipped."
-            JTREG_OK=false
-        else
-            info "Using cached jtreg: ${JTREG_DIR}/bin/jtreg"
-            JTREG_OK=true
-        fi
-        return
-    fi
-
-    log "Step 1: Downloading dependencies …"
-    local deps_exit=0
-    bash "${SCRIPT_DIR}/setup_deps.sh" --stream "${OPT_STREAM}" || deps_exit=$?
-
-    case "${deps_exit}" in
-        0)
-            JTREG_OK=true
-            success "Boot JDK and jtreg ready."
-            ;;
-        1)
-            [[ -f "${CI_TMP_DIR}/deps-failure.txt" ]] \
-                && cat "${CI_TMP_DIR}/deps-failure.txt"
-            die "Boot JDK download failed — cannot continue."
-            ;;
-        2)
-            JTREG_OK=false
-            warn "jtreg download failed — build will proceed but tests will be SKIPPED."
-            ;;
-        *)
-            die "setup_deps.sh exited with unexpected code ${deps_exit}."
-            ;;
-    esac
-}
-
 JTREG_OK=false
 if [[ "${COMMAND}" == "clean" ]]; then
     : # No deps needed to remove a build directory
-elif [[ "${COMMAND}" == "test" ]]; then
-    # For test-only: we still need JTREG; boot JDK may already be present
-    ensure_deps
-    [[ "${JTREG_OK}" != "true" ]] \
-        && die "jtreg is required for the 'test' command but is not available."
 else
-    ensure_deps
+    log "Step 1: Downloading dependencies …"
+    ensure_deps "${OPT_STREAM}" "${OPT_SKIP_DEPS}"
+    if [[ "${COMMAND}" == "test" && "${JTREG_OK}" != "true" ]]; then
+        die "jtreg is required for the 'test' command but is not available."
+    fi
 fi
 
 # ---------------------------------------------------------------------------
-# Step 2 — Git pull (for run and build; skipped for test-only)
+# Step 2 — Git pull helper (wraps shared update_source from build_test.sh)
 # ---------------------------------------------------------------------------
 prepare_src() {
     if ${OPT_DRY_RUN}; then
@@ -610,86 +524,20 @@ prepare_src() {
     fi
 
     log "Step 2: Updating source (${OPT_STREAM}) …"
-    if [[ -d "${SRC_DIR}/.git" ]]; then
-        info "  Fetching + pulling ${SRC_DIR} …"
-
-        # Capture HEAD before the pull so we can build a bisect command
-        local commit_before
-        commit_before="$(git -C "${SRC_DIR}" rev-parse HEAD 2>/dev/null || echo '')"
-
-        git -C "${SRC_DIR}" fetch --prune origin
-
-        # Discard any local modifications that would block the merge.
-        # This is a CI source mirror — upstream content always wins.
-        local dirty_files
-        dirty_files="$(git -C "${SRC_DIR}" status --porcelain 2>/dev/null)"
-        if [[ -n "${dirty_files}" ]]; then
-            warn "  Local modifications detected — discarding before pull:"
-            git -C "${SRC_DIR}" status --short | while IFS= read -r line; do
-                warn "    ${line}"
-            done
-            git -C "${SRC_DIR}" checkout -- .
-            git -C "${SRC_DIR}" clean -fd
+    # Resolve the src_subdir and git_url for this stream from the registry
+    local src_subdir="" git_url=""
+    for entry in "${JDK_STREAMS[@]}"; do
+        IFS='|' read -r lbl sub url _min _flags <<< "${entry}"
+        if [[ "${lbl}" == "${OPT_STREAM}" ]]; then
+            src_subdir="${sub}"; git_url="${url}"; break
         fi
+    done
+    [[ -z "${git_url}" ]] && die "Could not find git URL for stream ${OPT_STREAM}"
 
-        git -C "${SRC_DIR}" checkout master
-        git -C "${SRC_DIR}" pull --ff-only origin master
-        success "  Source updated: $(git -C "${SRC_DIR}" log -1 --oneline)"
-
-        local commit_after
-        commit_after="$(git -C "${SRC_DIR}" rev-parse HEAD)"
-
-        # Write commit-info.txt into the run output directory
-        {
-            echo "stream         : ${OPT_STREAM}"
-            echo "src_dir        : ${SRC_DIR}"
-            echo "run_date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-            echo ""
-            echo "commit_before  : ${commit_before:-(unknown)}"
-            echo "commit_after   : ${commit_after}"
-            echo ""
-            if [[ -n "${commit_before}" && "${commit_before}" != "${commit_after}" ]]; then
-                local n
-                n="$(git -C "${SRC_DIR}" rev-list --count \
-                    "${commit_before}..${commit_after}" 2>/dev/null || echo '?')"
-                echo "new_commits    : ${n} commit(s) pulled in this run"
-                echo "bisect_cmd     : git bisect start ${commit_after} ${commit_before}"
-                echo ""
-                echo "# Commits introduced (newest first):"
-                git -C "${SRC_DIR}" log --oneline --no-merges \
-                    "${commit_before}..${commit_after}" 2>/dev/null | sed 's/^/#   /'
-            else
-                echo "new_commits    : (none — already up to date)"
-                echo "bisect_cmd     : (not needed)"
-            fi
-        } > "${OUT_BASE}/commit-info.txt"
-    else
-        info "  No repo found — cloning …"
-        # Look up URL from registry
-        local git_url=""
-        for entry in "${JDK_STREAMS[@]}"; do
-            IFS='|' read -r lbl _sub url _min _flags <<< "${entry}"
-            if [[ "${lbl}" == "${OPT_STREAM}" ]]; then
-                git_url="${url}"; break
-            fi
-        done
-        [[ -z "${git_url}" ]] && die "Could not find git URL for stream ${OPT_STREAM}"
-        mkdir -p "${SRC_DIR}"
-        git clone --depth=1 "${git_url}" "${SRC_DIR}"
-        success "  Cloned: ${SRC_DIR}"
-
-        local commit_after
-        commit_after="$(git -C "${SRC_DIR}" rev-parse HEAD)"
-        {
-            echo "stream         : ${OPT_STREAM}"
-            echo "src_dir        : ${SRC_DIR}"
-            echo "run_date       : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-            echo ""
-            echo "commit_before  : (none — fresh clone)"
-            echo "commit_after   : ${commit_after}"
-            echo "bisect_cmd     : (not applicable — fresh clone)"
-        } > "${OUT_BASE}/commit-info.txt"
-    fi
+    local top_commit
+    top_commit="$(update_source "${OPT_STREAM}" "${src_subdir}" "${git_url}" "${OUT_BASE}")" \
+        || die "Source update failed for ${OPT_STREAM}."
+    echo "${top_commit}" > "${OUT_BASE}/top_commit"
 }
 
 # ---------------------------------------------------------------------------
@@ -969,18 +817,9 @@ purge_old_reports() {
 }
 
 # ---------------------------------------------------------------------------
-# Step 5 — Push disabled: results are kept local only
-# ---------------------------------------------------------------------------
-publish() {
-    info "Git push disabled — results stored locally in ${OUT_BASE}"
-}
-
-# ---------------------------------------------------------------------------
 # Main flow
 # ---------------------------------------------------------------------------
 trap 'cd "${REPORTS_REPO_ROOT}"' EXIT
-
-# Step 1: deps (done above as ensure_deps, before banner could resolve dirs)
 
 # Step 2: source — only needed for run/build (test/collect/clean reuse existing tree)
 if [[ "${COMMAND}" != "test" && "${COMMAND}" != "collect" && "${COMMAND}" != "clean" ]]; then
@@ -1007,10 +846,7 @@ if [[ "${COMMAND}" == "run" ]]; then
     purge_old_reports
 fi
 
-# Step 5: publish (no-op — push disabled)
-publish
-
-# Step 6: email notification
+# Step 5: email notification
 _jdk_overall="PASS"
 for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
     _st="${OP_STATUS[${_lvl}]:-}"

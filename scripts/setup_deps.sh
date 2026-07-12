@@ -25,12 +25,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/config.sh"
 
 # ---------------------------------------------------------------------------
-# Logging — every line is timestamped so the log is self-describing
+# Logging — extend the shared helpers with setup_deps-specific die variants
 # ---------------------------------------------------------------------------
-_ts()      { date -u '+%H:%M:%S'; }
-info()     { echo "$(_ts) [INFO]  $*"; }
-success()  { echo "$(_ts) [OK]    $*"; }
-warn()     { echo "$(_ts) [WARN]  $*" >&2; }
 _die_jdk() {
     # Exit code 1 = boot JDK failure
     echo "$(_ts) [FATAL] $*" >&2

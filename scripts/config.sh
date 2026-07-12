@@ -147,23 +147,6 @@ JTREG_SHA256_URL="${JTREG_ARTIFACT_BASE}/${JTREG_ARCHIVE_NAME}.sha256sum.txt"
 # Git / reporting settings
 # ---------------------------------------------------------------------------
 
-# Each class of run gets its own branch so history is easy to navigate:
-#
-#   ci-results-daily     — automated daily cron (run_daily.sh)
-#   ci-results-manual    — explicit jdk.sh invocations where the user
-#                          passed at least one non-default option
-#   ci-results-community — reserved for community / PR testing (future)
-#
-# If jdk.sh is invoked with no arguments at all it behaves identically to the
-# cron job and pushes to ci-results-daily, not ci-results-manual.
-GIT_RESULTS_BRANCH_DAILY="ci-results-daily"
-GIT_RESULTS_BRANCH_MANUAL="ci-results-manual"
-GIT_RESULTS_BRANCH_COMMUNITY="ci-results-community"
-
-# Legacy alias — kept so any external tooling that references GIT_RESULTS_BRANCH
-# directly still works.  Internal scripts use the three named constants above.
-GIT_RESULTS_BRANCH="${GIT_RESULTS_BRANCH_DAILY}"
-
 GIT_COMMIT_AUTHOR_NAME="${GIT_COMMIT_AUTHOR_NAME:-OpenJDK s390x CI}"
 GIT_COMMIT_AUTHOR_EMAIL="${GIT_COMMIT_AUTHOR_EMAIL:-ci@s390x}"
 
@@ -193,3 +176,92 @@ GIT_COMMIT_AUTHOR_EMAIL="${GIT_COMMIT_AUTHOR_EMAIL:-ci@s390x}"
 
 # From address stamped in the email header (cosmetic; set to whatever you like)
 : "${CI_NOTIFY_FROM:=openjdk-s390x-ci@$(hostname -f 2>/dev/null || hostname)}"
+
+# ---------------------------------------------------------------------------
+# Shared logging helpers
+#
+# Scripts that need a different prefix may define their own log() before
+# sourcing config.sh, or simply redefine it afterward.  These are defaults.
+# ---------------------------------------------------------------------------
+_ci_ts() { date -u '+%H:%M:%S'; }
+# Only define if not already defined by the sourcing script
+if ! declare -f log     &>/dev/null; then log()     { echo "$(_ci_ts) [RUN]   $*"; }; fi
+if ! declare -f info    &>/dev/null; then info()    { echo "$(_ci_ts) [INFO]  $*"; }; fi
+if ! declare -f success &>/dev/null; then success() { echo "$(_ci_ts) [OK]    $*"; }; fi
+if ! declare -f warn    &>/dev/null; then warn()    { echo "$(_ci_ts) [WARN]  $*" >&2; }; fi
+if ! declare -f die     &>/dev/null; then die()     { echo "$(_ci_ts) [FATAL] $*" >&2; exit 1; }; fi
+
+# ---------------------------------------------------------------------------
+# Shared helpers for boot JDK and dependency management
+# ---------------------------------------------------------------------------
+
+# resolve_boot_jdk <stream_label> <min_ver>
+#
+# Returns the boot JDK directory for the given stream.
+# - "head" (or min_ver=0/"") → BOOT_JDK_DIR (tip)
+# - versioned streams        → boot_jdk_dir_for_version(min_ver), with
+#                              fallback to BOOT_JDK_DIR if not present.
+resolve_boot_jdk() {
+    local label="${1:-}"
+    local min_ver="${2:-0}"
+    if [[ "${label}" == "head" || -z "${min_ver}" || "${min_ver}" == "0" ]]; then
+        echo "${BOOT_JDK_DIR}"
+        return
+    fi
+    local candidate
+    candidate="$(boot_jdk_dir_for_version "${min_ver}")"
+    if [[ -x "${candidate}/bin/java" ]]; then
+        echo "${candidate}"
+    else
+        echo "${BOOT_JDK_DIR}"
+    fi
+}
+
+# ensure_deps <stream_label>
+#
+# Downloads the boot JDK and jtreg required for <stream_label>.
+# Sets JTREG_OK=true/false in the caller's scope.
+# Aborts (exit 1) on boot JDK failure; sets JTREG_OK=false on jtreg failure.
+# Pass --skip-deps as $2 to use already-downloaded artifacts.
+ensure_deps() {
+    local stream_label="${1:-head}"
+    local skip="${2:-false}"
+
+    if [[ "${skip}" == "true" ]]; then
+        if [[ ! -x "${BOOT_JDK_DIR}/bin/java" ]]; then
+            die "Boot JDK not found at ${BOOT_JDK_DIR}. Remove --skip-deps to download it."
+        fi
+        info "Using cached boot JDK: $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
+        if [[ -x "${JTREG_DIR}/bin/jtreg" ]]; then
+            info "Using cached jtreg: ${JTREG_DIR}/bin/jtreg"
+            JTREG_OK=true
+        else
+            warn "jtreg not found at ${JTREG_DIR} — tests will be SKIPPED."
+            JTREG_OK=false
+        fi
+        return
+    fi
+
+    local deps_exit=0
+    bash "$(dirname "${BASH_SOURCE[0]}")/setup_deps.sh" \
+        --stream "${stream_label}" || deps_exit=$?
+
+    case "${deps_exit}" in
+        0)
+            JTREG_OK=true
+            success "Boot JDK and jtreg ready."
+            ;;
+        1)
+            [[ -f "${CI_TMP_DIR}/deps-failure.txt" ]] \
+                && cat "${CI_TMP_DIR}/deps-failure.txt"
+            die "Boot JDK download failed — cannot continue."
+            ;;
+        2)
+            JTREG_OK=false
+            warn "jtreg download failed — build will proceed but tests will be SKIPPED."
+            ;;
+        *)
+            die "setup_deps.sh exited with unexpected code ${deps_exit}."
+            ;;
+    esac
+}

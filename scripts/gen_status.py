@@ -87,6 +87,15 @@ PASSING_STATUSES = {"TEST_PASSED"}
 # ---------------------------------------------------------------------------
 # Data model
 # ---------------------------------------------------------------------------
+# Month-name lookup tables (defined once; shared by all functions)
+MONTH_TO_NUM = {
+    "January": 1, "February": 2, "March": 3, "April": 4,
+    "May": 5, "June": 6, "July": 7, "August": 8,
+    "September": 9, "October": 10, "November": 11, "December": 12,
+}
+NUM_TO_MONTH = {v: k for k, v in MONTH_TO_NUM.items()}
+
+
 class RunRecord:
     """One stream×level result from one day's run."""
     __slots__ = ("date", "stream", "level", "status", "detail")
@@ -138,12 +147,6 @@ def collect_all_runs(reports_dir: Path):
     Walk reports/<YYYY>/<Month>/<DD>/run-summary.txt and return a list of
     RunRecord objects sorted oldest-first.
     """
-    MONTHS = {
-        "January": 1, "February": 2, "March": 3, "April": 4,
-        "May": 5, "June": 6, "July": 7, "August": 8,
-        "September": 9, "October": 10, "November": 11, "December": 12,
-    }
-
     all_records = []
 
     for year_dir in sorted(reports_dir.iterdir()):
@@ -154,7 +157,7 @@ def collect_all_runs(reports_dir: Path):
         for month_dir in sorted(year_dir.iterdir()):
             if not month_dir.is_dir():
                 continue
-            month_num = MONTHS.get(month_dir.name)
+            month_num = MONTH_TO_NUM.get(month_dir.name)
             if month_num is None:
                 continue
 
@@ -373,18 +376,8 @@ def build_test_failure_history(reports_dir: Path, stream: str, level: str,
                                 cutoff_date) -> dict:
     """
     Walk all <stream>/<level>/test-failed.txt files older than cutoff_date
-    and return a dict mapping test_name → first date it was seen failing
-    (i.e. the start of its current failing streak).
-
-    We stop counting a streak when a date gap appears (i.e. the test passed
-    on a day that has a run directory but no entry in that day's failed list).
+    and return a dict mapping test_name → first date it was seen failing.
     """
-    MONTHS = {
-        "January": 1, "February": 2, "March": 3, "April": 4,
-        "May": 5, "June": 6, "July": 7, "August": 8,
-        "September": 9, "October": 10, "November": 11, "December": 12,
-    }
-
     # Collect (date, set_of_failed_tests) pairs sorted oldest-first
     dated_failures: list[tuple] = []
 
@@ -395,7 +388,7 @@ def build_test_failure_history(reports_dir: Path, stream: str, level: str,
         for month_dir in sorted(year_dir.iterdir()):
             if not month_dir.is_dir():
                 continue
-            month_num = MONTHS.get(month_dir.name)
+            month_num = MONTH_TO_NUM.get(month_dir.name)
             if month_num is None:
                 continue
             for day_dir in sorted(month_dir.iterdir()):
@@ -545,13 +538,6 @@ def gen_test_result_md(level_dir: Path, stream: str, level: str,
 # ---------------------------------------------------------------------------
 RETENTION_DAYS = 90
 
-_MONTH_NUMS = {
-    "January": 1, "February": 2, "March": 3,  "April": 4,
-    "May":     5, "June":     6, "July":     7, "August": 8,
-    "September": 9, "October": 10, "November": 11, "December": 12,
-}
-
-
 def _git_rm_cached(path: Path, repo_root: Path) -> None:
     """Stage a deletion in the git index (no-op if path was never tracked)."""
     rel = str(path.relative_to(repo_root))
@@ -582,7 +568,7 @@ def purge_old_data(reports_dir: Path, repo_root: Path,
         for month_dir in sorted(year_dir.iterdir()):
             if not month_dir.is_dir():
                 continue
-            month_num = _MONTH_NUMS.get(month_dir.name)
+            month_num = MONTH_TO_NUM.get(month_dir.name)
             if month_num is None:
                 continue
 
@@ -816,12 +802,7 @@ def main():
     # Derive run-summary.md path from the first today record's date components
     # Path structure: reports/<YYYY>/<Month>/<DD>/
     # We need to find the matching directory under reports_dir
-    MONTH_NAMES = {
-        1: "January", 2: "February", 3: "March", 4: "April",
-        5: "May", 6: "June", 7: "July", 8: "August",
-        9: "September", 10: "October", 11: "November", 12: "December",
-    }
-    month_name = MONTH_NAMES[latest_date.month]
+    month_name = NUM_TO_MONTH[latest_date.month]
     today_dir = (reports_dir
                  / str(latest_date.year)
                  / month_name
