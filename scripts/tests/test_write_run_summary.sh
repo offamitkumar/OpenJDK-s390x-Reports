@@ -334,9 +334,10 @@ assert_contains     "${T}/run-summary.txt" "Combinations tracked:          2"  "
 # ─────────────────────────────────────────────────────────────────────────────
 # T10  Large run — realistic stream × level product
 #
-# WHY CORRECT: The registry has 6 streams × 2 levels = 12 combinations.  A
-# realistic daily run might see 8 pass and 4 fail.  We verify the arithmetic
-# is correct at realistic scale, not just at count=1.
+# WHY CORRECT: The registry has 6 streams × 2 levels = 12 combinations.
+# Scenario: head(2 pass), jdk26(1 fail + 1 pass), jdk25(2 pass),
+#           jdk21(1 build-fail + 1 pass), jdk17(2 EOL-skipped), jdk11(2 no-jtreg)
+# passed=6, failed=1, build_fail=1, skipped=2, no_jtreg=2 → total=12
 # ─────────────────────────────────────────────────────────────────────────────
 it "T10: realistic 6-stream run — correct totals"
 _reset
@@ -359,11 +360,10 @@ record_status "jdk17" "release"   "SKIPPED_EOL"  ""
 record_status "jdk11" "fastdebug" "TEST_SKIPPED_NO_JTREG" ""
 record_status "jdk11" "release"   "TEST_SKIPPED_NO_JTREG" ""
 write_run_summary
-assert_contains "${T}/run-summary.txt" "TEST_PASSED:                   5"
+assert_contains "${T}/run-summary.txt" "TEST_PASSED:                   6"
 assert_contains "${T}/run-summary.txt" "TEST_FAILED:                   1"
 assert_contains "${T}/run-summary.txt" "BUILD_FAILED:                  1"
 assert_contains "${T}/run-summary.txt" "Skipped (any reason):          2"
 assert_contains "${T}/run-summary.txt" "TEST_SKIPPED (no jtreg):       2"
-assert_contains "${T}/run-summary.txt" "Combinations tracked:          11"
-# Sanity: 5+1+1+2+2 = 11, NOT 12, because n_total sums all five buckets.
-# 12 would be wrong only if something were double-counted.
+assert_contains "${T}/run-summary.txt" "Combinations tracked:          12"
+# Sanity: 6+1+1+2+2 = 12  (one entry per stream×level combination)
