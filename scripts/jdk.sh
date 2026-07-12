@@ -162,8 +162,9 @@ OPT_NO_PUSH=false
 OPT_DRY_RUN=false
 OPT_TEST_TARGET="tier1"
 OPT_JVM_FLAGS=""
-OPT_FROM=""        # --from DIR  (collect / resend commands)
+OPT_FROM=""           # --from DIR  (collect / resend commands)
 OPT_RUN_KIND="daily"  # --run-kind  (resend command)
+OPT_STREAM_SET=false  # true when --stream was explicitly passed
 
 # Tiers executed when --test-target all is requested
 ALL_TIERS=(tier1 tier2 tier3 tier4)
@@ -206,7 +207,7 @@ while [[ $# -gt 0 ]]; do
             esac
             shift 2 ;;
         --stream)
-            OPT_STREAM="$2"; shift 2 ;;
+            OPT_STREAM="$2"; OPT_STREAM_SET=true; shift 2 ;;
         --level)
             OPT_LEVEL="$2"
             if [[ "$OPT_LEVEL" != "fastdebug" && "$OPT_LEVEL" != "release" \
@@ -240,11 +241,16 @@ done
 # ---------------------------------------------------------------------------
 # Validate collect --from before anything else
 # ---------------------------------------------------------------------------
-if [[ "${COMMAND}" == "collect" || "${COMMAND}" == "resend" ]]; then
+if [[ "${COMMAND}" == "collect" ]]; then
     if [[ -z "${OPT_FROM}" ]]; then
-        echo "[jdk.sh] ERROR: '${COMMAND}' requires --from <DIR>" >&2
+        echo "[jdk.sh] ERROR: 'collect' requires --from <DIR>" >&2
         exit 1
     fi
+    OPT_FROM="$(cd "${OPT_FROM}" 2>/dev/null && pwd)" \
+        || { echo "[jdk.sh] ERROR: --from directory not found: ${OPT_FROM}" >&2; exit 1; }
+fi
+
+if [[ "${COMMAND}" == "resend" && -n "${OPT_FROM}" ]]; then
     OPT_FROM="$(cd "${OPT_FROM}" 2>/dev/null && pwd)" \
         || { echo "[jdk.sh] ERROR: --from directory not found: ${OPT_FROM}" >&2; exit 1; }
 fi
@@ -306,6 +312,20 @@ _resend_email() {
     local run_dir="${OPT_FROM}"
     local run_kind="${OPT_RUN_KIND}"
 
+    # ---- Auto-discover latest daily run dir if --from was not given -----
+    if [[ -z "${run_dir}" ]]; then
+        # Find all run-summary.txt files at depth 3 (YYYY/Month/DD),
+        # sort by modification time (newest first), take the parent dir.
+        run_dir="$(find "${REPORTS_DIR}" -mindepth 3 -maxdepth 3 \
+            -name "run-summary.txt" 2>/dev/null \
+            | xargs -I{} stat --format="%Y %n" {} 2>/dev/null \
+            | sort -rn | head -1 | awk '{print $2}' | xargs -I{} dirname {})"
+        if [[ -z "${run_dir}" ]]; then
+            die "No completed run found under ${REPORTS_DIR}. Run the daily pipeline first."
+        fi
+        info "Auto-discovered latest run: ${run_dir}"
+    fi
+
     log "========================================================"
     log "resend: re-sending email from ${run_dir}"
     log "========================================================"
@@ -327,7 +347,12 @@ _resend_email() {
     local date_str
     date_str="$(grep -m1 'Date' "${summary_file}" 2>/dev/null \
         | sed 's/.*Date[^:]*: *//' | awk '{print $1}' || date -u '+%Y-%m-%d')"
-    local subject_suffix="all streams (${date_str})"
+    local subject_suffix
+    if ${OPT_STREAM_SET}; then
+        subject_suffix="${OPT_STREAM} (${date_str})"
+    else
+        subject_suffix="all streams (${date_str})"
+    fi
 
     # ---- Commit info file ------------------------------------------------
     # Prefer commit-info-all.txt (daily runs); fall back to commit-info.txt
@@ -370,10 +395,16 @@ _resend_email() {
     }
 
     # Daily layout: <run_dir>/<stream>/<level>/
+    # If --stream was explicitly passed, only include that stream.
     for stream_dir in "${run_dir}"/*/; do
         [[ -d "${stream_dir}" ]] || continue
         local stream_label
         stream_label="$(basename "${stream_dir}")"
+
+        if ${OPT_STREAM_SET} && [[ "${stream_label}" != "${OPT_STREAM}" ]]; then
+            continue
+        fi
+
         local src_dir="${_registry_src[${stream_label}]:-}"
 
         for level in "${BUILD_LEVELS[@]}"; do
