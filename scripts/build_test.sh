@@ -241,28 +241,22 @@ _write_build_diagnosis() {
 # Public: update_source
 #
 # git fetch + pull (or shallow clone) one JDK source tree.
-# Writes:
-#   <out_base>/git-pull.log      — full git output
-#   <out_base>/commit-info.txt   — before/after commits + bisect command
-#   <out_base>/top_commit        — one-line HEAD commit (printed to stdout)
-#   <out_base>/source-failure.txt — present only on failure
+# Writes git-pull.log and commit-info.txt directly into <src_dir>.
+# On success, prints the top_commit text to stdout.
+# Returns 1 on failure (writes source-failure.txt into src_dir).
 #
 # Arguments:
 #   $1  label       — stream label (e.g. "head", "jdk21")
 #   $2  src_subdir  — subdirectory under JDK_SOURCES_ROOT
 #   $3  git_url     — upstream remote URL
-#   $4  out_base    — directory for output artefacts
-#
-# Returns 1 on git failure (writes source-failure.txt).
-# On success, prints the top_commit text to stdout.
 # ---------------------------------------------------------------------------
 update_source() {
     local label="$1"
     local src_subdir="$2"
     local git_url="$3"
-    local out_base="$4"
 
     local src_dir="${JDK_SOURCES_ROOT}/${src_subdir}"
+    local out_base="${src_dir}"   # metadata written into the source tree itself
 
     _bt_info "[${label}] Preparing source at ${src_dir} …"
     _bt_info "[${label}]   git URL : ${git_url}"
@@ -396,39 +390,35 @@ _record_source_failure() {
 #   $1  src_dir              — absolute path to checked-out JDK source
 #   $2  stream_label         — short label for reports (e.g. "head", "jdk21")
 #   $3  debug_level          — "fastdebug" or "release"
-#   $4  out_dir              — directory to write all artefacts into
-#   $5  jtreg_ok             — "true" to run tier1; "false" to skip tests
-#   $6  boot_jdk_dir         — path to the boot JDK to use for this stream
-#   $7+ extra_configure_flags — passed verbatim to configure (optional)
+#   $4  jtreg_ok             — "true" to run tier1; "false" to skip tests
+#   $5  boot_jdk_dir         — path to the boot JDK to use for this stream
+#   $6+ extra_configure_flags — passed verbatim to configure (optional)
+#
+# All artefacts are written into <src_dir>/build/<conf_name>/ — the same
+# directory OpenJDK itself uses.  No separate report directory is created.
 #
 # Exit code:
-#   0   build completed (and tests ran if jtreg_ok=true; test failures are
-#       recorded in run-metadata.txt, not propagated as a non-zero exit)
-#   1   infrastructure / build failure (configure or make images failed)
+#   0   build completed (test failures recorded in run-metadata.txt, not fatal)
+#   1   configure or make images failed
 # ---------------------------------------------------------------------------
 build_and_test_jdk() {
     local src_dir="$1"
     local stream_label="$2"
     local debug_level="$3"
-    local out_dir="$4"
-    local jtreg_ok="${5:-true}"
-    local boot_jdk_dir="${6:-${BOOT_JDK_DIR}}"
-    shift 6
+    local jtreg_ok="${4:-true}"
+    local boot_jdk_dir="${5:-${BOOT_JDK_DIR}}"
+    shift 5
     local extra_configure_flags=("$@")
-    # Timestamp for this specific invocation — used to namespace hs_err dirs
     local _run_ts; _run_ts="$(date '+%Y%m%d_%H%M%S')"
 
     _bt_info "=== build_and_test_jdk ==="
     _bt_info "    stream   : ${stream_label}"
     _bt_info "    level    : ${debug_level}"
     _bt_info "    src      : ${src_dir}"
-    _bt_info "    output   : ${out_dir}"
     _bt_info "    jtreg_ok : ${jtreg_ok}"
     _bt_info "    boot_jdk : ${boot_jdk_dir}"
     [[ ${#extra_configure_flags[@]} -gt 0 ]] && \
         _bt_info "    extra    : ${extra_configure_flags[*]}"
-
-    mkdir -p "${out_dir}"
 
     (
         set -euo pipefail
@@ -447,8 +437,11 @@ build_and_test_jdk() {
                 found_dir="$(_find_conf_dir "${debug_level}")"
                 [[ -n "${found_dir}" ]] && actual_log="${found_dir}/build.log"
             fi
+            # Write build-diagnosis.txt into the build conf dir
+            local diag_dir="${src_dir}/build/${conf_name}"
+            [[ -n "${actual_log}" ]] && diag_dir="$(dirname "${actual_log}")"
             _write_build_diagnosis \
-                "${out_dir}" \
+                "${diag_dir}" \
                 "${actual_log:-}" \
                 "${current_phase}" \
                 "${exit_code}" \
@@ -463,7 +456,6 @@ build_and_test_jdk() {
         _configure_jdk "${debug_level}" "${boot_jdk_dir}" \
             "${extra_configure_flags[@]+"${extra_configure_flags[@]}"}"
 
-        # Verify conf dir — configure may choose a slightly different name
         if [[ ! -d "build/${conf_name}" ]]; then
             local found
             found="$(_find_conf_dir "${debug_level}")"
@@ -476,14 +468,13 @@ build_and_test_jdk() {
         fi
 
         build_log_path="build/${conf_name}/build.log"
+        local conf_dir="${src_dir}/build/${conf_name}"
 
         # ---- Build images ------------------------------------------------
         current_phase="images"
         _bt_info "  Building images (CONF=${conf_name}) …"
 
         local make_exit=0
-        # Unset MAKEFLAGS/MAKEOVERRIDES — a parent make or shell alias may inject
-        # -jN into the environment, which OpenJDK's wrapper explicitly rejects.
         MAKEFLAGS= MAKEOVERRIDES= \
         make CONF="${conf_name}" LOG=debug images \
                 2>&1 || make_exit=$?
@@ -501,17 +492,14 @@ build_and_test_jdk() {
             test_exit="SKIPPED"
         else
             _bt_info "  Running make run-test-tier1 (CONF=${conf_name}) …"
-            make CONF="${conf_name}" \
-                TEST="tier1" \
-                run-test || test_exit=$?
+            make CONF="${conf_name}" TEST="tier1" run-test || test_exit=$?
         fi
 
-        # ---- Log newfailures + other_errors counts ----------------------
         if [[ "${jtreg_ok}" == "true" ]]; then
             _collect_test_results "build/${conf_name}"
         fi
 
-        # ---- Write run metadata ------------------------------------------
+        # ---- Write run-metadata.txt into the build conf dir -------------
         {
             echo "stream:       ${stream_label}"
             echo "debug_level:  ${debug_level}"
@@ -524,7 +512,7 @@ build_and_test_jdk() {
             echo "extra_flags:  ${extra_configure_flags[*]:-none}"
             echo "jtreg_ok:     ${jtreg_ok}"
             echo "test_exit:    ${test_exit}"
-        } > "${out_dir}/run-metadata.txt"
+        } > "${conf_dir}/run-metadata.txt"
 
         if [[ "${test_exit}" == "SKIPPED" ]]; then
             _bt_warn "  Tier1 tests SKIPPED (jtreg not available)."
@@ -546,68 +534,50 @@ build_only_jdk() {
     local src_dir="$1"
     local stream_label="$2"
     local debug_level="$3"
-    local out_dir="$4"
-    local boot_jdk_dir="${5:-${BOOT_JDK_DIR}}"
-    shift 5
+    local boot_jdk_dir="${4:-${BOOT_JDK_DIR}}"
+    shift 4
     build_and_test_jdk \
         "${src_dir}" "${stream_label}" "${debug_level}" \
-        "${out_dir}" "false" "${boot_jdk_dir}" "$@"
+        "false" "${boot_jdk_dir}" "$@"
 }
 
 # ---------------------------------------------------------------------------
 # Public: run_tests_only
 #
-# Re-use an already-built image.  Runs an arbitrary jtreg test target with
-# optional JVM flags.  Does NOT re-configure or re-build.
+# Re-use an already-built image.  Runs an arbitrary jtreg test target.
+# Results stay in <src_dir>/build/<conf>/test-results/ — no separate dir.
 #
 # Arguments:
 #   $1  src_dir        — JDK source root (must already be configured+built)
 #   $2  stream_label
 #   $3  debug_level    — must match the existing build (fastdebug|release)
-#   $4  out_dir        — where to write artefacts
-#   $5  test_target    — jtreg target, e.g. "tier1", "test/jdk",
-#                        "test/hotspot/jtreg/gc/epsilon"
-#   $6  jvm_flags      — extra JVM flags passed via JTREG_JAVA_OPTIONS, e.g.
-#                        "-Xint" or "-Xcomp -ea" (empty string = none)
+#   $4  test_target    — jtreg target (e.g. "tier1", "test/jdk")
+#   $5  jvm_flags      — extra JVM flags, or "" for none
 #
-# Exit code: 0 always (test failures are recorded, not fatal).
+# Exit code: 0 always (test failures recorded in run-metadata.txt, not fatal).
 # ---------------------------------------------------------------------------
 run_tests_only() {
     local src_dir="$1"
     local stream_label="$2"
     local debug_level="$3"
-    local out_dir="$4"
-    local test_target="${5:-tier1}"
-    local jvm_flags="${6:-}"
+    local test_target="${4:-tier1}"
+    local jvm_flags="${5:-}"
     local _run_ts; _run_ts="$(date '+%Y%m%d_%H%M%S')"
 
     _bt_info "=== run_tests_only ==="
     _bt_info "    stream      : ${stream_label}"
     _bt_info "    level       : ${debug_level}"
     _bt_info "    src         : ${src_dir}"
-    _bt_info "    output      : ${out_dir}"
     _bt_info "    test_target : ${test_target}"
     _bt_info "    jvm_flags   : ${jvm_flags:-(none)}"
 
-    mkdir -p "${out_dir}"
-
-    # Verify that a build exists for this conf
     local conf_name="linux-s390x-server-${debug_level}"
     if [[ ! -d "${src_dir}/build/${conf_name}" ]]; then
-        local found; found="$(_find_conf_dir_abs "${src_dir}" "${debug_level}")"
+        local found; found="$(find "${src_dir}/build" -maxdepth 1 -type d \
+            -name "*${debug_level}*" 2>/dev/null | sort | head -1)"
         if [[ -z "${found}" ]]; then
             _bt_warn "No existing build found for ${stream_label}/${debug_level}."
             _bt_warn "Run a build first: bash scripts/jdk.sh build --level ${debug_level}"
-            echo "NO_BUILD" > "${out_dir}/test-summary.txt"
-            {
-                echo "stream:       ${stream_label}"
-                echo "debug_level:  ${debug_level}"
-                echo "mode:         test-only"
-                echo "test_target:  ${test_target}"
-                echo "jvm_flags:    ${jvm_flags:-(none)}"
-                echo "test_exit:    SKIPPED (no build found)"
-                echo "date:         $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-            } > "${out_dir}/run-metadata.txt"
             return 0
         fi
         conf_name="$(basename "${found}")"
@@ -619,41 +589,31 @@ run_tests_only() {
         set -euo pipefail
         cd "${src_dir}"
 
-        # Build the make TEST= argument.
-        # OpenJDK's run-test target accepts TEST= as the jtreg group/path.
-        # "tier1" maps to run-test-tier1; everything else uses run-test with TEST=.
-        local make_target="run-test"
-        local make_test_arg="TEST=${test_target}"
-
-        # Build JTREG_OPTIONS for JVM flags
         local jtreg_opts=""
         if [[ -n "${jvm_flags}" ]]; then
-            # Each flag becomes a -javaoption: entry
             local f
             for f in ${jvm_flags}; do
                 jtreg_opts+=" -javaoption:${f}"
             done
-            jtreg_opts="${jtreg_opts# }"  # strip leading space
+            jtreg_opts="${jtreg_opts# }"
         fi
 
-        _bt_info "  Running: make CONF=${conf_name} ${make_test_arg} ${make_target}"
+        _bt_info "  Running: make CONF=${conf_name} TEST=${test_target} run-test"
         [[ -n "${jtreg_opts}" ]] && _bt_info "  JTREG extra opts: ${jtreg_opts}"
 
         local test_exit=0
         if [[ -n "${jtreg_opts}" ]]; then
             JTREG_OPTIONS="${jtreg_opts}" \
-                make CONF="${conf_name}" "${make_test_arg}" "${make_target}" \
+                make CONF="${conf_name}" "TEST=${test_target}" run-test \
                 || test_exit=$?
         else
-            make CONF="${conf_name}" "${make_test_arg}" "${make_target}" \
+            make CONF="${conf_name}" "TEST=${test_target}" run-test \
                 || test_exit=$?
         fi
 
-        local results_dir="build/${conf_name}/test-results"
-
-        # ---- Log newfailures + other_errors counts ----------------------
         _collect_test_results "build/${conf_name}"
 
+        local conf_dir="${src_dir}/build/${conf_name}"
         {
             echo "stream:       ${stream_label}"
             echo "debug_level:  ${debug_level}"
@@ -668,7 +628,7 @@ run_tests_only() {
             echo "jtreg:        $(JAVA_HOME="${BOOT_JDK_DIR}" "${JTREG_DIR}/bin/jtreg" \
                                      -version 2>/dev/null | head -1 || echo 'n/a')"
             echo "test_exit:    ${test_exit}"
-        } > "${out_dir}/run-metadata.txt"
+        } > "${conf_dir}/run-metadata.txt"
 
         if [[ "${test_exit}" -ne 0 ]]; then
             _bt_warn "  Tests finished with failures/errors (exit=${test_exit}) — recorded."
@@ -676,15 +636,4 @@ run_tests_only() {
             _bt_success "  Tests passed: ${stream_label}/${debug_level} target=${test_target}."
         fi
     )
-}
-
-# ---------------------------------------------------------------------------
-# Internal helper: find conf dir given an absolute src_dir
-# (run_tests_only is called from jdk.sh where CWD is not src_dir yet)
-# ---------------------------------------------------------------------------
-_find_conf_dir_abs() {
-    local src_dir="$1"
-    local debug_level="$2"
-    find "${src_dir}/build" -maxdepth 1 -type d -name "*${debug_level}*" \
-        2>/dev/null | sort | head -1
 }

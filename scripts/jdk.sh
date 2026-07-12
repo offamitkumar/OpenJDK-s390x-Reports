@@ -24,13 +24,11 @@
 #
 #   collect   Re-collect artefacts from an already-finished test run and
 #             re-send the email.  Does not run any build or test.
-#             Requires --from <OUT_BASE_DIR>.
+#             Reads test-results directly from the JDK build tree.
 #
 #   resend    Re-send the notification email for a completed run without
-#             rebuilding or re-testing anything.  Reads run-summary.txt,
-#             commit-info-all.txt, and per-stream result artefacts directly
-#             from the run directory.  Works for daily, manual, and pr runs.
-#             Requires --from <RUN_DIR>.
+#             rebuilding or re-testing anything.  Reads results directly
+#             from the JDK build tree.  Works for daily, manual, and pr runs.
 #
 # OPTIONS (all commands)
 # ──────────────────────
@@ -71,13 +69,6 @@
 #
 # OPTIONS (collect / resend only)
 # ────────────────────────────────
-#   --from DIR            Path to an existing run directory.
-#                         For collect: OUT_BASE from a previous test/run.
-#                         For resend:  the run directory containing
-#                                      run-summary.txt (e.g. reports/2025/July/11
-#                                      for a daily run, or the timestamped
-#                                      sub-directory for a jdk.sh run).
-#
 #   --run-kind KIND       Override the run kind label in the email subject.
 #                         Values: daily | manual | pr  (default: daily)
 #                         Only used with the resend command.
@@ -129,15 +120,13 @@
 #   bash scripts/jdk.sh run --level fastdebug --no-push
 #
 #   # Re-collect artefacts + resend email from a previous fastdebug test run:
-#   bash scripts/jdk.sh collect --stream head --level fastdebug \
-#       --from reports/2026/July/11/test-tier1-135843
+#   bash scripts/jdk.sh collect --stream head --level fastdebug
 #
-#   # Re-send email for a completed daily run (all streams):
-#   bash scripts/jdk.sh resend --from reports/2026/July/11
+#   # Re-send email using current results in the build tree:
+#   bash scripts/jdk.sh resend
 #
-#   # Re-send email for a completed jdk.sh manual run:
-#   bash scripts/jdk.sh resend --run-kind manual \
-#       --from reports/2026/July/11/run-135843
+#   # Re-send email with manual run-kind label:
+#   bash scripts/jdk.sh resend --run-kind manual
 #
 # EXIT CODES
 # ──────────
@@ -162,7 +151,6 @@ OPT_NO_PUSH=false
 OPT_DRY_RUN=false
 OPT_TEST_TARGET="tier1"
 OPT_JVM_FLAGS=""
-OPT_FROM=""           # --from DIR  (collect / resend commands)
 OPT_RUN_KIND="daily"  # --run-kind  (resend command)
 OPT_STREAM_SET=false  # true when --stream was explicitly passed
 
@@ -190,8 +178,6 @@ while [[ $# -gt 0 ]]; do
     case "$1" in
         run|build|test|clean|collect|resend)
             COMMAND="$1"; shift ;;
-        --from)
-            OPT_FROM="$2"; shift 2 ;;
         --run-kind)
             OPT_RUN_KIND="$2"
             case "${OPT_RUN_KIND}" in
@@ -230,18 +216,6 @@ done
 
 # Default command if only options were passed
 : "${COMMAND:=run}"
-
-# ---------------------------------------------------------------------------
-# Validate collect --from before anything else
-# ---------------------------------------------------------------------------
-if [[ "${COMMAND}" == "collect" ]]; then
-    if [[ -z "${OPT_FROM}" ]]; then
-        echo "[jdk.sh] ERROR: 'collect' requires --from <DIR>" >&2
-        exit 1
-    fi
-    OPT_FROM="$(cd "${OPT_FROM}" 2>/dev/null && pwd)" \
-        || { echo "[jdk.sh] ERROR: --from directory not found: ${OPT_FROM}" >&2; exit 1; }
-fi
 
 # Expand 'both' to the canonical BUILD_LEVELS array from config.sh
 if [[ "${OPT_LEVEL}" == "both" ]]; then
@@ -407,42 +381,11 @@ _resend_email() {
     log "========================================================"
 }
 
-# resend exits here — before report-dir setup, banner, RUN_LOG, or deps.
+# resend exits here — before stream resolution, banner, or deps.
 if [[ "${COMMAND}" == "resend" ]]; then
     _resend_email
     exit 0
 fi
-
-# ---------------------------------------------------------------------------
-# Report directory — one per invocation, timestamped so repeated runs on the
-# same day don't overwrite each other.
-# Layout: reports/YYYY/Month/DD/<label>-HHMMSS/
-# ---------------------------------------------------------------------------
-_YEAR="$(date +%Y)"
-_MONTH="$(date +%B)"
-_DAY="$(date +%d)"
-_TIME="$(date +%H%M%S)"
-
-_TARGET_SLUG="${OPT_TEST_TARGET//\//_}"
-_TARGET_SLUG="${_TARGET_SLUG// /-}"
-
-case "${COMMAND}" in
-    run)     _RUN_LABEL="run-${_TIME}" ;;
-    build)   _RUN_LABEL="build-${OPT_LEVEL}-${_TIME}" ;;
-    test)    _RUN_LABEL="test-${_TARGET_SLUG}-${_TIME}" ;;
-    clean)   _RUN_LABEL="clean-${OPT_LEVEL}-${_TIME}" ;;
-    collect) _RUN_LABEL="collect-${OPT_LEVEL}-${_TIME}" ;;
-esac
-
-if [[ "${COMMAND}" == "collect" ]]; then
-    OUT_BASE="${OPT_FROM}"
-else
-    OUT_BASE="${REPORTS_DIR}/${_YEAR}/${_MONTH}/${_DAY}/${_RUN_LABEL}"
-    mkdir -p "${OUT_BASE}"
-fi
-
-RUN_LOG="${OUT_BASE}/run.log"
-exec > >(tee -a "${RUN_LOG}") 2>&1
 
 # ---------------------------------------------------------------------------
 # Banner
@@ -463,8 +406,6 @@ fi
 ${OPT_SKIP_DEPS} && log "deps        : skipped (--skip-deps)"
 ${OPT_NO_PUSH}   && log "push        : disabled (--no-push)"
 ${OPT_DRY_RUN}   && log "mode        : DRY-RUN"
-log "output dir  : ${OUT_BASE}"
-log "run log     : ${RUN_LOG}"
 log "========================================================"
 
 # ---------------------------------------------------------------------------
@@ -524,7 +465,6 @@ prepare_src() {
     fi
 
     log "Step 2: Updating source (${OPT_STREAM}) …"
-    # Resolve the src_subdir and git_url for this stream from the registry
     local src_subdir="" git_url=""
     for entry in "${JDK_STREAMS[@]}"; do
         IFS='|' read -r lbl sub url _min _flags <<< "${entry}"
@@ -534,10 +474,8 @@ prepare_src() {
     done
     [[ -z "${git_url}" ]] && die "Could not find git URL for stream ${OPT_STREAM}"
 
-    local top_commit
-    top_commit="$(update_source "${OPT_STREAM}" "${src_subdir}" "${git_url}" "${OUT_BASE}")" \
+    update_source "${OPT_STREAM}" "${src_subdir}" "${git_url}" \
         || die "Source update failed for ${OPT_STREAM}."
-    echo "${top_commit}" > "${OUT_BASE}/top_commit"
 }
 
 # ---------------------------------------------------------------------------
@@ -545,13 +483,17 @@ prepare_src() {
 # ---------------------------------------------------------------------------
 declare -A OP_STATUS=()
 
-# _read_test_status LEVEL_OUT_DIR KEY
-# Extract the outcome string from run-metadata.txt for a given level dir.
+# Return the conf dir for a given src_dir + debug level
+_conf_dir() { find "${1}/build" -maxdepth 1 -type d -name "*${2}*" 2>/dev/null | sort | head -1; }
+
+# Read test outcome from run-metadata.txt in the build conf dir
 _read_test_status() {
-    local dir="$1"
-    local test_exit_line
-    test_exit_line="$(grep '^test_exit:' "${dir}/run-metadata.txt" \
-        2>/dev/null | awk '{print $2}' || echo "0")"
+    local src_dir="$1" level="$2"
+    local conf_dir; conf_dir="$(_conf_dir "${src_dir}" "${level}")"
+    local test_exit_line="0"
+    [[ -n "${conf_dir}" && -f "${conf_dir}/run-metadata.txt" ]] && \
+        test_exit_line="$(grep '^test_exit:' "${conf_dir}/run-metadata.txt" \
+            | awk '{print $2}' || echo "0")"
     case "${test_exit_line}" in
         0)           echo "PASSED" ;;
         SKIPPED*)    echo "BUILD_ONLY (no tests)" ;;
@@ -562,9 +504,6 @@ _read_test_status() {
 
 run_operations() {
     for level in "${EFFECTIVE_LEVELS[@]}"; do
-        local level_out="${OUT_BASE}/${level}"
-        mkdir -p "${level_out}"
-
         log "----------------------------------------------------"
         log "[${OPT_STREAM}/${level}] Starting ${COMMAND} …"
         log "----------------------------------------------------"
@@ -588,10 +527,9 @@ run_operations() {
             # ---- run: full pipeline (build + tests) ---------------
             run)
                 if [[ "${OPT_TEST_TARGET}" == "all" ]]; then
-                    # Build once, then run each tier in sequence
                     build_only_jdk \
                         "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                        "${level_out}" "${STREAM_BOOT_JDK}" \
+                        "${STREAM_BOOT_JDK}" \
                         || { exit_code=$?; OP_STATUS["${level}/build"]="FAILED (exit=${exit_code})"; continue; }
                     OP_STATUS["${level}/build"]="OK"
 
@@ -602,20 +540,16 @@ run_operations() {
                         done
                     else
                         for tier in "${ALL_TIERS[@]}"; do
-                            local tier_out="${level_out}/${tier}"
-                            mkdir -p "${tier_out}"
                             log "[${OPT_STREAM}/${level}] Running ${tier} …"
                             local tier_exit=0
                             run_tests_only \
                                 "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                                "${tier_out}" \
-                                "${tier}" \
-                                "${OPT_JVM_FLAGS}" \
+                                "${tier}" "${OPT_JVM_FLAGS}" \
                                 || tier_exit=$?
                             if [[ ${tier_exit} -ne 0 ]]; then
                                 OP_STATUS["${level}/${tier}"]="FAILED (exit=${tier_exit})"
                             else
-                                OP_STATUS["${level}/${tier}"]="$(_read_test_status "${tier_out}")"
+                                OP_STATUS["${level}/${tier}"]="$(_read_test_status "${SRC_DIR}" "${level}")"
                             fi
                             log "[${OPT_STREAM}/${level}/${tier}] ${OP_STATUS["${level}/${tier}"]}"
                         done
@@ -623,13 +557,12 @@ run_operations() {
                 else
                     build_and_test_jdk \
                         "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                        "${level_out}" "${JTREG_OK}" \
-                        "${STREAM_BOOT_JDK}" \
+                        "${JTREG_OK}" "${STREAM_BOOT_JDK}" \
                         || exit_code=$?
                     if [[ ${exit_code} -ne 0 ]]; then
                         OP_STATUS["${level}"]="FAILED (exit=${exit_code})"
                     else
-                        OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
+                        OP_STATUS["${level}"]="$(_read_test_status "${SRC_DIR}" "${level}")"
                     fi
                 fi
                 ;;
@@ -638,12 +571,12 @@ run_operations() {
             build)
                 build_only_jdk \
                     "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                    "${level_out}" "${STREAM_BOOT_JDK}" \
+                    "${STREAM_BOOT_JDK}" \
                     || exit_code=$?
                 if [[ ${exit_code} -ne 0 ]]; then
                     OP_STATUS["${level}"]="FAILED (exit=${exit_code})"
                 else
-                    OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
+                    OP_STATUS["${level}"]="$(_read_test_status "${SRC_DIR}" "${level}")"
                 fi
                 ;;
 
@@ -651,34 +584,28 @@ run_operations() {
             test)
                 if [[ "${OPT_TEST_TARGET}" == "all" ]]; then
                     for tier in "${ALL_TIERS[@]}"; do
-                        local tier_out="${level_out}/${tier}"
-                        mkdir -p "${tier_out}"
                         log "[${OPT_STREAM}/${level}] Running ${tier} …"
                         local tier_exit=0
                         run_tests_only \
                             "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                            "${tier_out}" \
-                            "${tier}" \
-                            "${OPT_JVM_FLAGS}" \
+                            "${tier}" "${OPT_JVM_FLAGS}" \
                             || tier_exit=$?
                         if [[ ${tier_exit} -ne 0 ]]; then
                             OP_STATUS["${level}/${tier}"]="FAILED (exit=${tier_exit})"
                         else
-                            OP_STATUS["${level}/${tier}"]="$(_read_test_status "${tier_out}")"
+                            OP_STATUS["${level}/${tier}"]="$(_read_test_status "${SRC_DIR}" "${level}")"
                         fi
                         log "[${OPT_STREAM}/${level}/${tier}] ${OP_STATUS["${level}/${tier}"]}"
                     done
                 else
                     run_tests_only \
                         "${SRC_DIR}" "${OPT_STREAM}" "${level}" \
-                        "${level_out}" \
-                        "${OPT_TEST_TARGET}" \
-                        "${OPT_JVM_FLAGS}" \
+                        "${OPT_TEST_TARGET}" "${OPT_JVM_FLAGS}" \
                         || exit_code=$?
                     if [[ ${exit_code} -ne 0 ]]; then
                         OP_STATUS["${level}"]="FAILED (exit=${exit_code})"
                     else
-                        OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
+                        OP_STATUS["${level}"]="$(_read_test_status "${SRC_DIR}" "${level}")"
                     fi
                 fi
                 ;;
@@ -713,22 +640,16 @@ run_operations() {
                 local results_dir="${SRC_DIR}/build/${conf_name}/test-results"
                 if [[ ! -d "${results_dir}" ]]; then
                     warn "[${OPT_STREAM}/${level}] test-results not found at ${results_dir}"
-                    warn "  Run the tests first before collecting."
                     OP_STATUS["${level}"]="COLLECT_FAILED (no test-results)"
                 else
                     info "[${OPT_STREAM}/${level}] Re-collecting from ${results_dir} …"
-                    (
-                        cd "${SRC_DIR}"
-                        _collect_test_results "build/${conf_name}" "${level_out}"
-                    )
-                    OP_STATUS["${level}"]="$(_read_test_status "${level_out}")"
+                    (cd "${SRC_DIR}" && _collect_test_results "build/${conf_name}")
+                    OP_STATUS["${level}"]="$(_read_test_status "${SRC_DIR}" "${level}")"
                     info "[${OPT_STREAM}/${level}] Collected: ${OP_STATUS[${level}]}"
                 fi
                 ;;
         esac
 
-        # For non-all targets the status was already set above.
-        # Log the per-level outcome only for single-target runs.
         if [[ "${OPT_TEST_TARGET}" != "all" || "${COMMAND}" == "build" ]]; then
             log "[${OPT_STREAM}/${level}] Done: ${OP_STATUS[${level}]}"
         fi
@@ -736,84 +657,51 @@ run_operations() {
 }
 
 # ---------------------------------------------------------------------------
-# Step 4 — Write run summary
+# Step 4 — Print run summary to stdout
 # ---------------------------------------------------------------------------
 write_summary() {
-    local summary="${OUT_BASE}/run-summary.txt"
-    {
-        echo "========================================================"
-        echo "  jdk.sh Run Summary"
-        echo "========================================================"
-        echo "  command      : ${COMMAND}"
-        echo "  stream       : ${OPT_STREAM}"
-        echo "  levels       : ${EFFECTIVE_LEVELS[*]}"
-        if [[ "${OPT_TEST_TARGET}" == "all" ]]; then
-            echo "  test-target  : all (${ALL_TIERS[*]})"
-        else
-            echo "  test-target  : ${OPT_TEST_TARGET}"
-        fi
-        echo "  jvm-flags    : ${OPT_JVM_FLAGS:-(none)}"
-        echo "  date         : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-        echo "  host         : $(hostname)"
-        if [[ -x "${BOOT_JDK_DIR}/bin/java" ]]; then
-            echo "  boot-jdk     : $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
-        fi
-        if [[ -x "${JTREG_DIR}/bin/jtreg" ]]; then
-            echo "  jtreg        : $(JAVA_HOME="${BOOT_JDK_DIR}" \
-                                       "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null \
-                                     | head -1 || echo 'n/a')"
-        fi
-        echo "  output dir   : ${OUT_BASE}"
-        echo "========================================================"
-        echo ""
-        echo "  Results:"
-        if [[ "${OPT_TEST_TARGET}" == "all" && "${COMMAND}" != "build" ]]; then
-            for level in "${EFFECTIVE_LEVELS[@]}"; do
-                # Show build step if it was tracked (run command)
-                if [[ -n "${OP_STATUS["${level}/build"]+set}" ]]; then
-                    printf "    %-20s  %s\n" "${level}/build" \
-                        "${OP_STATUS["${level}/build"]:-not-run}"
-                fi
-                for tier in "${ALL_TIERS[@]}"; do
-                    printf "    %-20s  %s\n" "${level}/${tier}" \
-                        "${OP_STATUS["${level}/${tier}"]:-not-run}"
-                done
-            done
-        else
-            for level in "${EFFECTIVE_LEVELS[@]}"; do
-                printf "    %-12s  %s\n" "${level}" "${OP_STATUS[${level}]:-not-run}"
-            done
-        fi
-        echo "========================================================"
-    } > "${summary}"
-    echo ""
-    cat "${summary}"
-    echo ""
-    success "Summary written to: ${summary}"
-}
-
-# ---------------------------------------------------------------------------
-# Step 4b — Retention purge: remove reports older than 90 days
-#
-# Runs unconditionally for the 'run' command (the default).
-# Deletes stale day directories from disk and stages their removal in the git
-# index so they are wiped from GitHub on the next push.
-# Also removes local-only hs_err/ and test-support/ trees within live days.
-# ---------------------------------------------------------------------------
-purge_old_reports() {
-    log "Step 4b: Retention purge (>90 days) …"
-
-    if ${OPT_DRY_RUN}; then
-        info "DRY-RUN: would run retention purge (gen_status.py --purge-only)"
-        return 0
-    fi
-
-    if ! python3 "${SCRIPT_DIR}/gen_status.py" \
-            "${REPORTS_DIR}" "${REPORTS_REPO_ROOT}" --purge-only 2>&1; then
-        warn "Retention purge failed — continuing."
+    echo "========================================================"
+    echo "  jdk.sh Run Summary"
+    echo "========================================================"
+    echo "  command      : ${COMMAND}"
+    echo "  stream       : ${OPT_STREAM}"
+    echo "  levels       : ${EFFECTIVE_LEVELS[*]}"
+    if [[ "${OPT_TEST_TARGET}" == "all" ]]; then
+        echo "  test-target  : all (${ALL_TIERS[*]})"
     else
-        success "Retention purge complete."
+        echo "  test-target  : ${OPT_TEST_TARGET}"
     fi
+    echo "  jvm-flags    : ${OPT_JVM_FLAGS:-(none)}"
+    echo "  date         : $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+    echo "  host         : $(hostname)"
+    if [[ -x "${BOOT_JDK_DIR}/bin/java" ]]; then
+        echo "  boot-jdk     : $("${BOOT_JDK_DIR}/bin/java" -version 2>&1 | head -1)"
+    fi
+    if [[ -x "${JTREG_DIR}/bin/jtreg" ]]; then
+        echo "  jtreg        : $(JAVA_HOME="${BOOT_JDK_DIR}" \
+                                   "${JTREG_DIR}/bin/jtreg" -version 2>/dev/null \
+                                 | head -1 || echo 'n/a')"
+    fi
+    echo "========================================================"
+    echo ""
+    echo "  Results:"
+    if [[ "${OPT_TEST_TARGET}" == "all" && "${COMMAND}" != "build" ]]; then
+        for level in "${EFFECTIVE_LEVELS[@]}"; do
+            if [[ -n "${OP_STATUS["${level}/build"]+set}" ]]; then
+                printf "    %-20s  %s\n" "${level}/build" \
+                    "${OP_STATUS["${level}/build"]:-not-run}"
+            fi
+            for tier in "${ALL_TIERS[@]}"; do
+                printf "    %-20s  %s\n" "${level}/${tier}" \
+                    "${OP_STATUS["${level}/${tier}"]:-not-run}"
+            done
+        done
+    else
+        for level in "${EFFECTIVE_LEVELS[@]}"; do
+            printf "    %-12s  %s\n" "${level}" "${OP_STATUS[${level}]:-not-run}"
+        done
+    fi
+    echo "========================================================"
 }
 
 # ---------------------------------------------------------------------------
@@ -829,22 +717,16 @@ fi
 # Step 3: execute
 run_operations
 
-# clean is done — no summary, no retention purge, no email
+# clean is done — no summary, no email
 if [[ "${COMMAND}" == "clean" ]]; then
     log "========================================================"
     log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-    log "Output: ${OUT_BASE}"
     log "========================================================"
     exit 0
 fi
 
-# Step 4a: summary
+# Step 4: summary (stdout only)
 write_summary
-
-# Step 4b: retention purge — runs for 'run' command only (default)
-if [[ "${COMMAND}" == "run" ]]; then
-    purge_old_reports
-fi
 
 # Step 5: email notification
 _jdk_overall="PASS"
@@ -855,11 +737,9 @@ for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
         _jdk_overall="FAIL"; break
     fi
 done
-# Build stream_label:src_dir:level:build_status quads for notify.sh
 _jdk_triples=()
 for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
     _st="${OP_STATUS[${_lvl}]:-UNKNOWN}"
-    # Normalise to BUILD_FAILED, BUILD_ONLY, TEST_FAILED, or TEST_PASSED
     if   [[ "${_st}" == FAILED*         ]]; then _bst="BUILD_FAILED"
     elif [[ "${_st}" == TEST_FAILURES*  ]]; then _bst="TEST_FAILED"
     elif [[ "${_st}" == BUILD_ONLY*     ]]; then _bst="BUILD_ONLY"
@@ -868,14 +748,16 @@ for _lvl in "${EFFECTIVE_LEVELS[@]}"; do
     fi
     _jdk_triples+=("${OPT_STREAM}:${SRC_DIR}:${_lvl}:${_bst}")
 done
-# For collect, commit-info.txt already lives in OUT_BASE from the original run
-_commit_info_file="${OUT_BASE}/commit-info.txt"
+
+_tmp_summary="$(mktemp)"
+write_summary > "${_tmp_summary}"
+_commit_info_file="${SRC_DIR}/commit-info.txt"
 ci_notify "manual" "${OPT_STREAM}/${OPT_LEVEL} ${COMMAND}" \
-    "${OUT_BASE}/run-summary.txt" "${_jdk_overall}" \
+    "${_tmp_summary}" "${_jdk_overall}" \
     "${_commit_info_file}" \
     "${_jdk_triples[@]}"
+rm -f "${_tmp_summary}"
 
 log "========================================================"
 log "Done: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-log "Output: ${OUT_BASE}"
 log "========================================================"

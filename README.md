@@ -1,50 +1,27 @@
-# OpenJDK s390x CI Reports
+# OpenJDK s390x CI
 
-Automated build and tier1 test reports for **OpenJDK on Linux/s390x (IBM Z)**.
+Automated build and tier1 test pipeline for **OpenJDK on Linux/s390x (IBM Z)**.
 
 The CI pipeline downloads a fresh [Adoptium Temurin nightly](https://adoptium.net/en-GB/temurin/nightly/)
 boot JDK and the [latest jtreg](https://ci.adoptium.net/view/Dependencies/job/dependency_pipeline/lastSuccessfulBuild/artifact/jtreg/)
 on every run, builds JDK head from source, runs `tier1` tests in both
-`fastdebug` and `release` configurations, and commits the results to this
-repository.
+`fastdebug` and `release` configurations, and sends an email summary.
 
 ---
 
 ## Repository layout
 
 ```
-STATUS.md          ← Rolling dashboard — open this on GitHub to see build health
-
 scripts/
   config.sh           # Central configuration — edit paths here
   setup_deps.sh       # Downloads / refreshes boot JDK and jtreg
-  build_test.sh       # Build + test function (sourced by other scripts)
+  build_test.sh       # Build + test functions (sourced by other scripts)
   run_daily.sh        # Automated daily CI orchestrator
   jdk.sh              # Human-facing CLI for manual build/test runs
   pr_test.sh          # Community PR tester (fastdebug tier1 for a given PR)
+  notify.sh           # Email notification helper
   resolve_streams.py  # Filters stream registry against Adoptium API
-  gen_status.py       # Generates STATUS.md + per-run run-summary.md
-
-reports/
-  YYYY/Month/DD/
-    pipeline.log            # Full timestamped run output
-    run-summary.txt         # Machine-readable per-stream results
-    run-summary.md          # GitHub-rendered per-run report <- browse on GitHub
-    deps-failure.txt        # Present only if a dep download failed
-    head/
-      top_commit            # Git log -1 of the JDK HEAD commit tested
-      commit-info.txt       # Pre/post-pull commits + bisect command
-      git-pull.log          # Git fetch/pull output
-      fastdebug/
-        configure.log
-        build.log
-        build-diagnosis.txt # Last compiler cmd + error context
-        test-summary.txt
-        newfailures.txt
-        other_errors.txt
-        run-metadata.txt
-      release/
-        (same as fastdebug/)
+  gen_status.py       # Parses build results for reporting
 
 PRs/
   <number>/
@@ -58,12 +35,11 @@ PRs/
         newfailures.txt
         other_errors.txt
         run-metadata.txt
-        test-passed.txt
-        test-failed.txt
-        test-skipped.txt
-        test-failure.log
-        hs_err/<timestamp>/ # JVM crash logs (local only -- not pushed)
 ```
+
+Build and test results are stored directly in the JDK source tree under
+`~/jdk-sources/<stream>/build/linux-s390x-server-<level>/` — the native
+OpenJDK output location — rather than a separate reports directory.
 
 ---
 
@@ -86,11 +62,9 @@ editing is needed for quick one-off overrides.
 | Variable | Default | Description |
 |---|---|---|
 | `JDK_SOURCES_ROOT` | `$HOME/jdk-sources` | Parent directory for JDK source trees |
-| `HEAD_SRC_DIR` | `$JDK_SOURCES_ROOT/jdk` | JDK mainline source checkout |
 | `BOOT_JDK_DIR` | `$HOME/boot_jdk_nightly` | Where the nightly boot JDK is installed |
 | `JTREG_DIR` | `$HOME/jtreg` | Where jtreg is installed |
 | `GTEST_DIR` | `$HOME/googletest` | Google Test (optional, for hotspot tests) |
-| `REPORTS_DIR` | `<repo>/reports` | Where report artefacts are written |
 | `MAKE_JOBS` | `nproc` result | Parallel make jobs |
 
 ### 3. Install prerequisites
@@ -128,23 +102,104 @@ jtreg. Re-running it always fetches the freshest versions.
 bash scripts/run_daily.sh
 ```
 
-The script runs five stages:
+The script runs the following stages:
 
 | Stage | Description |
 |---|---|
 | 1 | Download fresh Adoptium nightly boot JDK + latest jtreg |
 | 2 | Query Adoptium API for active JDK streams |
 | 3 | For each active stream: git pull, configure, build, tier1 test |
-| 4a | Write `reports/YYYY/Month/DD/run-summary.txt` |
-| 4b | Run `gen_status.py` → updates **`STATUS.md`** and writes `run-summary.md` |
-| 5 | `git commit && git push` — all artefacts land on `main` |
+| 4 | Print run summary to stdout and send email notification |
 
 Build errors abort the affected configuration but do **not** abort the other
 one — both results are always collected.
 
-> **Tip:** The commit subject line starts with ✅ or ❌ so you can tell at a
-> glance from the GitHub commit list whether the day's run passed or failed —
-> without logging into the machine.
+Results stay in the JDK source tree at
+`~/jdk-sources/<stream>/build/linux-s390x-server-<level>/` so you can inspect
+`build.log`, `test-results/`, and `run-metadata.txt` directly without navigating
+a separate report directory.
+
+### Flags
+
+```bash
+# Build release only (skip fastdebug):
+bash scripts/run_daily.sh --level release
+
+# Skip tests (build only):
+bash scripts/run_daily.sh --skip-tests
+
+# Dry run — see what would happen without building anything:
+bash scripts/run_daily.sh --dry-run
+
+# Restrict to a single stream:
+bash scripts/run_daily.sh --stream head
+```
+
+---
+
+## Using the manual CLI (`jdk.sh`)
+
+[`scripts/jdk.sh`](scripts/jdk.sh) is the human-facing entry point for
+ad-hoc builds, tests, and email re-sends.
+
+```
+bash scripts/jdk.sh <command> [options]
+```
+
+### Commands
+
+| Command | Description |
+|---|---|
+| `run` | git pull + build + tier1 test (same as daily cron) |
+| `build` | Configure + make images only. No tests. |
+| `test` | Re-use an existing build. Run tests without rebuilding. |
+| `clean` | Remove the build output directory for the chosen stream + level. |
+| `collect` | Re-collect artefacts from an already-finished test run and re-send email. |
+| `resend` | Re-send the notification email using current results in the build tree. |
+
+### Common options
+
+| Option | Description |
+|---|---|
+| `--stream LABEL` | Target one stream: `head` `jdk26` `jdk25` `jdk21` `jdk17` `jdk11` (default: `head`) |
+| `--level LEVEL` | `fastdebug` \| `release` \| `both` (default: `both`) |
+| `--test-target GROUP` | jtreg group or path, e.g. `tier1`, `tier2`, `test/jdk`. Use `all` to run tier1–tier4 in order. |
+| `--jvm-flags "FLAGS"` | Extra JVM flags injected into every jtreg run. |
+| `--skip-deps` | Skip boot JDK + jtreg download (use cached). |
+| `--no-push` | Do not git commit/push. |
+| `--dry-run` | Print what would happen; do nothing. |
+| `--run-kind KIND` | Override email subject label: `daily` \| `manual` \| `pr` (resend/collect only). |
+
+### Examples
+
+```bash
+# Full default run (same as cron):
+bash scripts/jdk.sh run
+
+# Build only, fastdebug:
+bash scripts/jdk.sh build --level fastdebug
+
+# Wipe the prior build before building fresh:
+bash scripts/jdk.sh clean && bash scripts/jdk.sh build --level fastdebug
+
+# Re-run tier1 tests without rebuilding:
+bash scripts/jdk.sh test
+
+# Run all tiers (tier1–tier4) for head:
+bash scripts/jdk.sh test --test-target all
+
+# Run a specific jtreg group:
+bash scripts/jdk.sh test --test-target test/jdk/java/lang
+
+# Run tier1 with interpreter-only mode:
+bash scripts/jdk.sh test --test-target tier1 --jvm-flags "-Xint"
+
+# Re-send email using current results in the build tree:
+bash scripts/jdk.sh resend
+
+# Re-send with manual run-kind label:
+bash scripts/jdk.sh resend --run-kind manual
+```
 
 ---
 
@@ -152,7 +207,7 @@ one — both results are always collected.
 
 Use [`scripts/pr_test.sh`](scripts/pr_test.sh) to build and test any upstream
 OpenJDK pull request on s390x in fastdebug mode against the tier1 test suite.
-Results are pushed to the **`ci-results-community`** branch under `PRs/<number>/`.
+Results are written under `PRs/<number>/<YYYYMMDD_HHMMSS>/`.
 PR result directories older than **30 days** are automatically purged.
 
 ### Syntax
@@ -171,17 +226,11 @@ bash scripts/pr_test.sh --pr <NUMBER_OR_URL> [options]
 ### Examples
 
 ```bash
-# Test PR 31868 — fetch, build fastdebug, run tier1, push results:
+# Test PR 31868 — fetch, build fastdebug, run tier1:
 bash scripts/pr_test.sh --pr 31868
-
-# Same by URL:
-bash scripts/pr_test.sh --pr https://github.com/openjdk/jdk/pull/31868
 
 # Quick local check — no push, use cached deps:
 bash scripts/pr_test.sh --pr 31868 --skip-deps --no-push
-
-# Dry run — see what would happen without touching anything:
-bash scripts/pr_test.sh --pr 31868 --dry-run
 ```
 
 ### What it does
@@ -192,12 +241,8 @@ bash scripts/pr_test.sh --pr 31868 --dry-run
 3. **Builds** the PR in `fastdebug` mode (`configure` + `make images`).
 4. **Runs** the full `tier1` test suite with jtreg.
 5. **Writes** all artefacts under `PRs/<number>/<YYYYMMDD_HHMMSS>/`.
-6. **Purges** any PR run directories older than 30 days from disk and the git index.
-7. **Pushes** results to the `ci-results-community` branch (unless `--no-push`).
-8. **Cleans up** the temporary PR worktree unconditionally.
-
-> **Tip:** The commit subject line starts with ✅ or ❌ so you can see the
-> result at a glance in the GitHub commit list for `ci-results-community`.
+6. **Purges** any PR run directories older than 30 days.
+7. **Cleans up** the temporary PR worktree unconditionally.
 
 ---
 
@@ -218,77 +263,23 @@ Create the log directory once:
 mkdir -p ~/ci-logs
 ```
 
-> **Tip:** Set `GIT_SSH_COMMAND` or configure SSH agent forwarding so the cron
-> job can push to GitHub without a passphrase prompt:
-> ```bash
-> # In ~/.ssh/config
-> Host github.com
->   IdentityFile ~/.ssh/id_ed25519
->   IdentitiesOnly yes
-> ```
-
 ---
 
-## Overriding configuration at runtime
+## Build artefacts explained
 
-All `config.sh` variables can be overridden without editing any file:
-
-```bash
-# Run with a custom boot JDK
-BOOT_JDK_DIR=/opt/my-jdk bash scripts/run_daily.sh
-
-# Skip the dependency refresh (useful when deps are already current)
-# Edit run_daily.sh and comment out the refresh_deps call,
-# or simply run build_test directly (advanced use).
-```
-
----
-
-## Tracking regressions without logging in
-
-Open **[`STATUS.md`](STATUS.md)** on GitHub.  It is updated on every push and shows:
-
-- 🟢 / 🔴 current status per stream × debug-level
-- **Failing since** — exact date the current streak started
-- **Last passed** — most recent passing date
-- **Consecutive failures** — how many runs in a row have failed
-- A 14-run sparkline history so you can see whether the failure is intermittent
-
-The per-run **`run-summary.md`** inside each day's directory gives the full
-breakdown for that specific run (GitHub renders it natively when you browse
-the folder in the web UI).
-
-Additionally, every commit subject starts with ✅ or ❌, so the
-[GitHub commit log](../../commits/main) itself acts as a status feed — no
-need to open any file.
-
----
-
-## Report artefacts explained
+Results live in the JDK source tree at
+`~/jdk-sources/<stream>/build/linux-s390x-server-<level>/`.
 
 | File | Contents |
 |---|---|
-| `STATUS.md` | Rolling dashboard — streams, last-pass, last-fail, sparkline |
-| `run-summary.md` | Per-run GitHub-rendered report |
-| `run-summary.txt` | Machine-readable per-stream status (parsed by gen_status.py) |
-| `pipeline.log` | Full timestamped run output |
-| `top_commit` | `git log -1` of the JDK commit tested |
-| `commit-info.txt` | Pre/post-pull commits + ready-to-run bisect command |
 | `build.log` | Full OpenJDK build log |
 | `build-diagnosis.txt` | Last compiler command + first error lines |
-| `test-summary.txt` | Pass/fail totals from jtreg for all tier1 suites |
-| `newfailures.txt` | Tests that failed in this run |
-| `other_errors.txt` | Tests that errored (not a clean pass/fail) |
+| `test-results/` | jtreg output tree per test suite |
+| `test-results/<suite>/newfailures.txt` | Tests that newly failed |
+| `test-results/<suite>/other_errors.txt` | Tests that errored |
 | `run-metadata.txt` | Boot JDK version, jtreg version, dates, exit code |
 
----
-
-## Extending to other JDK streams
-
-Open [`scripts/config.sh`](scripts/config.sh) and add a new source directory
-variable (e.g. `JDK21_SRC_DIR`).  Then call `build_and_test_jdk` from
-`run_daily.sh` in the same pattern as the head stream — the function is fully
-parameterised by stream label, debug level, and output directory.
+Commit info for each stream is written to `~/jdk-sources/<stream>/commit-info.txt`.
 
 ---
 

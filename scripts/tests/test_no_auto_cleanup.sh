@@ -140,13 +140,11 @@ describe "build_and_test_jdk — no automatic cleanup"
 
 it "T1: PREVIOUS_BUILD_SENTINEL survives build_and_test_jdk call"
 SRC="$(_make_fake_src "bat" "fastdebug")"
-OUT="${T}/out_bat"
-mkdir -p "${OUT}"
 SENTINEL="${SRC}/build/linux-s390x-server-fastdebug/PREVIOUS_BUILD_SENTINEL"
 assert_file_exists "${SENTINEL}" "pre-condition: sentinel must exist before call"
 
 build_and_test_jdk \
-    "${SRC}" "test-stream" "fastdebug" "${OUT}" "false" "${BOOT_JDK_DIR}"
+    "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}"
 
 assert_file_exists "${SENTINEL}" "sentinel must survive — no auto-cleanup"
 
@@ -160,48 +158,45 @@ describe "build_only_jdk — no automatic cleanup"
 
 it "T2: PREVIOUS_BUILD_SENTINEL survives build_only_jdk call"
 SRC="$(_make_fake_src "bo" "fastdebug")"
-OUT="${T}/out_bo"
-mkdir -p "${OUT}"
 SENTINEL="${SRC}/build/linux-s390x-server-fastdebug/PREVIOUS_BUILD_SENTINEL"
 assert_file_exists "${SENTINEL}" "pre-condition: sentinel must exist before call"
 
 build_only_jdk \
-    "${SRC}" "test-stream" "fastdebug" "${OUT}" "${BOOT_JDK_DIR}"
+    "${SRC}" "test-stream" "fastdebug" "${BOOT_JDK_DIR}"
 
 assert_file_exists "${SENTINEL}" "sentinel must survive — no auto-cleanup"
 
 # ---------------------------------------------------------------------------
-# T3  build_and_test_jdk writes run-metadata.txt (build completes)
+# T3  build_and_test_jdk writes run-metadata.txt into the build conf dir
 #
 # WHY CORRECT: If we only test for the absence of cleanup but the build itself
 # never ran, we get a false positive — sentinel survived because nothing
 # happened, not because cleanup was skipped.  run-metadata.txt is written only
 # when the build reaches the metadata-writing step, proving the build ran.
+# run-metadata.txt now lives in <src_dir>/build/<conf>/ (not a separate OUT).
 # ---------------------------------------------------------------------------
-it "T3: run-metadata.txt written — confirms build actually ran, not just silently skipped"
+it "T3: run-metadata.txt written into conf dir — confirms build actually ran"
 SRC="$(_make_fake_src "bat2" "fastdebug")"
-OUT="${T}/out_bat2"
-mkdir -p "${OUT}"
+CONF_DIR="${SRC}/build/linux-s390x-server-fastdebug"
 
 build_and_test_jdk \
-    "${SRC}" "test-stream" "fastdebug" "${OUT}" "false" "${BOOT_JDK_DIR}"
+    "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}"
 
-assert_file_exists "${OUT}/run-metadata.txt" "run-metadata.txt must be written"
-assert_contains    "${OUT}/run-metadata.txt" "stream:       test-stream"
+assert_file_exists "${CONF_DIR}/run-metadata.txt" "run-metadata.txt must be written"
+assert_contains    "${CONF_DIR}/run-metadata.txt" "stream:       test-stream"
 
 # ---------------------------------------------------------------------------
-# T4  build_only_jdk writes run-metadata.txt
+# T4  build_only_jdk writes run-metadata.txt (jtreg_ok=false → test_exit=SKIPPED)
 # ---------------------------------------------------------------------------
-it "T4: build_only_jdk writes run-metadata.txt proving build ran"
+it "T4: build_only_jdk writes run-metadata.txt into conf dir"
 SRC="$(_make_fake_src "bo2" "fastdebug")"
-OUT="${T}/out_bo2"
-mkdir -p "${OUT}"
+CONF_DIR="${SRC}/build/linux-s390x-server-fastdebug"
 
 build_only_jdk \
-    "${SRC}" "test-stream" "fastdebug" "${OUT}" "${BOOT_JDK_DIR}"
+    "${SRC}" "test-stream" "fastdebug" "${BOOT_JDK_DIR}"
 
-assert_file_exists "${OUT}/run-metadata.txt"
-assert_contains    "${OUT}/run-metadata.txt" "mode:         build-only"
+assert_file_exists "${CONF_DIR}/run-metadata.txt"
+assert_contains    "${CONF_DIR}/run-metadata.txt" "test_exit:    SKIPPED"
 
 # ---------------------------------------------------------------------------
 # T5  Consecutive builds — second run does NOT wipe first run's artifacts
@@ -217,13 +212,10 @@ assert_contains    "${OUT}/run-metadata.txt" "mode:         build-only"
 # ---------------------------------------------------------------------------
 it "T5: first-run test-results/ survives second build_and_test_jdk call"
 SRC="$(_make_fake_src "consec" "fastdebug")"
-OUT1="${T}/out_consec_1"
-OUT2="${T}/out_consec_2"
-mkdir -p "${OUT1}" "${OUT2}"
 
 # First run (creates test-results/)
 build_and_test_jdk \
-    "${SRC}" "test-stream" "fastdebug" "${OUT1}" "false" "${BOOT_JDK_DIR}"
+    "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}"
 
 # Plant a sentinel inside test-results to simulate previous run's evidence
 mkdir -p "${SRC}/build/linux-s390x-server-fastdebug/test-results"
@@ -232,7 +224,7 @@ echo "previous run failure" \
 
 # Second run
 build_and_test_jdk \
-    "${SRC}" "test-stream" "fastdebug" "${OUT2}" "false" "${BOOT_JDK_DIR}"
+    "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}"
 
 assert_file_exists \
     "${SRC}/build/linux-s390x-server-fastdebug/test-results/EVIDENCE" \
@@ -250,21 +242,17 @@ assert_file_exists \
 # ---------------------------------------------------------------------------
 it "T6: functions exit 0 even though dist-clean would fail — proves dist-clean is never called"
 SRC="$(_make_fake_src "nodc" "fastdebug")"
-OUT="${T}/out_nodc"
-mkdir -p "${OUT}"
 
 # build_and_test_jdk must return 0 (build success)
 rc=0
 build_and_test_jdk \
-    "${SRC}" "test-stream" "fastdebug" "${OUT}" "false" "${BOOT_JDK_DIR}" \
+    "${SRC}" "test-stream" "fastdebug" "false" "${BOOT_JDK_DIR}" \
     || rc=$?
 assert_eq "${rc}" "0" "build_and_test_jdk must exit 0 — dist-clean was NOT called"
 
 SRC2="$(_make_fake_src "nodc2" "fastdebug")"
-OUT2="${T}/out_nodc2"
-mkdir -p "${OUT2}"
 rc2=0
 build_only_jdk \
-    "${SRC2}" "test-stream" "fastdebug" "${OUT2}" "${BOOT_JDK_DIR}" \
+    "${SRC2}" "test-stream" "fastdebug" "${BOOT_JDK_DIR}" \
     || rc2=$?
 assert_eq "${rc2}" "0" "build_only_jdk must exit 0 — dist-clean was NOT called"
