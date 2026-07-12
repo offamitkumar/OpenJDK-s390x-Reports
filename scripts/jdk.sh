@@ -473,19 +473,22 @@ case "${COMMAND}" in
     test)    _RUN_LABEL="test-${_TARGET_SLUG}-${_TIME}" ;;
     clean)   _RUN_LABEL="clean-${OPT_LEVEL}-${_TIME}" ;;
     collect) _RUN_LABEL="collect-${OPT_LEVEL}-${_TIME}" ;;
+    resend)  _RUN_LABEL="" ;;  # resend exits before OUT_BASE is used
 esac
 
-# collect reuses the original run's OUT_BASE; all other commands create a new one
-if [[ "${COMMAND}" == "collect" ]]; then
-    OUT_BASE="${OPT_FROM}"
+# collect and resend reuse OPT_FROM; all other commands create a new OUT_BASE
+if [[ "${COMMAND}" == "collect" || "${COMMAND}" == "resend" ]]; then
+    OUT_BASE="${OPT_FROM:-${REPORTS_DIR}}"
 else
     OUT_BASE="${REPORTS_DIR}/${_YEAR}/${_MONTH}/${_DAY}/${_RUN_LABEL}"
     mkdir -p "${OUT_BASE}"
 fi
 
-# Tee all output to a run log
-RUN_LOG="${OUT_BASE}/run.log"
-exec > >(tee -a "${RUN_LOG}") 2>&1
+# Tee all output to a run log (resend writes to stdout only — no log file)
+if [[ "${COMMAND}" != "resend" ]]; then
+    RUN_LOG="${OUT_BASE}/run.log"
+    exec > >(tee -a "${RUN_LOG}") 2>&1
+fi
 
 # ---------------------------------------------------------------------------
 # Banner
