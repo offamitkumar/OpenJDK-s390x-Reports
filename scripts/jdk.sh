@@ -272,6 +272,12 @@ success() { echo "$(_ts) [OK]    $*"; }
 warn()    { echo "$(_ts) [WARN]  $*" >&2; }
 die()     { echo "$(_ts) [FATAL] $*" >&2; exit 1; }
 
+# resend exits here — before report-dir setup, banner, RUN_LOG, or deps.
+if [[ "${COMMAND}" == "resend" ]]; then
+    _resend_email
+    exit 0
+fi
+
 # ---------------------------------------------------------------------------
 # resend — re-send the notification email for an already-completed run.
 #
@@ -473,22 +479,19 @@ case "${COMMAND}" in
     test)    _RUN_LABEL="test-${_TARGET_SLUG}-${_TIME}" ;;
     clean)   _RUN_LABEL="clean-${OPT_LEVEL}-${_TIME}" ;;
     collect) _RUN_LABEL="collect-${OPT_LEVEL}-${_TIME}" ;;
-    resend)  _RUN_LABEL="" ;;  # resend exits before OUT_BASE is used
 esac
 
-# collect and resend reuse OPT_FROM; all other commands create a new OUT_BASE
-if [[ "${COMMAND}" == "collect" || "${COMMAND}" == "resend" ]]; then
-    OUT_BASE="${OPT_FROM:-${REPORTS_DIR}}"
+# collect reuses the original run's OUT_BASE; all other commands create a new one
+if [[ "${COMMAND}" == "collect" ]]; then
+    OUT_BASE="${OPT_FROM}"
 else
     OUT_BASE="${REPORTS_DIR}/${_YEAR}/${_MONTH}/${_DAY}/${_RUN_LABEL}"
     mkdir -p "${OUT_BASE}"
 fi
 
-# Tee all output to a run log (resend writes to stdout only — no log file)
-if [[ "${COMMAND}" != "resend" ]]; then
-    RUN_LOG="${OUT_BASE}/run.log"
-    exec > >(tee -a "${RUN_LOG}") 2>&1
-fi
+# Tee all output to a run log
+RUN_LOG="${OUT_BASE}/run.log"
+exec > >(tee -a "${RUN_LOG}") 2>&1
 
 # ---------------------------------------------------------------------------
 # Banner
@@ -1014,12 +1017,6 @@ publish() {
 # Main flow
 # ---------------------------------------------------------------------------
 trap 'cd "${REPORTS_REPO_ROOT}"' EXIT
-
-# resend: no build, no summary, no deps — just re-fire the email and exit.
-if [[ "${COMMAND}" == "resend" ]]; then
-    _resend_email
-    exit 0
-fi
 
 # Step 1: deps (done above as ensure_deps, before banner could resolve dirs)
 
