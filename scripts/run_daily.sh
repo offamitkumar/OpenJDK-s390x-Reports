@@ -32,14 +32,16 @@ source "${SCRIPT_DIR}/notify.sh"
 FILTER_STREAM=""
 FILTER_LEVEL=""
 SKIP_DEPS=false
+SKIP_TESTS=false
 DRY_RUN=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --stream)     FILTER_STREAM="$2"; shift 2 ;;
-        --level)      FILTER_LEVEL="$2";  shift 2 ;;
-        --skip-deps)  SKIP_DEPS=true;     shift   ;;
-        --dry-run)    DRY_RUN=true;       shift   ;;
+        --stream)      FILTER_STREAM="$2"; shift 2 ;;
+        --level)       FILTER_LEVEL="$2";  shift 2 ;;
+        --skip-deps)   SKIP_DEPS=true;     shift   ;;
+        --skip-tests)  SKIP_TESTS=true;    shift   ;;
+        --dry-run)     DRY_RUN=true;       shift   ;;
         *) echo "[FATAL] Unknown argument: $1" >&2; exit 1 ;;
     esac
 done
@@ -197,12 +199,14 @@ run_level() {
     fi
 
     local exit_code=0
+    local _run_jtreg="${JTREG_OK}"
+    ${SKIP_TESTS} && _run_jtreg="false"
     build_and_test_jdk \
         "${src_dir}" \
         "${label}" \
         "${debug_level}" \
         "${out_dir}" \
-        "${JTREG_OK}" \
+        "${_run_jtreg}" \
         "${boot_jdk_dir}" \
         "${extra_flags[@]+"${extra_flags[@]}"}" \
         || exit_code=$?
