@@ -331,7 +331,6 @@ run_pr_build_test() {
         "${PR_WORKTREE}" \
         "PR-${PR_NUMBER}" \
         "${level}" \
-        "${level_out}" \
         "${JTREG_OK}" \
         "${BOOT_JDK_DIR}" \
         || exit_code=$?
